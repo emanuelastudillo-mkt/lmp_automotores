@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#111318" />
+  <meta name="description" content="Dashboard rápido de stock de vehículos de LMP Autos" />
+  <title>Stock de vehículos | LMP Autos</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23111318'/%3E%3Cpath d='M13 42V21h7v15h11v6H13Zm21 0V21h7l5 9 5-9h7v21h-7V32l-5 8-5-8v10h-7Z' fill='%23f04444'/%3E%3C/svg%3E" />
+  <style>
+    :root{
+      --bg:#0d0f13; --surface:#15181e; --surface-2:#1c2028; --surface-3:#232833;
+      --text:#f4f6f8; --muted:#9ca4b2; --line:#2a303b; --accent:#ef4444;
+      --accent-soft:rgba(239,68,68,.14); --good:#32d583; --warning:#fdb022;
+      --shadow:0 18px 48px rgba(0,0,0,.28); --radius:18px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:linear-gradient(180deg,#0d0f13 0,#11141a 100%);color:var(--text);font:15px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
+    button,input,select{font:inherit}
+    button{cursor:pointer}
+    .app{width:min(1440px,100%);margin:auto;padding:20px 22px 42px}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}
+    .brand-mark{width:45px;height:45px;border-radius:14px;background:var(--surface-2);display:grid;place-items:center;box-shadow:inset 0 0 0 1px var(--line);font-weight:900;letter-spacing:-1px;color:var(--accent)}
+    .brand-copy h1{font-size:20px;line-height:1.1;margin:0 0 4px;letter-spacing:-.4px}
+    .brand-copy p{margin:0;color:var(--muted);font-size:12px}
+    .sync-area{display:flex;align-items:center;gap:10px}
+    .status{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:12px;white-space:nowrap}
+    .dot{width:8px;height:8px;border-radius:50%;background:var(--warning);box-shadow:0 0 0 4px rgba(253,176,34,.1)}
+    .dot.ok{background:var(--good);box-shadow:0 0 0 4px rgba(50,213,131,.1)}
+    .dot.error{background:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+    .icon-btn,.primary-btn,.secondary-btn{border:0;border-radius:12px;min-height:42px;padding:0 14px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:700}
+    .icon-btn,.secondary-btn{background:var(--surface-2);color:var(--text);box-shadow:inset 0 0 0 1px var(--line)}
+    .icon-btn:hover,.secondary-btn:hover{background:var(--surface-3)}
+    .primary-btn{background:var(--accent);color:#fff}
+    .primary-btn:hover{filter:brightness(1.08)}
+    .hero{background:radial-gradient(circle at 90% 0,rgba(239,68,68,.16),transparent 34%),var(--surface);border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:var(--shadow);margin-bottom:16px}
+    .hero-row{display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
+    .hero h2{margin:0 0 5px;font-size:28px;letter-spacing:-1px}
+    .hero p{margin:0;color:var(--muted)}
+    .kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:18px 0 0}
+    .kpi{background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:16px;padding:15px}
+    .kpi span{display:block;color:var(--muted);font-size:12px;margin-bottom:5px}
+    .kpi strong{display:block;font-size:24px;line-height:1.1;letter-spacing:-.5px}
+    .controls{position:sticky;top:0;z-index:15;background:rgba(13,15,19,.89);backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:18px;padding:12px;margin-bottom:16px}
+    .control-grid{display:grid;grid-template-columns:minmax(240px,1.6fr) repeat(4,minmax(135px,.65fr)) auto;gap:9px}
+    .field{position:relative}
+    .field svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--muted);pointer-events:none}
+    input,select{width:100%;height:44px;border:1px solid var(--line);border-radius:12px;background:var(--surface-2);color:var(--text);padding:0 12px;outline:none}
+    .field input{padding-left:40px}
+    input:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+    select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 16px) 19px,calc(100% - 11px) 19px;background-size:5px 5px,5px 5px;background-repeat:no-repeat;padding-right:30px}
+    .results-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:4px 2px 12px}
+    .results-head strong{font-size:14px}
+    .results-head span{color:var(--muted);font-size:12px}
+    .vehicle-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+    .vehicle-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:17px;min-width:0;transition:transform .16s ease,border-color .16s ease,background .16s ease}
+    .vehicle-card:hover{transform:translateY(-2px);border-color:#424a58;background:#181c23}
+    .card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+    .vehicle-name{min-width:0}
+    .vehicle-name small{color:var(--accent);font-weight:800;text-transform:uppercase;letter-spacing:.6px;font-size:10px}
+    .vehicle-name h3{margin:4px 0 0;font-size:18px;line-height:1.2;letter-spacing:-.35px;overflow-wrap:anywhere}
+    .year-pill{flex:0 0 auto;padding:6px 9px;border-radius:10px;background:var(--surface-2);border:1px solid var(--line);font-weight:800;font-size:12px}
+    .specs{display:flex;flex-wrap:wrap;gap:7px;margin:14px 0}
+    .spec{background:var(--surface-2);border:1px solid var(--line);border-radius:9px;padding:6px 8px;color:#c7cdd6;font-size:11px}
+    .prices{display:grid;gap:8px;padding:13px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);min-height:103px}
+    .price-row{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+    .price-row span{font-size:11px;color:var(--muted)}
+    .price-row strong{text-align:right;font-size:15px}
+    .price-row.main strong{font-size:19px;color:#fff}
+    .badges{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0;min-height:25px}
+    .badge{border-radius:999px;padding:5px 8px;font-size:10px;font-weight:800;background:rgba(50,213,131,.11);color:#8ee9b5;border:1px solid rgba(50,213,131,.2)}
+    .badge.alt{background:rgba(253,176,34,.1);color:#ffd27c;border-color:rgba(253,176,34,.2)}
+    .badge.muted{background:var(--surface-2);color:var(--muted);border-color:var(--line)}
+    .badge.danger{background:var(--accent-soft);color:#ff9a9a;border-color:rgba(239,68,68,.25)}
+    .card-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .card-actions button{min-height:39px;border-radius:10px;padding:0 10px;font-size:12px}
+    .empty,.loading{grid-column:1/-1;background:var(--surface);border:1px dashed var(--line);border-radius:18px;padding:44px 20px;text-align:center;color:var(--muted)}
+    .loading-spinner{width:32px;height:32px;border:3px solid var(--line);border-top-color:var(--accent);border-radius:50%;margin:0 auto 12px;animation:spin .8s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.67);display:none;align-items:center;justify-content:center;padding:18px;z-index:50;backdrop-filter:blur(5px)}
+    .modal-backdrop.open{display:flex}
+    .modal{width:min(720px,100%);max-height:min(86vh,820px);overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow)}
+    .modal-head{position:sticky;top:0;background:rgba(21,24,30,.96);backdrop-filter:blur(10px);display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:20px;border-bottom:1px solid var(--line);z-index:2}
+    .modal-head h3{margin:0;font-size:22px}
+    .modal-head p{margin:4px 0 0;color:var(--muted);font-size:12px}
+    .close-btn{width:38px;height:38px;border-radius:11px;border:1px solid var(--line);background:var(--surface-2);color:var(--text);font-size:22px}
+    .modal-body{padding:20px}
+    .detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .detail{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:12px;min-width:0}
+    .detail span{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+    .detail strong{display:block;overflow-wrap:anywhere;font-size:13px}
+    .modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+    .toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);background:#fff;color:#111;padding:11px 15px;border-radius:12px;font-weight:750;font-size:12px;opacity:0;pointer-events:none;transition:.2s;z-index:80;box-shadow:var(--shadow)}
+    .toast.show{opacity:1;transform:translate(-50%,0)}
+    footer{color:var(--muted);font-size:11px;text-align:center;padding-top:24px}
+    @media(max-width:1060px){.vehicle-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.control-grid{grid-template-columns:1.4fr repeat(2,1fr);}.control-grid .reset{grid-column:auto}.kpis{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:680px){
+      .app{padding:14px 12px 32px}.topbar{align-items:flex-start}.status span{display:none}.brand-copy p{max-width:210px}.hero{padding:18px;border-radius:20px}.hero-row{display:block}.hero h2{font-size:24px}.kpis{gap:8px}.kpi{padding:12px}.kpi strong{font-size:20px}
+      .controls{padding:9px;top:0;border-radius:15px}.control-grid{grid-template-columns:1fr 1fr;gap:7px}.control-grid .search{grid-column:1/-1}.control-grid .reset{grid-column:1/-1}.control-grid .reset button{width:100%}
+      .vehicle-grid{grid-template-columns:1fr}.vehicle-card{padding:15px}.results-head{align-items:flex-end}.results-head span{text-align:right;max-width:150px}.detail-grid{grid-template-columns:1fr}.modal-actions{grid-template-columns:1fr}.modal{max-height:91vh}.modal-body,.modal-head{padding:16px}
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">LMP</div>
+        <div class="brand-copy">
+          <h1>Stock de vehículos</h1>
+          <p>Consulta rápida para atención comercial</p>
+        </div>
+      </div>
+      <div class="sync-area">
+        <div class="status" title="Estado de la sincronización">
+          <i class="dot" id="statusDot"></i>
+          <span id="statusText">Conectando…</span>
+        </div>
+        <button class="icon-btn" id="refreshBtn" type="button" title="Actualizar stock" aria-label="Actualizar stock">↻ <span>Actualizar</span></button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-row">
+        <div>
+          <h2>Inventario disponible</h2>
+          <p>Buscá por marca, modelo, año, precio o cualquier dato de la planilla.</p>
+        </div>
+      </div>
+      <div class="kpis">
+        <article class="kpi"><span>Vehículos visibles</span><strong id="kpiVisible">—</strong></article>
+        <article class="kpi"><span>Total en la base</span><strong id="kpiTotal">—</strong></article>
+        <article class="kpi"><span>Con financiación</span><strong id="kpiFinance">—</strong></article>
+        <article class="kpi"><span>Aceptan permuta</span><strong id="kpiTrade">—</strong></article>
+      </div>
+    </section>
+
+    <section class="controls" aria-label="Filtros del inventario">
+      <div class="control-grid">
+        <div class="field search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg>
+          <input id="searchInput" type="search" placeholder="Buscar: Suran, 2018, GNC, $10.000.000…" autocomplete="off" />
+        </div>
+        <select id="brandFilter" aria-label="Filtrar por marca"><option value="">Todas las marcas</option></select>
+        <select id="yearFilter" aria-label="Filtrar por año"><option value="">Todos los años</option></select>
+        <select id="conditionFilter" aria-label="Filtrar por condición">
+          <option value="">Todas las condiciones</option>
+          <option value="financing">Con financiación</option>
+          <option value="trade">Acepta permuta</option>
+          <option value="cash">Solo contado</option>
+        </select>
+        <select id="sortSelect" aria-label="Ordenar vehículos">
+          <option value="sheet">Orden de la hoja</option>
+          <option value="year-desc">Año: más nuevo</option>
+          <option value="year-asc">Año: más antiguo</option>
+          <option value="km-asc">Kilómetros: menor</option>
+          <option value="price-asc">Precio: menor</option>
+          <option value="price-desc">Precio: mayor</option>
+        </select>
+        <div class="reset"><button class="secondary-btn" id="clearBtn" type="button">Limpiar</button></div>
+      </div>
+    </section>
+
+    <div class="results-head">
+      <strong id="resultsCount">Cargando inventario…</strong>
+      <span id="lastUpdate">Sin datos sincronizados</span>
+    </div>
+
+    <section class="vehicle-grid" id="vehicleGrid" aria-live="polite">
+      <div class="loading"><div class="loading-spinner"></div>Cargando vehículos desde Google Sheets…</div>
+    </section>
+
+    <footer>Dashboard de stock · LMP Autos · Datos tomados de la hoja publicada</footer>
+  </main>
+
+  <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <article class="modal">
+      <header class="modal-head">
+        <div><h3 id="modalTitle">Detalle del vehículo</h3><p id="modalSubtitle"></p></div>
+        <button class="close-btn" id="closeModalBtn" type="button" aria-label="Cerrar">×</button>
+      </header>
+      <div class="modal-body">
+        <div class="detail-grid" id="detailGrid"></div>
+        <div class="modal-actions">
+          <button class="primary-btn" id="copyReplyBtn" type="button">Copiar respuesta rápida</button>
+          <button class="secondary-btn" id="copyDetailsBtn" type="button">Copiar ficha completa</button>
+        </div>
+      </div>
+    </article>
+  </div>
+  <div class="toast" id="toast">Copiado</div>
+
+<script>
+(() => {
+  'use strict';
+
+  const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR97O_aQlCskpibTlj1UEomToyCeUl8seOUB3DoNihqoXAAfGbO-8DtUj_WG9XZJvYRWJ_PdGcEBKcH/pub?gid=0&single=true&output=csv';
+  const CACHE_KEY = 'lmp-stock-cache-v1';
+  const CACHE_MAX_AGE = 1000 * 60 * 60 * 12;
+  const FETCH_TIMEOUT = 12000;
+
+  const $ = (selector) => document.querySelector(selector);
+  const els = {
+    grid: $('#vehicleGrid'), search: $('#searchInput'), brand: $('#brandFilter'), year: $('#yearFilter'),
+    condition: $('#conditionFilter'), sort: $('#sortSelect'), clear: $('#clearBtn'), refresh: $('#refreshBtn'),
+    visible: $('#kpiVisible'), total: $('#kpiTotal'), finance: $('#kpiFinance'), trade: $('#kpiTrade'),
+    result: $('#resultsCount'), updated: $('#lastUpdate'), statusDot: $('#statusDot'), statusText: $('#statusText'),
+    modal: $('#modalBackdrop'), modalTitle: $('#modalTitle'), modalSubtitle: $('#modalSubtitle'), detailGrid: $('#detailGrid'),
+    closeModal: $('#closeModalBtn'), copyReply: $('#copyReplyBtn'), copyDetails: $('#copyDetailsBtn'), toast: $('#toast')
+  };
+
+  let rawRows = [];
+  let vehicles = [];
+  let activeVehicle = null;
+  let headers = [];
+
+  const aliases = {
+    brand: ['marca','fabricante'],
+    model: ['modelo','version','versión','vehiculo','vehículo','unidad'],
+    year: ['año','ano','modelo año','modelo ano'],
+    km: ['km','kms','kilometros','kilómetros','kilometraje'],
+    cashArs: ['contado','precio contado','precio en pesos','precio pesos','valor contado','precio venta','precio'],
+    cashUsd: ['dolares','dólares','usd','precio usd','contado usd','valor usd'],
+    downPayment: ['anticipo','entrega','adelanto','anticipo minimo','anticipo mínimo'],
+    installments: ['cuotas','financiacion','financiación','detalle financiacion','detalle financiación','cuota'],
+    financing: ['apto financiacion','apto financiación','financia','financiable','financiacion disponible','financiación disponible'],
+    trade: ['permuta','toma permuta','acepta permuta','se permuta'],
+    fuel: ['combustible','nafta/gnc','tipo combustible'],
+    transmission: ['caja','transmision','transmisión'],
+    status: ['estado','disponibilidad','situacion','situación'],
+    color: ['color'],
+    notes: ['observaciones','observacion','observación','detalle','notas','comentarios'],
+    id: ['id','codigo','código','stock','nro','numero','número']
+  };
+
+  function normalize(value='') {
+    return String(value).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+  }
+
+  function clean(value='') {
+    return String(value ?? '').replace(/\s+/g,' ').trim();
+  }
+
+  function findValue(row, key) {
+    const wanted = aliases[key].map(normalize);
+    const entries = Object.entries(row);
+    for (const [header,value] of entries) {
+      if (wanted.includes(normalize(header))) return clean(value);
+    }
+    const noFuzzy = new Set(['precio','contado','modelo','estado','detalle','color','id','km','cuotas','permuta']);
+    const fuzzyAliases = wanted.filter(alias => !noFuzzy.has(alias)).sort((a,b)=>b.length-a.length);
+    for (const alias of fuzzyAliases) {
+      for (const [header,value] of entries) {
+        const n = normalize(header);
+        if (n.startsWith(alias + ' ') || n.endsWith(' ' + alias)) return clean(value);
+      }
+    }
+    return '';
+  }
+
+  function parseCSV(text) {
+    const rows = [];
+    let row = [], cell = '', quoted = false;
+    for (let i=0; i<text.length; i++) {
+      const ch = text[i], next = text[i+1];
+      if (ch === '"' && quoted && next === '"') { cell += '"'; i++; }
+      else if (ch === '"') quoted = !quoted;
+      else if (ch === ',' && !quoted) { row.push(cell); cell=''; }
+      else if ((ch === '\n' || ch === '\r') && !quoted) {
+        if (ch === '\r' && next === '\n') i++;
+        row.push(cell); cell='';
+        if (row.some(v => clean(v) !== '')) rows.push(row);
+        row=[];
+      } else cell += ch;
+    }
+    row.push(cell);
+    if (row.some(v => clean(v) !== '')) rows.push(row);
+    if (!rows.length) return [];
+
+    const knownHeaders = new Set(Object.values(aliases).flat().map(normalize));
+    let headerIndex = -1, bestScore = -1;
+    rows.slice(0,15).forEach((candidate,index) => {
+      const normalized = candidate.map(normalize).filter(Boolean);
+      const aliasHits = normalized.filter(cell => knownHeaders.has(cell)).length;
+      const keywordHits = normalized.filter(cell => /marca|modelo|vehiculo|año|ano|km|precio|contado|anticipo|permuta|financia|estado/.test(cell)).length;
+      const score = aliasHits * 5 + keywordHits * 2 + Math.min(normalized.length,8) * .1;
+      if (normalized.length >= 2 && score > bestScore) { bestScore = score; headerIndex = index; }
+    });
+    if (headerIndex < 0) headerIndex = rows.findIndex(r => r.filter(v => clean(v)).length >= 2);
+    const useful = rows.slice(Math.max(headerIndex,0));
+    headers = useful[0].map((h,i) => clean(h) || `Columna ${i+1}`);
+    return useful.slice(1).map(cells => Object.fromEntries(headers.map((h,i) => [h, clean(cells[i] || '')])))
+      .filter(obj => Object.values(obj).some(Boolean));
+  }
+
+  function numeric(value) {
+    const raw = clean(value).toLowerCase();
+    if (!raw) return null;
+    let digits = raw.replace(/[^0-9,.-]/g,'');
+    if (!digits) return null;
+    const dotCount = (digits.match(/\./g)||[]).length;
+    const commaCount = (digits.match(/,/g)||[]).length;
+    if (dotCount > 1 || (dotCount === 1 && /\.\d{3}(\D|$)/.test(raw))) digits = digits.replace(/\./g,'');
+    if (commaCount > 1 || (commaCount === 1 && /,\d{3}(\D|$)/.test(raw))) digits = digits.replace(/,/g,'');
+    else digits = digits.replace(',','.');
+    const n = Number(digits);
+    return Number.isFinite(n) ? n : null;
+  }
+
+  function detectYes(value) {
+    const n = normalize(value);
+    if (!n) return null;
+    if (/\b(no|sin|solo contado|unicamente contado|únicamente contado|no apto)\b/.test(n)) return false;
+    if (/\b(si|sí|apto|acepta|disponible|financia|permuta)\b/.test(n)) return true;
+    return null;
+  }
+
+  function inferFlags(v) {
+    const all = normalize(Object.values(v.raw).join(' '));
+    const financeExplicit = detectYes(v.financing);
+    const tradeExplicit = detectYes(v.trade);
+    v.hasFinancing = financeExplicit ?? (Boolean(v.downPayment || v.installments) && !/no (se )?financia|solo contado|no apto financiacion/.test(all));
+    v.hasTrade = tradeExplicit ?? (/permuta/.test(all) && !/no (se )?permuta|sin permuta/.test(all));
+    v.cashOnly = /solo contado|unicamente contado|únicamente contado|no (se )?financia|no apto financiacion/.test(all);
+  }
+
+  function rowToVehicle(row,index) {
+    const brand = findValue(row,'brand');
+    const model = findValue(row,'model');
+    const nameFallback = Object.values(row).find(v => /[a-záéíóúñ]/i.test(v)) || `Vehículo ${index+1}`;
+    const v = {
+      index, raw:row, brand, model, year:findValue(row,'year'), km:findValue(row,'km'),
+      cashArs:findValue(row,'cashArs'), cashUsd:findValue(row,'cashUsd'), downPayment:findValue(row,'downPayment'),
+      installments:findValue(row,'installments'), financing:findValue(row,'financing'), trade:findValue(row,'trade'),
+      fuel:findValue(row,'fuel'), transmission:findValue(row,'transmission'), status:findValue(row,'status'),
+      color:findValue(row,'color'), notes:findValue(row,'notes'), id:findValue(row,'id')
+    };
+    v.title = clean([brand,model].filter(Boolean).join(' ')) || clean(nameFallback);
+    v.brand = brand || v.title.split(' ')[0] || 'Sin marca';
+    v.yearNumber = numeric(v.year) || 0;
+    v.kmNumber = numeric(v.km) ?? Number.MAX_SAFE_INTEGER;
+    v.priceNumber = numeric(v.cashArs) ?? numeric(v.cashUsd) ?? numeric(v.downPayment) ?? Number.MAX_SAFE_INTEGER;
+    v.searchText = normalize(Object.entries(row).map(([k,val]) => `${k} ${val}`).join(' '));
+    inferFlags(v);
+    return v;
+  }
+
+  function formatKm(value) {
+    if (!value) return '';
+    const n = numeric(value);
+    return n !== null ? `${Math.round(n).toLocaleString('es-AR')} km` : value;
+  }
+
+  function moneyDisplay(value, currency='ARS') {
+    if (!value) return '';
+    const raw = clean(value);
+    if (/\$|usd|u\$s|dolar|dólar/i.test(raw)) return raw;
+    const n = numeric(raw);
+    if (n === null) return raw;
+    return currency === 'USD' ? `USD ${n.toLocaleString('es-AR')}` : `$${n.toLocaleString('es-AR')}`;
+  }
+
+  function escapeHTML(value='') {
+    return String(value).replace(/[&<>'"]/g,ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));
+  }
+
+  function statusClass(status) {
+    const n = normalize(status);
+    if (/reserv|senad|señad/.test(n)) return 'alt';
+    if (/vendid|baja|no disponible/.test(n)) return 'danger';
+    return 'muted';
+  }
+
+  function renderCard(v) {
+    const primaryPrice = v.cashArs || v.cashUsd || v.downPayment || 'Consultar';
+    const primaryLabel = v.cashArs ? 'Contado' : v.cashUsd ? 'Contado USD' : v.downPayment ? 'Anticipo' : 'Precio';
+    const secondaryRows = [];
+    if (v.downPayment && v.downPayment !== primaryPrice) secondaryRows.push(`<div class="price-row"><span>Anticipo</span><strong>${escapeHTML(moneyDisplay(v.downPayment))}</strong></div>`);
+    if (v.cashUsd && v.cashUsd !== primaryPrice) secondaryRows.push(`<div class="price-row"><span>Valor USD</span><strong>${escapeHTML(moneyDisplay(v.cashUsd,'USD'))}</strong></div>`);
+    if (v.installments && v.installments !== primaryPrice) secondaryRows.push(`<div class="price-row"><span>Cuotas</span><strong>${escapeHTML(v.installments)}</strong></div>`);
+    if (!secondaryRows.length) secondaryRows.push(`<div class="price-row"><span>Condiciones</span><strong>${v.hasFinancing ? 'Financiación disponible' : 'Consultar'}</strong></div>`);
+
+    const specs = [v.km ? formatKm(v.km) : '', v.fuel, v.transmission, v.color].filter(Boolean).slice(0,4);
+    const badges = [];
+    if (v.hasFinancing) badges.push('<span class="badge">Financiación</span>');
+    if (v.hasTrade) badges.push('<span class="badge alt">Permuta</span>');
+    if (v.cashOnly) badges.push('<span class="badge muted">Solo contado</span>');
+    if (v.status) badges.push(`<span class="badge ${statusClass(v.status)}">${escapeHTML(v.status)}</span>`);
+
+    return `<article class="vehicle-card">
+      <div class="card-top">
+        <div class="vehicle-name"><small>${escapeHTML(v.brand)}</small><h3>${escapeHTML(v.title)}</h3></div>
+        ${v.year ? `<span class="year-pill">${escapeHTML(v.year)}</span>` : ''}
+      </div>
+      <div class="specs">${specs.length ? specs.map(s=>`<span class="spec">${escapeHTML(s)}</span>`).join('') : '<span class="spec">Datos en la ficha</span>'}</div>
+      <div class="prices">
+        <div class="price-row main"><span>${primaryLabel}</span><strong>${escapeHTML(primaryPrice === 'Consultar' ? primaryPrice : moneyDisplay(primaryPrice, v.cashUsd === primaryPrice ? 'USD':'ARS'))}</strong></div>
+        ${secondaryRows.slice(0,2).join('')}
+      </div>
+      <div class="badges">${badges.length ? badges.join('') : '<span class="badge muted">Consultar condiciones</span>'}</div>
+      <div class="card-actions">
+        <button class="secondary-btn" type="button" data-action="details" data-index="${v.index}">Ver ficha</button>
+        <button class="primary-btn" type="button" data-action="copy" data-index="${v.index}">Copiar respuesta</button>
+      </div>
+    </article>`;
+  }
+
+  function filteredVehicles() {
+    const query = normalize(els.search.value);
+    const brand = els.brand.value;
+    const year = els.year.value;
+    const condition = els.condition.value;
+    const list = vehicles.filter(v => {
+      if (query && !v.searchText.includes(query)) return false;
+      if (brand && normalize(v.brand) !== brand) return false;
+      if (year && clean(v.year) !== year) return false;
+      if (condition === 'financing' && !v.hasFinancing) return false;
+      if (condition === 'trade' && !v.hasTrade) return false;
+      if (condition === 'cash' && !v.cashOnly) return false;
+      return true;
+    });
+    const sort = els.sort.value;
+    if (sort === 'year-desc') list.sort((a,b)=>b.yearNumber-a.yearNumber);
+    if (sort === 'year-asc') list.sort((a,b)=>a.yearNumber-b.yearNumber);
+    if (sort === 'km-asc') list.sort((a,b)=>a.kmNumber-b.kmNumber);
+    if (sort === 'price-asc') list.sort((a,b)=>a.priceNumber-b.priceNumber);
+    if (sort === 'price-desc') list.sort((a,b)=>b.priceNumber-a.priceNumber);
+    return list;
+  }
+
+  function render() {
+    const list = filteredVehicles();
+    els.visible.textContent = list.length.toLocaleString('es-AR');
+    els.total.textContent = vehicles.length.toLocaleString('es-AR');
+    els.finance.textContent = vehicles.filter(v=>v.hasFinancing).length.toLocaleString('es-AR');
+    els.trade.textContent = vehicles.filter(v=>v.hasTrade).length.toLocaleString('es-AR');
+    els.result.textContent = `${list.length} ${list.length === 1 ? 'vehículo encontrado' : 'vehículos encontrados'}`;
+    els.grid.innerHTML = list.length ? list.map(renderCard).join('') : `<div class="empty"><strong>No hay coincidencias.</strong><br>Probá con otro término o limpiá los filtros.</div>`;
+  }
+
+  function fillFilters() {
+    const brands = [...new Set(vehicles.map(v=>clean(v.brand)).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es'));
+    const years = [...new Set(vehicles.map(v=>clean(v.year)).filter(v=>/^\d{4}$/.test(v)))].sort((a,b)=>Number(b)-Number(a));
+    els.brand.innerHTML = '<option value="">Todas las marcas</option>' + brands.map(b=>`<option value="${escapeHTML(normalize(b))}">${escapeHTML(b)}</option>`).join('');
+    els.year.innerHTML = '<option value="">Todos los años</option>' + years.map(y=>`<option value="${escapeHTML(y)}">${escapeHTML(y)}</option>`).join('');
+  }
+
+  function buildReply(v) {
+    const lines = [`${v.title}${v.year ? ` ${v.year}` : ''}${v.km ? `, ${formatKm(v.km)}` : ''}.`];
+    if (v.cashArs) lines.push(`Precio contado: ${moneyDisplay(v.cashArs)}.`);
+    if (v.cashUsd) lines.push(`Valor: ${moneyDisplay(v.cashUsd,'USD')}.`);
+    if (v.downPayment) lines.push(`Anticipo: ${moneyDisplay(v.downPayment)}.`);
+    if (v.installments) lines.push(`Financiación: ${v.installments}.`);
+    else if (v.hasFinancing) lines.push('Apto financiación.');
+    if (v.hasTrade) lines.push('Tomamos permuta.');
+    if (v.cashOnly) lines.push('Disponible únicamente de contado.');
+    lines.push('¿Tenés vehículo para entregar o necesitás financiación?');
+    return lines.join(' ');
+  }
+
+  function buildFullDetails(v) {
+    return Object.entries(v.raw).filter(([,value])=>clean(value)).map(([key,value])=>`${key}: ${value}`).join('\n');
+  }
+
+  async function copyText(text,message='Copiado') {
+    try { await navigator.clipboard.writeText(text); }
+    catch {
+      const area = document.createElement('textarea'); area.value=text; document.body.appendChild(area); area.select(); document.execCommand('copy'); area.remove();
+    }
+    showToast(message);
+  }
+
+  function showToast(message) {
+    els.toast.textContent = message; els.toast.classList.add('show');
+    clearTimeout(showToast.timer); showToast.timer=setTimeout(()=>els.toast.classList.remove('show'),1800);
+  }
+
+  function openModal(v) {
+    activeVehicle = v;
+    els.modalTitle.textContent = v.title;
+    els.modalSubtitle.textContent = [v.year, v.km ? formatKm(v.km) : '', v.status].filter(Boolean).join(' · ');
+    const ordered = Object.entries(v.raw).filter(([,value])=>clean(value));
+    els.detailGrid.innerHTML = ordered.map(([key,value])=>`<div class="detail"><span>${escapeHTML(key)}</span><strong>${escapeHTML(value)}</strong></div>`).join('');
+    els.modal.classList.add('open'); document.body.style.overflow='hidden'; els.closeModal.focus();
+  }
+
+  function closeModal() { els.modal.classList.remove('open'); document.body.style.overflow=''; activeVehicle=null; }
+
+  function setStatus(type,text) {
+    els.statusDot.className = `dot ${type === 'ok' ? 'ok' : type === 'error' ? 'error' : ''}`;
+    els.statusText.textContent = text;
+  }
+
+  function saveCache(text) {
+    try { localStorage.setItem(CACHE_KEY, JSON.stringify({text, savedAt:Date.now()})); } catch {}
+  }
+
+  function readCache() {
+    try { return JSON.parse(localStorage.getItem(CACHE_KEY) || 'null'); } catch { return null; }
+  }
+
+  function applyCSV(text, source='online', timestamp=Date.now()) {
+    rawRows = parseCSV(text);
+    vehicles = rawRows.map(rowToVehicle).filter(v => Object.values(v.raw).some(Boolean));
+    if (!vehicles.length) throw new Error('La hoja no contiene filas utilizables.');
+    fillFilters(); render();
+    const time = new Intl.DateTimeFormat('es-AR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}).format(new Date(timestamp));
+    els.updated.textContent = source === 'cache' ? `Copia local del ${time}` : `Actualizado ${time}`;
+    setStatus(source === 'cache' ? 'idle' : 'ok', source === 'cache' ? 'Mostrando copia local' : 'Stock actualizado');
+  }
+
+  async function fetchWithTimeout(url, ms) {
+    const controller = new AbortController();
+    const timer = setTimeout(()=>controller.abort(),ms);
+    try {
+      const response = await fetch(`${url}&t=${Date.now()}`, {cache:'no-store', signal:controller.signal});
+      if (!response.ok) throw new Error(`Error ${response.status}`);
+      return await response.text();
+    } finally { clearTimeout(timer); }
+  }
+
+  async function loadData(force=false) {
+    els.refresh.disabled = true;
+    setStatus('idle', force ? 'Actualizando…' : 'Conectando…');
+    const cache = readCache();
+    if (!force && cache?.text) {
+      try { applyCSV(cache.text,'cache',cache.savedAt); } catch {}
+    }
+    try {
+      const text = await fetchWithTimeout(SHEET_CSV_URL,FETCH_TIMEOUT);
+      applyCSV(text,'online',Date.now());
+      saveCache(text);
+    } catch (error) {
+      if (!vehicles.length && cache?.text) {
+        try { applyCSV(cache.text,'cache',cache.savedAt); } catch {}
+      }
+      if (!vehicles.length) {
+        els.grid.innerHTML = `<div class="empty"><strong>No se pudo cargar la hoja.</strong><br>Comprobá que siga publicada y presioná “Actualizar”.</div>`;
+        els.result.textContent = 'Inventario no disponible';
+        ['visible','total','finance','trade'].forEach(k=>els[k].textContent='—');
+      }
+      setStatus('error', vehicles.length ? 'Sin conexión; usando copia local' : 'Error de conexión');
+      console.error(error);
+    } finally { els.refresh.disabled=false; }
+  }
+
+  [els.search,els.brand,els.year,els.condition,els.sort].forEach(el=>el.addEventListener(el.tagName==='INPUT'?'input':'change',render));
+  els.clear.addEventListener('click',()=>{els.search.value='';els.brand.value='';els.year.value='';els.condition.value='';els.sort.value='sheet';render();els.search.focus();});
+  els.refresh.addEventListener('click',()=>loadData(true));
+  els.grid.addEventListener('click',e=>{
+    const btn=e.target.closest('button[data-index]'); if(!btn)return;
+    const v=vehicles.find(x=>x.index===Number(btn.dataset.index)); if(!v)return;
+    if(btn.dataset.action==='details') openModal(v); else copyText(buildReply(v),'Respuesta copiada');
+  });
+  els.closeModal.addEventListener('click',closeModal);
+  els.modal.addEventListener('click',e=>{if(e.target===els.modal)closeModal();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&els.modal.classList.contains('open'))closeModal();});
+  els.copyReply.addEventListener('click',()=>activeVehicle&&copyText(buildReply(activeVehicle),'Respuesta copiada'));
+  els.copyDetails.addEventListener('click',()=>activeVehicle&&copyText(buildFullDetails(activeVehicle),'Ficha copiada'));
+
+  loadData();
+})();
+</script>
+</body>
+</html>
