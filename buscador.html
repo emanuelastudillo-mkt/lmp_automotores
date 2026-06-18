@@ -94,12 +94,20 @@
     .modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
     .toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);background:#fff;color:#111;padding:11px 15px;border-radius:12px;font-weight:750;font-size:12px;opacity:0;pointer-events:none;transition:.2s;z-index:80;box-shadow:var(--shadow)}
     .toast.show{opacity:1;transform:translate(-50%,0)}
-    footer{color:var(--muted);font-size:11px;text-align:center;padding-top:24px}
+    footer{color:var(--muted);font-size:11px;padding-top:28px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+    .sold-toggle{display:inline-flex;align-items:center;gap:9px;cursor:pointer;user-select:none;opacity:.58;transition:opacity .16s ease;white-space:nowrap}
+    .sold-toggle:hover,.sold-toggle:focus-within{opacity:1}
+    .sold-toggle input{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px}
+    .switch-track{width:34px;height:19px;border-radius:999px;background:var(--surface-3);border:1px solid var(--line);padding:2px;transition:.18s ease}
+    .switch-knob{display:block;width:13px;height:13px;border-radius:50%;background:var(--muted);transition:.18s ease}
+    .sold-toggle input:checked + .switch-track{background:var(--accent-soft);border-color:rgba(239,68,68,.45)}
+    .sold-toggle input:checked + .switch-track .switch-knob{transform:translateX(15px);background:var(--accent)}
+    .sold-toggle input:focus-visible + .switch-track{box-shadow:0 0 0 3px var(--accent-soft)}
     @media(max-width:1060px){.vehicle-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.control-grid{grid-template-columns:1.4fr repeat(2,1fr);}.control-grid .reset{grid-column:auto}.kpis{grid-template-columns:repeat(2,1fr)}}
     @media(max-width:680px){
       .app{padding:14px 12px 32px}.topbar{align-items:flex-start}.status span{display:none}.brand-copy p{max-width:210px}.hero{padding:18px;border-radius:20px}.hero-row{display:block}.hero h2{font-size:24px}.kpis{gap:8px}.kpi{padding:12px}.kpi strong{font-size:20px}
       .controls{padding:9px;top:0;border-radius:15px}.control-grid{grid-template-columns:1fr 1fr;gap:7px}.control-grid .search{grid-column:1/-1}.control-grid .reset{grid-column:1/-1}.control-grid .reset button{width:100%}
-      .vehicle-grid{grid-template-columns:1fr}.vehicle-card{padding:15px}.results-head{align-items:flex-end}.results-head span{text-align:right;max-width:150px}.detail-grid{grid-template-columns:1fr}.modal-actions{grid-template-columns:1fr}.modal{max-height:91vh}.modal-body,.modal-head{padding:16px}
+      .vehicle-grid{grid-template-columns:1fr}.vehicle-card{padding:15px}.results-head{align-items:flex-end}.results-head span{text-align:right;max-width:150px}.detail-grid{grid-template-columns:1fr}.modal-actions{grid-template-columns:1fr}.modal{max-height:91vh}.modal-body,.modal-head{padding:16px}footer{align-items:flex-end}.sold-toggle{font-size:10px}
     }
   </style>
 </head>
@@ -172,7 +180,14 @@
       <div class="loading"><div class="loading-spinner"></div>Cargando vehículos desde Google Sheets…</div>
     </section>
 
-    <footer>Dashboard de stock · LMP Autos · Datos tomados de la hoja publicada</footer>
+    <footer>
+      <span>Dashboard de stock · LMP Autos · Datos tomados de la hoja publicada</span>
+      <label class="sold-toggle" title="Mostrar vehículos vendidos">
+        <span>Mostrar vendidos</span>
+        <input id="showSoldToggle" type="checkbox" />
+        <span class="switch-track" aria-hidden="true"><span class="switch-knob"></span></span>
+      </label>
+    </footer>
   </main>
 
   <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
@@ -208,7 +223,8 @@
     visible: $('#kpiVisible'), total: $('#kpiTotal'), finance: $('#kpiFinance'), trade: $('#kpiTrade'),
     result: $('#resultsCount'), updated: $('#lastUpdate'), statusDot: $('#statusDot'), statusText: $('#statusText'),
     modal: $('#modalBackdrop'), modalTitle: $('#modalTitle'), modalSubtitle: $('#modalSubtitle'), detailGrid: $('#detailGrid'),
-    closeModal: $('#closeModalBtn'), copyReply: $('#copyReplyBtn'), copyDetails: $('#copyDetailsBtn'), toast: $('#toast')
+    closeModal: $('#closeModalBtn'), copyReply: $('#copyReplyBtn'), copyDetails: $('#copyDetailsBtn'), toast: $('#toast'),
+    showSold: $('#showSoldToggle')
   };
 
   let rawRows = [];
@@ -229,7 +245,7 @@
     trade: ['permuta','toma permuta','acepta permuta','se permuta'],
     fuel: ['combustible','nafta/gnc','tipo combustible'],
     transmission: ['caja','transmision','transmisión'],
-    status: ['estado','disponibilidad','situacion','situación'],
+    status: ['estado actual del auto','estado actual','estado','disponibilidad','situacion','situación'],
     color: ['color'],
     notes: ['observaciones','observacion','observación','detalle','notas','comentarios'],
     id: ['id','codigo','código','stock','nro','numero','número']
@@ -245,17 +261,9 @@
 
   function findValue(row, key) {
     const wanted = aliases[key].map(normalize);
-    const entries = Object.entries(row);
-    for (const [header,value] of entries) {
-      if (wanted.includes(normalize(header))) return clean(value);
-    }
-    const noFuzzy = new Set(['precio','contado','modelo','estado','detalle','color','id','km','cuotas','permuta']);
-    const fuzzyAliases = wanted.filter(alias => !noFuzzy.has(alias)).sort((a,b)=>b.length-a.length);
-    for (const alias of fuzzyAliases) {
-      for (const [header,value] of entries) {
-        const n = normalize(header);
-        if (n.startsWith(alias + ' ') || n.endsWith(' ' + alias)) return clean(value);
-      }
+    for (const [header,value] of Object.entries(row)) {
+      const n = normalize(header);
+      if (wanted.includes(n) || wanted.some(alias => n.startsWith(alias + ' ') || n.endsWith(' ' + alias))) return clean(value);
     }
     return '';
   }
@@ -279,17 +287,8 @@
     if (row.some(v => clean(v) !== '')) rows.push(row);
     if (!rows.length) return [];
 
-    const knownHeaders = new Set(Object.values(aliases).flat().map(normalize));
-    let headerIndex = -1, bestScore = -1;
-    rows.slice(0,15).forEach((candidate,index) => {
-      const normalized = candidate.map(normalize).filter(Boolean);
-      const aliasHits = normalized.filter(cell => knownHeaders.has(cell)).length;
-      const keywordHits = normalized.filter(cell => /marca|modelo|vehiculo|año|ano|km|precio|contado|anticipo|permuta|financia|estado/.test(cell)).length;
-      const score = aliasHits * 5 + keywordHits * 2 + Math.min(normalized.length,8) * .1;
-      if (normalized.length >= 2 && score > bestScore) { bestScore = score; headerIndex = index; }
-    });
-    if (headerIndex < 0) headerIndex = rows.findIndex(r => r.filter(v => clean(v)).length >= 2);
-    const useful = rows.slice(Math.max(headerIndex,0));
+    const firstNonEmpty = rows.findIndex(r => r.filter(v => clean(v)).length >= 2);
+    const useful = rows.slice(Math.max(firstNonEmpty,0));
     headers = useful[0].map((h,i) => clean(h) || `Columna ${i+1}`);
     return useful.slice(1).map(cells => Object.fromEntries(headers.map((h,i) => [h, clean(cells[i] || '')])))
       .filter(obj => Object.values(obj).some(Boolean));
@@ -343,6 +342,7 @@
     v.kmNumber = numeric(v.km) ?? Number.MAX_SAFE_INTEGER;
     v.priceNumber = numeric(v.cashArs) ?? numeric(v.cashUsd) ?? numeric(v.downPayment) ?? Number.MAX_SAFE_INTEGER;
     v.searchText = normalize(Object.entries(row).map(([k,val]) => `${k} ${val}`).join(' '));
+    v.isSold = /\bvendid[oa]s?\b/.test(normalize(v.status));
     inferFlags(v);
     return v;
   }
@@ -413,6 +413,7 @@
     const year = els.year.value;
     const condition = els.condition.value;
     const list = vehicles.filter(v => {
+      if (v.isSold && !els.showSold.checked) return false;
       if (query && !v.searchText.includes(query)) return false;
       if (brand && normalize(v.brand) !== brand) return false;
       if (year && clean(v.year) !== year) return false;
@@ -434,17 +435,24 @@
     const list = filteredVehicles();
     els.visible.textContent = list.length.toLocaleString('es-AR');
     els.total.textContent = vehicles.length.toLocaleString('es-AR');
-    els.finance.textContent = vehicles.filter(v=>v.hasFinancing).length.toLocaleString('es-AR');
-    els.trade.textContent = vehicles.filter(v=>v.hasTrade).length.toLocaleString('es-AR');
-    els.result.textContent = `${list.length} ${list.length === 1 ? 'vehículo encontrado' : 'vehículos encontrados'}`;
+    const stockBase = vehicles.filter(v => els.showSold.checked || !v.isSold);
+    els.finance.textContent = stockBase.filter(v=>v.hasFinancing).length.toLocaleString('es-AR');
+    els.trade.textContent = stockBase.filter(v=>v.hasTrade).length.toLocaleString('es-AR');
+    const soldNote = els.showSold.checked ? ' · incluye vendidos' : '';
+    els.result.textContent = `${list.length} ${list.length === 1 ? 'vehículo encontrado' : 'vehículos encontrados'}${soldNote}`;
     els.grid.innerHTML = list.length ? list.map(renderCard).join('') : `<div class="empty"><strong>No hay coincidencias.</strong><br>Probá con otro término o limpiá los filtros.</div>`;
   }
 
   function fillFilters() {
-    const brands = [...new Set(vehicles.map(v=>clean(v.brand)).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es'));
-    const years = [...new Set(vehicles.map(v=>clean(v.year)).filter(v=>/^\d{4}$/.test(v)))].sort((a,b)=>Number(b)-Number(a));
+    const currentBrand = els.brand.value;
+    const currentYear = els.year.value;
+    const filterBase = vehicles.filter(v => els.showSold.checked || !v.isSold);
+    const brands = [...new Set(filterBase.map(v=>clean(v.brand)).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es'));
+    const years = [...new Set(filterBase.map(v=>clean(v.year)).filter(v=>/^\d{4}$/.test(v)))].sort((a,b)=>Number(b)-Number(a));
     els.brand.innerHTML = '<option value="">Todas las marcas</option>' + brands.map(b=>`<option value="${escapeHTML(normalize(b))}">${escapeHTML(b)}</option>`).join('');
     els.year.innerHTML = '<option value="">Todos los años</option>' + years.map(y=>`<option value="${escapeHTML(y)}">${escapeHTML(y)}</option>`).join('');
+    if ([...els.brand.options].some(option => option.value === currentBrand)) els.brand.value = currentBrand;
+    if ([...els.year.options].some(option => option.value === currentYear)) els.year.value = currentYear;
   }
 
   function buildReply(v) {
@@ -547,6 +555,7 @@
   }
 
   [els.search,els.brand,els.year,els.condition,els.sort].forEach(el=>el.addEventListener(el.tagName==='INPUT'?'input':'change',render));
+  els.showSold.addEventListener('change',()=>{ fillFilters(); render(); });
   els.clear.addEventListener('click',()=>{els.search.value='';els.brand.value='';els.year.value='';els.condition.value='';els.sort.value='sheet';render();els.search.focus();});
   els.refresh.addEventListener('click',()=>loadData(true));
   els.grid.addEventListener('click',e=>{
