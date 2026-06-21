@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#111318" />
   <meta name="description" content="Dashboard rápido de stock de vehículos de LMP Autos" />
-  <title>Stock de vehículos | LMP Autos</title>
+  <title>Buscador de stock | LMP Autos</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23111318'/%3E%3Cpath d='M13 42V21h7v15h11v6H13Zm21 0V21h7l5 9 5-9h7v21h-7V32l-5 8-5-8v10h-7Z' fill='%23f04444'/%3E%3C/svg%3E" />
   <style>
     :root{
@@ -114,10 +114,14 @@
     .gallery-tools a{font-size:11px;color:var(--muted);text-decoration:none}
     .gallery-tools a:hover{color:var(--text)}
     .photo-badge{background:rgba(96,165,250,.11);color:#9cc9ff;border-color:rgba(96,165,250,.22)}
+    .photo-warning{background:rgba(253,176,34,.1);color:#ffd27c;border-color:rgba(253,176,34,.22)}
     .detail a{color:#a8ccff;text-decoration:none}.detail a:hover{text-decoration:underline}
     .toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);background:#fff;color:#111;padding:11px 15px;border-radius:12px;font-weight:750;font-size:12px;opacity:0;pointer-events:none;transition:.2s;z-index:80;box-shadow:var(--shadow)}
     .toast.show{opacity:1;transform:translate(-50%,0)}
     footer{color:var(--muted);font-size:11px;padding-top:28px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+    .footer-tools{display:flex;align-items:center;justify-content:flex-end;gap:14px;flex-wrap:wrap}
+    .gallery-config-btn{border:0;background:transparent;color:var(--muted);padding:4px 0;font-size:10px;opacity:.58;text-decoration:underline;text-underline-offset:3px}
+    .gallery-config-btn:hover,.gallery-config-btn:focus-visible{opacity:1;color:var(--text)}
     .sold-toggle{display:inline-flex;align-items:center;gap:9px;cursor:pointer;user-select:none;opacity:.58;transition:opacity .16s ease;white-space:nowrap}
     .sold-toggle:hover,.sold-toggle:focus-within{opacity:1}
     .sold-toggle input{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px}
@@ -130,7 +134,7 @@
     @media(max-width:680px){
       .app{padding:14px 12px 32px}.topbar{align-items:flex-start}.status span{display:none}.brand-copy p{max-width:210px}.hero{padding:18px;border-radius:20px}.hero-row{display:block}.hero h2{font-size:24px}.kpis{gap:8px}.kpi{padding:12px}.kpi strong{font-size:20px}
       .controls{padding:9px;top:0;border-radius:15px}.control-grid{grid-template-columns:1fr 1fr;gap:7px}.control-grid .search{grid-column:1/-1}.control-grid .reset{grid-column:1/-1}.control-grid .reset button{width:100%}
-      .vehicle-grid{grid-template-columns:1fr}.vehicle-card{padding:15px}.results-head{align-items:flex-end}.results-head span{text-align:right;max-width:150px}.detail-grid{grid-template-columns:1fr}.modal-actions{grid-template-columns:1fr}.modal{max-height:91vh}.modal-body,.modal-head{padding:16px}.gallery-stage{aspect-ratio:4/3}.gallery-nav{width:38px;height:38px}.gallery-caption{display:none}footer{align-items:flex-end}.sold-toggle{font-size:10px}
+      .vehicle-grid{grid-template-columns:1fr}.vehicle-card{padding:15px}.results-head{align-items:flex-end}.results-head span{text-align:right;max-width:150px}.detail-grid{grid-template-columns:1fr}.modal-actions{grid-template-columns:1fr}.modal{max-height:91vh}.modal-body,.modal-head{padding:16px}.gallery-stage{aspect-ratio:4/3}.gallery-nav{width:38px;height:38px}.gallery-caption{display:none}footer{align-items:flex-end}.footer-tools{gap:10px}.sold-toggle{font-size:10px}
     }
   </style>
 </head>
@@ -205,11 +209,14 @@
 
     <footer>
       <span>Dashboard de stock · LMP Autos · Datos tomados de la hoja publicada</span>
-      <label class="sold-toggle" title="Mostrar vehículos vendidos">
-        <span>Mostrar vendidos</span>
-        <input id="showSoldToggle" type="checkbox" />
-        <span class="switch-track" aria-hidden="true"><span class="switch-knob"></span></span>
-      </label>
+      <div class="footer-tools">
+        <button class="gallery-config-btn" id="galleryConfigBtn" type="button">Configurar fotos</button>
+        <label class="sold-toggle" title="Mostrar vehículos vendidos">
+          <span>Mostrar vendidos</span>
+          <input id="showSoldToggle" type="checkbox" />
+          <span class="switch-track" aria-hidden="true"><span class="switch-knob"></span></span>
+        </label>
+      </div>
     </footer>
   </main>
 
@@ -236,9 +243,11 @@
   'use strict';
 
   const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR97O_aQlCskpibTlj1UEomToyCeUl8seOUB3DoNihqoXAAfGbO-8DtUj_WG9XZJvYRWJ_PdGcEBKcH/pub?gid=0&single=true&output=csv';
-  // Pegá aquí la URL /exec obtenida al publicar Code.gs como aplicación web.
-  const DRIVE_GALLERY_API_URL = 'https://script.google.com/macros/s/AKfycbyEQXz7_oQuy6EqJ-ybbnmanl0kKpGeKMfXSedTKVRUOdgYF7smvmcKHDl9WF89NBtQ/exec';
-  const CACHE_KEY = 'lmp-stock-cache-v2-gallery';
+  const SHEET_HTML_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR97O_aQlCskpibTlj1UEomToyCeUl8seOUB3DoNihqoXAAfGbO-8DtUj_WG9XZJvYRWJ_PdGcEBKcH/pubhtml?gid=0&single=true';
+  // También puede pegarse desde “Configurar fotos” al pie del dashboard.
+  const DEFAULT_DRIVE_GALLERY_API_URL = 'PEGAR_URL_APPS_SCRIPT_AQUI';
+  const GALLERY_API_STORAGE_KEY = 'lmp-drive-gallery-api-v2';
+  const CACHE_KEY = 'lmp-stock-cache-v3';
   const CACHE_MAX_AGE = 1000 * 60 * 60 * 12;
   const FETCH_TIMEOUT = 12000;
 
@@ -250,7 +259,7 @@
     result: $('#resultsCount'), updated: $('#lastUpdate'), statusDot: $('#statusDot'), statusText: $('#statusText'),
     modal: $('#modalBackdrop'), modalTitle: $('#modalTitle'), modalSubtitle: $('#modalSubtitle'), detailGrid: $('#detailGrid'),
     galleryHost: $('#galleryHost'), closeModal: $('#closeModalBtn'), copyReply: $('#copyReplyBtn'), copyDetails: $('#copyDetailsBtn'), toast: $('#toast'),
-    showSold: $('#showSoldToggle')
+    showSold: $('#showSoldToggle'), galleryConfig: $('#galleryConfigBtn')
   };
 
   let rawRows = [];
@@ -292,9 +301,45 @@
     const wanted = aliases[key].map(normalize);
     for (const [header,value] of Object.entries(row)) {
       const n = normalize(header);
-      if (wanted.includes(n) || wanted.some(alias => n.startsWith(alias + ' ') || n.endsWith(' ' + alias))) return clean(value);
+      const matches = wanted.includes(n) || wanted.some(alias => n.startsWith(alias + ' ') || n.endsWith(' ' + alias));
+      if (matches && clean(value)) return clean(value);
     }
     return '';
+  }
+
+  function isPhotoHeader(header='') {
+    const n = normalize(header);
+    const wanted = aliases.photosFolder.map(normalize);
+    return wanted.includes(n)
+      || wanted.some(alias => n.startsWith(alias + ' ') || n.endsWith(' ' + alias))
+      || (n.includes('foto') && (n.includes('carpeta') || n.includes('drive') || n.includes('link')));
+  }
+
+  function unwrapPossibleUrl(value='') {
+    const raw = clean(value);
+    if (!raw) return '';
+    const formula = raw.match(/HYPERLINK\s*\(\s*["']([^"']+)["']/i);
+    return formula?.[1] || (/^https?:\/\//i.test(raw) ? raw : '');
+  }
+
+  function findPhotoFolderData(row) {
+    let invalidRaw = '';
+    let sourceHeader = '';
+
+    for (const [header,value] of Object.entries(row)) {
+      if (!isPhotoHeader(header) || !clean(value)) continue;
+      const candidate = unwrapPossibleUrl(value);
+      if (candidate && extractDriveFolderInfo(candidate)) return { url:candidate, raw:clean(value), header };
+      if (!invalidRaw) { invalidRaw = clean(value); sourceHeader = header; }
+    }
+
+    // Respaldo: reconoce una carpeta aunque la columna tenga otro nombre.
+    for (const [header,value] of Object.entries(row)) {
+      const candidate = unwrapPossibleUrl(value);
+      if (candidate && extractDriveFolderInfo(candidate)) return { url:candidate, raw:clean(value), header };
+    }
+
+    return { url:'', raw:invalidRaw, header:sourceHeader };
   }
 
   function parseCSV(text) {
@@ -321,6 +366,59 @@
     headers = useful[0].map((h,i) => clean(h) || `Columna ${i+1}`);
     return useful.slice(1).map(cells => Object.fromEntries(headers.map((h,i) => [h, clean(cells[i] || '')])))
       .filter(obj => Object.values(obj).some(Boolean));
+  }
+
+  function unwrapPublishedHref(value='') {
+    if (!value) return '';
+    try {
+      const url = new URL(value, SHEET_HTML_URL);
+      if (/^(www\.)?google\./i.test(url.hostname) && url.pathname === '/url') {
+        return url.searchParams.get('q') || url.searchParams.get('url') || url.href;
+      }
+      return url.href;
+    } catch { return clean(value); }
+  }
+
+  function parsePublishedPhotoLinks(html='') {
+    const links = {};
+    if (!html || typeof DOMParser === 'undefined') return links;
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    const tables = [...doc.querySelectorAll('table')].sort((a,b)=>b.querySelectorAll('tr').length-a.querySelectorAll('tr').length);
+
+    for (const table of tables) {
+      const rows = [...table.querySelectorAll('tr')];
+      for (let headerIndex=0; headerIndex<rows.length; headerIndex++) {
+        const headerCells = [...rows[headerIndex].querySelectorAll('th,td')];
+        const photoColumn = headerCells.findIndex(cell => isPhotoHeader(cell.textContent));
+        if (photoColumn < 0) continue;
+
+        let dataIndex = 0;
+        for (let r=headerIndex+1; r<rows.length; r++) {
+          const cells = [...rows[r].querySelectorAll('th,td')];
+          if (!cells.some(cell => clean(cell.textContent))) continue;
+          const photoCell = cells[photoColumn];
+          if (photoCell) {
+            const anchor = photoCell.querySelector('a[href]');
+            const rawHref = anchor?.getAttribute('href') || photoCell.getAttribute('data-href') || '';
+            const href = unwrapPublishedHref(rawHref);
+            if (href && extractDriveFolderInfo(href)) links[dataIndex] = href;
+          }
+          dataIndex++;
+        }
+        return links;
+      }
+    }
+    return links;
+  }
+
+  function mergePublishedPhotoLinks(rows, photoLinks={}) {
+    const preferredHeader = headers.find(isPhotoHeader) || 'Carpeta de fotos';
+    Object.entries(photoLinks || {}).forEach(([index,url]) => {
+      const row = rows[Number(index)];
+      if (!row || !url || findPhotoFolderData(row).url) return;
+      row[preferredHeader] = url;
+    });
+    return rows;
   }
 
   function numeric(value) {
@@ -357,6 +455,7 @@
   function rowToVehicle(row,index) {
     const brand = findValue(row,'brand');
     const model = findValue(row,'model');
+    const photoData = findPhotoFolderData(row);
     const nameFallback = Object.values(row).find(v => /[a-záéíóúñ]/i.test(v)) || `Vehículo ${index+1}`;
     const v = {
       index, raw:row, brand, model, year:findValue(row,'year'), km:findValue(row,'km'),
@@ -364,7 +463,7 @@
       installments:findValue(row,'installments'), financing:findValue(row,'financing'), trade:findValue(row,'trade'),
       fuel:findValue(row,'fuel'), transmission:findValue(row,'transmission'), status:findValue(row,'status'),
       color:findValue(row,'color'), notes:findValue(row,'notes'), id:findValue(row,'id'),
-      photoFolder:findValue(row,'photosFolder')
+      photoFolder:photoData.url, photoFieldRaw:photoData.raw, photoFieldHeader:photoData.header
     };
     v.title = clean([brand,model].filter(Boolean).join(' ')) || clean(nameFallback);
     v.brand = brand || v.title.split(' ')[0] || 'Sin marca';
@@ -373,6 +472,7 @@
     v.priceNumber = numeric(v.cashArs) ?? numeric(v.cashUsd) ?? numeric(v.downPayment) ?? Number.MAX_SAFE_INTEGER;
     v.searchText = normalize(Object.entries(row).map(([k,val]) => `${k} ${val}`).join(' '));
     v.isSold = /\bvendid[oa]s?\b/.test(normalize(v.status));
+    v.photoLinkInvalid = Boolean(v.photoFieldRaw && !v.photoFolder);
     inferFlags(v);
     return v;
   }
@@ -418,6 +518,7 @@
     if (v.hasTrade) badges.push('<span class="badge alt">Permuta</span>');
     if (v.cashOnly) badges.push('<span class="badge muted">Solo contado</span>');
     if (v.photoFolder) badges.push('<span class="badge photo-badge">📷 Fotos</span>');
+    else if (v.photoLinkInvalid) badges.push('<span class="badge photo-warning">Revisar link de fotos</span>');
     if (v.status) badges.push(`<span class="badge ${statusClass(v.status)}">${escapeHTML(v.status)}</span>`);
 
     return `<article class="vehicle-card">
@@ -432,7 +533,7 @@
       </div>
       <div class="badges">${badges.length ? badges.join('') : '<span class="badge muted">Consultar condiciones</span>'}</div>
       <div class="card-actions">
-        <button class="secondary-btn" type="button" data-action="details" data-index="${v.index}">${v.photoFolder ? 'Fotos y ficha' : 'Ver ficha'}</button>
+        <button class="secondary-btn" type="button" data-action="details" data-index="${v.index}">${v.photoFolder ? 'Fotos y ficha' : v.photoLinkInvalid ? 'Revisar fotos' : 'Ver ficha'}</button>
         <button class="primary-btn" type="button" data-action="copy" data-index="${v.index}">Copiar respuesta</button>
       </div>
     </article>`;
@@ -465,8 +566,8 @@
   function render() {
     const list = filteredVehicles();
     els.visible.textContent = list.length.toLocaleString('es-AR');
-    els.total.textContent = vehicles.length.toLocaleString('es-AR');
     const stockBase = vehicles.filter(v => els.showSold.checked || !v.isSold);
+    els.total.textContent = stockBase.length.toLocaleString('es-AR');
     els.finance.textContent = stockBase.filter(v=>v.hasFinancing).length.toLocaleString('es-AR');
     els.trade.textContent = stockBase.filter(v=>v.hasTrade).length.toLocaleString('es-AR');
     const soldNote = els.showSold.checked ? ' · incluye vendidos' : '';
@@ -532,8 +633,41 @@
     return id ? { id, resourceKey, url: raw } : null;
   }
 
+  function isValidGalleryApiUrl(value='') {
+    return /^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/exec(?:\?|$)/i.test(clean(value));
+  }
+
+  function getGalleryApiUrl() {
+    if (isValidGalleryApiUrl(DEFAULT_DRIVE_GALLERY_API_URL)) return clean(DEFAULT_DRIVE_GALLERY_API_URL);
+    try {
+      const stored = localStorage.getItem(GALLERY_API_STORAGE_KEY) || '';
+      return isValidGalleryApiUrl(stored) ? stored : '';
+    } catch { return ''; }
+  }
+
   function galleryApiConfigured() {
-    return /^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/exec(?:\?|$)/i.test(DRIVE_GALLERY_API_URL);
+    return Boolean(getGalleryApiUrl());
+  }
+
+  function configureGalleryApi() {
+    const current = getGalleryApiUrl();
+    const value = window.prompt('Pegá la URL del Apps Script que termina en /exec:', current);
+    if (value === null) return;
+    const cleaned = clean(value);
+    if (!cleaned) {
+      try { localStorage.removeItem(GALLERY_API_STORAGE_KEY); } catch {}
+      galleryCache.clear();
+      showToast('Configuración eliminada');
+      return;
+    }
+    if (!isValidGalleryApiUrl(cleaned)) {
+      window.alert('La URL no es válida. Debe comenzar con https://script.google.com/macros/s/ y terminar en /exec.');
+      return;
+    }
+    try { localStorage.setItem(GALLERY_API_STORAGE_KEY, cleaned); } catch {}
+    galleryCache.clear();
+    showToast('Lector de fotos configurado');
+    if (activeVehicle) loadGallery(activeVehicle);
   }
 
   function jsonp(url, params={}, timeout=15000) {
@@ -601,14 +735,19 @@
 
   async function loadGallery(v) {
     activeGallery = {images:[],index:0,folderUrl:v.photoFolder || ''};
-    if (!v.photoFolder) { els.galleryHost.innerHTML=''; return; }
+    if (!v.photoFolder) {
+      els.galleryHost.innerHTML = v.photoLinkInvalid
+        ? `<div class="gallery-state"><strong>El enlace de fotos no quedó visible</strong><p>La celda contiene "${escapeHTML(v.photoFieldRaw)}", pero la publicación no entregó una URL de carpeta. Pegá el enlace completo como texto dentro de la celda y presioná Actualizar.</p></div>`
+        : '';
+      return;
+    }
     const folder = extractDriveFolderInfo(v.photoFolder);
     if (!folder) {
       els.galleryHost.innerHTML = `<div class="gallery-state"><strong>Enlace de fotos no reconocido</strong><p>Revisá que la celda contenga el enlace completo de una carpeta de Google Drive.</p></div>`;
       return;
     }
     if (!galleryApiConfigured()) {
-      els.galleryHost.innerHTML = `<div class="gallery-state"><strong>La carpeta de fotos está vinculada</strong><p>Falta pegar en el HTML la URL del Apps Script incluido en el paquete para activar el carrusel.</p><a class="secondary-btn" href="${escapeHTML(folder.url)}" target="_blank" rel="noopener noreferrer">Abrir carpeta</a></div>`;
+      els.galleryHost.innerHTML = `<div class="gallery-state"><strong>La carpeta de fotos está vinculada</strong><p>Falta configurar la URL del Apps Script. Usá “Configurar fotos” al final del dashboard y pegá la dirección terminada en /exec.</p><a class="secondary-btn" href="${escapeHTML(folder.url)}" target="_blank" rel="noopener noreferrer">Abrir carpeta</a></div>`;
       return;
     }
     els.galleryHost.innerHTML = `<div class="gallery-state"><div class="loading-spinner"></div><strong>Cargando fotos…</strong><p>Las imágenes se consultan solamente al abrir esta ficha.</p></div>`;
@@ -616,8 +755,11 @@
     try {
       let data = galleryCache.get(cacheKey);
       if (!data) {
-        data = await jsonp(DRIVE_GALLERY_API_URL,{folder:folder.id,resourceKey:folder.resourceKey});
-        if (!data?.ok) throw new Error(data?.error || 'No se pudo leer la carpeta.');
+        data = await jsonp(getGalleryApiUrl(),{action:'gallery',folder:folder.id,resourceKey:folder.resourceKey},25000);
+        if (!data?.ok) {
+          const detail = clean(data?.detail || '');
+          throw new Error([data?.error || 'No se pudo leer la carpeta.', detail].filter(Boolean).join(' — '));
+        }
         galleryCache.set(cacheKey,data);
       }
       if (activeVehicle !== v) return;
@@ -642,7 +784,7 @@
     const photoAliases = aliases.photosFolder.map(normalize);
     const ordered = Object.entries(v.raw).filter(([,value])=>clean(value));
     els.detailGrid.innerHTML = ordered.map(([key,value])=>{
-      const isPhotoField = photoAliases.includes(normalize(key));
+      const isPhotoField = photoAliases.includes(normalize(key)) || isPhotoHeader(key);
       const shownValue = isPhotoField && /^https?:\/\//i.test(value)
         ? `<a href="${escapeHTML(value)}" target="_blank" rel="noopener noreferrer">Abrir carpeta de fotos ↗</a>`
         : escapeHTML(value);
@@ -665,16 +807,16 @@
     els.statusText.textContent = text;
   }
 
-  function saveCache(text) {
-    try { localStorage.setItem(CACHE_KEY, JSON.stringify({text, savedAt:Date.now()})); } catch {}
+  function saveCache(text, photoLinks={}) {
+    try { localStorage.setItem(CACHE_KEY, JSON.stringify({text, photoLinks, savedAt:Date.now()})); } catch {}
   }
 
   function readCache() {
     try { return JSON.parse(localStorage.getItem(CACHE_KEY) || 'null'); } catch { return null; }
   }
 
-  function applyCSV(text, source='online', timestamp=Date.now()) {
-    rawRows = parseCSV(text);
+  function applyCSV(text, source='online', timestamp=Date.now(), photoLinks={}) {
+    rawRows = mergePublishedPhotoLinks(parseCSV(text), photoLinks);
     vehicles = rawRows.map(rowToVehicle).filter(v => Object.values(v.raw).some(Boolean));
     if (!vehicles.length) throw new Error('La hoja no contiene filas utilizables.');
     fillFilters(); render();
@@ -696,17 +838,23 @@
   async function loadData(force=false) {
     els.refresh.disabled = true;
     setStatus('idle', force ? 'Actualizando…' : 'Conectando…');
+    if (force) {
+      try { localStorage.removeItem(CACHE_KEY); } catch {}
+    }
     const cache = readCache();
     if (!force && cache?.text) {
-      try { applyCSV(cache.text,'cache',cache.savedAt); } catch {}
+      try { applyCSV(cache.text,'cache',cache.savedAt,cache.photoLinks || {}); } catch {}
     }
     try {
-      const text = await fetchWithTimeout(SHEET_CSV_URL,FETCH_TIMEOUT);
-      applyCSV(text,'online',Date.now());
-      saveCache(text);
+      const csvPromise = fetchWithTimeout(SHEET_CSV_URL,FETCH_TIMEOUT);
+      const htmlPromise = fetchWithTimeout(SHEET_HTML_URL,9000).catch(()=> '');
+      const [text,publishedHtml] = await Promise.all([csvPromise,htmlPromise]);
+      const photoLinks = parsePublishedPhotoLinks(publishedHtml);
+      applyCSV(text,'online',Date.now(),photoLinks);
+      saveCache(text,photoLinks);
     } catch (error) {
       if (!vehicles.length && cache?.text) {
-        try { applyCSV(cache.text,'cache',cache.savedAt); } catch {}
+        try { applyCSV(cache.text,'cache',cache.savedAt,cache.photoLinks || {}); } catch {}
       }
       if (!vehicles.length) {
         els.grid.innerHTML = `<div class="empty"><strong>No se pudo cargar la hoja.</strong><br>Comprobá que siga publicada y presioná “Actualizar”.</div>`;
@@ -720,6 +868,7 @@
 
   [els.search,els.brand,els.year,els.condition,els.sort].forEach(el=>el.addEventListener(el.tagName==='INPUT'?'input':'change',render));
   els.showSold.addEventListener('change',()=>{ fillFilters(); render(); });
+  els.galleryConfig.addEventListener('click',configureGalleryApi);
   els.clear.addEventListener('click',()=>{els.search.value='';els.brand.value='';els.year.value='';els.condition.value='';els.sort.value='sheet';render();els.search.focus();});
   els.refresh.addEventListener('click',()=>loadData(true));
   els.grid.addEventListener('click',e=>{
