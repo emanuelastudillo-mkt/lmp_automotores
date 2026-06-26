@@ -203,10 +203,9 @@
 
 <script>
 const CONFIG = {
-  dataUrls: [
-    "https://docs.google.com/spreadsheets/d/1DN8we3PaI2foFvz_pGcfu11aa9gmEIJaFiQjYjSN7RM/gviz/tq?tqx=out:csv&gid=0",
-    "https://docs.google.com/spreadsheets/d/e/2PACX-1vR97O_aQlCskpibTlj1UEomToyCeUl8seOUB3DoNihqoXAAfGbO-8DtUj_WG9XZJvYRWJ_PdGcEBKcH/pub?gid=0&single=true&output=csv"
-  ],
+  sheetId: "1DN8we3PaI2foFvz_pGcfu11aa9gmEIJaFiQjYjSN7RM",
+  gid: "0",
+  csvUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR97O_aQlCskpibTlj1UEomToyCeUl8seOUB3DoNihqoXAAfGbO-8DtUj_WG9XZJvYRWJ_PdGcEBKcH/pub?gid=0&single=true&output=csv",
   whatsapp: "5491132627744",
   maxFeatured: 6
 };
@@ -372,36 +371,101 @@ function switchView(view){
   window.scrollTo({top:0,behavior:'smooth'});
   if(!home) applyFilters();
 }
-async function fetchFirstAvailableCsv(){
-  const errors=[];
-  for(const source of CONFIG.dataUrls){
-    try{
-      const url=source+(source.includes('?')?'&':'?')+'_='+Date.now();
-      const res=await fetch(url,{
-        method:'GET',
-        mode:'cors',
-        cache:'no-store',
-        credentials:'omit',
-        redirect:'follow'
-      });
-      if(!res.ok) throw new Error(`HTTP ${res.status}`);
-      const text=await res.text();
-      if(!text || !text.includes('Marca') || !text.includes('Modelo')){
-        throw new Error('La respuesta no parece ser el CSV esperado');
-      }
-      return {text,source};
-    }catch(error){
-      errors.push(`${source}: ${error.message}`);
+function loadGoogleSheetJsonp(){
+  return new Promise((resolve,reject)=>{
+    const callbackName='lmpSheetCallback_'+Date.now();
+    const script=document.createElement('script');
+    const timeout=setTimeout(()=>{
+      cleanup();
+      reject(new Error('Google Sheets no respondió mediante JSONP'));
+    },15000);
+
+    function cleanup(){
+      clearTimeout(timeout);
+      delete window[callbackName];
+      script.remove();
     }
+
+    window[callbackName]=(response)=>{
+      try{
+        if(!response || response.status==='error' || !response.table){
+          throw new Error('Respuesta inválida de Google Sheets');
+        }
+        const headers=response.table.cols.map((col,i)=>
+          clean(col.label || col.id || (i===0?'ID':`col_${i}`))
+        );
+        const rows=response.table.rows.map(row=>{
+          const obj={};
+          headers.forEach((header,i)=>{
+            const cell=row.c && row.c[i] ? row.c[i] : null;
+            obj[header]=cell ? clean(cell.f ?? cell.v ?? '') : '';
+          });
+          return obj;
+        });
+        cleanup();
+        resolve({rows,source:'Google Sheets JSONP'});
+      }catch(error){
+        cleanup();
+        reject(error);
+      }
+    };
+
+    const query=new URLSearchParams({
+      gid:CONFIG.gid,
+      tqx:`responseHandler:${callbackName}`,
+      tq:'select *',
+      headers:'1',
+      _:Date.now().toString()
+    });
+    script.src=`https://docs.google.com/spreadsheets/d/${CONFIG.sheetId}/gviz/tq?${query}`;
+    script.onerror=()=>{
+      cleanup();
+      reject(new Error('No se pudo cargar el script de Google Sheets'));
+    };
+    document.head.appendChild(script);
+  });
+}
+
+async function loadPublishedCsv(){
+  const url=CONFIG.csvUrl+(CONFIG.csvUrl.includes('?')?'&':'?')+'_='+Date.now();
+  const res=await fetch(url,{
+    method:'GET',
+    mode:'cors',
+    cache:'no-store',
+    credentials:'omit',
+    redirect:'follow'
+  });
+  if(!res.ok) throw new Error(`CSV HTTP ${res.status}`);
+  const text=await res.text();
+  if(!text || !text.includes('Marca') || !text.includes('Modelo')){
+    throw new Error('El CSV no contiene las columnas esperadas');
+  }
+  return {rows:parseCSV(text),source:'CSV publicado'};
+}
+
+async function loadSheetRows(){
+  const errors=[];
+  try{
+    return await loadGoogleSheetJsonp();
+  }catch(error){
+    errors.push(error.message);
+  }
+  try{
+    return await loadPublishedCsv();
+  }catch(error){
+    errors.push(error.message);
   }
   throw new Error(errors.join(' | '));
 }
 
 async function loadData(){
   try{
-    const result=await fetchFirstAvailableCsv();
-    vehicles=parseCSV(result.text).map(mapVehicle).filter(validVehicle);
-    if(!vehicles.length) throw new Error('La hoja respondió, pero no se encontraron vehículos válidos');
+    const result=await loadSheetRows();
+    vehicles=result.rows.map(mapVehicle).filter(validVehicle);
+    if(!vehicles.length){
+      const states=[...new Set(result.rows.map(r=>clean(r['Estado actual del auto'])).filter(Boolean))];
+      throw new Error(`La hoja cargó ${result.rows.length} filas, pero ninguna pasó el filtro. Estados detectados: ${states.join(', ') || 'ninguno'}`);
+    }
     vehicles.sort((a,b)=>(a.estado==='DISPONIBLE'?0:1)-(b.estado==='DISPONIBLE'?0:1) || Number(b.anio)-Number(a.anio));
     populateFilters();
     renderCards($('#featuredGrid'),vehicles.slice(0,CONFIG.maxFeatured));
@@ -409,13 +473,14 @@ async function loadData(){
     $('#brandsStat').textContent=new Set(vehicles.map(v=>normalize(v.marca))).size;
     const now=new Date();
     $('#homeStatus').textContent=`Actualizado ${now.toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'})}`;
-    $('#catalogStatus').textContent='Conectado a Google Sheets';
+    $('#catalogStatus').textContent=`Conectado: ${result.source}`;
     $('#updateTime').textContent=`Datos sincronizados: ${now.toLocaleString('es-AR')}`;
     applyFilters();
   }catch(err){
     console.error('Error de conexión con Google Sheets:',err);
-    const error=`<div class="empty"><strong>No se pudo leer Google Sheets.</strong><br>La hoja debe estar compartida como “Cualquier persona con el enlace” o publicada en la web.<br><small>${escapeHtml(err.message)}</small></div>`;
-    $('#featuredGrid').innerHTML=error;$('#catalogGrid').innerHTML=error;
+    const error=`<div class="empty"><strong>No se pudo leer Google Sheets.</strong><br><small>${escapeHtml(err.message)}</small></div>`;
+    $('#featuredGrid').innerHTML=error;
+    $('#catalogGrid').innerHTML=error;
     $('#homeStatus').textContent='Error de conexión';
     $('#catalogStatus').textContent='Sin conexión';
     $('#resultCount').textContent='No se pudo cargar el catálogo';
