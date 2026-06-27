@@ -525,16 +525,26 @@ function apiJsonp(params,timeoutMs=15000){
   });
 }
 function trackEvent(vehicleId,eventName){
-  if(!vehicleId || !CONFIG.eventsApi)return;
+  if(!vehicleId || !CONFIG.eventsApi)return Promise.resolve(false);
+  const key=`lmp_view_${vehicleId}`;
   if(eventName==='vista'){
-    const key=`lmp_view_${vehicleId}`;
     try{
-      if(sessionStorage.getItem(key))return;
-      sessionStorage.setItem(key,'1');
+      if(sessionStorage.getItem(key))return Promise.resolve(true);
     }catch(_){}
   }
-  apiJsonp({action:'track',vehiculo_id:vehicleId,evento:eventName},12000).catch(error=>{
-    console.warn('No se pudo registrar el evento:',error.message);
+  return apiJsonp({
+    action:'track',
+    vehiculo_id:vehicleId,
+    evento:eventName
+  },15000).then(response=>{
+    if(eventName==='vista'){
+      try{sessionStorage.setItem(key,'1')}catch(_){}
+    }
+    console.info('Evento registrado:',eventName,vehicleId,response);
+    return true;
+  }).catch(error=>{
+    console.warn('No se pudo registrar el evento:',eventName,vehicleId,error.message);
+    return false;
   });
 }
 async function loadVehicleStats(){
