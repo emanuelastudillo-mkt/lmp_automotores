@@ -524,28 +524,73 @@ function apiJsonp(params,timeoutMs=15000){
     document.head.appendChild(script);
   });
 }
-function trackEvent(vehicleId,eventName){
-  if(!vehicleId || !CONFIG.eventsApi)return Promise.resolve(false);
-  const key=`lmp_view_${vehicleId}`;
-  if(eventName==='vista'){
-    try{
-      if(sessionStorage.getItem(key))return Promise.resolve(true);
-    }catch(_){}
-  }
-  return apiJsonp({
+const trackingBeacons=new Set();
+
+function buildTrackUrl(vehicleId,eventName){
+  const query=new URLSearchParams({
     action:'track',
     vehiculo_id:vehicleId,
-    evento:eventName
-  },15000).then(response=>{
+    evento:eventName,
+    origen:'web',
+    _:Date.now().toString()
+  });
+  return `${CONFIG.eventsApi}?${query}`;
+}
+
+function sendTrackingFallback(url){
+  return new Promise(resolve=>{
+    const image=new Image();
+    trackingBeacons.add(image);
+    const finish=()=>{
+      trackingBeacons.delete(image);
+      resolve(true);
+    };
+    image.onload=finish;
+    image.onerror=finish;
+    image.src=url;
+    setTimeout(finish,5000);
+  });
+}
+
+async function trackEvent(vehicleId,eventName){
+  if(!vehicleId || !CONFIG.eventsApi)return false;
+
+  // Se cambia la versión de la clave para ignorar bloqueos guardados por versiones anteriores.
+  const key=`lmp_view_v3_${vehicleId}`;
+  if(eventName==='vista'){
+    try{
+      if(sessionStorage.getItem(key))return true;
+    }catch(_){}
+  }
+
+  const url=buildTrackUrl(vehicleId,eventName);
+
+  try{
+    await fetch(url,{
+      method:'GET',
+      mode:'no-cors',
+      cache:'no-store',
+      credentials:'omit',
+      keepalive:true,
+      redirect:'follow'
+    });
+
     if(eventName==='vista'){
       try{sessionStorage.setItem(key,'1')}catch(_){}
     }
-    console.info('Evento registrado:',eventName,vehicleId,response);
+
+    console.info('Evento enviado:',eventName,vehicleId);
     return true;
-  }).catch(error=>{
-    console.warn('No se pudo registrar el evento:',eventName,vehicleId,error.message);
-    return false;
-  });
+  }catch(error){
+    console.warn('Fetch de seguimiento falló; se usa beacon:',error.message);
+    const sent=await sendTrackingFallback(url);
+
+    if(sent && eventName==='vista'){
+      try{sessionStorage.setItem(key,'1')}catch(_){}
+    }
+
+    return sent;
+  }
 }
 async function loadVehicleStats(){
   if(!CONFIG.eventsApi)return {};
