@@ -43,7 +43,7 @@
     .hero{padding:74px 0 36px;background:linear-gradient(145deg,#111 0%,#222 68%,#351014 100%);color:#fff}
     .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:36px;align-items:center}
     .eyebrow{display:inline-flex;align-items:center;gap:8px;color:#ededed;background:rgba(255,255,255,.09);padding:8px 11px;border-radius:999px;font-size:13px;font-weight:700}
-    h1{font-size:clamp(40px,6vw,76px);line-height:.98;margin:18px 0;letter-spacing:-.06em;max-width:760px}
+    h1{font-size:clamp(38px,5.4vw,66px);line-height:1;margin:18px 0;letter-spacing:-.055em;max-width:720px}
     .hero p{font-size:18px;line-height:1.65;color:#c9c9c9;max-width:650px}
     .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
     .btn{border:0;border-radius:14px;padding:14px 18px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px}
@@ -76,6 +76,11 @@
     h2{font-size:clamp(28px,4vw,44px);letter-spacing:-.045em;margin:0}
     .section-head p{color:var(--muted);margin:7px 0 0}
     .status{font-size:13px;color:var(--muted)}
+    .filter-mobile-trigger{display:none;width:100%;border:1px solid var(--line);background:#fff;border-radius:14px;padding:13px 15px;margin-bottom:14px;font-weight:900;align-items:center;justify-content:space-between;cursor:pointer}
+    .filter-overlay{display:none}
+    .filter-panel-head{display:none}
+    .filter-actions{display:contents}
+    .filter-apply{display:none}
     .filters{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:16px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr)) auto;gap:10px;margin-bottom:22px;box-shadow:0 8px 24px rgba(0,0,0,.035)}
     .field{display:flex;flex-direction:column;gap:6px}
     .field label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:800;color:var(--muted)}
@@ -88,8 +93,11 @@
     .photo{aspect-ratio:3/4;background:#ecece8;position:relative;overflow:hidden;display:grid;place-items:center}
     .photo img{width:100%;height:100%;object-fit:contain;display:block}
     .photo-empty{width:100%;height:100%;display:grid;place-items:center;color:#8a8a84;font-weight:800;background:linear-gradient(135deg,#efefec,#deded8)}
-    .badge{position:absolute;top:12px;left:12px;background:rgba(15,15,15,.86);color:#fff;padding:7px 9px;border-radius:999px;font-size:11px;font-weight:900;letter-spacing:.04em}
+    .badge-stack{position:absolute;top:12px;left:12px;right:12px;display:flex;flex-wrap:wrap;gap:6px;z-index:2}
+    .badge{position:static;background:rgba(15,15,15,.86);color:#fff;padding:7px 9px;border-radius:999px;font-size:10px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;box-shadow:0 3px 10px rgba(0,0,0,.12)}
     .badge.preparando{background:#8a6200}
+    .badge.hot{background:var(--accent)}
+    .badge.feature{background:rgba(255,255,255,.92);color:#171717}
     .body{padding:18px}
     .make{font-size:12px;color:var(--accent);font-weight:900;text-transform:uppercase;letter-spacing:.08em}
     .vehicle h3{font-size:21px;line-height:1.15;margin:6px 0 12px;letter-spacing:-.03em}
@@ -103,7 +111,9 @@
     .price-label{font-size:11px;color:inherit;opacity:.72;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
     .price{font-size:24px;font-weight:900;letter-spacing:-.04em;margin:2px 0 0;display:flex;align-items:center;gap:5px}.price svg{width:19px;height:19px}
     .price-prefix{font-size:12px;font-weight:900;margin-right:4px;opacity:.8}
-    .advance{font-size:13px;color:#555;margin-top:4px}
+    .advance{font-size:13px;color:#555;margin-top:8px}
+    .card-benefits{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+    .card-benefits span{font-size:11px;font-weight:800;color:#555;background:#f2f2ef;border-radius:999px;padding:6px 8px}
     .card-actions{display:grid;grid-template-columns:1fr auto;gap:9px;margin-top:16px}
     .detail-btn{background:#111;color:#fff;border:0;padding:12px;border-radius:12px;font-weight:800;cursor:pointer}
     .ig-btn{border:1px solid var(--line);background:#fff;border-radius:12px;padding:12px 14px;font-weight:900}
@@ -117,8 +127,13 @@
     .close{position:sticky;float:right;top:14px;margin:14px 14px -60px 0;z-index:5;width:42px;height:42px;border:0;border-radius:50%;background:rgba(0,0,0,.72);color:#fff;font-size:20px;cursor:pointer}
     .detail-grid{display:grid;grid-template-columns:1.12fr .88fr}
     .gallery{background:#111;min-height:520px;display:flex;flex-direction:column}
-    .main-image{flex:1;min-height:420px;position:relative}
+    .main-image{flex:1;min-height:420px;position:relative;touch-action:pan-y;user-select:none}
     .main-image img{width:100%;height:100%;position:absolute;inset:0;object-fit:contain}
+    .gallery-thumbs{display:flex;gap:8px;overflow-x:auto;padding:10px 12px 0;scrollbar-width:none}
+    .gallery-thumbs::-webkit-scrollbar{display:none}
+    .gallery-thumb{width:58px;height:74px;flex:0 0 auto;border:2px solid transparent;border-radius:10px;padding:0;background:#252525;overflow:hidden;cursor:pointer;opacity:.62}
+    .gallery-thumb.active{border-color:#fff;opacity:1}
+    .gallery-thumb img{width:100%;height:100%;object-fit:cover;display:block}
     .gallery-controls{display:flex;justify-content:center;align-items:center;gap:12px;padding:12px}
     .gallery-controls button{border:1px solid #444;background:#222;color:#fff;width:42px;height:42px;border-radius:50%;cursor:pointer}
     .counter{color:#bbb;font-size:13px;min-width:60px;text-align:center}
@@ -130,6 +145,21 @@
     .spec small{color:var(--muted);display:flex;align-items:center;gap:6px;margin-bottom:4px}.detail-price svg{width:22px;height:22px;vertical-align:-4px}
     .spec strong{font-size:14px}
     .whatsapp{width:100%;background:#1fa855;color:#fff;border:0;border-radius:14px;padding:15px;font-weight:900;cursor:pointer}
+    .detail-benefits{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 18px}
+    .detail-benefits span{background:#f1f1ee;border-radius:999px;padding:8px 10px;font-size:12px;font-weight:800;color:#444}
+    .detail-links{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}
+    .detail-link{border:1px solid var(--line);background:#fff;border-radius:12px;padding:12px;text-align:center;font-weight:850;color:#333}
+    .trust-section{padding:0 0 72px}
+    .trust-card{background:#111;color:#fff;border-radius:26px;padding:28px;box-shadow:var(--shadow)}
+    .trust-head{max-width:650px;margin-bottom:22px}
+    .trust-head h2{font-size:clamp(28px,4vw,42px)}
+    .trust-head p{color:#bdbdbd;line-height:1.6;margin:8px 0 0}
+    .trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .trust-item{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.09);border-radius:17px;padding:18px}
+    .trust-icon{width:38px;height:38px;border-radius:12px;background:var(--accent);display:grid;place-items:center;font-size:13px;font-weight:950;margin-bottom:14px}
+    .trust-item strong{display:block;font-size:16px;margin-bottom:5px}
+    .trust-item span{font-size:13px;line-height:1.45;color:#bdbdbd}
+    .mobile-wa-bar{display:none}
     footer{background:#111;color:#aaa;padding:30px 0;font-size:13px}
     .footer-inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     .hidden{display:none!important}
@@ -165,13 +195,30 @@
       .hero-copy .hero-usd{margin-bottom:0}
       .hero-copy button{width:100%;margin-top:auto;padding:12px 14px}
       .hero-card-bottom{padding:0 12px 12px}
-      .filters{grid-template-columns:1fr}.field.search{grid-column:auto}
+      body{padding-bottom:78px}
+      .filter-mobile-trigger{display:flex}
+      .filter-overlay{position:fixed;inset:0;background:rgba(0,0,0,.58);z-index:115}
+      .filter-overlay.open{display:block}
+      .filters{position:fixed;left:0;right:0;bottom:0;z-index:120;display:grid;grid-template-columns:1fr;border-radius:24px 24px 0 0;margin:0;padding:18px 18px calc(18px + env(safe-area-inset-bottom));max-height:86vh;overflow:auto;transform:translateY(105%);transition:transform .3s ease;box-shadow:0 -22px 55px rgba(0,0,0,.2)}
+      .filters.open{transform:translateY(0)}
+      .filter-panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+      .filter-panel-head strong{font-size:21px}
+      .filter-close{width:38px;height:38px;border:0;border-radius:50%;background:#eee;cursor:pointer;font-size:19px}
+      .filter-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:5px}
+      .filter-apply{display:block;border:0;background:#111;color:#fff;border-radius:12px;padding:13px 15px;font-weight:900;cursor:pointer}
+      .clear{align-self:auto}
       .grid{grid-template-columns:1fr}
+      .trust-grid{grid-template-columns:1fr 1fr}
+      .trust-card{padding:22px}
+      .mobile-wa-bar{position:fixed;left:10px;right:10px;bottom:calc(8px + env(safe-area-inset-bottom));z-index:110;display:flex;align-items:center;justify-content:space-between;gap:12px;background:#1fa855;color:#fff;border-radius:16px;padding:10px 10px 10px 15px;box-shadow:0 14px 34px rgba(0,0,0,.24)}
+      .mobile-wa-bar span{font-size:12px;font-weight:800;line-height:1.25}
+      .mobile-wa-bar button{border:0;background:#fff;color:#116b37;border-radius:11px;padding:11px 13px;font-weight:950;white-space:nowrap;cursor:pointer}
+      body.modal-open .mobile-wa-bar{display:none}
       .section-head{align-items:start;flex-direction:column}
       .modal{padding:0}.modal-panel{height:100vh;max-height:none;border-radius:0}
       .gallery{min-height:360px}.main-image{min-height:300px}
       .detail-info{padding:24px}
-      .detail-info h3{font-size:29px}.detail-price-grid{grid-template-columns:1fr}
+      .detail-info h3{font-size:29px}.detail-price-grid{grid-template-columns:1fr}.detail-links{grid-template-columns:1fr}.trust-grid{grid-template-columns:1fr 1fr}
     }
   </style>
 </head>
@@ -219,7 +266,6 @@
         <p>Consultá el stock disponible, compará anticipos y encontrá una opción de financiación acorde a tu búsqueda.</p>
         <div class="hero-actions">
           <button class="btn btn-primary" data-view="catalog">Ver vehículos</button>
-          <a class="btn btn-light" href="#featured">Destacados</a>
         </div>
       </div>
       <div class="hero-card">
@@ -238,10 +284,26 @@
   </div>
   <main class="shell" id="featured">
     <div class="section-head">
-      <div><h2>Vehículos destacados</h2><p>Una selección del stock actual.</p></div>
+      <div><h2 id="featuredTitle">Vehículos recomendados</h2><p id="featuredSubtitle">Una selección variada del stock disponible.</p></div>
     </div>
     <div class="grid" id="featuredGrid"><div class="loading"><div class="spinner"></div>Cargando stock…</div></div>
   </main>
+  <section class="trust-section">
+    <div class="shell">
+      <div class="trust-card">
+        <div class="trust-head">
+          <h2>Comprar tu próximo auto puede ser más simple.</h2>
+          <p>Te acompañamos para encontrar una opción acorde a tu presupuesto y forma de pago.</p>
+        </div>
+        <div class="trust-grid">
+          <div class="trust-item"><div class="trust-icon">$</div><strong>Financiación</strong><span>Opciones de anticipo y cuotas según el vehículo.</span></div>
+          <div class="trust-item"><div class="trust-icon">↔</div><strong>Tomamos permutas</strong><span>Podés entregar tu vehículo como parte de pago.</span></div>
+          <div class="trust-item"><div class="trust-icon">DNI</div><strong>Gestión simple</strong><span>Consultá alternativas de financiación solo con DNI.</span></div>
+          <div class="trust-item"><div class="trust-icon">⌖</div><strong>Agencia física</strong><span>Estamos en Av. Mosconi 799, Lomas del Mirador.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
 </section>
 
 <section id="catalogView" class="hidden">
@@ -249,16 +311,33 @@
     <div class="section-head">
       <div><h2>Catálogo</h2><p id="resultCount">Cargando vehículos…</p></div>
     </div>
-    <div class="filters">
+    <button class="filter-mobile-trigger" id="mobileFilterTrigger" type="button">
+      <span>Filtrar vehículos</span>
+      <strong id="filterCount">Sin filtros</strong>
+    </button>
+    <div class="filter-overlay" id="filterOverlay"></div>
+    <div class="filters" id="filtersPanel">
+      <div class="filter-panel-head">
+        <strong>Filtrar vehículos</strong>
+        <button class="filter-close" id="filterClose" type="button" aria-label="Cerrar filtros">×</button>
+      </div>
       <div class="field"><label>Marca</label><select id="brandFilter"><option value="">Todas</option></select></div>
       <div class="field"><label>Año desde</label><select id="yearFilter"><option value="">Todos</option></select></div>
       <div class="field"><label>Transmisión</label><select id="transFilter"><option value="">Todas</option></select></div>
       <div class="field"><label>Combustible</label><select id="fuelFilter"><option value="">Todos</option></select></div>
-      <button class="clear" id="clearFilters">Limpiar</button>
+      <div class="filter-actions">
+        <button class="clear" id="clearFilters" type="button">Limpiar</button>
+        <button class="filter-apply" id="applyMobileFilters" type="button">Ver resultados</button>
+      </div>
     </div>
     <div class="grid" id="catalogGrid"><div class="loading"><div class="spinner"></div>Cargando stock…</div></div>
   </main>
 </section>
+
+<div class="mobile-wa-bar" id="mobileWhatsappBar">
+  <span id="mobileWhatsappText">¿Buscás un vehículo?</span>
+  <button type="button" id="mobileWhatsappBtn">Consultar</button>
+</div>
 
 <div class="modal" id="vehicleModal" aria-hidden="true">
   <div class="modal-panel">
@@ -293,6 +372,8 @@ let highlightedVehicles = [];
 let currentGallery = {images:[],index:0};
 let heroIndex = 0;
 let heroTimer = null;
+let currentVehicle = null;
+let galleryTouchStartX = 0;
 
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
@@ -353,12 +434,30 @@ function mapVehicle(r){
 function validVehicle(v){
   return Boolean(v.id && v.marca && v.modelo && v.estado && v.estado!=='VENDIDO');
 }
+function isAutomatic(v){
+  return /AUT|AUTO|AT|CVT|DSG/i.test(normalize(v.transmision));
+}
+function hasGnc(v){
+  return /GNC/i.test(normalize(v.combustible));
+}
+function badgeItems(v){
+  const stats=vehicleStats[v.id]||{};
+  const items=[{
+    text:v.estado==='PREPARANDO'?'Preparando':'Disponible',
+    className:v.estado==='PREPARANDO'?'preparando':''
+  }];
+  if(Number(stats.score)>0) items.push({text:'Más consultado',className:'hot'});
+  else if(isAutomatic(v)) items.push({text:'Automático',className:'feature'});
+  else if(hasGnc(v)) items.push({text:'GNC',className:'feature'});
+  else if(v.anticipo) items.push({text:'Financiación',className:'feature'});
+  return items.slice(0,2);
+}
 function card(v,index=0){
   const img=v.fotos[0];
   return `<article class="vehicle" style="--delay:${Math.min(index,8)*45}ms">
     <div class="photo">
       ${img?`<img src="${escapeAttr(img)}" alt="${escapeAttr(v.marca+' '+v.modelo)}" loading="lazy" onerror="this.outerHTML='<div class=&quot;photo-empty&quot;>Imagen no disponible</div>'">`:`<div class="photo-empty">Fotos próximamente</div>`}
-      <span class="badge ${v.estado==='PREPARANDO'?'preparando':''}">${v.estado||'DISPONIBLE'}</span>
+      <div class="badge-stack">${badgeItems(v).map(item=>`<span class="badge ${item.className}">${escapeHtml(item.text)}</span>`).join('')}</div>
     </div>
     <div class="body">
       <div class="make">${escapeHtml(v.marca)}</div>
@@ -374,6 +473,7 @@ function card(v,index=0){
         ${v.cotizacion?`<div class="price-box ars"><div class="price-label">Valor total en pesos</div><div class="price"><span class="price-prefix">ARS</span>${escapeHtml(money(v.cotizacion))}</div></div>`:''}
       </div>
       ${v.anticipo?`<div class="advance">Anticipo desde <strong>${escapeHtml(v.anticipo)}</strong></div>`:''}
+      <div class="card-benefits"><span>Financiación</span><span>Tomamos permuta</span></div>
       <div class="card-actions">
         <button class="detail-btn" data-id="${escapeAttr(v.id)}">Ver vehículo</button>
         ${v.instagram?`<a class="ig-btn" href="${escapeAttr(v.instagram)}" target="_blank" rel="noopener">IG</a>`:''}
@@ -561,6 +661,23 @@ function populateFilters(){
   const fuels=[...new Set(vehicles.map(v=>v.combustible).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
   $('#fuelFilter').innerHTML='<option value="">Todos</option>'+fuels.map(x=>`<option>${escapeHtml(x)}</option>`).join('');
 }
+function activeFilterCount(){
+  return ['brandFilter','yearFilter','transFilter','fuelFilter'].filter(id=>$('#'+id).value).length;
+}
+function updateFilterButton(){
+  const count=activeFilterCount();
+  $('#filterCount').textContent=count?`${count} activo${count===1?'':'s'}`:'Sin filtros';
+}
+function openFilters(){
+  $('#filtersPanel').classList.add('open');
+  $('#filterOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeFilters(){
+  $('#filtersPanel').classList.remove('open');
+  $('#filterOverlay').classList.remove('open');
+  if(!$('#vehicleModal').classList.contains('open')) document.body.style.overflow='';
+}
 function applyFilters(){
   const brand=$('#brandFilter').value;
   const year=$('#yearFilter').value;
@@ -574,9 +691,12 @@ function applyFilters(){
   );
   renderCards($('#catalogGrid'),filtered);
   $('#resultCount').textContent=`${filtered.length} vehículo${filtered.length===1?'':'s'} encontrado${filtered.length===1?'':'s'}`;
+  updateFilterButton();
 }
 function openVehicle(id){
   const v=vehicles.find(x=>x.id===id); if(!v)return;
+  currentVehicle=v;
+  updateMobileWhatsapp(v);
   trackEvent(v.id,'vista');
   currentGallery={images:v.fotos,index:0};
   const specs=[
@@ -586,33 +706,54 @@ function openVehicle(id){
   ].filter(x=>x[1]);
   const gallery=v.fotos.length?`
     <div class="gallery">
-      <div class="main-image"><img id="modalImage" src="${escapeAttr(v.fotos[0])}" alt=""></div>
-      <div class="gallery-controls"><button id="prevPhoto">‹</button><span class="counter" id="photoCounter">1 / ${v.fotos.length}</span><button id="nextPhoto">›</button></div>
+      <div class="main-image" id="mainImageWrap"><img id="modalImage" src="${escapeAttr(v.fotos[0])}" alt="${escapeAttr(v.marca+' '+v.modelo)}"></div>
+      ${v.fotos.length>1?`<div class="gallery-thumbs" id="galleryThumbs">${v.fotos.map((photo,i)=>`<button class="gallery-thumb ${i===0?'active':''}" type="button" data-gallery-index="${i}" aria-label="Ver foto ${i+1}"><img src="${escapeAttr(photo)}" alt=""></button>`).join('')}</div>`:''}
+      <div class="gallery-controls"><button id="prevPhoto" type="button">‹</button><span class="counter" id="photoCounter">1 / ${v.fotos.length}</span><button id="nextPhoto" type="button">›</button></div>
     </div>`:`<div class="gallery"><div class="main-image"><div class="photo-empty">Fotos próximamente</div></div></div>`;
   $('#modalContent').innerHTML=`<div class="detail-grid">${gallery}
     <div class="detail-info">
-      <div class="make">${escapeHtml(v.marca)} · ${escapeHtml(v.id)}</div>
+      <div class="make">${escapeHtml(v.marca)}</div>
       <h3>${escapeHtml(v.modelo)}</h3>
       <div class="detail-price-grid">
-        ${v.precioPublicado?`<div class="price-box usd"><div class="price-label">Valor en dólares</div><div class="detail-price">${icon('dollar')} ${escapeHtml(money(v.precioPublicado))}</div></div>`:''}
         ${v.cotizacion?`<div class="price-box ars"><div class="price-label">Valor total en pesos</div><div class="detail-price"><span class="price-prefix">ARS</span>${escapeHtml(money(v.cotizacion))}</div></div>`:''}
+        ${v.precioPublicado?`<div class="price-box usd"><div class="price-label">Valor en dólares</div><div class="detail-price">${icon('dollar')} ${escapeHtml(money(v.precioPublicado))}</div></div>`:''}
       </div>
       ${v.anticipo?`<p>Anticipo mínimo: <strong>${escapeHtml(v.anticipo)}</strong></p>`:''}
+      <div class="detail-benefits"><span>Financiación disponible</span><span>Tomamos permutas</span><span>Atención en agencia</span></div>
       <div class="specs">${specs.map(s=>`<div class="spec"><small class="spec-title">${s[2]?icon(s[2]):''}${escapeHtml(s[0])}</small><strong>${escapeHtml(s[1])}</strong></div>`).join('')}</div>
-      <button class="whatsapp" id="whatsappBtn">Consultar por WhatsApp</button>
-      ${v.carpeta?`<p style="margin-top:14px"><a href="${escapeAttr(v.carpeta)}" target="_blank" rel="noopener" style="font-weight:800;color:var(--accent)">Ver carpeta de fotos</a></p>`:''}
+      <button class="whatsapp" id="whatsappBtn" type="button">Consultar este vehículo por WhatsApp</button>
+      <div class="detail-links">
+        ${v.instagram?`<a class="detail-link" href="${escapeAttr(v.instagram)}" target="_blank" rel="noopener">Ver Reel</a>`:''}
+        ${v.carpeta?`<a class="detail-link" href="${escapeAttr(v.carpeta)}" target="_blank" rel="noopener">Ver todas las fotos</a>`:''}
+      </div>
     </div></div>`;
-  $('#vehicleModal').classList.add('open'); document.body.style.overflow='hidden';
+  $('#vehicleModal').classList.add('open');
+  document.body.classList.add('modal-open');
+  document.body.style.overflow='hidden';
   $('#whatsappBtn').onclick=()=>contactVehicle(v);
   if(v.fotos.length){
-    $('#prevPhoto').onclick=()=>moveGallery(-1); $('#nextPhoto').onclick=()=>moveGallery(1);
+    $('#prevPhoto').onclick=()=>moveGallery(-1);
+    $('#nextPhoto').onclick=()=>moveGallery(1);
+    $$('#galleryThumbs [data-gallery-index]').forEach(button=>button.addEventListener('click',()=>setGalleryIndex(Number(button.dataset.galleryIndex))));
+    const wrap=$('#mainImageWrap');
+    if(wrap){
+      wrap.addEventListener('touchstart',event=>{galleryTouchStartX=event.changedTouches[0].clientX},{passive:true});
+      wrap.addEventListener('touchend',event=>{
+        const delta=event.changedTouches[0].clientX-galleryTouchStartX;
+        if(Math.abs(delta)>45) moveGallery(delta<0?1:-1);
+      },{passive:true});
+    }
   }
 }
-function moveGallery(step){
+function setGalleryIndex(index){
   const n=currentGallery.images.length;if(!n)return;
-  currentGallery.index=(currentGallery.index+step+n)%n;
+  currentGallery.index=(index+n)%n;
   $('#modalImage').src=currentGallery.images[currentGallery.index];
   $('#photoCounter').textContent=`${currentGallery.index+1} / ${n}`;
+  $$('#galleryThumbs .gallery-thumb').forEach((thumb,i)=>thumb.classList.toggle('active',i===currentGallery.index));
+}
+function moveGallery(step){
+  setGalleryIndex(currentGallery.index+step);
 }
 function contactVehicle(v){
   trackEvent(v.id,'whatsapp');
@@ -620,8 +761,25 @@ function contactVehicle(v){
   const base=CONFIG.whatsapp?`https://wa.me/${CONFIG.whatsapp}`:'https://wa.me/';
   window.open(`${base}?text=${encodeURIComponent(msg)}`,'_blank','noopener');
 }
+function updateMobileWhatsapp(v=null){
+  const text=$('#mobileWhatsappText');
+  if(!text)return;
+  text.textContent=v?`${v.marca} ${v.modelo} ${v.anio||''}`:'¿Buscás un vehículo?';
+}
+function contactGeneral(){
+  if(currentVehicle){
+    contactVehicle(currentVehicle);
+    return;
+  }
+  const msg='Hola quisiera mas informacion sobre los vehiculos disponibles';
+  window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`,'_blank','noopener');
+}
 function closeModal(){
-  $('#vehicleModal').classList.remove('open');document.body.style.overflow='';
+  $('#vehicleModal').classList.remove('open');
+  document.body.classList.remove('modal-open');
+  currentVehicle=null;
+  updateMobileWhatsapp();
+  document.body.style.overflow='';
 }
 function switchView(view){
   const home=view==='home';
@@ -729,6 +887,9 @@ async function loadData(){
     populateFilters();
     await loadVehicleStats();
     highlightedVehicles=selectHighlights(CONFIG.maxFeatured);
+    const hasRealStats=Object.values(vehicleStats).some(item=>Number(item.score)>0);
+    $('#featuredTitle').textContent=hasRealStats?'Los más consultados':'Vehículos recomendados';
+    $('#featuredSubtitle').textContent=hasRealStats?'Los vehículos que más interés generan entre nuestros visitantes.':'Una selección variada entre distintas marcas y rangos de precio.';
     renderCards($('#featuredGrid'),highlightedVehicles);
     renderHeroCarousel(highlightedVehicles);
     $('#availableStat').textContent=vehicles.filter(v=>v.estado==='DISPONIBLE').length;
@@ -747,6 +908,11 @@ async function loadData(){
 $$('[data-view]').forEach(x=>x.addEventListener('click',e=>{e.preventDefault();switchView(x.dataset.view)}));
 ['brandFilter','yearFilter','transFilter','fuelFilter'].forEach(id=>$('#'+id).addEventListener('change',applyFilters));
 $('#clearFilters').onclick=()=>{$('#brandFilter').value='';$('#yearFilter').value='';$('#transFilter').value='';$('#fuelFilter').value='';applyFilters()};
+$('#mobileFilterTrigger').onclick=openFilters;
+$('#filterClose').onclick=closeFilters;
+$('#filterOverlay').onclick=closeFilters;
+$('#applyMobileFilters').onclick=()=>{applyFilters();closeFilters()};
+$('#mobileWhatsappBtn').onclick=contactGeneral;
 $('#closeModal').onclick=closeModal;
 $('#vehicleModal').addEventListener('click',e=>{if(e.target===$('#vehicleModal'))closeModal()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
