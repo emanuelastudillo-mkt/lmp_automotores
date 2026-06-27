@@ -7,9 +7,9 @@
   <link rel="icon" href="./favicon.ico" sizes="any">
   <link rel="shortcut icon" href="./favicon.ico">
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
-  <meta name="apple-mobile-web-app-title" content="LMP Automotores">
-  <title>LMP Automotores | Catálogo</title>
-  <meta name="description" content="Catálogo actualizado de vehículos disponibles en LMP Automotores.">
+  <meta name="apple-mobile-web-app-title" content="LMP Autos">
+  <title>LMP Autos | Catálogo</title>
+  <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   <style>
     :root{
       --bg:#f5f5f3;--card:#fff;--text:#161616;--muted:#707070;--line:#deded9;
@@ -20,16 +20,26 @@
     html{scroll-behavior:smooth}
     body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
     button,input,select{font:inherit}
-    button,a{-webkit-tap-highlight-color:transparent}
+    button,a{-webkit-tap-highlight-color:transparent}button,a{transition:transform .2s ease,background-color .2s ease,color .2s ease,border-color .2s ease,opacity .2s ease}.btn:hover,.detail-btn:hover,.whatsapp:hover,.hero-copy button:hover{transform:translateY(-2px)}
     a{text-decoration:none;color:inherit}
     .shell{width:min(1180px,calc(100% - 32px));margin:auto}
     header{position:sticky;top:0;z-index:50;background:rgba(16,16,16,.94);backdrop-filter:blur(14px);color:#fff;border-bottom:1px solid rgba(255,255,255,.09)}
     .topbar{height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
     .brand{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:-.03em}
-    .brand-mark{width:42px;height:42px;border-radius:12px;background:#fff;display:grid;place-items:center;overflow:hidden;border:1px solid rgba(255,255,255,.16)}.brand-mark img{width:100%;height:100%;object-fit:contain;display:block}
+    .brand-mark{width:44px;height:44px;background:transparent;display:grid;place-items:center;overflow:visible;border:0}.brand-mark img{width:100%;height:100%;object-fit:contain;display:block;background:transparent}
     nav{display:flex;gap:8px}
     nav button{border:0;background:transparent;color:#bfbfbf;padding:10px 14px;border-radius:12px;cursor:pointer;font-weight:700}
     nav button.active,nav button:hover{background:#272727;color:#fff}
+
+    .sales-ticker{overflow:hidden;background:var(--accent);color:#fff;border-bottom:1px solid rgba(255,255,255,.13)}
+    .sales-ticker-track{display:flex;width:max-content;animation:tickerMove 28s linear infinite;will-change:transform}
+    .sales-ticker:hover .sales-ticker-track{animation-play-state:paused}
+    .sales-ticker-group{display:flex;align-items:center;white-space:nowrap}
+    .sales-ticker-item{display:inline-flex;align-items:center;gap:12px;padding:10px 22px;font-size:12px;font-weight:900;letter-spacing:.09em;text-transform:uppercase}
+    .sales-ticker-item::after{content:'◆';font-size:7px;opacity:.72}
+    @keyframes tickerMove{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes cardIn{from{opacity:0;transform:translateY(24px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
     .hero{padding:74px 0 36px;background:linear-gradient(145deg,#111 0%,#222 68%,#351014 100%);color:#fff}
     .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:36px;align-items:center}
     .eyebrow{display:inline-flex;align-items:center;gap:8px;color:#ededed;background:rgba(255,255,255,.09);padding:8px 11px;border-radius:999px;font-size:13px;font-weight:700}
@@ -43,14 +53,14 @@
     .hero-card{min-height:330px;border-radius:28px;background:radial-gradient(circle at 80% 15%,rgba(187,29,35,.65),transparent 34%),linear-gradient(135deg,#292929,#111);box-shadow:0 25px 70px rgba(0,0,0,.32);padding:0;display:grid;grid-template-rows:minmax(210px,1fr) auto;border:1px solid rgba(255,255,255,.1);overflow:hidden}
     .hero-carousel{position:relative;min-height:230px;overflow:hidden}
     .hero-slide{position:absolute;inset:0;display:grid;grid-template-columns:46% 54%;opacity:0;transform:translateX(14px);transition:opacity .45s ease,transform .45s ease;pointer-events:none}
-    .hero-slide.active{opacity:1;transform:translateX(0);pointer-events:auto}
+    .hero-slide.active{opacity:1;transform:translateX(0);pointer-events:auto}.hero-slide.active .hero-copy>*{animation:fadeUp .55s both}.hero-slide.active .hero-copy>*:nth-child(2){animation-delay:.06s}.hero-slide.active .hero-copy>*:nth-child(3){animation-delay:.11s}.hero-slide.active .hero-copy>*:nth-child(4){animation-delay:.16s}.hero-slide.active .hero-copy>*:nth-child(5){animation-delay:.21s}.hero-slide.active .hero-copy>*:nth-child(6){animation-delay:.26s}.hero-slide.active .hero-copy>*:nth-child(7){animation-delay:.31s}
     .hero-visual{min-width:0;background:linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.01));display:grid;place-items:center;overflow:hidden}
-    .hero-visual img{width:100%;height:100%;object-fit:contain;display:block}
+    .hero-visual img{width:100%;height:100%;object-fit:contain;display:block;transition:transform 5s ease}.hero-slide.active .hero-visual img{transform:scale(1.035)}
     .hero-copy{padding:24px 24px 18px 18px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;min-width:0}
     .hero-copy small{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#ffb6b9;font-weight:900}
     .hero-copy strong{font-size:clamp(20px,2.4vw,30px);line-height:1.03;letter-spacing:-.045em;margin:7px 0 5px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
     .hero-copy .hero-year{font-size:13px;color:#bcbcbc;margin-bottom:12px}
-    .hero-copy .hero-price{font-size:21px;font-weight:950;letter-spacing:-.035em;margin-bottom:13px}
+    .hero-copy .hero-price-label{font-size:10px;color:#c6c6c6;font-weight:850;text-transform:uppercase;letter-spacing:.08em;margin-top:2px}.hero-copy .hero-price{font-size:23px;font-weight:950;letter-spacing:-.04em;margin:3px 0 2px;color:#fff}.hero-copy .hero-usd{font-size:12px;color:#bdbdbd;font-weight:750;margin-bottom:13px}
     .hero-copy button{border:1px solid rgba(255,255,255,.18);background:#fff;color:#111;border-radius:11px;padding:10px 13px;font-weight:900;cursor:pointer}
     .hero-carousel-empty{position:absolute;inset:0;display:grid;place-items:center;color:#aaa;font-size:13px;text-align:center;padding:30px}
     .hero-card-bottom{padding:0 16px 16px}
@@ -73,7 +83,7 @@
     input:focus,select:focus{border-color:#999;background:#fff}
     .clear{align-self:end;background:#f0f0ed;color:#333;border:0;border-radius:12px;padding:13px 15px;font-weight:750;cursor:pointer}
     .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-    .vehicle{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:0 8px 28px rgba(0,0,0,.045);transition:.22s transform,.22s box-shadow}
+    .vehicle{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:0 8px 28px rgba(0,0,0,.045);transition:.22s transform,.22s box-shadow;animation:cardIn .55s both;animation-delay:var(--delay,0ms)}
     .vehicle:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
     .photo{aspect-ratio:3/4;background:#ecece8;position:relative;overflow:hidden;display:grid;place-items:center}
     .photo img{width:100%;height:100%;object-fit:contain;display:block}
@@ -123,6 +133,12 @@
     footer{background:#111;color:#aaa;padding:30px 0;font-size:13px}
     .footer-inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     .hidden{display:none!important}
+
+    @media(prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      .sales-ticker-track,.vehicle,.hero-slide.active .hero-copy>*{animation:none!important}
+      .hero-visual img,.hero-slide{transition:none!important}
+    }
     @media(max-width:960px){
       .hero-grid,.detail-grid{grid-template-columns:1fr}
       .hero-card{min-height:330px}
@@ -151,8 +167,8 @@
 <header>
   <div class="shell topbar">
     <a class="brand" href="#" data-view="home">
-      <div class="brand-mark"><img src="./apple-touch-icon.png" alt="Logo LMP Automotores"></div>
-      <span>LMP Automotores</span>
+      <div class="brand-mark"><img src="./apple-touch-icon.png" alt="Logo LMP Autos"></div>
+      <span>LMP Autos</span>
     </a>
     <nav>
       <button class="active" data-view="home">Inicio</button>
@@ -161,11 +177,32 @@
   </div>
 </header>
 
+<div class="sales-ticker" aria-label="Beneficios de compra">
+  <div class="sales-ticker-track">
+    <div class="sales-ticker-group">
+      <span class="sales-ticker-item">Financiación</span>
+      <span class="sales-ticker-item">Cuotas fijas</span>
+      <span class="sales-ticker-item">Tomamos permutas</span>
+      <span class="sales-ticker-item">Solo con DNI</span>
+      <span class="sales-ticker-item">Vehículos seleccionados</span>
+      <span class="sales-ticker-item">Consultá por WhatsApp</span>
+    </div>
+    <div class="sales-ticker-group" aria-hidden="true">
+      <span class="sales-ticker-item">Financiación</span>
+      <span class="sales-ticker-item">Cuotas fijas</span>
+      <span class="sales-ticker-item">Tomamos permutas</span>
+      <span class="sales-ticker-item">Solo con DNI</span>
+      <span class="sales-ticker-item">Vehículos seleccionados</span>
+      <span class="sales-ticker-item">Consultá por WhatsApp</span>
+    </div>
+  </div>
+</div>
+
 <section id="homeView">
   <div class="hero">
     <div class="shell hero-grid">
       <div>
-        <span class="eyebrow">● Stock conectado en tiempo real</span>
+        <span class="eyebrow">Financiación · Permutas · Solo con DNI</span>
         <h1>Tu próximo vehículo está más cerca.</h1>
         <p>Consultá el stock disponible, compará anticipos y encontrá una opción de financiación acorde a tu búsqueda.</p>
         <div class="hero-actions">
@@ -190,7 +227,6 @@
   <main class="shell" id="featured">
     <div class="section-head">
       <div><h2>Vehículos destacados</h2><p>Una selección del stock actual.</p></div>
-      <span class="status" id="homeStatus">Actualizando…</span>
     </div>
     <div class="grid" id="featuredGrid"><div class="loading"><div class="spinner"></div>Cargando stock…</div></div>
   </main>
@@ -200,7 +236,6 @@
   <main class="shell">
     <div class="section-head">
       <div><h2>Catálogo</h2><p id="resultCount">Cargando vehículos…</p></div>
-      <span class="status" id="catalogStatus">Fuente: Google Sheets</span>
     </div>
     <div class="filters">
       <div class="field search"><label>Buscar</label><input id="searchInput" placeholder="Marca, modelo o versión"></div>
@@ -223,9 +258,8 @@
 
 <footer>
   <div class="shell footer-inner">
-    <strong>LMP Automotores</strong>
-    <span>Av. Mosconi 799, Lomas del Mirador</span>
-    <span id="updateTime">Sincronizando datos…</span>
+    <strong>LMP Autos</strong>
+    <span>Av. Mosconi 799, Lomas del Mirador</span><span>WhatsApp: 11-3262-7744</span>
   </div>
 </footer>
 
@@ -308,9 +342,9 @@ function mapVehicle(r){
 function validVehicle(v){
   return Boolean(v.id && v.marca && v.modelo && v.estado && v.estado!=='VENDIDO');
 }
-function card(v){
+function card(v,index=0){
   const img=v.fotos[0];
-  return `<article class="vehicle">
+  return `<article class="vehicle" style="--delay:${Math.min(index,8)*45}ms">
     <div class="photo">
       ${img?`<img src="${escapeAttr(img)}" alt="${escapeAttr(v.marca+' '+v.modelo)}" loading="lazy" onerror="this.outerHTML='<div class=&quot;photo-empty&quot;>Imagen no disponible</div>'">`:`<div class="photo-empty">Fotos próximamente</div>`}
       <span class="badge ${v.estado==='PREPARANDO'?'preparando':''}">${v.estado||'DISPONIBLE'}</span>
@@ -408,6 +442,23 @@ function numericPrice(value){
   const digits=clean(value).replace(/[^0-9]/g,'');
   return digits?Number(digits):0;
 }
+function formatArs(value){
+  const amount=Number(value)||0;
+  return amount?`$${new Intl.NumberFormat('es-AR',{maximumFractionDigits:0}).format(amount)}`:'Consultar';
+}
+function formatUsd(value){
+  const text=clean(value).replace(/\$/g,'').trim();
+  return text?`USD ${text}`:'';
+}
+function cashPriceArs(v){
+  const totalArs=numericPrice(v.cotizacion);
+  const publishedUsd=numericPrice(v.precioPublicado);
+  const cashUsd=numericPrice(v.precioContado);
+  if(totalArs && publishedUsd && cashUsd){
+    return Math.round((totalArs*(cashUsd/publishedUsd))/1000)*1000;
+  }
+  return totalArs;
+}
 function addUnique(list,vehicle){
   if(vehicle && !list.some(item=>item.id===vehicle.id))list.push(vehicle);
 }
@@ -439,13 +490,17 @@ function selectHighlights(limit=CONFIG.maxFeatured){
 function heroSlide(v,index){
   const stats=vehicleStats[v.id]||{};
   const label=Number(stats.score)>0?'Más consultado':'Selección del stock';
+  const contadoArs=cashPriceArs(v);
+  const contadoUsd=v.precioContado||v.precioPublicado;
   return `<article class="hero-slide ${index===0?'active':''}" data-hero-index="${index}">
     <div class="hero-visual">${v.fotos[0]?`<img src="${escapeAttr(v.fotos[0])}" alt="${escapeAttr(v.marca+' '+v.modelo)}">`:'<div class="photo-empty">Fotos próximamente</div>'}</div>
     <div class="hero-copy">
       <small>${label}</small>
       <strong>${escapeHtml(v.marca)} ${escapeHtml(v.modelo)}</strong>
       <span class="hero-year">${escapeHtml(v.anio||'')}</span>
-      <div class="hero-price">${escapeHtml(money(v.precioPublicado||v.cotizacion))}</div>
+      <span class="hero-price-label">Contado en pesos</span>
+      <div class="hero-price">${escapeHtml(formatArs(contadoArs))}</div>
+      ${contadoUsd?`<div class="hero-usd">${escapeHtml(formatUsd(contadoUsd))}</div>`:''}
       <button type="button" data-hero-id="${escapeAttr(v.id)}">Ver vehículo</button>
     </div>
   </article>`;
@@ -664,18 +719,12 @@ async function loadData(){
     $('#availableStat').textContent=vehicles.filter(v=>v.estado==='DISPONIBLE').length;
     $('#brandsStat').textContent=new Set(vehicles.map(v=>normalize(v.marca))).size;
     const now=new Date();
-    const hasStats=Object.values(vehicleStats).some(item=>Number(item.score)>0);
-    $('#homeStatus').textContent=`${hasStats?'Destacados por interés':'Selección variada'} · ${now.toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'})}`;
-    $('#catalogStatus').textContent=`Conectado: ${result.source}`;
-    $('#updateTime').textContent=`Datos sincronizados: ${now.toLocaleString('es-AR')}`;
     applyFilters();
   }catch(err){
     console.error('Error de conexión con Google Sheets:',err);
     const error=`<div class="empty"><strong>No se pudo leer Google Sheets.</strong><br><small>${escapeHtml(err.message)}</small></div>`;
     $('#featuredGrid').innerHTML=error;
     $('#catalogGrid').innerHTML=error;
-    $('#homeStatus').textContent='Error de conexión';
-    $('#catalogStatus').textContent='Sin conexión';
     $('#resultCount').textContent='No se pudo cargar el catálogo';
   }
 }
