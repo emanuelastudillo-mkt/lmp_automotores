@@ -50,18 +50,18 @@
     .btn-primary{background:var(--accent);color:#fff}
     .btn-primary:hover{background:var(--accent-dark)}
     .btn-light{background:#fff;color:#111}
-    .hero-card{min-height:330px;border-radius:28px;background:radial-gradient(circle at 80% 15%,rgba(187,29,35,.65),transparent 34%),linear-gradient(135deg,#292929,#111);box-shadow:0 25px 70px rgba(0,0,0,.32);padding:0;display:grid;grid-template-rows:minmax(210px,1fr) auto;border:1px solid rgba(255,255,255,.1);overflow:hidden}
-    .hero-carousel{position:relative;min-height:230px;overflow:hidden}
+    .hero-card{min-height:430px;border-radius:28px;background:radial-gradient(circle at 80% 15%,rgba(187,29,35,.65),transparent 34%),linear-gradient(135deg,#292929,#111);box-shadow:0 25px 70px rgba(0,0,0,.32);padding:0;display:grid;grid-template-rows:minmax(300px,1fr) auto;border:1px solid rgba(255,255,255,.1);overflow:hidden}
+    .hero-carousel{position:relative;min-height:300px;overflow:hidden}
     .hero-slide{position:absolute;inset:0;display:grid;grid-template-columns:46% 54%;opacity:0;transform:translateX(14px);transition:opacity .45s ease,transform .45s ease;pointer-events:none}
     .hero-slide.active{opacity:1;transform:translateX(0);pointer-events:auto}.hero-slide.active .hero-copy>*{animation:fadeUp .55s both}.hero-slide.active .hero-copy>*:nth-child(2){animation-delay:.06s}.hero-slide.active .hero-copy>*:nth-child(3){animation-delay:.11s}.hero-slide.active .hero-copy>*:nth-child(4){animation-delay:.16s}.hero-slide.active .hero-copy>*:nth-child(5){animation-delay:.21s}.hero-slide.active .hero-copy>*:nth-child(6){animation-delay:.26s}.hero-slide.active .hero-copy>*:nth-child(7){animation-delay:.31s}
     .hero-visual{min-width:0;background:linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.01));display:grid;place-items:center;overflow:hidden}
     .hero-visual img{width:100%;height:100%;object-fit:contain;display:block;transition:transform 5s ease}.hero-slide.active .hero-visual img{transform:scale(1.035)}
-    .hero-copy{padding:24px 24px 18px 18px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;min-width:0}
+    .hero-copy{padding:22px 22px 16px 18px;display:flex;flex-direction:column;justify-content:flex-start;align-items:flex-start;min-width:0;min-height:0;overflow:hidden}
     .hero-copy small{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#ffb6b9;font-weight:900}
     .hero-copy strong{font-size:clamp(20px,2.4vw,30px);line-height:1.03;letter-spacing:-.045em;margin:7px 0 5px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
     .hero-copy .hero-year{font-size:13px;color:#bcbcbc;margin-bottom:12px}
     .hero-copy .hero-price-label{font-size:10px;color:#c6c6c6;font-weight:850;text-transform:uppercase;letter-spacing:.08em;margin-top:2px}.hero-copy .hero-price{font-size:23px;font-weight:950;letter-spacing:-.04em;margin:3px 0 2px;color:#fff}.hero-copy .hero-usd{font-size:12px;color:#bdbdbd;font-weight:750;margin-bottom:13px}
-    .hero-copy button{border:1px solid rgba(255,255,255,.18);background:#fff;color:#111;border-radius:11px;padding:10px 13px;font-weight:900;cursor:pointer}
+    .hero-copy button{border:1px solid rgba(255,255,255,.18);background:#fff;color:#111;border-radius:11px;padding:10px 13px;font-weight:900;cursor:pointer;margin-top:auto;flex:0 0 auto}
     .hero-carousel-empty{position:absolute;inset:0;display:grid;place-items:center;color:#aaa;font-size:13px;text-align:center;padding:30px}
     .hero-card-bottom{padding:0 16px 16px}
     .hero-dots{display:flex;justify-content:center;gap:7px;height:18px;align-items:center}
@@ -76,7 +76,7 @@
     h2{font-size:clamp(28px,4vw,44px);letter-spacing:-.045em;margin:0}
     .section-head p{color:var(--muted);margin:7px 0 0}
     .status{font-size:13px;color:var(--muted)}
-    .filters{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:16px;display:grid;grid-template-columns:2fr repeat(4,1fr) auto;gap:10px;margin-bottom:22px;box-shadow:0 8px 24px rgba(0,0,0,.035)}
+    .filters{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:16px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr)) auto;gap:10px;margin-bottom:22px;box-shadow:0 8px 24px rgba(0,0,0,.035)}
     .field{display:flex;flex-direction:column;gap:6px}
     .field label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:800;color:var(--muted)}
     input,select{width:100%;border:1px solid var(--line);background:#fafafa;border-radius:12px;padding:12px 13px;color:var(--text);outline:none}
@@ -141,7 +141,7 @@
     }
     @media(max-width:960px){
       .hero-grid,.detail-grid{grid-template-columns:1fr}
-      .hero-card{min-height:330px}
+      .hero-card{min-height:430px}
       .filters{grid-template-columns:repeat(2,1fr)}
       .field.search{grid-column:1/-1}
       .grid{grid-template-columns:repeat(2,1fr)}
@@ -152,7 +152,7 @@
       .topbar{height:64px}.brand span:last-child{display:none}
       nav button{padding:9px 10px}
       .hero{padding:48px 0 28px}.hero-grid{gap:22px}
-      .hero-card{min-height:320px}.hero-slide{grid-template-columns:44% 56%}.hero-copy{padding:18px 16px 14px 12px}.hero-copy strong{font-size:21px}.hero-card-bottom{padding:0 12px 12px}
+      .hero-card{min-height:440px;grid-template-rows:minmax(320px,1fr) auto}.hero-carousel{min-height:320px}.hero-slide{grid-template-columns:42% 58%}.hero-copy{padding:17px 15px 13px 12px}.hero-copy strong{font-size:20px}.hero-card-bottom{padding:0 12px 12px}
       .filters{grid-template-columns:1fr}.field.search{grid-column:auto}
       .grid{grid-template-columns:1fr}
       .section-head{align-items:start;flex-direction:column}
@@ -238,11 +238,10 @@
       <div><h2>Catálogo</h2><p id="resultCount">Cargando vehículos…</p></div>
     </div>
     <div class="filters">
-      <div class="field search"><label>Buscar</label><input id="searchInput" placeholder="Marca, modelo o versión"></div>
       <div class="field"><label>Marca</label><select id="brandFilter"><option value="">Todas</option></select></div>
       <div class="field"><label>Año desde</label><select id="yearFilter"><option value="">Todos</option></select></div>
       <div class="field"><label>Transmisión</label><select id="transFilter"><option value="">Todas</option></select></div>
-      <div class="field"><label>Estado</label><select id="statusFilter"><option value="DISPONIBLE">Disponible</option><option value="PREPARANDO">Preparando</option><option value="ALL">Todos excepto vendidos</option></select></div>
+      <div class="field"><label>Combustible</label><select id="fuelFilter"><option value="">Todos</option></select></div>
       <button class="clear" id="clearFilters">Limpiar</button>
     </div>
     <div class="grid" id="catalogGrid"><div class="loading"><div class="spinner"></div>Cargando stock…</div></div>
@@ -545,17 +544,21 @@ function populateFilters(){
   $('#brandFilter').innerHTML='<option value="">Todas</option>'+brands.map(x=>`<option>${escapeHtml(x)}</option>`).join('');
   const years=[...new Set(vehicles.map(v=>v.anio).filter(Boolean))].sort((a,b)=>Number(b)-Number(a));
   $('#yearFilter').innerHTML='<option value="">Todos</option>'+years.map(x=>`<option>${escapeHtml(x)}</option>`).join('');
-  const trans=[...new Set(vehicles.map(v=>v.transmision).filter(Boolean))].sort();
+  const trans=[...new Set(vehicles.map(v=>v.transmision).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
   $('#transFilter').innerHTML='<option value="">Todas</option>'+trans.map(x=>`<option>${escapeHtml(x)}</option>`).join('');
+  const fuels=[...new Set(vehicles.map(v=>v.combustible).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+  $('#fuelFilter').innerHTML='<option value="">Todos</option>'+fuels.map(x=>`<option>${escapeHtml(x)}</option>`).join('');
 }
 function applyFilters(){
-  const q=normalize($('#searchInput').value), brand=$('#brandFilter').value, year=$('#yearFilter').value;
-  const trans=$('#transFilter').value, status=$('#statusFilter').value;
+  const brand=$('#brandFilter').value;
+  const year=$('#yearFilter').value;
+  const trans=$('#transFilter').value;
+  const fuel=$('#fuelFilter').value;
   filtered=vehicles.filter(v=>
-    (!q || normalize(`${v.marca} ${v.modelo} ${v.anio}`).includes(q)) &&
-    (!brand || v.marca===brand) && (!year || Number(v.anio)>=Number(year)) &&
+    (!brand || v.marca===brand) &&
+    (!year || Number(v.anio)>=Number(year)) &&
     (!trans || v.transmision===trans) &&
-    (status==='ALL' || v.estado===status)
+    (!fuel || v.combustible===fuel)
   );
   renderCards($('#catalogGrid'),filtered);
   $('#resultCount').textContent=`${filtered.length} vehículo${filtered.length===1?'':'s'} encontrado${filtered.length===1?'':'s'}`;
@@ -730,8 +733,8 @@ async function loadData(){
 }
 
 $$('[data-view]').forEach(x=>x.addEventListener('click',e=>{e.preventDefault();switchView(x.dataset.view)}));
-['searchInput','brandFilter','yearFilter','transFilter','statusFilter'].forEach(id=>$('#'+id).addEventListener(id==='searchInput'?'input':'change',applyFilters));
-$('#clearFilters').onclick=()=>{$('#searchInput').value='';$('#brandFilter').value='';$('#yearFilter').value='';$('#transFilter').value='';$('#statusFilter').value='DISPONIBLE';applyFilters()};
+['brandFilter','yearFilter','transFilter','fuelFilter'].forEach(id=>$('#'+id).addEventListener('change',applyFilters));
+$('#clearFilters').onclick=()=>{$('#brandFilter').value='';$('#yearFilter').value='';$('#transFilter').value='';$('#fuelFilter').value='';applyFilters()};
 $('#closeModal').onclick=closeModal;
 $('#vehicleModal').addEventListener('click',e=>{if(e.target===$('#vehicleModal'))closeModal()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
