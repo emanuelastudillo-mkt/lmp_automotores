@@ -40,9 +40,25 @@
     .btn-primary{background:var(--accent);color:#fff}
     .btn-primary:hover{background:var(--accent-dark)}
     .btn-light{background:#fff;color:#111}
-    .hero-card{min-height:330px;border-radius:28px;background:radial-gradient(circle at 80% 15%,rgba(187,29,35,.65),transparent 34%),linear-gradient(135deg,#292929,#111);box-shadow:0 25px 70px rgba(0,0,0,.32);padding:28px;display:flex;flex-direction:column;justify-content:flex-end;border:1px solid rgba(255,255,255,.1)}
+    .hero-card{min-height:330px;border-radius:28px;background:radial-gradient(circle at 80% 15%,rgba(187,29,35,.65),transparent 34%),linear-gradient(135deg,#292929,#111);box-shadow:0 25px 70px rgba(0,0,0,.32);padding:0;display:grid;grid-template-rows:minmax(210px,1fr) auto;border:1px solid rgba(255,255,255,.1);overflow:hidden}
+    .hero-carousel{position:relative;min-height:230px;overflow:hidden}
+    .hero-slide{position:absolute;inset:0;display:grid;grid-template-columns:46% 54%;opacity:0;transform:translateX(14px);transition:opacity .45s ease,transform .45s ease;pointer-events:none}
+    .hero-slide.active{opacity:1;transform:translateX(0);pointer-events:auto}
+    .hero-visual{min-width:0;background:linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.01));display:grid;place-items:center;overflow:hidden}
+    .hero-visual img{width:100%;height:100%;object-fit:contain;display:block}
+    .hero-copy{padding:24px 24px 18px 18px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;min-width:0}
+    .hero-copy small{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#ffb6b9;font-weight:900}
+    .hero-copy strong{font-size:clamp(20px,2.4vw,30px);line-height:1.03;letter-spacing:-.045em;margin:7px 0 5px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .hero-copy .hero-year{font-size:13px;color:#bcbcbc;margin-bottom:12px}
+    .hero-copy .hero-price{font-size:21px;font-weight:950;letter-spacing:-.035em;margin-bottom:13px}
+    .hero-copy button{border:1px solid rgba(255,255,255,.18);background:#fff;color:#111;border-radius:11px;padding:10px 13px;font-weight:900;cursor:pointer}
+    .hero-carousel-empty{position:absolute;inset:0;display:grid;place-items:center;color:#aaa;font-size:13px;text-align:center;padding:30px}
+    .hero-card-bottom{padding:0 16px 16px}
+    .hero-dots{display:flex;justify-content:center;gap:7px;height:18px;align-items:center}
+    .hero-dot{width:7px;height:7px;padding:0;border:0;border-radius:50%;background:rgba(255,255,255,.25);cursor:pointer;transition:.2s}
+    .hero-dot.active{width:22px;border-radius:99px;background:#fff}
     .hero-stat{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-    .stat{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:16px}
+    .stat{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:14px 16px}
     .stat strong{font-size:28px;display:block}
     .stat span{font-size:13px;color:#bbb}
     main{padding:36px 0 72px}
@@ -109,7 +125,7 @@
     .hidden{display:none!important}
     @media(max-width:960px){
       .hero-grid,.detail-grid{grid-template-columns:1fr}
-      .hero-card{min-height:230px}
+      .hero-card{min-height:330px}
       .filters{grid-template-columns:repeat(2,1fr)}
       .field.search{grid-column:1/-1}
       .grid{grid-template-columns:repeat(2,1fr)}
@@ -120,7 +136,7 @@
       .topbar{height:64px}.brand span:last-child{display:none}
       nav button{padding:9px 10px}
       .hero{padding:48px 0 28px}.hero-grid{gap:22px}
-      .hero-card{min-height:190px;padding:18px}
+      .hero-card{min-height:320px}.hero-slide{grid-template-columns:44% 56%}.hero-copy{padding:18px 16px 14px 12px}.hero-copy strong{font-size:21px}.hero-card-bottom{padding:0 12px 12px}
       .filters{grid-template-columns:1fr}.field.search{grid-column:auto}
       .grid{grid-template-columns:1fr}
       .section-head{align-items:start;flex-direction:column}
@@ -158,9 +174,15 @@
         </div>
       </div>
       <div class="hero-card">
-        <div class="hero-stat">
-          <div class="stat"><strong id="availableStat">—</strong><span>Disponibles</span></div>
-          <div class="stat"><strong id="brandsStat">—</strong><span>Marcas</span></div>
+        <div class="hero-carousel" id="heroCarousel">
+          <div class="hero-carousel-empty">Preparando vehículos destacados…</div>
+        </div>
+        <div class="hero-card-bottom">
+          <div class="hero-dots" id="heroDots"></div>
+          <div class="hero-stat">
+            <div class="stat"><strong id="availableStat">—</strong><span>Disponibles</span></div>
+            <div class="stat"><strong id="brandsStat">—</strong><span>Marcas</span></div>
+          </div>
         </div>
       </div>
     </div>
@@ -212,13 +234,20 @@ const CONFIG = {
   sheetId: "1DN8we3PaI2foFvz_pGcfu11aa9gmEIJaFiQjYjSN7RM",
   gid: "0",
   csvUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR97O_aQlCskpibTlj1UEomToyCeUl8seOUB3DoNihqoXAAfGbO-8DtUj_WG9XZJvYRWJ_PdGcEBKcH/pub?gid=0&single=true&output=csv",
+  eventsApi: "https://script.google.com/macros/s/AKfycbyEQXz7_oQuy6EqJ-ybbnmanl0kKpGeKMfXSedTKVRUOdgYF7smvmcKHDl9WF89NBtQ/exec",
   whatsapp: "5491132627744",
-  maxFeatured: 6
+  maxFeatured: 6,
+  heroSlides: 4,
+  heroInterval: 5000
 };
 
 let vehicles = [];
 let filtered = [];
+let vehicleStats = {};
+let highlightedVehicles = [];
 let currentGallery = {images:[],index:0};
+let heroIndex = 0;
+let heroTimer = null;
 
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
@@ -320,6 +349,138 @@ function icon(type){
   };
   return icons[type]||'';
 }
+function apiJsonp(params,timeoutMs=15000){
+  return new Promise((resolve,reject)=>{
+    const callbackName='lmpApiCallback_'+Date.now()+'_'+Math.random().toString(36).slice(2);
+    const script=document.createElement('script');
+    const timeout=setTimeout(()=>{
+      cleanup();
+      reject(new Error('El servicio de estadísticas no respondió'));
+    },timeoutMs);
+    function cleanup(){
+      clearTimeout(timeout);
+      try{delete window[callbackName]}catch(_){window[callbackName]=undefined}
+      script.remove();
+    }
+    window[callbackName]=response=>{
+      cleanup();
+      if(!response || response.ok===false){
+        reject(new Error(response&&response.error?response.error:'Respuesta inválida'));
+        return;
+      }
+      resolve(response);
+    };
+    const query=new URLSearchParams({...params,callback:callbackName,_:Date.now().toString()});
+    script.src=`${CONFIG.eventsApi}?${query}`;
+    script.onerror=()=>{
+      cleanup();
+      reject(new Error('No se pudo conectar con el servicio de estadísticas'));
+    };
+    document.head.appendChild(script);
+  });
+}
+function trackEvent(vehicleId,eventName){
+  if(!vehicleId || !CONFIG.eventsApi)return;
+  if(eventName==='vista'){
+    const key=`lmp_view_${vehicleId}`;
+    try{
+      if(sessionStorage.getItem(key))return;
+      sessionStorage.setItem(key,'1');
+    }catch(_){}
+  }
+  apiJsonp({action:'track',vehiculo_id:vehicleId,evento:eventName},12000).catch(error=>{
+    console.warn('No se pudo registrar el evento:',error.message);
+  });
+}
+async function loadVehicleStats(){
+  if(!CONFIG.eventsApi)return {};
+  try{
+    const response=await apiJsonp({action:'stats'});
+    vehicleStats=response.vehicles||{};
+    return vehicleStats;
+  }catch(error){
+    console.warn('Estadísticas no disponibles:',error.message);
+    vehicleStats={};
+    return vehicleStats;
+  }
+}
+function numericPrice(value){
+  const digits=clean(value).replace(/[^0-9]/g,'');
+  return digits?Number(digits):0;
+}
+function addUnique(list,vehicle){
+  if(vehicle && !list.some(item=>item.id===vehicle.id))list.push(vehicle);
+}
+function fallbackHighlights(limit){
+  const candidates=vehicles.filter(v=>v.estado==='DISPONIBLE' && v.fotos.length);
+  if(!candidates.length)return vehicles.filter(v=>v.estado==='DISPONIBLE').slice(0,limit);
+  const sorted=[...candidates].sort((a,b)=>numericPrice(a.cotizacion)-numericPrice(b.cotizacion));
+  const picks=[];
+  const positions=[0,Math.floor((sorted.length-1)/3),Math.floor((sorted.length-1)*2/3),sorted.length-1];
+  positions.forEach(pos=>addUnique(picks,sorted[pos]));
+  const newest=[...candidates].sort((a,b)=>Number(b.anio)-Number(a.anio));
+  newest.forEach(v=>{
+    if(picks.length>=limit)return;
+    const brandUsed=picks.some(item=>normalize(item.marca)===normalize(v.marca));
+    if(!brandUsed)addUnique(picks,v);
+  });
+  candidates.forEach(v=>{if(picks.length<limit)addUnique(picks,v)});
+  return picks.slice(0,limit);
+}
+function selectHighlights(limit=CONFIG.maxFeatured){
+  const ranked=vehicles
+    .filter(v=>v.estado==='DISPONIBLE' && v.fotos.length && vehicleStats[v.id] && Number(vehicleStats[v.id].score)>0)
+    .sort((a,b)=>Number(vehicleStats[b.id].score)-Number(vehicleStats[a.id].score));
+  const selected=[];
+  ranked.forEach(v=>{if(selected.length<limit)addUnique(selected,v)});
+  fallbackHighlights(limit).forEach(v=>{if(selected.length<limit)addUnique(selected,v)});
+  return selected.slice(0,limit);
+}
+function heroSlide(v,index){
+  const stats=vehicleStats[v.id]||{};
+  const label=Number(stats.score)>0?'Más consultado':'Selección del stock';
+  return `<article class="hero-slide ${index===0?'active':''}" data-hero-index="${index}">
+    <div class="hero-visual">${v.fotos[0]?`<img src="${escapeAttr(v.fotos[0])}" alt="${escapeAttr(v.marca+' '+v.modelo)}">`:'<div class="photo-empty">Fotos próximamente</div>'}</div>
+    <div class="hero-copy">
+      <small>${label}</small>
+      <strong>${escapeHtml(v.marca)} ${escapeHtml(v.modelo)}</strong>
+      <span class="hero-year">${escapeHtml(v.anio||'')}</span>
+      <div class="hero-price">${escapeHtml(money(v.precioPublicado||v.cotizacion))}</div>
+      <button type="button" data-hero-id="${escapeAttr(v.id)}">Ver vehículo</button>
+    </div>
+  </article>`;
+}
+function renderHeroCarousel(list){
+  const slides=list.slice(0,CONFIG.heroSlides);
+  const carousel=$('#heroCarousel'),dots=$('#heroDots');
+  clearInterval(heroTimer);
+  heroTimer=null;
+  heroIndex=0;
+  if(!slides.length){
+    carousel.innerHTML='<div class="hero-carousel-empty">No hay vehículos disponibles para destacar.</div>';
+    dots.innerHTML='';
+    return;
+  }
+  carousel.innerHTML=slides.map(heroSlide).join('');
+  dots.innerHTML=slides.map((_,i)=>`<button class="hero-dot ${i===0?'active':''}" type="button" data-dot-index="${i}" aria-label="Mostrar vehículo ${i+1}"></button>`).join('');
+  carousel.querySelectorAll('[data-hero-id]').forEach(button=>button.addEventListener('click',()=>openVehicle(button.dataset.heroId)));
+  dots.querySelectorAll('[data-dot-index]').forEach(button=>button.addEventListener('click',()=>showHeroSlide(Number(button.dataset.dotIndex),true)));
+  if(slides.length>1){
+    heroTimer=setInterval(()=>showHeroSlide((heroIndex+1)%slides.length,false),CONFIG.heroInterval);
+  }
+}
+function showHeroSlide(index,restart){
+  const slides=$$('#heroCarousel .hero-slide');
+  const dots=$$('#heroDots .hero-dot');
+  if(!slides.length)return;
+  heroIndex=(index+slides.length)%slides.length;
+  slides.forEach((slide,i)=>slide.classList.toggle('active',i===heroIndex));
+  dots.forEach((dot,i)=>dot.classList.toggle('active',i===heroIndex));
+  if(restart && slides.length>1){
+    clearInterval(heroTimer);
+    heroTimer=setInterval(()=>showHeroSlide((heroIndex+1)%slides.length,false),CONFIG.heroInterval);
+  }
+}
 function renderCards(target,list){
   target.innerHTML=list.length?list.map(card).join(''):`<div class="empty">No encontramos vehículos con estos filtros.</div>`;
   target.querySelectorAll('.detail-btn').forEach(b=>b.addEventListener('click',()=>openVehicle(b.dataset.id)));
@@ -346,6 +507,7 @@ function applyFilters(){
 }
 function openVehicle(id){
   const v=vehicles.find(x=>x.id===id); if(!v)return;
+  trackEvent(v.id,'vista');
   currentGallery={images:v.fotos,index:0};
   const specs=[
     ['Año',v.anio,'calendar'],['Kilometraje',v.kilometraje?km(v.kilometraje):'','odometer'],
@@ -383,6 +545,7 @@ function moveGallery(step){
   $('#photoCounter').textContent=`${currentGallery.index+1} / ${n}`;
 }
 function contactVehicle(v){
+  trackEvent(v.id,'whatsapp');
   const msg=`Hola quisiera mas informacion del ${v.modelo} ${v.anio||''}`;
   const base=CONFIG.whatsapp?`https://wa.me/${CONFIG.whatsapp}`:'https://wa.me/';
   window.open(`${base}?text=${encodeURIComponent(msg)}`,'_blank','noopener');
@@ -494,11 +657,15 @@ async function loadData(){
     }
     vehicles.sort((a,b)=>(a.estado==='DISPONIBLE'?0:1)-(b.estado==='DISPONIBLE'?0:1) || Number(b.anio)-Number(a.anio));
     populateFilters();
-    renderCards($('#featuredGrid'),vehicles.slice(0,CONFIG.maxFeatured));
+    await loadVehicleStats();
+    highlightedVehicles=selectHighlights(CONFIG.maxFeatured);
+    renderCards($('#featuredGrid'),highlightedVehicles);
+    renderHeroCarousel(highlightedVehicles);
     $('#availableStat').textContent=vehicles.filter(v=>v.estado==='DISPONIBLE').length;
     $('#brandsStat').textContent=new Set(vehicles.map(v=>normalize(v.marca))).size;
     const now=new Date();
-    $('#homeStatus').textContent=`Actualizado ${now.toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'})}`;
+    const hasStats=Object.values(vehicleStats).some(item=>Number(item.score)>0);
+    $('#homeStatus').textContent=`${hasStats?'Destacados por interés':'Selección variada'} · ${now.toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'})}`;
     $('#catalogStatus').textContent=`Conectado: ${result.source}`;
     $('#updateTime').textContent=`Datos sincronizados: ${now.toLocaleString('es-AR')}`;
     applyFilters();
