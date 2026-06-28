@@ -27,6 +27,13 @@
     .topbar{height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
     .brand{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:-.03em}
     .brand-mark{width:44px;height:44px;background:transparent;display:grid;place-items:center;overflow:visible;border:0}.brand-mark img{width:100%;height:100%;object-fit:contain;display:block;background:transparent}
+    .top-actions{display:flex;align-items:center;gap:10px}
+    .instagram-pill{display:flex;align-items:center;gap:9px;color:#fff;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:8px 11px;min-height:42px}
+    .instagram-pill:hover{background:rgba(255,255,255,.14);transform:translateY(-1px)}
+    .instagram-pill svg{width:21px;height:21px;flex:0 0 auto}
+    .instagram-pill-text{display:flex;flex-direction:column;line-height:1.05}
+    .instagram-pill-text strong{font-size:13px}
+    .instagram-pill-text span{font-size:10px;color:#c7c7c7;margin-top:3px}
     nav{display:flex;gap:8px}
     nav button{border:0;background:transparent;color:#bfbfbf;padding:10px 14px;border-radius:12px;cursor:pointer;font-weight:700}
     nav button.active,nav button:hover{background:#272727;color:#fff}
@@ -179,8 +186,13 @@
     }
     @media(max-width:620px){
       .shell{width:min(100% - 22px,1180px)}
-      .topbar{height:64px}.brand span:last-child{display:none}
-      nav button{padding:9px 10px}
+      .topbar{height:64px;gap:8px}.brand span:last-child{display:none}
+      .top-actions{gap:5px}
+      .instagram-pill{padding:8px 9px;border-radius:12px}
+      .instagram-pill-text strong{font-size:12px}
+      .instagram-pill-text span{display:none}
+      nav{gap:2px}
+      nav button{padding:9px 8px;font-size:12px}
       .hero{padding:48px 0 28px}.hero-grid{gap:22px}
       .hero-card{min-height:760px;grid-template-rows:minmax(640px,1fr) auto}
       .hero-carousel{min-height:640px}
@@ -229,10 +241,23 @@
       <div class="brand-mark"><img src="./apple-touch-icon.png" alt="Logo LMP Autos"></div>
       <span>LMP Autos</span>
     </a>
-    <nav>
-      <button class="active" data-view="home">Inicio</button>
-      <button data-view="catalog">Vehículos</button>
-    </nav>
+    <div class="top-actions">
+      <a class="instagram-pill" href="https://www.instagram.com/lmpautos/" target="_blank" rel="noopener" aria-label="Abrir Instagram de LMP Autos">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+          <circle cx="12" cy="12" r="4"></circle>
+          <circle cx="17.4" cy="6.6" r="1"></circle>
+        </svg>
+        <span class="instagram-pill-text">
+          <strong id="instagramFollowers">5.848 seguidores</strong>
+          <span>@lmpautos</span>
+        </span>
+      </a>
+      <nav>
+        <button class="active" data-view="home">Inicio</button>
+        <button data-view="catalog">Vehículos</button>
+      </nav>
+    </div>
   </div>
 </header>
 
@@ -362,7 +387,11 @@ const CONFIG = {
   whatsapp: "5491132627744",
   maxFeatured: 6,
   heroSlides: 4,
-  heroInterval: 5000
+  heroInterval: 5000,
+  instagramFollowers: 5848,
+  // Opcional: endpoint que responda {"followers": 5848}.
+  // Debe consultarse desde un backend seguro; no expongas tokens de Meta en este HTML.
+  instagramFollowersApi: ""
 };
 
 let vehicles = [];
@@ -377,6 +406,40 @@ let galleryTouchStartX = 0;
 
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
+
+function formatFollowers(value){
+  const amount=Number(value);
+  return Number.isFinite(amount) && amount>=0
+    ? `${new Intl.NumberFormat('es-AR').format(amount)} seguidores`
+    : 'Seguinos en Instagram';
+}
+
+async function loadInstagramFollowers(){
+  const label=$('#instagramFollowers');
+  if(!label)return;
+
+  label.textContent=formatFollowers(CONFIG.instagramFollowers);
+
+  if(!CONFIG.instagramFollowersApi)return;
+
+  try{
+    const separator=CONFIG.instagramFollowersApi.includes('?')?'&':'?';
+    const response=await fetch(`${CONFIG.instagramFollowersApi}${separator}_=${Date.now()}`,{
+      cache:'no-store',
+      credentials:'omit'
+    });
+    if(!response.ok)throw new Error(`HTTP ${response.status}`);
+
+    const data=await response.json();
+    const followers=Number(data.followers ?? data.followers_count);
+
+    if(Number.isFinite(followers) && followers>=0){
+      label.textContent=formatFollowers(followers);
+    }
+  }catch(error){
+    console.warn('No se pudo actualizar la cifra de Instagram:',error.message);
+  }
+}
 
 function parseCSV(text){
   const rows=[]; let row=[], cell='', quoted=false;
@@ -971,6 +1034,7 @@ $('#mobileWhatsappBtn').onclick=contactGeneral;
 $('#closeModal').onclick=closeModal;
 $('#vehicleModal').addEventListener('click',e=>{if(e.target===$('#vehicleModal'))closeModal()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+loadInstagramFollowers();
 loadData();
 </script>
 </body>
