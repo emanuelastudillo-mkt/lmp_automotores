@@ -589,7 +589,7 @@
           <circle cx="17.4" cy="6.6" r="1"></circle>
         </svg>
         <span class="instagram-pill-text">
-          <strong id="instagramFollowers">5.848 seguidores</strong>
+          <strong id="instagramFollowers">5.872 seguidores</strong>
           <span>@lmpautos</span>
         </span>
       </a>
@@ -771,7 +771,7 @@ const CONFIG = {
   eventsApi: "https://script.google.com/macros/s/AKfycbyEQXz7_oQuy6EqJ-ybbnmanl0kKpGeKMfXSedTKVRUOdgYF7smvmcKHDl9WF89NBtQ/exec",
   whatsapp: "5491132627744",
   maxFeatured: 6,
-  instagramFollowers: 5848,
+  instagramFollowers: 5872,
   // Opcional: endpoint que responda {"followers": 5848}.
   // Debe consultarse desde un backend seguro; no expongas tokens de Meta en este HTML.
   instagramFollowersApi: "",
@@ -912,11 +912,77 @@ function formatFollowers(value){
     : 'Seguinos en Instagram';
 }
 
-async function loadInstagramFollowers(){
+function followerNumber(value){
+  const digits=clean(value).replace(/[^\d]/g,'');
+  if(!digits)return 0;
+  const amount=Number(digits);
+  return Number.isFinite(amount) && amount>=100 && amount<=100000000 ? amount : 0;
+}
+
+function extractInstagramFollowers(rows){
+  if(!Array.isArray(rows) || !rows.length)return 0;
+
+  const headerPattern=/(instagram.*(seguidor|followers?)|(seguidor|followers?).*instagram|^seguidores?$|^followers?_count$)/i;
+
+  // Primero busca una columna con un encabezado explícito.
+  for(let rowIndex=rows.length-1;rowIndex>=0;rowIndex--){
+    const row=rows[rowIndex]||{};
+    for(const [key,value] of Object.entries(row)){
+      if(headerPattern.test(normalize(key))){
+        const amount=followerNumber(value);
+        if(amount)return amount;
+      }
+    }
+  }
+
+  // Después busca una fila de configuración que mencione Instagram o seguidores.
+  for(let rowIndex=rows.length-1;rowIndex>=0;rowIndex--){
+    const row=rows[rowIndex]||{};
+    const entries=Object.entries(row).filter(([,value])=>clean(value));
+    if(!entries.length)continue;
+
+    const isVehicleRow=Boolean(
+      clean(row.Marca) ||
+      clean(row.Modelo) ||
+      clean(row['Estado actual del auto'])
+    );
+    if(isVehicleRow)continue;
+
+    const rowText=normalize(entries.map(([key,value])=>`${key} ${value}`).join(' '));
+    const candidates=entries
+      .map(([,value])=>followerNumber(value))
+      .filter(Boolean);
+
+    if(
+      candidates.length &&
+      (
+        rowText.includes('INSTAGRAM') ||
+        rowText.includes('SEGUIDOR') ||
+        rowText.includes('FOLLOWER')
+      )
+    ){
+      return Math.max(...candidates);
+    }
+
+    // Respaldo: si la última fila no corresponde a un vehículo y contiene
+    // un único número razonable, se toma como cantidad de seguidores.
+    if(candidates.length===1)return candidates[0];
+  }
+
+  return 0;
+}
+
+async function loadInstagramFollowers(rows=[]){
   const label=$('#instagramFollowers');
   if(!label)return;
 
   label.textContent=formatFollowers(CONFIG.instagramFollowers);
+
+  const sheetFollowers=extractInstagramFollowers(rows);
+  if(sheetFollowers){
+    label.textContent=formatFollowers(sheetFollowers);
+    return;
+  }
 
   if(!CONFIG.instagramFollowersApi)return;
 
@@ -1604,6 +1670,7 @@ async function loadSheetRows(){
 async function loadData(){
   try{
     const result=await loadSheetRows();
+    await loadInstagramFollowers(result.rows);
     vehicles=result.rows.map(mapVehicle).filter(validVehicle);
     if(!vehicles.length){
       const states=[...new Set(result.rows.map(r=>clean(r['Estado actual del auto'])).filter(Boolean))];
