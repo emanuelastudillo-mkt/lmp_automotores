@@ -454,6 +454,8 @@
     .radar-area{fill:rgba(187,29,35,.38);stroke:#ef555a;stroke-width:2}
     .radar-point{fill:#fff;stroke:#ef555a;stroke-width:2}
     .radar-label{fill:#fff;font-size:9px;font-weight:850;letter-spacing:.01em}
+    .radar-mobile-label{display:none;fill:#fff;font-size:9px;font-weight:850;letter-spacing:.01em}
+    .radar-mobile-value{fill:#ff6267;font-size:13px;font-weight:950;letter-spacing:-.02em}
     .score-bars{display:flex;flex-direction:column;justify-content:center;gap:13px;padding:4px 0}.score-scale-note{font-size:11px;color:var(--muted);font-weight:800;margin-bottom:2px;text-align:right}
     .score-row{display:grid;grid-template-columns:82px 1fr 36px;align-items:center;gap:8px}
     .score-row-label{font-size:11px;font-weight:900;color:#2f2f2f}
@@ -543,6 +545,12 @@
       .filter-apply{display:block;border:0;background:#111;color:#fff;border-radius:12px;padding:13px 15px;font-weight:900;cursor:pointer}
       .clear{align-self:auto}
       .grid{grid-template-columns:1fr}
+      .score-layout{grid-template-columns:1fr;padding:14px 12px 18px}
+      .score-bars{display:none}
+      .radar-card{min-height:390px;padding:16px 22px}
+      .radar-chart{max-width:410px}
+      .radar-label{display:none}
+      .radar-mobile-label{display:block}
       .trust-grid{grid-template-columns:1fr 1fr}
       .trust-card{padding:22px}
       .section-head{align-items:start;flex-direction:column}
@@ -1106,6 +1114,14 @@ function radarLabelPoint(index){
     anchor:Math.cos(angle)>.25?'start':Math.cos(angle)<-.25?'end':'middle'
   };
 }
+function radarMobileLabelPoint(index){
+  const angle=(-90+index*72)*Math.PI/180;
+  const radius=116;
+  return {
+    x:150+Math.cos(angle)*radius,
+    y:150+Math.sin(angle)*radius
+  };
+}
 function renderScoreGraphic(v){
   const scores=vehicleScoreData(v);
   if(!scores.some(item=>item.value>0))return '';
@@ -1124,6 +1140,14 @@ function renderScoreGraphic(v){
   const labels=scores.map((item,index)=>{
     const point=radarLabelPoint(index);
     return `<text class="radar-label" x="${point.x.toFixed(1)}" y="${point.y.toFixed(1)}" text-anchor="${point.anchor}" dominant-baseline="middle">${escapeHtml(item.label)}</text>`;
+  }).join('');
+
+  const mobileLabels=scores.map((item,index)=>{
+    const point=radarMobileLabelPoint(index);
+    return `<text class="radar-mobile-label" x="${point.x.toFixed(1)}" y="${point.y.toFixed(1)}" text-anchor="middle">
+      <tspan x="${point.x.toFixed(1)}" dy="0">${escapeHtml(item.label)}</tspan>
+      <tspan class="radar-mobile-value" x="${point.x.toFixed(1)}" dy="14">${item.value}</tspan>
+    </text>`;
   }).join('');
 
   const points=scores.map((item,index)=>{
@@ -1156,6 +1180,7 @@ function renderScoreGraphic(v){
           <polygon class="radar-area" points="${areaPoints}"></polygon>
           ${points}
           ${labels}
+          ${mobileLabels}
         </svg>
       </div>
       <div class="score-bars"><div class="score-scale-note">Puntaje sobre 100</div>${bars}</div>
