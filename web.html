@@ -258,7 +258,22 @@
     .trust-item strong{display:block;font-size:16px;margin-bottom:5px}
     .trust-item span{font-size:13px;line-height:1.45;color:#bdbdbd}
     footer{background:#111;color:#aaa;padding:30px 0;font-size:13px}
-    .footer-inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+    .footer-inner{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:22px}
+    .footer-brand{display:flex;flex-direction:column;gap:5px}
+    .footer-brand strong{color:#fff;font-size:16px}
+    .footer-brand span{color:#9f9f9f}
+    .footer-location{display:flex;align-items:center;gap:12px;min-width:0}
+    .footer-location-icon{width:42px;height:42px;flex:0 0 auto;border-radius:13px;background:rgba(255,255,255,.08);display:grid;place-items:center;color:#fff}
+    .footer-location-icon svg{width:21px;height:21px}
+    .footer-address{display:flex;flex-direction:column;gap:4px;min-width:0}
+    .footer-address strong{color:#fff;font-size:14px}
+    .footer-address span{color:#aaa;line-height:1.4}
+    .footer-map-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end}
+    .map-link{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.07);color:#fff;border-radius:12px;padding:10px 12px;font-weight:850}
+    .map-link:hover{background:rgba(255,255,255,.14);transform:translateY(-1px)}
+    .map-link svg{width:18px;height:18px;flex:0 0 auto}
+    .map-link.maps{border-color:rgba(66,133,244,.45)}
+    .map-link.waze{border-color:rgba(51,204,255,.45)}
     .hidden{display:none!important}
 
     @media(prefers-reduced-motion:reduce){
@@ -310,6 +325,9 @@
       .gallery{min-height:360px}.main-image{min-height:300px}
       .detail-info{padding:24px}
       .detail-info h3{font-size:29px}.detail-price-grid{grid-template-columns:1fr}.detail-links{grid-template-columns:1fr}.trust-grid{grid-template-columns:1fr 1fr}
+      .footer-inner{grid-template-columns:1fr;align-items:start}
+      .footer-map-actions{justify-content:flex-start;width:100%}
+      .map-link{flex:1;justify-content:center;min-width:130px}
     }
   </style>
 </head>
@@ -442,8 +460,55 @@
 
 <footer>
   <div class="shell footer-inner">
-    <strong>LMP Autos</strong>
-    <span>Av. Mosconi 799, Lomas del Mirador</span><span>WhatsApp: 11-3262-7744</span>
+    <div class="footer-brand">
+      <strong>LMP Autos</strong>
+      <span>WhatsApp: 11-3262-7744</span>
+    </div>
+
+    <div class="footer-location">
+      <div class="footer-location-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path>
+          <circle cx="12" cy="10" r="2.5"></circle>
+        </svg>
+      </div>
+      <div class="footer-address">
+        <strong>Visitanos en Lomas del Mirador</strong>
+        <span>Av. Mosconi 799, Lomas del Mirador</span>
+      </div>
+    </div>
+
+    <div class="footer-map-actions">
+      <a class="map-link maps"
+         href="https://share.google/fCKD7WCnOfEI4F2ut"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Abrir la ubicación de LMP Autos en Google Maps">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M9 18 3.5 20.5V6L9 3.5l6 2.5L20.5 3.5V18L15 20.5 9 18Z"></path>
+          <path d="M9 3.5V18M15 6v14.5"></path>
+        </svg>
+        Google Maps
+      </a>
+
+      <a class="map-link waze"
+         href="https://waze.com/ul?q=Av.%20Mosconi%20799%2C%20Lomas%20del%20Mirador%2C%20Buenos%20Aires&navigate=yes"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Abrir la ubicación de LMP Autos en Waze">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 11.2c0-4.5-3.5-7.7-8.2-7.7S3.5 6.8 3.5 11.2c0 2 .8 3.8 2.3 5.2-.4 1.4-1.4 2.1-2.3 2.5 1.8.5 3.4.2 4.7-.6 1.1.4 2.3.6 3.6.6 4.7 0 8.2-3.2 8.2-7.7Z"></path>
+          <circle cx="9" cy="11" r="1"></circle>
+          <circle cx="15" cy="11" r="1"></circle>
+          <path d="M9.5 14.5c1.4 1 3.6 1 5 0"></path>
+          <circle cx="7" cy="19" r="1.5"></circle>
+          <circle cx="17" cy="19" r="1.5"></circle>
+        </svg>
+        Waze
+      </a>
+    </div>
+
+    <!-- Próxima mejora: bloque de calificación y reseñas de Google. -->
   </div>
 </footer>
 
