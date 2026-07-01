@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
-  <meta name="lmp-build" content="index-pdf-fixed-2026-07-01">
+  <meta name="lmp-build" content="single-vehicle-pdf-2026-07-01">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   <style>
     :root{
@@ -425,29 +425,33 @@
       font-size:10px;
       line-height:1.45
     }
-    .detail-main-actions{
+    .detail-actions{
+      display:grid;
+      grid-template-columns:minmax(360px,1fr) minmax(180px,.55fr);
+      gap:10px;
+      align-items:stretch
+    }
+    .detail-primary-actions{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:9px
     }
-    .quote-add{
+    .detail-actions .whatsapp{margin-top:0}
+    .vehicle-pdf{
       width:100%;
-      border:0;
+      border:1px solid #1c1c1c;
       border-radius:13px;
       padding:13px;
-      background:#111;
-      color:#fff;
+      background:#fff;
+      color:#161616;
       font-weight:950;
       cursor:pointer
     }
-    .quote-add:hover{background:#272727;transform:translateY(-1px)}
-    .detail-actions{
-      display:grid;
-      grid-template-columns:minmax(400px,1fr) minmax(180px,.55fr);
-      gap:10px;
-      align-items:stretch
+    .vehicle-pdf:hover{
+      background:#111;
+      color:#fff;
+      transform:translateY(-1px)
     }
-    .detail-actions .whatsapp{margin-top:0}
     .detail-secondary-actions{
       display:grid;
       grid-template-columns:1fr 1fr;
@@ -668,6 +672,7 @@
         gap:18px
       }
       .detail-actions{grid-template-columns:1fr 1fr}
+      .detail-primary-actions{grid-template-columns:1fr}
       .specs{grid-template-columns:repeat(3,minmax(0,1fr))}
     }
     @media(max-width:620px){
@@ -726,6 +731,7 @@
       .installment-option small{grid-column:1}
       .installment-summary{align-items:flex-start;flex-direction:column;gap:5px}
       .detail-actions{grid-template-columns:1fr}
+      .detail-primary-actions{grid-template-columns:1fr}
       .detail-secondary-actions{grid-template-columns:1fr}
       .specs{grid-template-columns:repeat(2,minmax(0,1fr))}
       .score-section{margin:0}
@@ -743,342 +749,7 @@
       .footer-map-actions{justify-content:flex-start;width:100%}
       .map-link{flex:1;justify-content:center;min-width:130px}
     }
-  
-    .quote-cart-trigger{
-      position:fixed;
-      right:18px;
-      bottom:18px;
-      z-index:92;
-      min-height:52px;
-      border:0;
-      border-radius:999px;
-      padding:10px 14px 10px 16px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      background:#111;
-      color:#fff;
-      box-shadow:0 16px 38px rgba(0,0,0,.28);
-      cursor:pointer
-    }
-    .quote-cart-trigger:hover{background:#272727;transform:translateY(-2px)}
-    .quote-cart-trigger svg{width:21px;height:21px}
-    .quote-cart-trigger strong{font-size:12px}
-    .quote-cart-count{
-      min-width:27px;
-      height:27px;
-      padding:0 7px;
-      border-radius:999px;
-      display:grid;
-      place-items:center;
-      background:var(--accent);
-      color:#fff;
-      font-size:11px;
-      font-weight:950
-    }
-    .quote-cart-trigger.empty .quote-cart-count{background:#555}
-
-    .quote-modal{
-      position:fixed;
-      inset:0;
-      z-index:310;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding:18px;
-      background:rgba(0,0,0,.78)
-    }
-    .quote-modal.open{display:flex}
-    .quote-panel{
-      width:min(1050px,100%);
-      max-height:94vh;
-      overflow:auto;
-      border-radius:24px;
-      background:#f5f5f3;
-      box-shadow:0 30px 90px rgba(0,0,0,.45)
-    }
-    .quote-head{
-      position:sticky;
-      top:0;
-      z-index:4;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:18px;
-      padding:19px 22px;
-      border-bottom:1px solid var(--line);
-      background:rgba(255,255,255,.96);
-      backdrop-filter:blur(14px)
-    }
-    .quote-head-copy strong{
-      display:block;
-      font-size:21px;
-      letter-spacing:-.035em
-    }
-    .quote-head-copy span{
-      display:block;
-      margin-top:4px;
-      color:var(--muted);
-      font-size:11px
-    }
-    .quote-close{
-      width:40px;
-      height:40px;
-      flex:0 0 auto;
-      border:0;
-      border-radius:50%;
-      background:#111;
-      color:#fff;
-      font-size:21px;
-      cursor:pointer
-    }
-    .quote-content{padding:20px}
-    .quote-customer{
-      display:grid;
-      grid-template-columns:1.2fr .8fr 1.5fr;
-      gap:10px;
-      margin-bottom:14px
-    }
-    .quote-field{
-      display:flex;
-      flex-direction:column;
-      gap:6px
-    }
-    .quote-field label{
-      color:#555;
-      font-size:10px;
-      font-weight:900;
-      letter-spacing:.07em;
-      text-transform:uppercase
-    }
-    .quote-field input{
-      width:100%;
-      min-height:43px;
-      border:1px solid var(--line);
-      border-radius:12px;
-      background:#fff;
-      padding:10px 12px;
-      color:#181818;
-      font-weight:800;
-      outline:none
-    }
-    .quote-field input:focus{
-      border-color:var(--accent);
-      box-shadow:0 0 0 3px rgba(187,29,35,.09)
-    }
-    .quote-empty{
-      padding:38px 18px;
-      border:1px dashed #c9c9c4;
-      border-radius:17px;
-      background:#fff;
-      text-align:center
-    }
-    .quote-empty strong{display:block;font-size:17px}
-    .quote-empty span{
-      display:block;
-      max-width:520px;
-      margin:7px auto 0;
-      color:var(--muted);
-      font-size:12px;
-      line-height:1.5
-    }
-    .quote-list{display:grid;gap:10px}
-    .quote-item{
-      border:1px solid var(--line);
-      border-radius:18px;
-      background:#fff;
-      overflow:hidden
-    }
-    .quote-item-head{
-      display:flex;
-      justify-content:space-between;
-      gap:14px;
-      padding:14px 15px 12px;
-      border-bottom:1px solid var(--line)
-    }
-    .quote-item-title{min-width:0}
-    .quote-item-title small{
-      display:block;
-      color:var(--accent);
-      font-size:9px;
-      font-weight:950;
-      letter-spacing:.08em;
-      text-transform:uppercase
-    }
-    .quote-item-title strong{
-      display:block;
-      margin-top:4px;
-      font-size:16px;
-      letter-spacing:-.025em
-    }
-    .quote-item-title span{
-      display:block;
-      margin-top:4px;
-      color:var(--muted);
-      font-size:10px
-    }
-    .quote-remove{
-      align-self:flex-start;
-      border:1px solid var(--line);
-      border-radius:10px;
-      background:#fff;
-      color:#8d1217;
-      padding:8px 10px;
-      font-size:10px;
-      font-weight:900;
-      cursor:pointer
-    }
-    .quote-remove:hover{background:#fff1f1}
-    .quote-item-body{
-      display:grid;
-      grid-template-columns:.85fr .85fr .85fr 1.45fr;
-      gap:9px;
-      padding:13px 15px 15px
-    }
-    .quote-data{
-      min-width:0;
-      border-radius:12px;
-      background:#f5f5f2;
-      padding:10px 11px
-    }
-    .quote-data span{
-      display:block;
-      color:var(--muted);
-      font-size:9px;
-      font-weight:850;
-      letter-spacing:.05em;
-      text-transform:uppercase
-    }
-    .quote-data strong{
-      display:block;
-      margin-top:5px;
-      font-size:14px;
-      letter-spacing:-.025em;
-      overflow-wrap:anywhere
-    }
-    .quote-advance-input{
-      width:100%;
-      min-height:35px;
-      margin-top:5px;
-      border:1px solid #d4d4cf;
-      border-radius:9px;
-      background:#fff;
-      padding:7px 8px;
-      font-weight:900;
-      outline:none
-    }
-    .quote-advance-input:focus{border-color:var(--accent)}
-    .quote-advance-help{
-      display:block;
-      margin-top:4px;
-      color:#888;
-      font-size:8px;
-      line-height:1.35
-    }
-    .quote-quota-grid{
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:6px
-    }
-    .quote-quota{
-      border-radius:10px;
-      background:#111;
-      color:#fff;
-      padding:9px 8px;
-      text-align:center
-    }
-    .quote-quota span{
-      display:block;
-      color:#aaa;
-      font-size:8px;
-      font-weight:850;
-      text-transform:uppercase
-    }
-    .quote-quota strong{
-      display:block;
-      margin-top:4px;
-      font-size:12px;
-      line-height:1.1;
-      overflow-wrap:anywhere
-    }
-    .quote-actions{
-      position:sticky;
-      bottom:0;
-      z-index:3;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      margin:16px -20px -20px;
-      padding:14px 20px calc(14px + env(safe-area-inset-bottom));
-      border-top:1px solid var(--line);
-      background:rgba(255,255,255,.97);
-      backdrop-filter:blur(14px)
-    }
-    .quote-actions-note{
-      color:var(--muted);
-      font-size:10px;
-      line-height:1.4
-    }
-    .quote-action-buttons{
-      display:flex;
-      gap:8px;
-      flex:0 0 auto
-    }
-    .quote-clear,.quote-print{
-      min-height:43px;
-      border-radius:999px;
-      padding:10px 16px;
-      font-weight:950;
-      cursor:pointer
-    }
-    .quote-clear{
-      border:1px solid var(--line);
-      background:#fff;
-      color:#555
-    }
-    .quote-print{
-      border:0;
-      background:var(--accent);
-      color:#fff;
-      box-shadow:0 10px 24px rgba(187,29,35,.23)
-    }
-    .quote-print:hover{background:var(--accent-dark)}
-    .quote-print:disabled,.quote-clear:disabled{
-      opacity:.45;
-      cursor:not-allowed
-    }
-    body.quote-open{overflow:hidden}
-
-    @media(max-width:760px){
-      .quote-cart-trigger{
-        right:12px;
-        bottom:12px;
-        min-height:48px
-      }
-      .quote-cart-trigger strong{display:none}
-      .quote-modal{padding:0}
-      .quote-panel{
-        width:100%;
-        height:100vh;
-        max-height:none;
-        border-radius:0
-      }
-      .quote-content{padding:15px}
-      .quote-customer{grid-template-columns:1fr}
-      .quote-item-body{grid-template-columns:1fr 1fr}
-      .quote-item-body .quote-data:last-child{grid-column:1/-1}
-      .quote-actions{
-        align-items:stretch;
-        flex-direction:column;
-        margin:14px -15px -15px;
-        padding:12px 15px calc(12px + env(safe-area-inset-bottom))
-      }
-      .quote-action-buttons{display:grid;grid-template-columns:.7fr 1.3fr;width:100%}
-      .detail-main-actions{grid-template-columns:1fr}
-    }
-
-</style>
+  </style>
 </head>
 <body>
 <header>
@@ -1206,56 +877,6 @@
   <div class="lightbox-counter" id="lightboxCounter"></div>
 </div>
 
-<button class="quote-cart-trigger empty" id="quoteCartTrigger" type="button" aria-label="Abrir presupuesto">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-    <path d="M5 4h14v16H5z"></path>
-    <path d="M8 8h8M8 12h8M8 16h5"></path>
-  </svg>
-  <strong>Presupuesto</strong>
-  <span class="quote-cart-count" id="quoteCartCount">0</span>
-</button>
-
-<div class="quote-modal" id="quoteModal" aria-hidden="true">
-  <section class="quote-panel" role="dialog" aria-modal="true" aria-labelledby="quoteTitle">
-    <div class="quote-head">
-      <div class="quote-head-copy">
-        <strong id="quoteTitle">Presupuesto de vehículos</strong>
-        <span>Podés agregar el mismo vehículo varias veces con anticipos diferentes.</span>
-      </div>
-      <button class="quote-close" id="quoteClose" type="button" aria-label="Cerrar presupuesto">×</button>
-    </div>
-
-    <div class="quote-content">
-      <div class="quote-customer">
-        <div class="quote-field">
-          <label for="quoteCustomer">Cliente</label>
-          <input id="quoteCustomer" type="text" placeholder="Nombre y apellido">
-        </div>
-        <div class="quote-field">
-          <label for="quoteCustomerPhone">Teléfono</label>
-          <input id="quoteCustomerPhone" type="text" inputmode="tel" placeholder="Ej.: 11 1234-5678">
-        </div>
-        <div class="quote-field">
-          <label for="quoteNotes">Observaciones</label>
-          <input id="quoteNotes" type="text" placeholder="Permuta, documentación u otro detalle">
-        </div>
-      </div>
-
-      <div id="quoteCartBody"></div>
-
-      <div class="quote-actions">
-        <div class="quote-actions-note">
-          El PDF no incluye fotografías. Las cuotas son estimativas y están sujetas a aprobación crediticia.
-        </div>
-        <div class="quote-action-buttons">
-          <button class="quote-clear" id="quoteClear" type="button">Vaciar</button>
-          <button class="quote-print" id="quotePrint" type="button">Generar PDF</button>
-        </div>
-      </div>
-    </div>
-  </section>
-</div>
-
 <footer>
   <div class="shell footer-inner">
     <div class="footer-brand">
@@ -1333,10 +954,6 @@ let vehicleStats = {};
 let highlightedVehicles = [];
 let currentGallery = {images:[],index:0};
 let galleryTouchStartX = 0;
-let quoteItems = [];
-let quoteMeta = {customer:'',phone:'',notes:''};
-const QUOTE_STORAGE_KEY = 'lmp_quote_cart_v1';
-const QUOTE_META_KEY = 'lmp_quote_meta_v1';
 
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
@@ -2009,314 +1626,47 @@ function moneyInputValue(amount){
   return new Intl.NumberFormat('es-AR',{maximumFractionDigits:0}).format(Math.max(0,Math.round(amount||0)));
 }
 
-
 function quotaValue(capital,rate){
   return Math.max(0,Math.round((Number(capital)||0)*(Number(rate)||0)));
 }
 
-function quoteUid(){
-  return 'q_'+Date.now()+'_'+Math.random().toString(36).slice(2,9);
-}
-
-function quoteSnapshot(v,advanceValue){
+function printVehiclePdf(v){
   const total=numericPrice(v.cotizacion);
-  const minimumAdvance=Math.min(total,numericPrice(v.anticipo));
-  const advance=Math.max(minimumAdvance,Math.min(total,numericPrice(advanceValue)||minimumAdvance));
-  return {
-    uid:quoteUid(),
-    vehicleId:v.id,
-    marca:v.marca,
-    modelo:v.modelo,
-    anio:v.anio,
-    kilometraje:v.kilometraje,
-    combustible:v.combustible,
-    transmision:v.transmision,
-    color:v.color,
-    price:total,
-    minAdvance:minimumAdvance,
-    advance,
-    createdAt:Date.now()
-  };
-}
 
-function quoteComputed(item){
-  const financed=Math.max(0,(Number(item.price)||0)-(Number(item.advance)||0));
-  const band=financingBand(item.anio);
-  return {
-    financed,
-    band,
-    q12:quotaValue(financed,band.rates[12]),
-    q18:quotaValue(financed,band.rates[18]),
-    q24:quotaValue(financed,band.rates[24])
-  };
-}
-
-function saveQuoteState(){
-  try{
-    localStorage.setItem(QUOTE_STORAGE_KEY,JSON.stringify(quoteItems));
-    localStorage.setItem(QUOTE_META_KEY,JSON.stringify(quoteMeta));
-  }catch(error){
-    console.warn('No se pudo guardar el presupuesto:',error);
-  }
-}
-
-function loadQuoteState(){
-  try{
-    const storedItems=JSON.parse(localStorage.getItem(QUOTE_STORAGE_KEY)||'[]');
-    const storedMeta=JSON.parse(localStorage.getItem(QUOTE_META_KEY)||'{}');
-    quoteItems=Array.isArray(storedItems)?storedItems.filter(item=>item&&item.uid):[];
-    quoteMeta={
-      customer:clean(storedMeta.customer),
-      phone:clean(storedMeta.phone),
-      notes:clean(storedMeta.notes)
-    };
-  }catch(error){
-    quoteItems=[];
-    quoteMeta={customer:'',phone:'',notes:''};
-  }
-}
-
-function addVehicleToQuote(v){
-  const total=numericPrice(v.cotizacion);
   if(!total){
-    alert('Este vehículo no tiene un valor en pesos disponible para generar el presupuesto.');
+    alert('Este vehículo no tiene un valor en pesos disponible para generar la ficha.');
     return;
   }
 
-  const editedAdvance=$('#installmentAdvance')?.value;
-  const item=quoteSnapshot(v,editedAdvance||v.anticipo);
-  quoteItems.push(item);
-  saveQuoteState();
-  renderQuoteCart();
+  const minimumAdvance=Math.min(total,numericPrice(v.anticipo));
+  const advanceInput=$('#installmentAdvance');
+  const enteredAdvance=advanceInput?numericPrice(advanceInput.value):minimumAdvance;
+  const advance=Math.max(minimumAdvance,Math.min(total,enteredAdvance||minimumAdvance));
+  const financed=Math.max(0,total-advance);
+  const band=financingBand(v.anio);
 
-  const button=$('#quoteAddBtn');
-  if(button){
-    const previous=button.textContent;
-    button.textContent='Agregado al presupuesto';
-    button.disabled=true;
-    setTimeout(()=>{
-      button.textContent=previous;
-      button.disabled=false;
-    },850);
-  }
-}
-
-function updateQuoteItemAdvance(uid,rawValue,formatField=true){
-  const item=quoteItems.find(entry=>entry.uid===uid);
-  if(!item)return;
-
-  const entered=numericPrice(rawValue);
-  item.advance=Math.max(
-    Number(item.minAdvance)||0,
-    Math.min(Number(item.price)||0,entered||Number(item.minAdvance)||0)
-  );
-
-  saveQuoteState();
-  renderQuoteCart();
-
-  if(formatField){
-    const input=[...document.querySelectorAll('[data-quote-advance]')]
-      .find(field=>field.dataset.quoteAdvance===uid);
-    if(input)input.value=moneyInputValue(item.advance);
-  }
-}
-
-function removeQuoteItem(uid){
-  quoteItems=quoteItems.filter(item=>item.uid!==uid);
-  saveQuoteState();
-  renderQuoteCart();
-}
-
-function clearQuoteItems(){
-  if(!quoteItems.length)return;
-  if(!confirm('¿Vaciar todos los vehículos del presupuesto?'))return;
-  quoteItems=[];
-  saveQuoteState();
-  renderQuoteCart();
-}
-
-function quoteItemMarkup(item,index){
-  const data=quoteComputed(item);
-  const detail=[
-    item.anio?`Año ${escapeHtml(item.anio)}`:'',
-    item.kilometraje?escapeHtml(km(item.kilometraje)):'',
-    item.combustible?escapeHtml(item.combustible):'',
-    item.transmision?escapeHtml(item.transmision):''
-  ].filter(Boolean).join(' · ');
-
-  return `<article class="quote-item">
-    <div class="quote-item-head">
-      <div class="quote-item-title">
-        <small>Opción ${index+1} · ${escapeHtml(item.vehicleId||'')}</small>
-        <strong>${escapeHtml(item.marca)} ${escapeHtml(item.modelo)}</strong>
-        <span>${detail||'Datos del vehículo'}</span>
-      </div>
-      <button class="quote-remove" type="button" data-quote-remove="${escapeAttr(item.uid)}">Quitar</button>
-    </div>
-
-    <div class="quote-item-body">
-      <div class="quote-data">
-        <span>Valor</span>
-        <strong>${escapeHtml(formatArs(item.price))}</strong>
-      </div>
-
-      <div class="quote-data">
-        <span>Anticipo</span>
-        <input
-          class="quote-advance-input"
-          type="text"
-          inputmode="numeric"
-          value="${escapeAttr(moneyInputValue(item.advance))}"
-          data-quote-advance="${escapeAttr(item.uid)}">
-        <small class="quote-advance-help">Mínimo ${escapeHtml(formatArs(item.minAdvance))}</small>
-      </div>
-
-      <div class="quote-data">
-        <span>A financiar</span>
-        <strong>${escapeHtml(formatArs(data.financed))}</strong>
-      </div>
-
-      <div class="quote-data">
-        <span>Cuotas estimadas</span>
-        <div class="quote-quota-grid">
-          <div class="quote-quota"><span>12 cuotas</span><strong>${escapeHtml(formatArs(data.q12))}</strong></div>
-          <div class="quote-quota"><span>18 cuotas</span><strong>${escapeHtml(formatArs(data.q18))}</strong></div>
-          <div class="quote-quota"><span>24 cuotas</span><strong>${escapeHtml(formatArs(data.q24))}</strong></div>
-        </div>
-      </div>
-    </div>
-  </article>`;
-}
-
-function renderQuoteCart(){
-  const body=$('#quoteCartBody');
-  const count=$('#quoteCartCount');
-  const trigger=$('#quoteCartTrigger');
-  const printButton=$('#quotePrint');
-  const clearButton=$('#quoteClear');
-
-  if(count)count.textContent=String(quoteItems.length);
-  if(trigger)trigger.classList.toggle('empty',!quoteItems.length);
-  if(printButton)printButton.disabled=!quoteItems.length;
-  if(clearButton)clearButton.disabled=!quoteItems.length;
-
-  if(!body)return;
-
-  if(!quoteItems.length){
-    body.innerHTML=`<div class="quote-empty">
-      <strong>No agregaste vehículos todavía</strong>
-      <span>Abrí una ficha, modificá el anticipo si es necesario y elegí “Agregar al presupuesto”. Podés incorporar el mismo vehículo más de una vez.</span>
-    </div>`;
-  }else{
-    body.innerHTML=`<div class="quote-list">${quoteItems.map(quoteItemMarkup).join('')}</div>`;
-  }
-
-  body.querySelectorAll('[data-quote-remove]').forEach(button=>{
-    button.addEventListener('click',()=>removeQuoteItem(button.dataset.quoteRemove));
-  });
-
-  body.querySelectorAll('[data-quote-advance]').forEach(input=>{
-    input.addEventListener('change',()=>updateQuoteItemAdvance(input.dataset.quoteAdvance,input.value,true));
-    input.addEventListener('blur',()=>updateQuoteItemAdvance(input.dataset.quoteAdvance,input.value,true));
-    input.addEventListener('keydown',event=>{
-      if(event.key==='Enter'){
-        event.preventDefault();
-        updateQuoteItemAdvance(input.dataset.quoteAdvance,input.value,true);
-        input.blur();
-      }
-    });
-  });
-}
-
-function openQuoteCart(){
-  const modal=$('#quoteModal');
-  if(!modal)return;
-
-  renderQuoteCart();
-  modal.classList.add('open');
-  modal.setAttribute('aria-hidden','false');
-  document.body.classList.add('quote-open');
-
-  const customer=$('#quoteCustomer');
-  const phone=$('#quoteCustomerPhone');
-  const notes=$('#quoteNotes');
-
-  if(customer)customer.value=quoteMeta.customer;
-  if(phone)phone.value=quoteMeta.phone;
-  if(notes)notes.value=quoteMeta.notes;
-}
-
-function closeQuoteCart(){
-  const modal=$('#quoteModal');
-  if(!modal)return;
-
-  modal.classList.remove('open');
-  modal.setAttribute('aria-hidden','true');
-  document.body.classList.remove('quote-open');
-}
-
-function quoteCode(date=new Date()){
-  const pad=value=>String(value).padStart(2,'0');
-  return `LMP-${date.getFullYear()}${pad(date.getMonth()+1)}${pad(date.getDate())}-${pad(date.getHours())}${pad(date.getMinutes())}`;
-}
-
-function printableQuoteItem(item,index){
-  const data=quoteComputed(item);
-  const details=[
-    item.anio?`Año: ${escapeHtml(item.anio)}`:'',
-    item.kilometraje?`Kilometraje: ${escapeHtml(km(item.kilometraje))}`:'',
-    item.combustible?`Combustible: ${escapeHtml(item.combustible)}`:'',
-    item.transmision?`Transmisión: ${escapeHtml(item.transmision)}`:'',
-    item.color?`Color: ${escapeHtml(item.color)}`:''
-  ].filter(Boolean).join(' · ');
-
-  return `<section class="vehicle-option">
-    <div class="option-head">
-      <div>
-        <small>OPCIÓN ${index+1} · ${escapeHtml(item.vehicleId||'')}</small>
-        <h2>${escapeHtml(item.marca)} ${escapeHtml(item.modelo)}</h2>
-        <p>${details}</p>
-      </div>
-      <div class="price">${escapeHtml(formatArs(item.price))}<span>Valor del vehículo</span></div>
-    </div>
-
-    <div class="finance-grid">
-      <div><span>Anticipo</span><strong>${escapeHtml(formatArs(item.advance))}</strong></div>
-      <div><span>Monto a financiar</span><strong>${escapeHtml(formatArs(data.financed))}</strong></div>
-      <div><span>12 cuotas</span><strong>${escapeHtml(formatArs(data.q12))}</strong></div>
-      <div><span>18 cuotas</span><strong>${escapeHtml(formatArs(data.q18))}</strong></div>
-      <div><span>24 cuotas</span><strong>${escapeHtml(formatArs(data.q24))}</strong></div>
-    </div>
-  </section>`;
-}
-
-function generateQuotePdf(){
-  if(!quoteItems.length){
-    alert('Agregá al menos un vehículo al presupuesto.');
-    return;
-  }
-
-  quoteMeta={
-    customer:clean($('#quoteCustomer').value),
-    phone:clean($('#quoteCustomerPhone').value),
-    notes:clean($('#quoteNotes').value)
-  };
-  saveQuoteState();
+  const q12=quotaValue(financed,band.rates[12]);
+  const q18=quotaValue(financed,band.rates[18]);
+  const q24=quotaValue(financed,band.rates[24]);
 
   const now=new Date();
-  const code=quoteCode(now);
+  const pad=value=>String(value).padStart(2,'0');
+  const code=`LMP-${v.id||'AUTO'}-${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}-${pad(now.getHours())}${pad(now.getMinutes())}`;
+
+  const details=[
+    v.anio?`Año: ${escapeHtml(v.anio)}`:'',
+    v.kilometraje?`Kilometraje: ${escapeHtml(km(v.kilometraje))}`:'',
+    v.combustible?`Combustible: ${escapeHtml(v.combustible)}`:'',
+    v.transmision?`Transmisión: ${escapeHtml(v.transmision)}`:'',
+    v.color?`Color: ${escapeHtml(v.color)}`:''
+  ].filter(Boolean).join(' · ');
+
   const printWindow=window.open('','_blank','width=980,height=820');
 
   if(!printWindow){
-    alert('El navegador bloqueó la ventana de impresión. Permití las ventanas emergentes para generar el PDF.');
+    alert('El navegador bloqueó la ventana de impresión. Permití las ventanas emergentes para guardar el PDF.');
     return;
   }
-
-  const customerRows=[
-    quoteMeta.customer?`<div><span>Cliente</span><strong>${escapeHtml(quoteMeta.customer)}</strong></div>`:'',
-    quoteMeta.phone?`<div><span>Teléfono</span><strong>${escapeHtml(quoteMeta.phone)}</strong></div>`:'',
-    quoteMeta.notes?`<div class="wide"><span>Observaciones</span><strong>${escapeHtml(quoteMeta.notes)}</strong></div>`:''
-  ].filter(Boolean).join('');
 
   printWindow.document.open();
   printWindow.document.write(`<!doctype html>
@@ -2325,44 +1675,180 @@ function generateQuotePdf(){
     <meta charset="utf-8">
     <title>${escapeHtml(code)} | LMP Autos</title>
     <style>
-      @page{size:A4;margin:13mm}
+      @page{size:A4;margin:14mm}
       *{box-sizing:border-box}
-      body{margin:0;color:#171717;font-family:Arial,Helvetica,sans-serif;font-size:10.5pt}
+      body{
+        margin:0;
+        color:#181818;
+        background:#fff;
+        font-family:Arial,Helvetica,sans-serif;
+        font-size:10.5pt
+      }
       .document{max-width:190mm;margin:auto}
-      .agency{display:flex;justify-content:space-between;gap:18px;padding-bottom:12px;border-bottom:3px solid #a9191f}
-      .agency h1{margin:0;font-size:25pt;letter-spacing:-1px}
-      .agency p{margin:5px 0 0;color:#555;line-height:1.45}
-      .agency-meta{text-align:right}
-      .agency-meta strong{display:block;font-size:11pt}
-      .agency-meta span{display:block;margin-top:4px;color:#555}
-      .document-title{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;margin:18px 0 12px}
-      .document-title h2{margin:0;font-size:18pt}
-      .document-title p{margin:5px 0 0;color:#666}
-      .code{text-align:right;color:#555;font-size:9pt}
-      .customer{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:0 0 13px;padding:10px;border:1px solid #ddd;border-radius:8px;background:#fafafa}
-      .customer div{min-width:0}
-      .customer .wide{grid-column:1/-1}
-      .customer span{display:block;color:#777;font-size:8pt;text-transform:uppercase}
-      .customer strong{display:block;margin-top:3px}
-      .vehicle-option{break-inside:avoid;margin:0 0 12px;border:1px solid #d9d9d9;border-radius:10px;overflow:hidden}
-      .option-head{display:flex;justify-content:space-between;gap:15px;padding:12px 13px;background:#f4f4f2;border-bottom:1px solid #ddd}
-      .option-head small{color:#a9191f;font-weight:bold;letter-spacing:.5px}
-      .option-head h2{margin:4px 0 0;font-size:15pt}
-      .option-head p{margin:5px 0 0;color:#555;font-size:8.5pt;line-height:1.4}
-      .price{text-align:right;font-size:17pt;font-weight:bold;white-space:nowrap}
-      .price span{display:block;margin-top:4px;color:#666;font-size:7.5pt;font-weight:normal;text-transform:uppercase}
-      .finance-grid{display:grid;grid-template-columns:repeat(5,1fr)}
-      .finance-grid div{padding:10px;border-right:1px solid #e2e2e2}
-      .finance-grid div:last-child{border-right:0}
-      .finance-grid span{display:block;color:#777;font-size:7.5pt;text-transform:uppercase}
-      .finance-grid strong{display:block;margin-top:5px;font-size:10.5pt}
-      .conditions{margin-top:15px;padding-top:10px;border-top:1px solid #ccc;color:#555;font-size:8.5pt;line-height:1.5}
-      .contact{margin-top:11px;padding:10px 12px;border-radius:8px;background:#171717;color:#fff}
-      .contact strong{font-size:10pt}
-      .contact span{display:block;margin-top:4px;color:#ddd}
-      .signatures{display:grid;grid-template-columns:1fr 1fr;gap:45px;margin-top:30px}
-      .signature{padding-top:18px;border-top:1px solid #777;text-align:center;color:#666;font-size:8.5pt}
-      @media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+      .agency{
+        display:flex;
+        justify-content:space-between;
+        gap:20px;
+        padding-bottom:13px;
+        border-bottom:4px solid #a9191f
+      }
+      .agency h1{
+        margin:0;
+        font-size:27pt;
+        line-height:1;
+        letter-spacing:-1.2px
+      }
+      .agency p{
+        margin:7px 0 0;
+        color:#555;
+        line-height:1.45
+      }
+      .agency-contact{text-align:right}
+      .agency-contact strong{display:block;font-size:12pt}
+      .agency-contact span{display:block;margin-top:4px;color:#555}
+      .document-meta{
+        display:flex;
+        justify-content:space-between;
+        align-items:flex-end;
+        gap:20px;
+        margin:19px 0 14px
+      }
+      .document-meta h2{margin:0;font-size:17pt}
+      .document-meta p{margin:5px 0 0;color:#666}
+      .code{text-align:right;color:#666;font-size:8.5pt}
+      .vehicle{
+        overflow:hidden;
+        border:1px solid #d6d6d6;
+        border-radius:11px
+      }
+      .vehicle-head{
+        display:flex;
+        justify-content:space-between;
+        gap:20px;
+        padding:15px 16px;
+        background:#f3f3f1;
+        border-bottom:1px solid #d6d6d6
+      }
+      .vehicle-head small{
+        color:#a9191f;
+        font-size:8pt;
+        font-weight:bold;
+        letter-spacing:.6px;
+        text-transform:uppercase
+      }
+      .vehicle-head h3{
+        margin:5px 0 0;
+        font-size:19pt;
+        letter-spacing:-.5px
+      }
+      .vehicle-head p{
+        margin:7px 0 0;
+        color:#555;
+        font-size:9pt;
+        line-height:1.45
+      }
+      .vehicle-price{
+        text-align:right;
+        white-space:nowrap;
+        font-size:20pt;
+        font-weight:bold
+      }
+      .vehicle-price span{
+        display:block;
+        margin-top:5px;
+        color:#666;
+        font-size:7.5pt;
+        font-weight:normal;
+        text-transform:uppercase
+      }
+      .finance-main{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        border-bottom:1px solid #ddd
+      }
+      .finance-main div,.quota-grid div{
+        padding:14px;
+        border-right:1px solid #ddd
+      }
+      .finance-main div:last-child,.quota-grid div:last-child{border-right:0}
+      .finance-main span,.quota-grid span{
+        display:block;
+        color:#777;
+        font-size:7.5pt;
+        font-weight:bold;
+        letter-spacing:.4px;
+        text-transform:uppercase
+      }
+      .finance-main strong,.quota-grid strong{
+        display:block;
+        margin-top:6px;
+        font-size:14pt
+      }
+      .quota-title{
+        padding:11px 14px 0;
+        color:#a9191f;
+        font-size:8pt;
+        font-weight:bold;
+        letter-spacing:.5px;
+        text-transform:uppercase
+      }
+      .quota-grid{
+        display:grid;
+        grid-template-columns:repeat(3,1fr)
+      }
+      .quota-grid strong{font-size:12pt}
+      .conditions{
+        margin-top:15px;
+        padding:12px 13px;
+        border:1px solid #ddd;
+        border-radius:9px;
+        background:#fafafa;
+        color:#555;
+        font-size:8.5pt;
+        line-height:1.5
+      }
+      .agency-info{
+        display:grid;
+        grid-template-columns:repeat(3,1fr);
+        gap:8px;
+        margin-top:12px
+      }
+      .agency-info div{
+        padding:11px;
+        border-radius:8px;
+        background:#171717;
+        color:#fff
+      }
+      .agency-info strong{display:block;font-size:9.5pt}
+      .agency-info span{
+        display:block;
+        margin-top:4px;
+        color:#d0d0d0;
+        font-size:7.7pt;
+        line-height:1.35
+      }
+      .signature{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:48px;
+        margin-top:34px
+      }
+      .signature div{
+        padding-top:18px;
+        border-top:1px solid #777;
+        color:#666;
+        font-size:8.5pt;
+        text-align:center
+      }
+      .footer{
+        margin-top:16px;
+        color:#777;
+        font-size:7.7pt;
+        line-height:1.45
+      }
+      @media print{
+        body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+      }
     </style>
   </head>
   <body>
@@ -2370,51 +1856,104 @@ function generateQuotePdf(){
       <header class="agency">
         <div>
           <h1>LMP Autos</h1>
-          <p>Av. Mosconi 799, Lomas del Mirador<br>Vehículos usados · Financiación · Permutas</p>
+          <p>Vehículos usados · Financiación · Permutas<br>Gestoría propia y atención personalizada</p>
         </div>
-        <div class="agency-meta">
+        <div class="agency-contact">
           <strong>11-3262-7744</strong>
-          <span>lmpautos.com</span>
-          <span>Instagram: @lmpautos</span>
+          <span>Av. Mosconi 799, Lomas del Mirador</span>
+          <span>lmpautos.com · @lmpautos</span>
         </div>
       </header>
 
-      <section class="document-title">
+      <section class="document-meta">
         <div>
-          <h2>Presupuesto de vehículos</h2>
-          <p>Emitido el ${escapeHtml(now.toLocaleString('es-AR',{dateStyle:'long',timeStyle:'short'}))}</p>
+          <h2>Ficha comercial del vehículo</h2>
+          <p>Emitida el ${escapeHtml(now.toLocaleString('es-AR',{dateStyle:'long',timeStyle:'short'}))}</p>
         </div>
-        <div class="code">Presupuesto<br><strong>${escapeHtml(code)}</strong></div>
+        <div class="code">Referencia<br><strong>${escapeHtml(code)}</strong></div>
       </section>
 
-      ${customerRows?`<section class="customer">${customerRows}</section>`:''}
-      ${quoteItems.map(printableQuoteItem).join('')}
+      <section class="vehicle">
+        <div class="vehicle-head">
+          <div>
+            <small>${escapeHtml(v.id||'Vehículo disponible')}</small>
+            <h3>${escapeHtml(v.marca)} ${escapeHtml(v.modelo)}</h3>
+            <p>${details||'Consultar características con el asesor comercial.'}</p>
+          </div>
+          <div class="vehicle-price">
+            ${escapeHtml(formatArs(total))}
+            <span>Valor del vehículo</span>
+          </div>
+        </div>
+
+        <div class="finance-main">
+          <div>
+            <span>Anticipo</span>
+            <strong>${escapeHtml(formatArs(advance))}</strong>
+          </div>
+          <div>
+            <span>Monto a financiar</span>
+            <strong>${escapeHtml(formatArs(financed))}</strong>
+          </div>
+        </div>
+
+        <div class="quota-title">Cuotas mensuales estimadas</div>
+        <div class="quota-grid">
+          <div>
+            <span>12 cuotas</span>
+            <strong>${escapeHtml(formatArs(q12))}</strong>
+          </div>
+          <div>
+            <span>18 cuotas</span>
+            <strong>${escapeHtml(formatArs(q18))}</strong>
+          </div>
+          <div>
+            <span>24 cuotas</span>
+            <strong>${escapeHtml(formatArs(q24))}</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="agency-info">
+        <div>
+          <strong>Financiación</strong>
+          <span>Opciones de cuotas fijas sujetas a evaluación y aprobación crediticia.</span>
+        </div>
+        <div>
+          <strong>Permutas</strong>
+          <span>Tomamos vehículos como parte de pago, sujetos a revisión y tasación.</span>
+        </div>
+        <div>
+          <strong>Entrega</strong>
+          <span>Gestoría propia y unidades listas para coordinar la entrega en 24 o 48 horas.</span>
+        </div>
+      </section>
 
       <section class="conditions">
-        <strong>Información comercial:</strong> valores sujetos a disponibilidad y confirmación al momento de la operación.
-        Las cuotas son estimativas, pueden variar y están sujetas a evaluación y aprobación crediticia.
-        La entrega se coordina luego de completar la documentación y las condiciones de la operación.
+        <strong>Condiciones:</strong> valores sujetos a disponibilidad y confirmación al momento de la operación.
+        Las cuotas son orientativas y pueden variar según el perfil crediticio, la entidad financiera y las condiciones vigentes.
+        La reserva, documentación, transferencia y entrega deben ser confirmadas por un asesor de LMP Autos.
       </section>
 
-      <section class="contact">
-        <strong>LMP Autos · Av. Mosconi 799, Lomas del Mirador</strong>
-        <span>WhatsApp 11-3262-7744 · lmpautos.com · @lmpautos</span>
-      </section>
+      <div class="signature">
+        <div>Firma y aclaración del cliente</div>
+        <div>Asesor comercial</div>
+      </div>
 
-      <div class="signatures">
-        <div class="signature">Firma y aclaración del cliente</div>
-        <div class="signature">Asesor comercial</div>
+      <div class="footer">
+        LMP Autos · Av. Mosconi 799, Lomas del Mirador · WhatsApp 11-3262-7744 · lmpautos.com · Instagram @lmpautos
       </div>
     </main>
+
     <script>
       window.addEventListener('load',()=>setTimeout(()=>window.print(),250));
     <\/script>
   </body>
   </html>`);
+
   printWindow.document.close();
   printWindow.focus();
 }
-
 
 function installmentCalculatorMarkup(v){
   const total=numericPrice(v.cotizacion);
@@ -2774,9 +2313,9 @@ function openVehicle(id,{updateUrl=true,replaceUrl=false}={}){
       ${installmentCalculatorMarkup(v)}
 
       <div class="detail-actions">
-        <div class="detail-main-actions">
+        <div class="detail-primary-actions">
           <button class="whatsapp" id="whatsappBtn" type="button">Consultar por WhatsApp</button>
-          <button class="quote-add" id="quoteAddBtn" type="button">Agregar al presupuesto</button>
+          <button class="vehicle-pdf" id="vehiclePdfBtn" type="button">Guardar ficha en PDF</button>
         </div>
 
         <div class="detail-secondary-actions">
@@ -2790,7 +2329,7 @@ function openVehicle(id,{updateUrl=true,replaceUrl=false}={}){
   document.body.classList.add('modal-open');
   document.body.style.overflow='hidden';
   $('#whatsappBtn').onclick=()=>contactVehicle(v);
-  $('#quoteAddBtn').onclick=()=>addVehicleToQuote(v);
+  $('#vehiclePdfBtn').onclick=()=>printVehiclePdf(v);
   setupInstallmentCalculator(v);
   if(v.fotos.length){
     $('#prevPhoto').onclick=()=>moveGallery(-1);
@@ -3042,48 +2581,6 @@ $('#lightboxPrev').onclick=()=>moveGallery(-1);
 $('#lightboxNext').onclick=()=>moveGallery(1);
 $('#photoLightbox').addEventListener('click',e=>{if(e.target===$('#photoLightbox'))closePhotoLightbox()});
 
-function initQuoteCart(){
-  try{
-    loadQuoteState();
-    renderQuoteCart();
-
-    const trigger=$('#quoteCartTrigger');
-    const closeButton=$('#quoteClose');
-    const modal=$('#quoteModal');
-    const clearButton=$('#quoteClear');
-    const printButton=$('#quotePrint');
-
-    if(trigger)trigger.onclick=openQuoteCart;
-    if(closeButton)closeButton.onclick=closeQuoteCart;
-    if(modal){
-      modal.addEventListener('click',event=>{
-        if(event.target===modal)closeQuoteCart();
-      });
-    }
-    if(clearButton)clearButton.onclick=clearQuoteItems;
-    if(printButton)printButton.onclick=generateQuotePdf;
-
-    ['quoteCustomer','quoteCustomerPhone','quoteNotes'].forEach(id=>{
-      const field=$('#'+id);
-      if(!field)return;
-
-      field.addEventListener('input',()=>{
-        quoteMeta={
-          customer:clean($('#quoteCustomer')?.value),
-          phone:clean($('#quoteCustomerPhone')?.value),
-          notes:clean($('#quoteNotes')?.value)
-        };
-        saveQuoteState();
-      });
-    });
-  }catch(error){
-    console.error('El carrito de presupuestos no pudo iniciarse:',error);
-
-    const trigger=$('#quoteCartTrigger');
-    if(trigger)trigger.hidden=true;
-  }
-}
-
 window.addEventListener('popstate',()=>{
   const slug=currentVehicleSlugFromUrl();
 
@@ -3105,11 +2602,7 @@ window.addEventListener('popstate',()=>{
 
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){
-    const quoteModal=$('#quoteModal');
-    const lightbox=$('#photoLightbox');
-
-    if(quoteModal?.classList.contains('open')) closeQuoteCart();
-    else if(lightbox?.classList.contains('open')) closePhotoLightbox();
+    if($('#photoLightbox').classList.contains('open')) closePhotoLightbox();
     else closeModal();
   }
   if($('#photoLightbox').classList.contains('open')){
@@ -3117,28 +2610,11 @@ document.addEventListener('keydown',e=>{
     if(e.key==='ArrowRight') moveGallery(1);
   }
 });
-// La carga del catálogo es prioritaria y no depende del carrito.
+renderBannerCarousel();
+$('#bannerPrev').onclick=()=>showBanner(bannerIndex-1,true);
+$('#bannerNext').onclick=()=>showBanner(bannerIndex+1,true);
+loadInstagramFollowers();
 loadData();
-
-try{
-  renderBannerCarousel();
-
-  const bannerPrev=$('#bannerPrev');
-  const bannerNext=$('#bannerNext');
-
-  if(bannerPrev)bannerPrev.onclick=()=>showBanner(bannerIndex-1,true);
-  if(bannerNext)bannerNext.onclick=()=>showBanner(bannerIndex+1,true);
-}catch(error){
-  console.error('El banner no pudo iniciarse:',error);
-}
-
-try{
-  loadInstagramFollowers();
-}catch(error){
-  console.error('El contador de seguidores no pudo iniciarse:',error);
-}
-
-initQuoteCart();
 </script>
 </body>
 </html>
