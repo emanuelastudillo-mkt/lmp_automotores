@@ -9,6 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
+  <meta name="lmp-build" content="index-pdf-fixed-2026-07-01">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   <style>
     :root{
@@ -2114,7 +2115,8 @@ function updateQuoteItemAdvance(uid,rawValue,formatField=true){
   renderQuoteCart();
 
   if(formatField){
-    const input=document.querySelector(`[data-quote-advance="${CSS.escape(uid)}"]`);
+    const input=[...document.querySelectorAll('[data-quote-advance]')]
+      .find(field=>field.dataset.quoteAdvance===uid);
     if(input)input.value=moneyInputValue(item.advance);
   }
 }
@@ -2227,19 +2229,29 @@ function renderQuoteCart(){
 }
 
 function openQuoteCart(){
+  const modal=$('#quoteModal');
+  if(!modal)return;
+
   renderQuoteCart();
-  $('#quoteModal').classList.add('open');
-  $('#quoteModal').setAttribute('aria-hidden','false');
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden','false');
   document.body.classList.add('quote-open');
 
-  $('#quoteCustomer').value=quoteMeta.customer;
-  $('#quoteCustomerPhone').value=quoteMeta.phone;
-  $('#quoteNotes').value=quoteMeta.notes;
+  const customer=$('#quoteCustomer');
+  const phone=$('#quoteCustomerPhone');
+  const notes=$('#quoteNotes');
+
+  if(customer)customer.value=quoteMeta.customer;
+  if(phone)phone.value=quoteMeta.phone;
+  if(notes)notes.value=quoteMeta.notes;
 }
 
 function closeQuoteCart(){
-  $('#quoteModal').classList.remove('open');
-  $('#quoteModal').setAttribute('aria-hidden','true');
+  const modal=$('#quoteModal');
+  if(!modal)return;
+
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden','true');
   document.body.classList.remove('quote-open');
 }
 
@@ -3030,21 +3042,47 @@ $('#lightboxPrev').onclick=()=>moveGallery(-1);
 $('#lightboxNext').onclick=()=>moveGallery(1);
 $('#photoLightbox').addEventListener('click',e=>{if(e.target===$('#photoLightbox'))closePhotoLightbox()});
 
-$('#quoteCartTrigger').onclick=openQuoteCart;
-$('#quoteClose').onclick=closeQuoteCart;
-$('#quoteModal').addEventListener('click',event=>{if(event.target===$('#quoteModal'))closeQuoteCart()});
-$('#quoteClear').onclick=clearQuoteItems;
-$('#quotePrint').onclick=generateQuotePdf;
-['quoteCustomer','quoteCustomerPhone','quoteNotes'].forEach(id=>{
-  $('#'+id).addEventListener('input',()=>{
-    quoteMeta={
-      customer:clean($('#quoteCustomer').value),
-      phone:clean($('#quoteCustomerPhone').value),
-      notes:clean($('#quoteNotes').value)
-    };
-    saveQuoteState();
-  });
-});
+function initQuoteCart(){
+  try{
+    loadQuoteState();
+    renderQuoteCart();
+
+    const trigger=$('#quoteCartTrigger');
+    const closeButton=$('#quoteClose');
+    const modal=$('#quoteModal');
+    const clearButton=$('#quoteClear');
+    const printButton=$('#quotePrint');
+
+    if(trigger)trigger.onclick=openQuoteCart;
+    if(closeButton)closeButton.onclick=closeQuoteCart;
+    if(modal){
+      modal.addEventListener('click',event=>{
+        if(event.target===modal)closeQuoteCart();
+      });
+    }
+    if(clearButton)clearButton.onclick=clearQuoteItems;
+    if(printButton)printButton.onclick=generateQuotePdf;
+
+    ['quoteCustomer','quoteCustomerPhone','quoteNotes'].forEach(id=>{
+      const field=$('#'+id);
+      if(!field)return;
+
+      field.addEventListener('input',()=>{
+        quoteMeta={
+          customer:clean($('#quoteCustomer')?.value),
+          phone:clean($('#quoteCustomerPhone')?.value),
+          notes:clean($('#quoteNotes')?.value)
+        };
+        saveQuoteState();
+      });
+    });
+  }catch(error){
+    console.error('El carrito de presupuestos no pudo iniciarse:',error);
+
+    const trigger=$('#quoteCartTrigger');
+    if(trigger)trigger.hidden=true;
+  }
+}
 
 window.addEventListener('popstate',()=>{
   const slug=currentVehicleSlugFromUrl();
@@ -3067,8 +3105,11 @@ window.addEventListener('popstate',()=>{
 
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){
-    if($('#quoteModal').classList.contains('open')) closeQuoteCart();
-    else if($('#photoLightbox').classList.contains('open')) closePhotoLightbox();
+    const quoteModal=$('#quoteModal');
+    const lightbox=$('#photoLightbox');
+
+    if(quoteModal?.classList.contains('open')) closeQuoteCart();
+    else if(lightbox?.classList.contains('open')) closePhotoLightbox();
     else closeModal();
   }
   if($('#photoLightbox').classList.contains('open')){
@@ -3076,13 +3117,28 @@ document.addEventListener('keydown',e=>{
     if(e.key==='ArrowRight') moveGallery(1);
   }
 });
-loadQuoteState();
-renderQuoteCart();
-renderBannerCarousel();
-$('#bannerPrev').onclick=()=>showBanner(bannerIndex-1,true);
-$('#bannerNext').onclick=()=>showBanner(bannerIndex+1,true);
-loadInstagramFollowers();
+// La carga del catálogo es prioritaria y no depende del carrito.
 loadData();
+
+try{
+  renderBannerCarousel();
+
+  const bannerPrev=$('#bannerPrev');
+  const bannerNext=$('#bannerNext');
+
+  if(bannerPrev)bannerPrev.onclick=()=>showBanner(bannerIndex-1,true);
+  if(bannerNext)bannerNext.onclick=()=>showBanner(bannerIndex+1,true);
+}catch(error){
+  console.error('El banner no pudo iniciarse:',error);
+}
+
+try{
+  loadInstagramFollowers();
+}catch(error){
+  console.error('El contador de seguidores no pudo iniciarse:',error);
+}
+
+initQuoteCart();
 </script>
 </body>
 </html>
