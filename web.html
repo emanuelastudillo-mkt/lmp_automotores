@@ -286,6 +286,144 @@
       letter-spacing:-.045em;
       margin:5px 0 0
     }
+    .installments-wrap{
+      margin:14px 0 12px;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:#f7f7f4;
+      overflow:hidden
+    }
+    .installments-toggle{
+      width:100%;
+      min-height:52px;
+      border:0;
+      background:#111;
+      color:#fff;
+      padding:14px 17px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      font-weight:950;
+      cursor:pointer;
+      text-align:left
+    }
+    .installments-toggle:hover{background:#1c1c1c}
+    .installments-toggle-copy{display:flex;flex-direction:column;gap:3px}
+    .installments-toggle-copy strong{font-size:15px}
+    .installments-toggle-copy span{font-size:11px;color:#bdbdbd;font-weight:700}
+    .installments-toggle-icon{
+      width:30px;
+      height:30px;
+      flex:0 0 auto;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:rgba(255,255,255,.1);
+      font-size:19px;
+      transition:transform .25s ease
+    }
+    .installments-wrap.open .installments-toggle-icon{transform:rotate(45deg)}
+    .installments-panel{
+      display:grid;
+      grid-template-rows:0fr;
+      transition:grid-template-rows .3s ease
+    }
+    .installments-wrap.open .installments-panel{grid-template-rows:1fr}
+    .installments-panel-inner{min-height:0;overflow:hidden}
+    .installments-content{padding:17px}
+    .installments-fields{
+      display:grid;
+      grid-template-columns:.65fr 1fr 1fr;
+      gap:10px;
+      margin-bottom:14px
+    }
+    .installment-field{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      min-width:0
+    }
+    .installment-field label{
+      font-size:10px;
+      color:var(--muted);
+      font-weight:900;
+      letter-spacing:.07em;
+      text-transform:uppercase
+    }
+    .installment-field input{
+      min-height:44px;
+      border:1px solid var(--line);
+      border-radius:12px;
+      background:#fff;
+      padding:10px 12px;
+      color:#181818;
+      font-weight:900;
+      outline:none
+    }
+    .installment-field input:focus{border-color:#777}
+    .installment-field input[readonly]{
+      background:#ecece8;
+      color:#555;
+      cursor:default
+    }
+    .installment-help{
+      grid-column:1/-1;
+      margin:-2px 0 0;
+      color:var(--muted);
+      font-size:10px;
+      line-height:1.45
+    }
+    .installment-results{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:9px
+    }
+    .installment-option{
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:#fff;
+      padding:13px 12px;
+      text-align:center
+    }
+    .installment-option span{
+      display:block;
+      color:var(--muted);
+      font-size:10px;
+      font-weight:900;
+      letter-spacing:.06em;
+      text-transform:uppercase
+    }
+    .installment-option strong{
+      display:block;
+      margin:5px 0 3px;
+      color:#71171b;
+      font-size:clamp(18px,2vw,25px);
+      letter-spacing:-.045em;
+      line-height:1
+    }
+    .installment-option small{font-size:10px;color:#777}
+    .installment-summary{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-top:12px;
+      padding-top:11px;
+      border-top:1px solid var(--line);
+      color:#555;
+      font-size:11px
+    }
+    .installment-summary strong{color:#222}
+    .installment-notice{
+      margin-top:9px;
+      border-radius:11px;
+      background:#f1e4e4;
+      color:#6e2024;
+      padding:9px 10px;
+      font-size:10px;
+      line-height:1.45
+    }
     .detail-actions{
       display:grid;
       grid-template-columns:minmax(280px,1fr) minmax(180px,.65fr);
@@ -562,6 +700,14 @@
       .detail-finance-grid{grid-template-columns:1fr}
       .finance-value{font-size:clamp(28px,13vw,42px)}
       .finance-advance .finance-value{font-size:clamp(25px,11vw,36px)}
+      .installments-fields{grid-template-columns:1fr 1fr}
+      .installment-field:first-child{grid-column:1/-1}
+      .installment-results{grid-template-columns:1fr}
+      .installment-option{display:grid;grid-template-columns:1fr auto;align-items:center;text-align:left;gap:8px}
+      .installment-option span{grid-column:1}
+      .installment-option strong{grid-column:2;grid-row:1/3;margin:0;font-size:22px}
+      .installment-option small{grid-column:1}
+      .installment-summary{align-items:flex-start;flex-direction:column;gap:5px}
       .detail-actions{grid-template-columns:1fr}
       .detail-secondary-actions{grid-template-columns:1fr}
       .specs{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -1405,6 +1551,199 @@ function cashPriceArs(v){
   }
   return totalArs;
 }
+
+const FINANCING_TABLE={
+  recent:{
+    label:'2022 en adelante',
+    rates:{12:0.141187,18:0.112018,24:0.097734}
+  },
+  middle:{
+    label:'2017 a 2021',
+    rates:{12:0.144942,18:0.116052,24:0.102881}
+  },
+  older:{
+    label:'2012 a 2016',
+    rates:{12:0.147221,18:0.118492,24:0.105491}
+  }
+};
+
+function financingBand(year){
+  const value=Number(year)||0;
+  if(value>=2022)return {...FINANCING_TABLE.recent,estimated:false};
+  if(value>=2017)return {...FINANCING_TABLE.middle,estimated:false};
+  if(value>=2012)return {...FINANCING_TABLE.older,estimated:false};
+  return {...FINANCING_TABLE.older,label:'Referencia para modelos anteriores a 2012',estimated:true};
+}
+
+function moneyInputValue(amount){
+  return new Intl.NumberFormat('es-AR',{maximumFractionDigits:0}).format(Math.max(0,Math.round(amount||0)));
+}
+
+function quotaValue(capital,rate){
+  return Math.max(0,Math.round((Number(capital)||0)*(Number(rate)||0)));
+}
+
+function installmentCalculatorMarkup(v){
+  const total=numericPrice(v.cotizacion);
+  const minimumAdvance=Math.min(total,numericPrice(v.anticipo));
+  const financed=Math.max(0,total-minimumAdvance);
+  const band=financingBand(v.anio);
+
+  if(!total){
+    return `<div class="installments-wrap">
+      <button class="installments-toggle" id="installmentsToggle" type="button">
+        <span class="installments-toggle-copy">
+          <strong>Ver cuotas</strong>
+          <span>Consultá una simulación de financiación</span>
+        </span>
+        <span class="installments-toggle-icon">+</span>
+      </button>
+      <div class="installments-panel">
+        <div class="installments-panel-inner">
+          <div class="installments-content">
+            <div class="installment-notice">El valor del vehículo no está disponible para calcular las cuotas. Consultanos por WhatsApp.</div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  return `<div class="installments-wrap" id="installmentsWrap">
+    <button class="installments-toggle" id="installmentsToggle" type="button" aria-expanded="false">
+      <span class="installments-toggle-copy">
+        <strong>Ver cuotas</strong>
+        <span>Simulación para un vehículo año ${escapeHtml(v.anio||'—')}</span>
+      </span>
+      <span class="installments-toggle-icon">+</span>
+    </button>
+
+    <div class="installments-panel">
+      <div class="installments-panel-inner">
+        <div class="installments-content">
+          <div class="installments-fields">
+            <div class="installment-field">
+              <label>Año del vehículo</label>
+              <input id="installmentYear" value="${escapeAttr(v.anio||'')}" readonly>
+            </div>
+
+            <div class="installment-field">
+              <label>Anticipo</label>
+              <input
+                id="installmentAdvance"
+                inputmode="numeric"
+                value="${escapeAttr(moneyInputValue(minimumAdvance))}"
+                data-min="${minimumAdvance}"
+                data-total="${total}">
+            </div>
+
+            <div class="installment-field">
+              <label>Monto a financiar</label>
+              <input
+                id="installmentCapital"
+                inputmode="numeric"
+                value="${escapeAttr(moneyInputValue(financed))}"
+                data-max="${financed}"
+                data-total="${total}">
+            </div>
+
+            <p class="installment-help">
+              El anticipo no puede ser menor a ${escapeHtml(formatArs(minimumAdvance))}. Al modificar cualquiera de los dos valores, el otro se recalcula automáticamente.
+            </p>
+          </div>
+
+          <div class="installment-results">
+            <div class="installment-option">
+              <span>12 cuotas</span>
+              <strong id="quota12">${escapeHtml(formatArs(quotaValue(financed,band.rates[12])))}</strong>
+              <small>por mes</small>
+            </div>
+            <div class="installment-option">
+              <span>18 cuotas</span>
+              <strong id="quota18">${escapeHtml(formatArs(quotaValue(financed,band.rates[18])))}</strong>
+              <small>por mes</small>
+            </div>
+            <div class="installment-option">
+              <span>24 cuotas</span>
+              <strong id="quota24">${escapeHtml(formatArs(quotaValue(financed,band.rates[24])))}</strong>
+              <small>por mes</small>
+            </div>
+          </div>
+
+          <div class="installment-summary">
+            <span>Tabla aplicada: <strong>${escapeHtml(band.label)}</strong></span>
+            <span>Saldo: <strong id="installmentCapitalSummary">${escapeHtml(formatArs(financed))}</strong></span>
+          </div>
+
+          <div class="installment-notice" id="installmentNotice">
+            Valores estimativos sujetos a evaluación y aprobación crediticia.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function setupInstallmentCalculator(v){
+  const wrap=$('#installmentsWrap');
+  const toggle=$('#installmentsToggle');
+  if(!toggle)return;
+
+  toggle.onclick=()=>{
+    const container=wrap||toggle.closest('.installments-wrap');
+    const open=!container.classList.contains('open');
+    container.classList.toggle('open',open);
+    toggle.setAttribute('aria-expanded',String(open));
+  };
+
+  const advanceInput=$('#installmentAdvance');
+  const capitalInput=$('#installmentCapital');
+  if(!advanceInput || !capitalInput)return;
+
+  const total=Number(advanceInput.dataset.total)||0;
+  const minimumAdvance=Number(advanceInput.dataset.min)||0;
+  const maximumCapital=Number(capitalInput.dataset.max)||0;
+  const band=financingBand(v.anio);
+
+  function updateResults(capital){
+    const amount=Math.max(0,Math.min(maximumCapital,Math.round(capital||0)));
+    $('#quota12').textContent=formatArs(quotaValue(amount,band.rates[12]));
+    $('#quota18').textContent=formatArs(quotaValue(amount,band.rates[18]));
+    $('#quota24').textContent=formatArs(quotaValue(amount,band.rates[24]));
+    $('#installmentCapitalSummary').textContent=formatArs(amount);
+
+    const notice=$('#installmentNotice');
+    const messages=['Valores estimativos sujetos a evaluación y aprobación crediticia.'];
+    if(amount>12500000)messages.unshift('El monto supera el rango de referencia de $12.500.000; la cuota es una estimación.');
+    if(amount>0 && amount<1000000)messages.unshift('El monto está por debajo del capital mínimo de referencia de $1.000.000.');
+    if(band.estimated)messages.unshift('Para este año se utiliza la banda más antigua como referencia aproximada.');
+    notice.textContent=messages.join(' ');
+  }
+
+  function setAdvance(rawValue,formatField=false){
+    const entered=numericPrice(rawValue);
+    const advance=Math.max(minimumAdvance,Math.min(total,entered||minimumAdvance));
+    const capital=Math.max(0,total-advance);
+    if(formatField)advanceInput.value=moneyInputValue(advance);
+    capitalInput.value=moneyInputValue(capital);
+    updateResults(capital);
+  }
+
+  function setCapital(rawValue,formatField=false){
+    const entered=numericPrice(rawValue);
+    const capital=Math.max(0,Math.min(maximumCapital,entered));
+    const advance=Math.max(minimumAdvance,total-capital);
+    if(formatField)capitalInput.value=moneyInputValue(capital);
+    advanceInput.value=moneyInputValue(advance);
+    updateResults(capital);
+  }
+
+  advanceInput.addEventListener('input',()=>setAdvance(advanceInput.value,false));
+  advanceInput.addEventListener('blur',()=>setAdvance(advanceInput.value,true));
+  capitalInput.addEventListener('input',()=>setCapital(capitalInput.value,false));
+  capitalInput.addEventListener('blur',()=>setCapital(capitalInput.value,true));
+
+  updateResults(maximumCapital);
+}
 function addUnique(list,vehicle){
   if(vehicle && !list.some(item=>item.id===vehicle.id))list.push(vehicle);
 }
@@ -1546,6 +1885,8 @@ function openVehicle(id){
 
       <div class="specs">${specs.map(s=>`<div class="spec"><small class="spec-title">${s[2]?icon(s[2]):''}${escapeHtml(s[0])}</small><strong>${escapeHtml(s[1])}</strong></div>`).join('')}</div>
 
+      ${installmentCalculatorMarkup(v)}
+
       <div class="detail-actions">
         <button class="whatsapp" id="whatsappBtn" type="button">Consultar este vehículo por WhatsApp</button>
 
@@ -1560,6 +1901,7 @@ function openVehicle(id){
   document.body.classList.add('modal-open');
   document.body.style.overflow='hidden';
   $('#whatsappBtn').onclick=()=>contactVehicle(v);
+  setupInstallmentCalculator(v);
   if(v.fotos.length){
     $('#prevPhoto').onclick=()=>moveGallery(-1);
     $('#nextPhoto').onclick=()=>moveGallery(1);
