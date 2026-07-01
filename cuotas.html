@@ -1,0 +1,805 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#101010">
+  <link rel="icon" href="./favicon.ico" sizes="any">
+  <link rel="shortcut icon" href="./favicon.ico">
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-title" content="LMP Autos">
+  <title>LMP Autos | Calculadora de cuotas</title>
+  <meta name="description" content="Calculadora de financiación para vehículos de LMP Autos.">
+  <style>
+    :root{
+      --bg:#f5f5f3;
+      --card:#ffffff;
+      --text:#161616;
+      --muted:#707070;
+      --line:#deded9;
+      --accent:#bb1d23;
+      --accent-dark:#8d1217;
+      --dark:#101010;
+      --dark-soft:#1b1b1b;
+      --success:#1fa855;
+      --radius:20px;
+      --shadow:0 12px 34px rgba(0,0,0,.08);
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+
+    button,input,select{font:inherit}
+    button,a{-webkit-tap-highlight-color:transparent}
+    button,a{
+      transition:transform .2s ease,background-color .2s ease,color .2s ease,
+        border-color .2s ease,box-shadow .2s ease;
+    }
+    a{color:inherit;text-decoration:none}
+    .shell{width:min(1180px,calc(100% - 32px));margin:auto}
+
+    header{
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:rgba(16,16,16,.95);
+      backdrop-filter:blur(14px);
+      color:#fff;
+      border-bottom:1px solid rgba(255,255,255,.09);
+    }
+    .topbar{
+      min-height:72px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:900;
+      letter-spacing:-.03em;
+    }
+    .brand-mark{
+      width:44px;
+      height:44px;
+      display:grid;
+      place-items:center;
+    }
+    .brand-mark img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      display:block;
+    }
+    .brand-copy{display:flex;flex-direction:column;line-height:1.05}
+    .brand-copy strong{font-size:16px}
+    .brand-copy span{margin-top:4px;color:#bdbdbd;font-size:10px;font-weight:700}
+    nav{display:flex;align-items:center;gap:7px}
+    nav a{
+      color:#bfbfbf;
+      padding:10px 14px;
+      border-radius:12px;
+      font-weight:750;
+      font-size:13px;
+    }
+    nav a:hover,nav a.active{background:#272727;color:#fff}
+
+    .sales-ticker{
+      overflow:hidden;
+      background:var(--accent);
+      color:#fff;
+      border-bottom:1px solid rgba(255,255,255,.13);
+    }
+    .sales-ticker-track{
+      display:flex;
+      width:max-content;
+      animation:tickerMove 28s linear infinite;
+      will-change:transform;
+    }
+    .sales-ticker-group{display:flex;align-items:center;white-space:nowrap}
+    .sales-ticker-item{
+      display:inline-flex;
+      align-items:center;
+      gap:12px;
+      padding:10px 22px;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.09em;
+      text-transform:uppercase;
+    }
+    .sales-ticker-item::after{content:'◆';font-size:7px;opacity:.72}
+    @keyframes tickerMove{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      background:
+        radial-gradient(circle at 78% 10%,rgba(187,29,35,.28),transparent 35%),
+        linear-gradient(135deg,#171717,#090909 72%);
+      color:#fff;
+      padding:70px 0 100px;
+    }
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:auto -140px -220px auto;
+      width:520px;
+      height:520px;
+      border-radius:50%;
+      border:1px solid rgba(255,255,255,.08);
+    }
+    .hero-grid{
+      position:relative;
+      z-index:1;
+      display:grid;
+      grid-template-columns:minmax(0,1.15fr) minmax(280px,.55fr);
+      gap:48px;
+      align-items:end;
+    }
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      margin-bottom:16px;
+      color:#ffb9bc;
+      font-size:11px;
+      font-weight:950;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
+    .eyebrow::before{
+      content:"";
+      width:26px;
+      height:2px;
+      border-radius:999px;
+      background:var(--accent);
+    }
+    .hero h1{
+      max-width:760px;
+      margin:0;
+      font-size:clamp(39px,6vw,70px);
+      line-height:.98;
+      letter-spacing:-.058em;
+    }
+    .hero p{
+      max-width:660px;
+      margin:20px 0 0;
+      color:#c8c8c8;
+      font-size:16px;
+      line-height:1.55;
+    }
+    .hero-note{
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:20px;
+      background:rgba(255,255,255,.06);
+      padding:20px;
+      backdrop-filter:blur(10px);
+    }
+    .hero-note strong{display:block;font-size:17px}
+    .hero-note span{display:block;margin-top:7px;color:#bbb;font-size:12px;line-height:1.5}
+
+    main{padding:0 0 54px}
+    .calculator-wrap{
+      position:relative;
+      z-index:4;
+      margin-top:-54px;
+    }
+    .calculator-card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:26px;
+      box-shadow:0 22px 58px rgba(0,0,0,.13);
+      overflow:hidden;
+    }
+    .calculator-head{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:24px;
+      padding:26px 28px 22px;
+      border-bottom:1px solid var(--line);
+    }
+    .calculator-head h2{
+      margin:0;
+      font-size:clamp(23px,4vw,34px);
+      letter-spacing:-.045em;
+    }
+    .calculator-head p{
+      margin:7px 0 0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.45;
+    }
+    .source-badge{
+      flex:0 0 auto;
+      padding:8px 11px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:#f5f5f2;
+      color:#555;
+      font-size:10px;
+      font-weight:850;
+      white-space:nowrap;
+    }
+
+    .calculator{padding:28px}
+    .form-grid{
+      display:grid;
+      grid-template-columns:minmax(190px,.72fr) minmax(260px,1.28fr) auto;
+      gap:12px;
+      align-items:end;
+    }
+    label{
+      display:block;
+      margin:0 0 7px;
+      color:#343434;
+      font-size:12px;
+      font-weight:900;
+    }
+    .hint{
+      display:block;
+      margin-top:7px;
+      color:var(--muted);
+      font-size:10px;
+      line-height:1.4;
+    }
+    select,.money-input{
+      width:100%;
+      min-height:52px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:#fff;
+      color:var(--text);
+      outline:none;
+    }
+    select{padding:0 14px;cursor:pointer;font-weight:750}
+    .money-wrap{position:relative}
+    .money-symbol{
+      position:absolute;
+      left:15px;
+      top:50%;
+      transform:translateY(-50%);
+      color:#777;
+      font-weight:900;
+      pointer-events:none;
+    }
+    .money-input{
+      padding:0 15px 0 33px;
+      font-size:18px;
+      font-weight:900;
+    }
+    select:focus,.money-input:focus{
+      border-color:var(--accent);
+      box-shadow:0 0 0 4px rgba(187,29,35,.1);
+    }
+    .calculate{
+      min-height:52px;
+      border:0;
+      border-radius:999px;
+      padding:0 24px;
+      background:var(--accent);
+      color:#fff;
+      font-weight:950;
+      cursor:pointer;
+      box-shadow:0 12px 28px rgba(187,29,35,.25);
+    }
+    .calculate:hover{
+      background:var(--accent-dark);
+      transform:translateY(-2px);
+      box-shadow:0 15px 32px rgba(187,29,35,.32);
+    }
+    .calculate:active{transform:translateY(0)}
+
+    .status{
+      display:none;
+      margin:17px 0 0;
+      padding:11px 13px;
+      border-radius:12px;
+      font-size:12px;
+      line-height:1.5;
+    }
+    .status.show{display:block}
+    .status.warn{background:#fff8e5;color:#815800;border:1px solid #efdca0}
+    .status.error{background:#fff0f0;color:#8e2125;border:1px solid #ecc6c7}
+
+    .results{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:12px;
+      margin-top:24px;
+    }
+    .result-card{
+      position:relative;
+      overflow:hidden;
+      min-height:190px;
+      padding:21px;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:linear-gradient(180deg,#fff,#f7f7f4);
+    }
+    .result-card::after{
+      content:"";
+      position:absolute;
+      right:-33px;
+      top:-38px;
+      width:110px;
+      height:110px;
+      border-radius:50%;
+      background:rgba(187,29,35,.09);
+    }
+    .term{
+      position:relative;
+      z-index:1;
+      color:var(--accent);
+      font-size:11px;
+      font-weight:950;
+      letter-spacing:.09em;
+      text-transform:uppercase;
+    }
+    .installment{
+      position:relative;
+      z-index:1;
+      margin:15px 0 5px;
+      font-size:clamp(28px,4vw,40px);
+      line-height:1;
+      letter-spacing:-.055em;
+      font-weight:950;
+      overflow-wrap:anywhere;
+    }
+    .per-month{color:var(--muted);font-size:11px}
+    .total{
+      margin-top:20px;
+      padding-top:13px;
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      font-size:10px;
+    }
+    .total strong{
+      display:block;
+      margin-top:4px;
+      color:#262626;
+      font-size:13px;
+    }
+    .empty .installment,.empty .total strong{color:#aaa}
+
+    .summary{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-top:12px;
+      padding:15px 17px;
+      border:1px solid var(--line);
+      border-radius:15px;
+      background:#f5f5f2;
+    }
+    .summary-item span{
+      display:block;
+      color:var(--muted);
+      font-size:10px;
+      margin-bottom:4px;
+    }
+    .summary-item strong{font-size:14px}
+
+    .benefits{padding:48px 0 10px}
+    .benefits-head{max-width:700px;margin-bottom:20px}
+    .benefits-head h2{
+      margin:0;
+      font-size:clamp(27px,4vw,42px);
+      letter-spacing:-.05em;
+    }
+    .benefits-head p{margin:10px 0 0;color:var(--muted);line-height:1.5}
+    .benefits-grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:10px;
+    }
+    .benefit{
+      padding:18px;
+      border:1px solid var(--line);
+      border-radius:17px;
+      background:#fff;
+    }
+    .benefit-icon{
+      width:38px;
+      height:38px;
+      margin-bottom:13px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background:#111;
+      color:#fff;
+      font-size:12px;
+      font-weight:950;
+    }
+    .benefit strong{display:block;font-size:14px}
+    .benefit span{display:block;margin-top:6px;color:var(--muted);font-size:11px;line-height:1.45}
+
+    footer{
+      background:#101010;
+      color:#fff;
+      padding:28px 0;
+      margin-top:38px;
+    }
+    .footer-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:24px;
+    }
+    .footer-brand strong{display:block;font-size:16px}
+    .footer-brand span{display:block;margin-top:5px;color:#aaa;font-size:11px}
+    .footer-links{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px}
+    .footer-links a{
+      padding:10px 13px;
+      border:1px solid rgba(255,255,255,.13);
+      border-radius:999px;
+      color:#ddd;
+      font-size:11px;
+      font-weight:800;
+    }
+    .footer-links a:hover{background:#262626;color:#fff}
+
+    @media(max-width:850px){
+      .hero{padding:54px 0 90px}
+      .hero-grid{grid-template-columns:1fr;gap:24px}
+      .hero-note{max-width:520px}
+      .form-grid{grid-template-columns:1fr 1fr}
+      .calculate{grid-column:1/-1}
+      .results{grid-template-columns:1fr}
+      .result-card{min-height:0}
+      .benefits-grid{grid-template-columns:1fr 1fr}
+    }
+
+    @media(max-width:620px){
+      .shell{width:min(100% - 20px,1180px)}
+      .topbar{min-height:64px}
+      .brand-mark{width:40px;height:40px}
+      .brand-copy span{display:none}
+      nav a{padding:9px 10px;font-size:11px}
+      nav a:first-child{display:none}
+      .sales-ticker-item{padding:9px 16px;font-size:10px}
+      .hero{padding:44px 0 78px}
+      .hero h1{font-size:clamp(36px,11vw,50px)}
+      .hero p{font-size:14px}
+      .calculator-wrap{margin-top:-42px}
+      .calculator-card{border-radius:22px}
+      .calculator-head{align-items:flex-start;flex-direction:column;padding:22px 18px 18px}
+      .calculator{padding:20px 18px 22px}
+      .form-grid{grid-template-columns:1fr}
+      .calculate{grid-column:auto}
+      .summary{grid-template-columns:1fr}
+      .benefits{padding-top:38px}
+      .benefits-grid{grid-template-columns:1fr}
+      .footer-inner{align-items:flex-start;flex-direction:column}
+      .footer-links{justify-content:flex-start}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="shell topbar">
+      <a class="brand" href="/" aria-label="Ir al inicio de LMP Autos">
+        <span class="brand-mark"><img src="./apple-touch-icon.png" alt=""></span>
+        <span class="brand-copy">
+          <strong>LMP Autos</strong>
+          <span>Lomas del Mirador</span>
+        </span>
+      </a>
+
+      <nav aria-label="Navegación principal">
+        <a href="/">Inicio</a>
+        <a href="/#catalogView">Vehículos</a>
+        <a class="active" href="./cuotas.html">Cuotas</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="sales-ticker" aria-hidden="true">
+    <div class="sales-ticker-track">
+      <div class="sales-ticker-group">
+        <span class="sales-ticker-item">Financiación disponible</span>
+        <span class="sales-ticker-item">Cuotas fijas</span>
+        <span class="sales-ticker-item">Solo con DNI</span>
+        <span class="sales-ticker-item">Tomamos permutas</span>
+        <span class="sales-ticker-item">Gestoría propia</span>
+      </div>
+      <div class="sales-ticker-group">
+        <span class="sales-ticker-item">Financiación disponible</span>
+        <span class="sales-ticker-item">Cuotas fijas</span>
+        <span class="sales-ticker-item">Solo con DNI</span>
+        <span class="sales-ticker-item">Tomamos permutas</span>
+        <span class="sales-ticker-item">Gestoría propia</span>
+      </div>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="shell hero-grid">
+      <div>
+        <span class="eyebrow">Calculadora de financiación</span>
+        <h1>Conocé tus cuotas antes de elegir el vehículo.</h1>
+        <p>Seleccioná el año e ingresá el capital que necesitás financiar. La herramienta calcula automáticamente opciones estimadas a 12, 18 y 24 meses.</p>
+      </div>
+
+      <aside class="hero-note">
+        <strong>Simulación rápida</strong>
+        <span>Los valores son orientativos y quedan sujetos a evaluación y aprobación crediticia.</span>
+      </aside>
+    </div>
+  </section>
+
+  <main>
+    <div class="shell calculator-wrap">
+      <section class="calculator-card">
+        <div class="calculator-head">
+          <div>
+            <h2>Calculá la financiación</h2>
+            <p>Completá ambos campos para obtener las cuotas estimadas.</p>
+          </div>
+          <span class="source-badge">Producto propio · Enero 2026</span>
+        </div>
+
+        <div class="calculator">
+          <div class="form-grid">
+            <div>
+              <label for="year">Año del vehículo</label>
+              <select id="year" aria-label="Año del vehículo">
+                <option value="">Seleccionar año</option>
+              </select>
+              <span class="hint">Disponible para modelos 2012 en adelante.</span>
+            </div>
+
+            <div>
+              <label for="amount">Monto necesario</label>
+              <div class="money-wrap">
+                <span class="money-symbol">$</span>
+                <input
+                  id="amount"
+                  class="money-input"
+                  type="text"
+                  inputmode="numeric"
+                  autocomplete="off"
+                  placeholder="Ej.: 7.500.000"
+                  aria-label="Monto necesario">
+              </div>
+              <span class="hint">Tabla de referencia: $1.000.000 a $12.500.000.</span>
+            </div>
+
+            <button class="calculate" id="calculate" type="button">Calcular cuotas</button>
+          </div>
+
+          <div id="status" class="status" role="alert"></div>
+
+          <div class="results" aria-live="polite">
+            <article class="result-card empty">
+              <div class="term">12 cuotas</div>
+              <div class="installment" id="q12">—</div>
+              <div class="per-month">por mes</div>
+              <div class="total">Total estimado<strong id="t12">—</strong></div>
+            </article>
+
+            <article class="result-card empty">
+              <div class="term">18 cuotas</div>
+              <div class="installment" id="q18">—</div>
+              <div class="per-month">por mes</div>
+              <div class="total">Total estimado<strong id="t18">—</strong></div>
+            </article>
+
+            <article class="result-card empty">
+              <div class="term">24 cuotas</div>
+              <div class="installment" id="q24">—</div>
+              <div class="per-month">por mes</div>
+              <div class="total">Total estimado<strong id="t24">—</strong></div>
+            </article>
+          </div>
+
+          <div class="summary">
+            <div class="summary-item">
+              <span>Categoría aplicada</span>
+              <strong id="category">Sin calcular</strong>
+            </div>
+            <div class="summary-item">
+              <span>Capital solicitado</span>
+              <strong id="capital">—</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="benefits">
+        <div class="benefits-head">
+          <h2>Financiación simple y acompañada.</h2>
+          <p>La simulación sirve como referencia inicial. El equipo de LMP Autos puede ayudarte a revisar las opciones disponibles para cada vehículo.</p>
+        </div>
+
+        <div class="benefits-grid">
+          <div class="benefit">
+            <div class="benefit-icon">$</div>
+            <strong>Cuotas estimadas</strong>
+            <span>Opciones a 12, 18 y 24 meses según el año.</span>
+          </div>
+          <div class="benefit">
+            <div class="benefit-icon">DNI</div>
+            <strong>Gestión simple</strong>
+            <span>Consultá alternativas de financiación solo con DNI.</span>
+          </div>
+          <div class="benefit">
+            <div class="benefit-icon">↔</div>
+            <strong>Tomamos permutas</strong>
+            <span>Tu vehículo puede formar parte de la operación.</span>
+          </div>
+          <div class="benefit">
+            <div class="benefit-icon">⌖</div>
+            <strong>Agencia física</strong>
+            <span>Av. Mosconi 799, Lomas del Mirador.</span>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="shell footer-inner">
+      <div class="footer-brand">
+        <strong>LMP Autos</strong>
+        <span>Av. Mosconi 799 · WhatsApp 11-3262-7744</span>
+      </div>
+
+      <div class="footer-links">
+        <a href="https://wa.me/5491132627744" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://share.google/fCKD7WCnOfEI4F2ut" target="_blank" rel="noopener">Google Maps</a>
+        <a href="/">Volver al catálogo</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+const COEFFICIENTS = {
+      recent: {
+        label: "Año 0 km – 2022",
+        minYear: 2022,
+        values: {12: 141.1865, 18: 112.0183, 24: 97.7338}
+      },
+      middle: {
+        label: "Año 2021 – 2017",
+        minYear: 2017,
+        maxYear: 2021,
+        values: {12: 144.9422, 18: 116.0522, 24: 102.8805}
+      },
+      older: {
+        label: "Año 2016 – 2012",
+        minYear: 2012,
+        maxYear: 2016,
+        values: {12: 147.2213, 18: 118.4918, 24: 105.4913}
+      }
+    };
+
+    const yearSelect = document.getElementById("year");
+    const amountInput = document.getElementById("amount");
+    const calculateButton = document.getElementById("calculate");
+    const statusBox = document.getElementById("status");
+    const resultCards = [...document.querySelectorAll(".result-card")];
+
+    const currentYear = new Date().getFullYear();
+    for (let year = currentYear; year >= 2012; year--) {
+      const option = document.createElement("option");
+      option.value = String(year);
+      option.textContent = year === currentYear ? `${year} / 0 km` : String(year);
+      yearSelect.appendChild(option);
+    }
+
+    const currency = new Intl.NumberFormat("es-AR", {
+      style: "currency",
+      currency: "ARS",
+      maximumFractionDigits: 0
+    });
+
+    const number = new Intl.NumberFormat("es-AR", {
+      maximumFractionDigits: 0
+    });
+
+    function parseAmount(value) {
+      const digits = String(value).replace(/\D/g, "");
+      return digits ? Number(digits) : 0;
+    }
+
+    function formatInput() {
+      const amount = parseAmount(amountInput.value);
+      amountInput.value = amount ? number.format(amount) : "";
+    }
+
+    function getCategory(year) {
+      if (year >= 2022) return COEFFICIENTS.recent;
+      if (year >= 2017) return COEFFICIENTS.middle;
+      if (year >= 2012) return COEFFICIENTS.older;
+      return null;
+    }
+
+    function showStatus(message, type) {
+      statusBox.textContent = message;
+      statusBox.className = `status show ${type}`;
+    }
+
+    function clearStatus() {
+      statusBox.textContent = "";
+      statusBox.className = "status";
+    }
+
+    function resetResults() {
+      [12,18,24].forEach(term => {
+        document.getElementById(`q${term}`).textContent = "—";
+        document.getElementById(`t${term}`).textContent = "—";
+      });
+      document.getElementById("category").textContent = "Sin calcular";
+      document.getElementById("capital").textContent = "—";
+      resultCards.forEach(card => card.classList.add("empty"));
+    }
+
+    function calculate() {
+      clearStatus();
+
+      const year = Number(yearSelect.value);
+      const amount = parseAmount(amountInput.value);
+
+      if (!year) {
+        resetResults();
+        showStatus("Seleccioná el año del vehículo.", "error");
+        yearSelect.focus();
+        return;
+      }
+
+      if (!amount) {
+        resetResults();
+        showStatus("Ingresá el monto que necesitás financiar.", "error");
+        amountInput.focus();
+        return;
+      }
+
+      const category = getCategory(year);
+      if (!category) {
+        resetResults();
+        showStatus("La tabla disponible contempla vehículos desde el año 2012.", "error");
+        return;
+      }
+
+      if (amount < 1000000 || amount > 12500000) {
+        showStatus(
+          "El monto ingresado está fuera del rango publicado de $1.000.000 a $12.500.000. El resultado se calcula por proporcionalidad y requiere validación comercial.",
+          "warn"
+        );
+      }
+
+      [12,18,24].forEach(term => {
+        const installment = Math.round((amount / 1000) * category.values[term]);
+        const total = installment * term;
+        document.getElementById(`q${term}`).textContent = currency.format(installment);
+        document.getElementById(`t${term}`).textContent = currency.format(total);
+      });
+
+      document.getElementById("category").textContent = category.label;
+      document.getElementById("capital").textContent = currency.format(amount);
+      resultCards.forEach(card => card.classList.remove("empty"));
+    }
+
+    amountInput.addEventListener("input", formatInput);
+    amountInput.addEventListener("keydown", event => {
+      if (event.key === "Enter") calculate();
+    });
+    yearSelect.addEventListener("change", () => {
+      if (amountInput.value) calculate();
+    });
+    calculateButton.addEventListener("click", calculate);
+
+    resetResults();
+  </script>
+</body>
+</html>
