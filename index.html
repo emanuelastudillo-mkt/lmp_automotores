@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
-<meta name="lmp-build" content="portadas-locales-financiacion-nav-2026-07-03">
+<meta name="lmp-build" content="portadas-webp-banner-webp-carga-prioritaria-2026-07-03">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   
   <!-- Meta Pixel Code -->
@@ -272,6 +272,9 @@ fbq('track', 'PageView');
     .detail-btn{background:#111;color:#fff;border:0;padding:12px;border-radius:12px;font-weight:800;cursor:pointer}
     .ig-btn{border:1px solid var(--line);background:#fff;border-radius:12px;padding:12px 14px;font-weight:900}
     .empty{grid-column:1/-1;text-align:center;padding:60px 20px;background:#fff;border:1px dashed #c9c9c3;border-radius:20px;color:var(--muted)}
+    .empty small{display:block;margin-top:8px;line-height:1.45}
+    .retry-catalog{margin-top:16px;border:0;border-radius:999px;background:#111;color:#fff;padding:11px 16px;font-weight:950;cursor:pointer}
+    .retry-catalog:hover{background:#2a2a2a;transform:translateY(-1px)}
     .loading{grid-column:1/-1;padding:70px;text-align:center;color:var(--muted)}
     .spinner{width:32px;height:32px;border:3px solid #ddd;border-top-color:#222;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 14px}
     @keyframes spin{to{transform:rotate(360deg)}}
@@ -955,7 +958,7 @@ const CONFIG = {
   // Debe consultarse desde un backend seguro; no expongas tokens de Meta en este HTML.
   instagramFollowersApi: "",
   bannerInterval: 6500,
-  bannerBases: ["./banner-1"]
+  bannerBases: ["./banner-1.webp"]
 };
 
 let vehicles = [];
@@ -970,7 +973,7 @@ const $$ = s => [...document.querySelectorAll(s)];
 
 let bannerIndex=0;
 let bannerTimer=null;
-const bannerExtensions=['.webp','.jpg','.jpeg','.png',''];
+const bannerExtensions=[''];
 
 function bannerImageMarkup(base,index){
   return `<img
@@ -1444,26 +1447,31 @@ function coverCandidates(v){
   const candidates=[];
 
   if(id){
-    ['webp','jpg','jpeg','png'].forEach(ext=>{
-      candidates.push(`./img/vehiculos/${id}.${ext}`);
-    });
+    candidates.push(`./img/vehiculos/${id}.webp`);
   }
 
-  if(v.fotos && v.fotos[0]) candidates.push(v.fotos[0]);
+  if(v.fotos && v.fotos[0]){
+    candidates.push(v.fotos[0]);
+  }
 
   return [...new Set(candidates.filter(Boolean))];
 }
-function coverImageMarkup(v){
+function coverImageMarkup(v,index=0){
   const candidates=coverCandidates(v);
 
   if(!candidates.length){
     return `<div class="photo-empty">Fotos próximamente</div>`;
   }
 
+  const priority=index<6;
+  const fetchPriority=index<3?'high':'auto';
+
   return `<img
     src="${escapeAttr(candidates[0])}"
     alt="${escapeAttr(v.marca+' '+v.modelo)}"
-    loading="lazy"
+    loading="${priority?'eager':'lazy'}"
+    decoding="async"
+    fetchpriority="${fetchPriority}"
     data-cover-candidates="${escapeAttr(JSON.stringify(candidates))}"
     data-cover-index="0"
     onerror="nextCoverCandidate(this)">`;
@@ -1488,7 +1496,7 @@ function nextCoverCandidate(img){
 function card(v,index=0){
   return `<article class="vehicle" style="--delay:${Math.min(index,8)*45}ms">
     <div class="photo">
-      ${coverImageMarkup(v)}
+      ${coverImageMarkup(v,index)}
       <div class="badge-stack">${badgeItems(v).map(item=>`<span class="badge ${item.className}">${escapeHtml(item.text)}</span>`).join('')}</div>
     </div>
     <div class="body">
@@ -2210,10 +2218,12 @@ async function loadData(){
     }
   }catch(err){
     console.error('Error de conexión con Google Sheets:',err);
-    const error=`<div class="empty"><strong>No se pudo leer Google Sheets.</strong><br><small>${escapeHtml(err.message)}</small></div>`;
+    const message=escapeHtml(err.message||'Revisá la conexión, la publicación de la hoja o intentá nuevamente.');
+    const error=`<div class="empty"><strong>No se pudo cargar el catálogo.</strong><small>${message}</small><button class="retry-catalog" type="button">Reintentar</button></div>`;
     $('#featuredGrid').innerHTML=error;
     $('#catalogGrid').innerHTML=error;
     $('#resultCount').textContent='No se pudo cargar el catálogo';
+    $$('.retry-catalog').forEach(button=>button.addEventListener('click',loadData));
   }
 }
 
@@ -2275,11 +2285,27 @@ document.addEventListener('keydown',e=>{
     if(e.key==='ArrowRight') moveGallery(1);
   }
 });
-renderBannerCarousel();
-$('#bannerPrev').onclick=()=>showBanner(bannerIndex-1,true);
-$('#bannerNext').onclick=()=>showBanner(bannerIndex+1,true);
-loadInstagramFollowers();
 loadData();
+
+setTimeout(()=>{
+  try{
+    renderBannerCarousel();
+
+    const bannerPrev=$('#bannerPrev');
+    const bannerNext=$('#bannerNext');
+
+    if(bannerPrev)bannerPrev.onclick=()=>showBanner(bannerIndex-1,true);
+    if(bannerNext)bannerNext.onclick=()=>showBanner(bannerIndex+1,true);
+  }catch(error){
+    console.error('No se pudo iniciar el banner:',error);
+  }
+
+  try{
+    loadInstagramFollowers();
+  }catch(error){
+    console.error('No se pudo iniciar el contador de seguidores:',error);
+  }
+},0);
 </script>
 </body>
 </html>
