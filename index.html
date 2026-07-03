@@ -9,6 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
+<meta name="lmp-build" content="portadas-locales-financiacion-nav-2026-07-03">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   
   <!-- Meta Pixel Code -->
@@ -87,8 +88,8 @@ fbq('track', 'PageView');
     .instagram-pill-text strong{font-size:13px}
     .instagram-pill-text span{font-size:10px;color:#c7c7c7;margin-top:3px}
     nav{display:flex;gap:8px}
-    nav button{border:0;background:transparent;color:#bfbfbf;padding:10px 14px;border-radius:12px;cursor:pointer;font-weight:700}
-    nav button.active,nav button:hover{background:#272727;color:#fff}
+    nav button,nav a{border:0;background:transparent;color:#bfbfbf;padding:10px 14px;border-radius:12px;cursor:pointer;font-weight:700;text-decoration:none;display:inline-flex;align-items:center}
+    nav button.active,nav button:hover,nav a:hover{background:#272727;color:#fff}
 
     .sales-ticker{overflow:hidden;background:var(--accent);color:#fff;border-bottom:1px solid rgba(255,255,255,.13)}
     .sales-ticker-track{display:flex;width:max-content;animation:tickerMove 28s linear infinite;will-change:transform}
@@ -678,7 +679,7 @@ fbq('track', 'PageView');
       .instagram-pill-text strong{font-size:12px}
       .instagram-pill-text span{display:none}
       nav{gap:2px}
-      nav button{padding:9px 8px;font-size:12px}
+      nav button,nav a{padding:9px 8px;font-size:12px}
       .banner-carousel{height:clamp(280px,72vw,460px)}
       .banner-content{width:min(100% - 24px,1180px);padding-bottom:34px}
       .banner-content h1{font-size:clamp(34px,10vw,52px);max-width:90%;margin-bottom:16px}
@@ -772,6 +773,7 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
       <nav>
         <button class="active" data-view="home">Inicio</button>
         <button data-view="catalog">Vehículos</button>
+        <a href="./cuotas.html">Financiación</a>
       </nav>
     </div>
   </div>
@@ -1433,11 +1435,60 @@ function badgeItems(v){
   else if(v.anticipo) items.push({text:'Financiación',className:'feature'});
   return items.slice(0,2);
 }
+
+function vehicleCoverId(v){
+  return clean(v.id).replace(/\.[a-z0-9]+$/i,'').replace(/[^a-z0-9_-]/gi,'');
+}
+function coverCandidates(v){
+  const id=vehicleCoverId(v);
+  const candidates=[];
+
+  if(id){
+    ['webp','jpg','jpeg','png'].forEach(ext=>{
+      candidates.push(`./img/vehiculos/${id}.${ext}`);
+    });
+  }
+
+  if(v.fotos && v.fotos[0]) candidates.push(v.fotos[0]);
+
+  return [...new Set(candidates.filter(Boolean))];
+}
+function coverImageMarkup(v){
+  const candidates=coverCandidates(v);
+
+  if(!candidates.length){
+    return `<div class="photo-empty">Fotos próximamente</div>`;
+  }
+
+  return `<img
+    src="${escapeAttr(candidates[0])}"
+    alt="${escapeAttr(v.marca+' '+v.modelo)}"
+    loading="lazy"
+    data-cover-candidates="${escapeAttr(JSON.stringify(candidates))}"
+    data-cover-index="0"
+    onerror="nextCoverCandidate(this)">`;
+}
+function nextCoverCandidate(img){
+  try{
+    const candidates=JSON.parse(img.dataset.coverCandidates||'[]');
+    const nextIndex=(Number(img.dataset.coverIndex)||0)+1;
+
+    if(nextIndex<candidates.length){
+      img.dataset.coverIndex=String(nextIndex);
+      img.src=candidates[nextIndex];
+      return;
+    }
+  }catch(error){
+    console.warn('No se pudo cargar la portada local:',error);
+  }
+
+  img.outerHTML='<div class="photo-empty">Imagen no disponible</div>';
+}
+
 function card(v,index=0){
-  const img=v.fotos[0];
   return `<article class="vehicle" style="--delay:${Math.min(index,8)*45}ms">
     <div class="photo">
-      ${img?`<img src="${escapeAttr(img)}" alt="${escapeAttr(v.marca+' '+v.modelo)}" loading="lazy" onerror="this.outerHTML='<div class=&quot;photo-empty&quot;>Imagen no disponible</div>'">`:`<div class="photo-empty">Fotos próximamente</div>`}
+      ${coverImageMarkup(v)}
       <div class="badge-stack">${badgeItems(v).map(item=>`<span class="badge ${item.className}">${escapeHtml(item.text)}</span>`).join('')}</div>
     </div>
     <div class="body">
