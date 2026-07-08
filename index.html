@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
-<meta name="lmp-build" content="portadas-webp-banner-webp-carga-prioritaria-2026-07-03">
+<meta name="lmp-build" content="estado-reservado-badge-amarillo-2026-07-03">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   
   <!-- Meta Pixel Code -->
@@ -250,6 +250,7 @@ fbq('track', 'PageView');
     .badge-stack{position:absolute;top:12px;left:12px;right:12px;display:flex;flex-wrap:wrap;gap:6px;z-index:2}
     .badge{position:static;background:rgba(15,15,15,.86);color:#fff;padding:7px 9px;border-radius:999px;font-size:10px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;box-shadow:0 3px 10px rgba(0,0,0,.12)}
     .badge.preparando{background:#8a6200}
+    .badge.reservado{background:#ffd43b;color:#171717;box-shadow:0 3px 12px rgba(255,212,59,.28)}
     .badge.hot{background:var(--accent)}
     .badge.feature{background:rgba(255,255,255,.92);color:#171717}
     .body{padding:18px}
@@ -1426,16 +1427,36 @@ function isAutomatic(v){
 function hasGnc(v){
   return /GNC/i.test(normalize(v.combustible));
 }
+function badgeFromStatus(status){
+  const normalized=normalize(status);
+
+  if(normalized==='RESERVADO'){
+    return {text:'Reservado',className:'reservado'};
+  }
+
+  if(normalized==='PREPARANDO'){
+    return {text:'Preparando',className:'preparando'};
+  }
+
+  if(normalized==='DISPONIBLE'){
+    return {text:'Disponible',className:''};
+  }
+
+  return {
+    text:clean(status).toLowerCase().replace(/(^|\s)\S/g,letter=>letter.toUpperCase()) || 'Disponible',
+    className:''
+  };
+}
+
 function badgeItems(v){
   const stats=vehicleStats[v.id]||{};
-  const items=[{
-    text:v.estado==='PREPARANDO'?'Preparando':'Disponible',
-    className:v.estado==='PREPARANDO'?'preparando':''
-  }];
+  const items=[badgeFromStatus(v.estado)];
+
   if(Number(stats.score)>0) items.push({text:'Más consultado',className:'hot'});
   else if(isAutomatic(v)) items.push({text:'Automático',className:'feature'});
   else if(hasGnc(v)) items.push({text:'GNC',className:'feature'});
   else if(v.anticipo) items.push({text:'Financiación',className:'feature'});
+
   return items.slice(0,2);
 }
 
