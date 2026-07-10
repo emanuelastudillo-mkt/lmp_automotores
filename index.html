@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
-<meta name="lmp-build" content="popup-mobile-mas-compacto-2026-07-03">
+<meta name="lmp-build" content="popup-mobile-foto-prioritaria-2026-07-03">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   
   <!-- Meta Pixel Code -->
@@ -1511,6 +1511,54 @@ fbq('track', 'PageView');
       }
     }
 
+
+    /* Popup mobile: foto prioritaria, sin texto redundante */
+    @media(max-width:760px){
+      .featured-popup-media{
+        min-height:260px;
+        max-height:330px;
+      }
+      .featured-popup-media img{
+        object-fit:cover;
+        object-position:center center;
+      }
+      .featured-popup-content{
+        padding:12px 13px 13px;
+      }
+      .featured-popup-kicker,
+      .featured-popup-content h2,
+      .featured-popup-specs{
+        display:none !important;
+      }
+      .featured-popup-prices{
+        grid-template-columns:1fr 1fr;
+        gap:7px;
+        margin-top:0;
+      }
+      .featured-popup-price{
+        padding:9px 10px;
+      }
+      .featured-popup-price strong{
+        font-size:16px;
+      }
+      .featured-popup-countdown{
+        margin-top:9px;
+      }
+      .featured-popup-actions{
+        margin-top:10px;
+      }
+    }
+
+    @media(max-width:390px){
+      .featured-popup-media{
+        min-height:230px;
+        max-height:295px;
+      }
+      .featured-popup-price strong{
+        font-size:15px;
+      }
+    }
+
 </style>
 </head>
 <body>
@@ -1641,7 +1689,7 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
 
 
 <div class="featured-popup" id="featuredPopup" aria-hidden="true">
-  <section class="featured-popup-panel" role="dialog" aria-modal="true" aria-labelledby="featuredPopupTitle">
+  <section class="featured-popup-panel" role="dialog" aria-modal="true" aria-label="Vehículo destacado">
     <button class="featured-popup-close" id="featuredPopupClose" type="button" aria-label="Cerrar destacado">×</button>
     <div id="featuredPopupBody"></div>
   </section>
@@ -2416,11 +2464,6 @@ function featuredPopupMarkup(v){
     </div>
 
     <div class="featured-popup-content">
-      <span class="featured-popup-kicker">Oportunidad destacada</span>
-      <h2 id="featuredPopupTitle">${escapeHtml(v.marca)} ${escapeHtml(v.modelo)}</h2>
-
-      <div class="featured-popup-specs">${specs}</div>
-
       <div class="featured-popup-prices">
         ${v.cotizacion?`<div class="featured-popup-price"><span>Valor total</span><strong>${escapeHtml(money(v.cotizacion))}</strong></div>`:''}
         ${v.anticipo?`<div class="featured-popup-price"><span>Anticipo desde</span><strong>${escapeHtml(v.anticipo)}</strong></div>`:''}
