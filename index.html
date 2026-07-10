@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
-<meta name="lmp-build" content="estado-con-descuento-badge-grande-2026-07-03">
+<meta name="lmp-build" content="popup-destacado-contador-reservalo-2026-07-03">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   
   <!-- Meta Pixel Code -->
@@ -956,6 +956,83 @@ fbq('track', 'PageView');
       .featured-popup-actions{grid-template-columns:1fr}
     }
 
+
+    .featured-popup-countdown{
+      margin:18px 0 0;
+      padding:14px;
+      border:2px solid #ffd43b;
+      border-radius:17px;
+      background:linear-gradient(135deg,#fff9d8,#fff);
+      box-shadow:0 12px 28px rgba(255,212,59,.22)
+    }
+    .featured-popup-countdown-label{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      color:#171717;
+      font-size:10px;
+      font-weight:950;
+      letter-spacing:.1em;
+      text-transform:uppercase
+    }
+    .featured-popup-countdown-label strong{
+      padding:6px 9px;
+      border-radius:999px;
+      background:#171717;
+      color:#ffd43b;
+      white-space:nowrap
+    }
+    .featured-popup-countdown-time{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:7px;
+      margin-top:10px
+    }
+    .featured-popup-countdown-time div{
+      min-width:0;
+      padding:9px 7px;
+      border-radius:12px;
+      background:#171717;
+      color:#fff;
+      text-align:center
+    }
+    .featured-popup-countdown-time strong{
+      display:block;
+      font-size:22px;
+      line-height:1;
+      letter-spacing:-.04em
+    }
+    .featured-popup-countdown-time span{
+      display:block;
+      margin-top:4px;
+      color:#cfcfcf;
+      font-size:8px;
+      font-weight:850;
+      letter-spacing:.06em;
+      text-transform:uppercase
+    }
+    .featured-popup-deadline{
+      display:block;
+      margin-top:8px;
+      color:#555;
+      font-size:11px;
+      line-height:1.4
+    }
+    .featured-popup-countdown.expired{
+      border-color:#d2d2cc;
+      background:#f5f5f2;
+      box-shadow:none
+    }
+    .featured-popup-countdown.expired .featured-popup-countdown-label strong{
+      background:#555;
+      color:#fff
+    }
+    @media(max-width:760px){
+      .featured-popup-countdown-time strong{font-size:19px}
+      .featured-popup-countdown-label{align-items:flex-start;flex-direction:column}
+    }
+
 </style>
 </head>
 <body>
@@ -1746,6 +1823,66 @@ function nextCoverCandidate(img){
 }
 
 
+
+const FEATURED_POPUP_DEADLINE = '2026-07-13T18:00:00-03:00';
+let featuredPopupCountdownTimer = null;
+
+function countdownParts(deadline){
+  const total=Math.max(0,new Date(deadline).getTime()-Date.now());
+  const seconds=Math.floor(total/1000);
+  const days=Math.floor(seconds/86400);
+  const hours=Math.floor((seconds%86400)/3600);
+  const minutes=Math.floor((seconds%3600)/60);
+  const secs=seconds%60;
+
+  return {total,days,hours,minutes,seconds:secs};
+}
+
+function renderFeaturedPopupCountdown(){
+  const box=$('#featuredPopupCountdown');
+  if(!box)return;
+
+  const parts=countdownParts(FEATURED_POPUP_DEADLINE);
+  const pad=value=>String(value).padStart(2,'0');
+
+  if(parts.total<=0){
+    box.classList.add('expired');
+    box.innerHTML=`<div class="featured-popup-countdown-label">
+      <span>Promoción finalizada</span>
+      <strong>Consultá disponibilidad</strong>
+    </div>
+    <small class="featured-popup-deadline">La condición especial vencía el lunes 13 a las 18 hs.</small>`;
+    return;
+  }
+
+  box.classList.remove('expired');
+  box.innerHTML=`<div class="featured-popup-countdown-label">
+    <span>Reservalo antes de que venza</span>
+    <strong>RESERVALO</strong>
+  </div>
+  <div class="featured-popup-countdown-time" aria-label="Tiempo restante de la promoción">
+    <div><strong>${pad(parts.days)}</strong><span>Días</span></div>
+    <div><strong>${pad(parts.hours)}</strong><span>Horas</span></div>
+    <div><strong>${pad(parts.minutes)}</strong><span>Min</span></div>
+    <div><strong>${pad(parts.seconds)}</strong><span>Seg</span></div>
+  </div>
+  <small class="featured-popup-deadline">Vence el lunes 13 a las 18 hs.</small>`;
+}
+
+function startFeaturedPopupCountdown(){
+  stopFeaturedPopupCountdown();
+  renderFeaturedPopupCountdown();
+  featuredPopupCountdownTimer=setInterval(renderFeaturedPopupCountdown,1000);
+}
+
+function stopFeaturedPopupCountdown(){
+  if(featuredPopupCountdownTimer){
+    clearInterval(featuredPopupCountdownTimer);
+    featuredPopupCountdownTimer=null;
+  }
+}
+
+
 function featuredPopupVehicle(){
   return vehicles.find(v=>v.destacadoPopup && v.estado!=='VENDIDO') || null;
 }
@@ -1787,12 +1924,14 @@ function featuredPopupMarkup(v){
       </div>
 
       <p class="featured-popup-text">
-        Unidad destacada del catálogo. Podés ver la ficha completa, fotos, financiación y contacto directo por WhatsApp.
+        Unidad destacada del catálogo con condición especial por tiempo limitado.
       </p>
+
+      <div class="featured-popup-countdown" id="featuredPopupCountdown" aria-live="polite"></div>
 
       <div class="featured-popup-actions">
         <button class="featured-popup-view" type="button" data-featured-view="${escapeAttr(v.id)}">Ver ficha</button>
-        <a class="featured-popup-wa" href="${escapeAttr((CONFIG.whatsapp?`https://wa.me/${CONFIG.whatsapp}`:'https://wa.me/')+'?text='+encodeURIComponent(`Hola quisiera mas informacion del ${v.modelo} ${v.anio||''}`))}" target="_blank" rel="noopener">Consultar</a>
+        <a class="featured-popup-wa" href="${escapeAttr((CONFIG.whatsapp?`https://wa.me/${CONFIG.whatsapp}`:'https://wa.me/')+'?text='+encodeURIComponent(`Hola, quiero reservar el ${v.modelo} ${v.anio||''} antes de que venza la promoción.`))}" target="_blank" rel="noopener">RESERVALO</a>
       </div>
     </div>
   </div>`;
@@ -1808,6 +1947,7 @@ function openFeaturedPopup(v){
   popup.setAttribute('aria-hidden','false');
   document.body.style.overflow='hidden';
   markFeaturedPopupSeen();
+  startFeaturedPopupCountdown();
 
   const viewButton=body.querySelector('[data-featured-view]');
   if(viewButton){
@@ -1828,6 +1968,7 @@ function closeFeaturedPopup(){
 
   popup.classList.remove('open');
   popup.setAttribute('aria-hidden','true');
+  stopFeaturedPopupCountdown();
 
   const modal=$('#vehicleModal');
   const lightbox=$('#photoLightbox');
