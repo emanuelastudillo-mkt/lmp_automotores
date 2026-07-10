@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
-<meta name="lmp-build" content="mobile-portada-header-fix-2026-07-03">
+<meta name="lmp-build" content="popup-destacado-aleatorio-2026-07-03">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   
   <!-- Meta Pixel Code -->
@@ -2226,7 +2226,32 @@ function stopFeaturedPopupCountdown(){
 
 
 function featuredPopupVehicle(){
-  return vehicles.find(v=>v.destacadoPopup && v.estado!=='VENDIDO') || null;
+  const featured=vehicles.filter(v=>v.destacadoPopup && v.estado!=='VENDIDO');
+
+  if(!featured.length){
+    return null;
+  }
+
+  if(featured.length===1){
+    return featured[0];
+  }
+
+  try{
+    const storedId=sessionStorage.getItem('lmp_featured_popup_vehicle_id');
+    const storedVehicle=featured.find(v=>v.id===storedId);
+
+    if(storedVehicle){
+      return storedVehicle;
+    }
+  }catch(_){}
+
+  const selected=featured[Math.floor(Math.random()*featured.length)];
+
+  try{
+    sessionStorage.setItem('lmp_featured_popup_vehicle_id',selected.id);
+  }catch(_){}
+
+  return selected;
 }
 function shouldShowFeaturedPopup(){
   try{
