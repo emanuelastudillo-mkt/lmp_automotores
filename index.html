@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
-<meta name="lmp-build" content="popup-destacado-contador-reservalo-2026-07-03">
+<meta name="lmp-build" content="mobile-catalogo-popup-compacto-2026-07-03">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   
   <!-- Meta Pixel Code -->
@@ -1031,6 +1031,272 @@ fbq('track', 'PageView');
     @media(max-width:760px){
       .featured-popup-countdown-time strong{font-size:19px}
       .featured-popup-countdown-label{align-items:flex-start;flex-direction:column}
+    }
+
+
+    /* Ajuste mobile compacto: más datos visibles sin abrir la ficha */
+    @media(max-width:620px){
+      .grid{
+        gap:12px;
+      }
+      .vehicle{
+        display:grid;
+        grid-template-columns:38% 62%;
+        min-height:176px;
+        border-radius:18px;
+      }
+      .vehicle:hover{
+        transform:none;
+        box-shadow:0 8px 28px rgba(0,0,0,.045);
+      }
+      .vehicle .photo{
+        aspect-ratio:auto;
+        min-height:100%;
+        height:100%;
+      }
+      .vehicle .photo img{
+        object-fit:cover;
+      }
+      .vehicle .badge-stack{
+        top:7px;
+        left:7px;
+        right:7px;
+        gap:4px;
+        align-items:flex-start;
+      }
+      .vehicle .badge{
+        padding:5px 7px;
+        font-size:8px;
+        line-height:1.05;
+        box-shadow:0 3px 8px rgba(0,0,0,.14);
+      }
+      .vehicle .badge.descuento{
+        padding:6px 8px;
+        font-size:9px;
+        border-width:1px;
+        letter-spacing:.05em;
+        box-shadow:0 7px 15px rgba(255,212,59,.32),0 2px 0 rgba(17,17,17,.18);
+      }
+      .vehicle .body{
+        padding:11px 10px 10px;
+        min-width:0;
+      }
+      .vehicle .make{
+        font-size:9px;
+        letter-spacing:.07em;
+      }
+      .vehicle h3{
+        margin:4px 0 7px;
+        font-size:15px;
+        line-height:1.12;
+        letter-spacing:-.025em;
+      }
+      .vehicle .meta{
+        gap:4px;
+        margin:0 0 7px;
+      }
+      .vehicle .meta span{
+        padding:4px 6px;
+        font-size:9px;
+        gap:4px;
+      }
+      .vehicle .meta svg{
+        width:12px;
+        height:12px;
+      }
+      .vehicle .price-stack{
+        gap:5px;
+      }
+      .vehicle .price-box{
+        padding:7px 8px;
+        border-radius:10px;
+      }
+      .vehicle .price-label{
+        font-size:8px;
+        letter-spacing:.045em;
+      }
+      .vehicle .price{
+        margin-top:1px;
+        font-size:15px;
+        line-height:1.08;
+        gap:3px;
+      }
+      .vehicle .price svg{
+        width:13px;
+        height:13px;
+      }
+      .vehicle .price-prefix{
+        font-size:9px;
+        margin-right:2px;
+      }
+      .vehicle .advance{
+        margin-top:6px;
+        font-size:10px;
+        line-height:1.25;
+      }
+      .vehicle .card-benefits{
+        display:none;
+      }
+      .vehicle .card-actions{
+        grid-template-columns:1fr auto;
+        gap:6px;
+        margin-top:8px;
+      }
+      .vehicle .detail-btn,
+      .vehicle .ig-btn{
+        padding:8px 9px;
+        border-radius:10px;
+        font-size:11px;
+      }
+    }
+
+    /* Popup destacado compacto en teléfonos */
+    @media(max-width:760px){
+      .featured-popup{
+        align-items:flex-start;
+        padding:8px;
+        overflow:auto;
+      }
+      .featured-popup-panel{
+        width:100%;
+        max-height:calc(100dvh - 16px);
+        border-radius:20px;
+      }
+      .featured-popup-close{
+        right:9px;
+        top:9px;
+        width:34px;
+        height:34px;
+        font-size:20px;
+      }
+      .featured-popup-card{
+        grid-template-columns:1fr;
+        min-height:0;
+      }
+      .featured-popup-media{
+        min-height:155px;
+        max-height:185px;
+      }
+      .featured-popup-media img{
+        object-fit:cover;
+      }
+      .featured-popup-media .photo-empty{
+        min-height:155px;
+      }
+      .featured-popup-ribbon{
+        left:10px;
+        top:10px;
+        padding:6px 9px;
+        font-size:8px;
+      }
+      .featured-popup-content{
+        padding:15px 14px 14px;
+      }
+      .featured-popup-kicker{
+        font-size:9px;
+        letter-spacing:.1em;
+      }
+      .featured-popup-content h2{
+        margin-top:6px;
+        font-size:clamp(23px,7vw,30px);
+        line-height:1.02;
+      }
+      .featured-popup-specs{
+        gap:5px;
+        margin-top:10px;
+      }
+      .featured-popup-specs span{
+        padding:5px 7px;
+        font-size:9px;
+      }
+      .featured-popup-prices{
+        grid-template-columns:1fr 1fr;
+        gap:7px;
+        margin-top:11px;
+      }
+      .featured-popup-price{
+        padding:9px;
+        border-radius:12px;
+      }
+      .featured-popup-price span{
+        font-size:8px;
+        letter-spacing:.05em;
+      }
+      .featured-popup-price strong{
+        margin-top:3px;
+        font-size:14px;
+        line-height:1.08;
+      }
+      .featured-popup-text{
+        display:none;
+      }
+      .featured-popup-countdown{
+        margin-top:10px;
+        padding:9px;
+        border-radius:13px;
+      }
+      .featured-popup-countdown-label{
+        flex-direction:row;
+        align-items:center;
+        font-size:8px;
+        gap:8px;
+        letter-spacing:.06em;
+      }
+      .featured-popup-countdown-label strong{
+        padding:5px 7px;
+        font-size:8px;
+      }
+      .featured-popup-countdown-time{
+        gap:5px;
+        margin-top:7px;
+      }
+      .featured-popup-countdown-time div{
+        padding:7px 4px;
+        border-radius:9px;
+      }
+      .featured-popup-countdown-time strong{
+        font-size:16px;
+      }
+      .featured-popup-countdown-time span{
+        margin-top:3px;
+        font-size:7px;
+      }
+      .featured-popup-deadline{
+        margin-top:6px;
+        font-size:9px;
+      }
+      .featured-popup-actions{
+        grid-template-columns:1fr 1fr;
+        gap:7px;
+        margin-top:11px;
+      }
+      .featured-popup-actions button,
+      .featured-popup-actions a{
+        min-height:40px;
+        padding:9px 11px;
+        font-size:11px;
+      }
+    }
+
+    @media(max-width:390px){
+      .vehicle{
+        grid-template-columns:35% 65%;
+      }
+      .vehicle .photo{
+        min-height:168px;
+      }
+      .vehicle .body{
+        padding:10px 9px;
+      }
+      .vehicle h3{
+        font-size:14px;
+      }
+      .vehicle .price{
+        font-size:14px;
+      }
+      .vehicle .meta span{
+        font-size:8.5px;
+      }
     }
 
 </style>
