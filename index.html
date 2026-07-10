@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
-<meta name="lmp-build" content="estado-reservado-badge-amarillo-2026-07-03">
+<meta name="lmp-build" content="estado-con-descuento-badge-grande-2026-07-03">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   
   <!-- Meta Pixel Code -->
@@ -251,6 +251,21 @@ fbq('track', 'PageView');
     .badge{position:static;background:rgba(15,15,15,.86);color:#fff;padding:7px 9px;border-radius:999px;font-size:10px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;box-shadow:0 3px 10px rgba(0,0,0,.12)}
     .badge.preparando{background:#8a6200}
     .badge.reservado{background:#ffd43b;color:#171717;box-shadow:0 3px 12px rgba(255,212,59,.28)}
+    .badge.descuento{
+      background:#ffd43b;
+      color:#171717;
+      border:2px solid rgba(17,17,17,.92);
+      font-size:13px;
+      padding:10px 14px;
+      letter-spacing:.08em;
+      box-shadow:0 10px 24px rgba(255,212,59,.42),0 3px 0 rgba(17,17,17,.22);
+      transform:rotate(-2deg);
+      animation:discountBadgePulse 1.7s ease-in-out infinite
+    }
+    @keyframes discountBadgePulse{
+      0%,100%{transform:rotate(-2deg) scale(1)}
+      50%{transform:rotate(-2deg) scale(1.04)}
+    }
     .badge.hot{background:var(--accent)}
     .badge.feature{background:rgba(255,255,255,.92);color:#171717}
     .body{padding:18px}
@@ -748,7 +763,200 @@ fbq('track', 'PageView');
       .footer-map-actions{justify-content:flex-start;width:100%}
       .map-link{flex:1;justify-content:center;min-width:130px}
     }
-  </style>
+  
+    .featured-popup{
+      position:fixed;
+      inset:0;
+      z-index:260;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      background:rgba(0,0,0,.72);
+      backdrop-filter:blur(8px)
+    }
+    .featured-popup.open{display:flex}
+    .featured-popup-panel{
+      position:relative;
+      width:min(880px,100%);
+      max-height:92vh;
+      overflow:auto;
+      border-radius:26px;
+      background:#fff;
+      box-shadow:0 30px 90px rgba(0,0,0,.45);
+      animation:featuredPopupIn .22s ease both
+    }
+    @keyframes featuredPopupIn{
+      from{opacity:0;transform:translateY(16px) scale(.985)}
+      to{opacity:1;transform:translateY(0) scale(1)}
+    }
+    .featured-popup-close{
+      position:absolute;
+      right:13px;
+      top:13px;
+      z-index:3;
+      width:40px;
+      height:40px;
+      border:0;
+      border-radius:50%;
+      background:rgba(17,17,17,.9);
+      color:#fff;
+      font-size:23px;
+      cursor:pointer
+    }
+    .featured-popup-close:hover{background:#000;transform:translateY(-1px)}
+    .featured-popup-card{
+      display:grid;
+      grid-template-columns:minmax(300px,.92fr) minmax(0,1.08fr);
+      min-height:430px
+    }
+    .featured-popup-media{
+      position:relative;
+      min-height:430px;
+      background:#171717;
+      overflow:hidden
+    }
+    .featured-popup-media img{
+      width:100%;
+      height:100%;
+      position:absolute;
+      inset:0;
+      object-fit:cover;
+      object-position:center
+    }
+    .featured-popup-media .photo-empty{
+      width:100%;
+      height:100%;
+      min-height:430px;
+      display:grid;
+      place-items:center;
+      color:#ccc;
+      background:#1d1d1d
+    }
+    .featured-popup-ribbon{
+      position:absolute;
+      left:18px;
+      top:18px;
+      z-index:2;
+      padding:8px 12px;
+      border-radius:999px;
+      background:var(--accent);
+      color:#fff;
+      font-size:10px;
+      font-weight:950;
+      letter-spacing:.09em;
+      text-transform:uppercase;
+      box-shadow:0 8px 22px rgba(0,0,0,.22)
+    }
+    .featured-popup-content{
+      padding:34px 32px 30px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center
+    }
+    .featured-popup-kicker{
+      color:var(--accent);
+      font-size:11px;
+      font-weight:950;
+      letter-spacing:.12em;
+      text-transform:uppercase
+    }
+    .featured-popup-content h2{
+      margin:10px 0 0;
+      font-size:clamp(30px,4vw,46px);
+      line-height:.98;
+      letter-spacing:-.055em
+    }
+    .featured-popup-specs{
+      display:flex;
+      flex-wrap:wrap;
+      gap:7px;
+      margin:17px 0 0
+    }
+    .featured-popup-specs span{
+      padding:8px 10px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:#f7f7f4;
+      color:#555;
+      font-size:11px;
+      font-weight:800
+    }
+    .featured-popup-prices{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin:22px 0 0
+    }
+    .featured-popup-price{
+      min-width:0;
+      padding:13px;
+      border:1px solid var(--line);
+      border-radius:15px;
+      background:#f5f5f2
+    }
+    .featured-popup-price span{
+      display:block;
+      color:var(--muted);
+      font-size:10px;
+      font-weight:850;
+      letter-spacing:.07em;
+      text-transform:uppercase
+    }
+    .featured-popup-price strong{
+      display:block;
+      margin-top:5px;
+      font-size:18px;
+      letter-spacing:-.035em;
+      overflow-wrap:anywhere
+    }
+    .featured-popup-text{
+      margin:16px 0 0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.52
+    }
+    .featured-popup-actions{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:9px;
+      margin-top:23px
+    }
+    .featured-popup-actions button,
+    .featured-popup-actions a{
+      min-height:48px;
+      border-radius:999px;
+      padding:12px 15px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      font-weight:950;
+      cursor:pointer
+    }
+    .featured-popup-view{
+      border:0;
+      background:var(--accent);
+      color:#fff
+    }
+    .featured-popup-view:hover{background:var(--accent-dark);transform:translateY(-1px)}
+    .featured-popup-wa{
+      border:1px solid #111;
+      background:#111;
+      color:#fff
+    }
+    .featured-popup-wa:hover{background:#272727;transform:translateY(-1px)}
+    @media(max-width:760px){
+      .featured-popup{padding:12px}
+      .featured-popup-card{grid-template-columns:1fr;min-height:0}
+      .featured-popup-media{min-height:300px}
+      .featured-popup-media .photo-empty{min-height:300px}
+      .featured-popup-content{padding:25px 19px 21px}
+      .featured-popup-prices{grid-template-columns:1fr}
+      .featured-popup-actions{grid-template-columns:1fr}
+    }
+
+</style>
 </head>
 <body>
   
@@ -875,6 +1083,14 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
     <div class="grid" id="catalogGrid"><div class="loading"><div class="spinner"></div>Cargando stock…</div></div>
   </main>
 </section>
+
+
+<div class="featured-popup" id="featuredPopup" aria-hidden="true">
+  <section class="featured-popup-panel" role="dialog" aria-modal="true" aria-labelledby="featuredPopupTitle">
+    <button class="featured-popup-close" id="featuredPopupClose" type="button" aria-label="Cerrar destacado">×</button>
+    <div id="featuredPopupBody"></div>
+  </section>
+</div>
 
 <div class="modal" id="vehicleModal" aria-hidden="true">
   <div class="modal-panel">
@@ -1394,6 +1610,16 @@ function renderScoreGraphic(v){
     </div>
   </section>`;
 }
+function isFeaturedPopupValue(value){
+  const normalized=normalize(value);
+
+  if(!normalized || normalized==='NO' || normalized==='0' || normalized==='FALSE'){
+    return false;
+  }
+
+  return ['SI','TRUE','1','DESTACADO','POPUP','PRINCIPAL','X'].includes(normalized);
+}
+
 function mapVehicle(r){
   const firstValue=Object.values(r)[0];
   const rawId=clean(r.ID || r[' '] || r[''] || r.A || firstValue);
@@ -1406,6 +1632,7 @@ function mapVehicle(r){
     precioPublicado:clean(r['Precio publicado Uds']), precioContado:clean(r['Precio de contado Uds']),
     cotizacion:clean(r['Cotizacion al día']), maxFinan:clean(r['MAX FINAN']),
     anticipo:clean(r['Anticipo MINIMO']), estado:normalize(r['Estado actual del auto']),
+    destacadoPopup:isFeaturedPopupValue(r['Vehículo destacado'] ?? r['Vehiculo destacado'] ?? r.Destacado ?? r['Popup destacado'] ?? r['Destacado popup']),
     combustible:clean(r.Combustible), transmision:clean(r.Transmision),
     instagram:clean(r.Reel).startsWith('http')?clean(r.Reel):'',
     carpeta:clean(r['Link de fotos/videos']),
@@ -1428,7 +1655,11 @@ function hasGnc(v){
   return /GNC/i.test(normalize(v.combustible));
 }
 function badgeFromStatus(status){
-  const normalized=normalize(status);
+  const normalized=normalize(status).normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+
+  if(['CON DESCUENTO','DESCUENTO','EN DESCUENTO','PROMO','PROMOCION'].includes(normalized)){
+    return {text:'CON DESCUENTO',className:'descuento'};
+  }
 
   if(normalized==='RESERVADO'){
     return {text:'Reservado',className:'reservado'};
@@ -1513,6 +1744,114 @@ function nextCoverCandidate(img){
 
   img.outerHTML='<div class="photo-empty">Imagen no disponible</div>';
 }
+
+
+function featuredPopupVehicle(){
+  return vehicles.find(v=>v.destacadoPopup && v.estado!=='VENDIDO') || null;
+}
+function shouldShowFeaturedPopup(){
+  try{
+    return !sessionStorage.getItem('lmp_featured_popup_seen');
+  }catch(_){
+    return true;
+  }
+}
+function markFeaturedPopupSeen(){
+  try{
+    sessionStorage.setItem('lmp_featured_popup_seen','1');
+  }catch(_){}
+}
+function featuredPopupMarkup(v){
+  const specs=[
+    v.anio?`Año ${escapeHtml(v.anio)}`:'',
+    v.kilometraje?escapeHtml(km(v.kilometraje)):'',
+    v.combustible?escapeHtml(v.combustible):'',
+    v.transmision?escapeHtml(v.transmision):''
+  ].filter(Boolean).map(item=>`<span>${item}</span>`).join('');
+
+  return `<div class="featured-popup-card">
+    <div class="featured-popup-media">
+      ${coverImageMarkup(v,0)}
+      <div class="featured-popup-ribbon">Vehículo destacado</div>
+    </div>
+
+    <div class="featured-popup-content">
+      <span class="featured-popup-kicker">Oportunidad destacada</span>
+      <h2 id="featuredPopupTitle">${escapeHtml(v.marca)} ${escapeHtml(v.modelo)}</h2>
+
+      <div class="featured-popup-specs">${specs}</div>
+
+      <div class="featured-popup-prices">
+        ${v.cotizacion?`<div class="featured-popup-price"><span>Valor total</span><strong>${escapeHtml(money(v.cotizacion))}</strong></div>`:''}
+        ${v.anticipo?`<div class="featured-popup-price"><span>Anticipo desde</span><strong>${escapeHtml(v.anticipo)}</strong></div>`:''}
+      </div>
+
+      <p class="featured-popup-text">
+        Unidad destacada del catálogo. Podés ver la ficha completa, fotos, financiación y contacto directo por WhatsApp.
+      </p>
+
+      <div class="featured-popup-actions">
+        <button class="featured-popup-view" type="button" data-featured-view="${escapeAttr(v.id)}">Ver ficha</button>
+        <a class="featured-popup-wa" href="${escapeAttr((CONFIG.whatsapp?`https://wa.me/${CONFIG.whatsapp}`:'https://wa.me/')+'?text='+encodeURIComponent(`Hola quisiera mas informacion del ${v.modelo} ${v.anio||''}`))}" target="_blank" rel="noopener">Consultar</a>
+      </div>
+    </div>
+  </div>`;
+}
+function openFeaturedPopup(v){
+  const popup=$('#featuredPopup');
+  const body=$('#featuredPopupBody');
+
+  if(!popup || !body || !v)return;
+
+  body.innerHTML=featuredPopupMarkup(v);
+  popup.classList.add('open');
+  popup.setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+  markFeaturedPopupSeen();
+
+  const viewButton=body.querySelector('[data-featured-view]');
+  if(viewButton){
+    viewButton.addEventListener('click',()=>{
+      closeFeaturedPopup();
+      openVehicle(viewButton.dataset.featuredView);
+    });
+  }
+
+  const wa=body.querySelector('.featured-popup-wa');
+  if(wa){
+    wa.addEventListener('click',()=>trackEvent(v.id,'whatsapp'));
+  }
+}
+function closeFeaturedPopup(){
+  const popup=$('#featuredPopup');
+  if(!popup)return;
+
+  popup.classList.remove('open');
+  popup.setAttribute('aria-hidden','true');
+
+  const modal=$('#vehicleModal');
+  const lightbox=$('#photoLightbox');
+  if(!modal.classList.contains('open') && !lightbox.classList.contains('open')){
+    document.body.style.overflow='';
+  }
+}
+function maybeShowFeaturedPopup(){
+  const v=featuredPopupVehicle();
+
+  if(!v || !shouldShowFeaturedPopup() || currentVehicleSlugFromUrl()){
+    return;
+  }
+
+  setTimeout(()=>{
+    const vehicleModal=$('#vehicleModal');
+    const popup=$('#featuredPopup');
+
+    if(!vehicleModal.classList.contains('open') && !popup.classList.contains('open')){
+      openFeaturedPopup(v);
+    }
+  },950);
+}
+
 
 function card(v,index=0){
   return `<article class="vehicle" style="--delay:${Math.min(index,8)*45}ms">
@@ -2236,6 +2575,8 @@ async function loadData(){
       }else{
         clearVehicleUrl({replace:true});
       }
+    }else{
+      maybeShowFeaturedPopup();
     }
   }catch(err){
     console.error('Error de conexión con Google Sheets:',err);
@@ -2272,6 +2613,8 @@ $('#filterOverlay').onclick=closeFilters;
 $('#applyMobileFilters').onclick=()=>{applyFilters();closeFilters()};
 $('#closeModal').onclick=closeModal;
 $('#vehicleModal').addEventListener('click',e=>{if(e.target===$('#vehicleModal'))closeModal()});
+$('#featuredPopup').addEventListener('click',e=>{if(e.target===$('#featuredPopup'))closeFeaturedPopup()});
+$('#featuredPopupClose').onclick=closeFeaturedPopup;
 $('#lightboxClose').onclick=closePhotoLightbox;
 $('#lightboxPrev').onclick=()=>moveGallery(-1);
 $('#lightboxNext').onclick=()=>moveGallery(1);
@@ -2298,7 +2641,8 @@ window.addEventListener('popstate',()=>{
 
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){
-    if($('#photoLightbox').classList.contains('open')) closePhotoLightbox();
+    if($('#featuredPopup').classList.contains('open')) closeFeaturedPopup();
+    else if($('#photoLightbox').classList.contains('open')) closePhotoLightbox();
     else closeModal();
   }
   if($('#photoLightbox').classList.contains('open')){
