@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
-<meta name="lmp-build" content="popup-destacado-sin-temporizador-2026-07-03">
+<meta name="lmp-build" content="popup-mobile-fit-screen-2026-07-03">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   
   <!-- Meta Pixel Code -->
@@ -1410,6 +1410,108 @@ fbq('track', 'PageView');
       }
       .featured-popup-price strong{
         font-size:15px;
+      }
+    }
+
+
+    /* Popup mobile ultra-compacto para que entre completo en pantalla */
+    @media(max-width:760px){
+      .featured-popup{
+        align-items:center;
+        padding:6px;
+      }
+      .featured-popup-panel{
+        width:100%;
+        max-width:100%;
+        max-height:calc(100dvh - 12px);
+        border-radius:18px;
+        overflow:hidden;
+      }
+      .featured-popup-card{
+        grid-template-columns:1fr;
+        min-height:0;
+      }
+      .featured-popup-media{
+        min-height:170px;
+        max-height:190px;
+      }
+      .featured-popup-media img{
+        object-fit:cover;
+        object-position:center center;
+      }
+      .featured-popup-content{
+        padding:10px 12px 12px;
+      }
+      .featured-popup-prices{
+        grid-template-columns:1fr 1fr;
+        gap:7px;
+        margin-top:0;
+      }
+      .featured-popup-price{
+        padding:8px 9px;
+        border-radius:12px;
+      }
+      .featured-popup-price span{
+        font-size:8px;
+        letter-spacing:.04em;
+      }
+      .featured-popup-price strong{
+        margin-top:3px;
+        font-size:15px;
+        line-height:1.05;
+      }
+      .featured-popup-actions{
+        grid-template-columns:1fr 1fr;
+        gap:7px;
+        margin-top:9px;
+      }
+      .featured-popup-actions button,
+      .featured-popup-actions a{
+        min-height:38px;
+        padding:8px 10px;
+        font-size:11px;
+      }
+      .featured-popup-close{
+        right:8px;
+        top:8px;
+        width:34px;
+        height:34px;
+        font-size:20px;
+      }
+    }
+
+    @media(max-width:420px){
+      .featured-popup-media{
+        min-height:150px;
+        max-height:170px;
+      }
+      .featured-popup-content{
+        padding:9px 10px 10px;
+      }
+      .featured-popup-price{
+        padding:8px;
+      }
+      .featured-popup-price strong{
+        font-size:14px;
+      }
+      .featured-popup-actions button,
+      .featured-popup-actions a{
+        min-height:36px;
+        font-size:10.5px;
+      }
+    }
+
+    @media(max-width:360px){
+      .featured-popup-media{
+        min-height:138px;
+        max-height:155px;
+      }
+      .featured-popup-prices{
+        grid-template-columns:1fr;
+        gap:6px;
+      }
+      .featured-popup-actions{
+        grid-template-columns:1fr;
       }
     }
 
