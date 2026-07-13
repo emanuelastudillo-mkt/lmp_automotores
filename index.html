@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
-<meta name="lmp-build" content="popup-mobile-fit-screen-2026-07-03">
+<meta name="lmp-build" content="popup-mobile-imagen-450x360-contain-2026-07-03">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   
   <!-- Meta Pixel Code -->
@@ -1509,6 +1509,86 @@ fbq('track', 'PageView');
       .featured-popup-prices{
         grid-template-columns:1fr;
         gap:6px;
+      }
+      .featured-popup-actions{
+        grid-template-columns:1fr;
+      }
+    }
+
+
+    /* Popup mobile: imagen fija 450x360, completa sin recorte */
+    @media(max-width:760px){
+      .featured-popup{
+        align-items:center;
+        justify-content:center;
+        padding:6px;
+      }
+      .featured-popup-panel{
+        width:min(100%, 462px);
+        max-height:calc(100dvh - 12px);
+        overflow:auto;
+        border-radius:18px;
+      }
+      .featured-popup-media{
+        width:min(450px, calc(100vw - 24px));
+        height:min(360px, calc((100vw - 24px) * .8));
+        min-height:0;
+        max-height:none;
+        margin:0 auto;
+        background:#111;
+      }
+      .featured-popup-media img{
+        position:static;
+        width:100%;
+        height:100%;
+        object-fit:contain;
+        object-position:center center;
+        display:block;
+        background:#111;
+      }
+      .featured-popup-media .photo-empty{
+        min-height:0;
+        height:100%;
+      }
+      .featured-popup-content{
+        padding:10px 12px 12px;
+      }
+      .featured-popup-prices{
+        grid-template-columns:1fr 1fr;
+        gap:7px;
+        margin-top:0;
+      }
+      .featured-popup-price{
+        padding:8px 9px;
+        border-radius:12px;
+      }
+      .featured-popup-price strong{
+        font-size:15px;
+        line-height:1.05;
+      }
+      .featured-popup-actions{
+        grid-template-columns:1fr 1fr;
+        gap:7px;
+        margin-top:9px;
+      }
+      .featured-popup-actions button,
+      .featured-popup-actions a{
+        min-height:38px;
+        padding:8px 10px;
+        font-size:11px;
+      }
+    }
+
+    @media(max-width:380px){
+      .featured-popup-panel{
+        width:calc(100vw - 10px);
+      }
+      .featured-popup-media{
+        width:calc(100vw - 22px);
+        height:calc((100vw - 22px) * .8);
+      }
+      .featured-popup-prices{
+        grid-template-columns:1fr;
       }
       .featured-popup-actions{
         grid-template-columns:1fr;
