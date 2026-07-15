@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
-<meta name="lmp-build" content="etiquetas-financiacion-contado-permuta-2010-2026-07-15">
+<meta name="lmp-build" content="lmp-autos-web-v1.01-ajustes-popup">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   
   <!-- Meta Pixel Code -->
@@ -854,33 +854,11 @@ fbq('track', 'PageView');
       flex-direction:column;
       justify-content:center
     }
-    .featured-popup-kicker{
-      color:var(--accent);
-      font-size:11px;
-      font-weight:950;
-      letter-spacing:.12em;
-      text-transform:uppercase
-    }
     .featured-popup-content h2{
       margin:10px 0 0;
       font-size:clamp(30px,4vw,46px);
       line-height:.98;
       letter-spacing:-.055em
-    }
-    .featured-popup-specs{
-      display:flex;
-      flex-wrap:wrap;
-      gap:7px;
-      margin:17px 0 0
-    }
-    .featured-popup-specs span{
-      padding:8px 10px;
-      border:1px solid var(--line);
-      border-radius:999px;
-      background:#f7f7f4;
-      color:#555;
-      font-size:11px;
-      font-weight:800
     }
     .featured-popup-prices{
       display:grid;
@@ -988,22 +966,10 @@ fbq('track', 'PageView');
       .featured-popup-content{
         padding:13px 13px 12px
       }
-      .featured-popup-kicker{
-        font-size:9px;
-        letter-spacing:.08em
-      }
       .featured-popup-content h2{
         margin-top:6px;
         font-size:clamp(21px,6.5vw,28px);
         line-height:1.02
-      }
-      .featured-popup-specs{
-        gap:5px;
-        margin-top:9px
-      }
-      .featured-popup-specs span{
-        padding:5px 7px;
-        font-size:9px
       }
       .featured-popup-prices{
         grid-template-columns:1fr 1fr;
@@ -1200,22 +1166,10 @@ fbq('track', 'PageView');
       .featured-popup-content{
         padding:15px 14px 14px;
       }
-      .featured-popup-kicker{
-        font-size:9px;
-        letter-spacing:.1em;
-      }
       .featured-popup-content h2{
         margin-top:6px;
         font-size:clamp(23px,7vw,30px);
         line-height:1.02;
-      }
-      .featured-popup-specs{
-        gap:5px;
-        margin-top:10px;
-      }
-      .featured-popup-specs span{
-        padding:5px 7px;
-        font-size:9px;
       }
       .featured-popup-prices{
         grid-template-columns:1fr 1fr;
@@ -1349,472 +1303,72 @@ fbq('track', 'PageView');
     }
 
 
-    @media(max-width:390px){
-      .featured-popup-media{
-        min-height:105px;
-        max-height:132px
-      }
-      .featured-popup-content{
-        padding:12px 11px 11px
-      }
-      .featured-popup-content h2{
-        font-size:20px
-      }
-      .featured-popup-prices{
-        grid-template-columns:1fr
-      }
-      .featured-popup-actions{
-        grid-template-columns:1fr
-      }
-    }
-
-
-    /* Popup mobile: foto prioritaria, sin texto redundante */
-    @media(max-width:760px){
-      .featured-popup-media{
-        min-height:260px;
-        max-height:330px;
-      }
-      .featured-popup-media img{
-        object-fit:cover;
-        object-position:center center;
-      }
-      .featured-popup-content{
-        padding:12px 13px 13px;
-      }
-      .featured-popup-kicker,
-      .featured-popup-content h2,
-      .featured-popup-specs{
-        display:none !important;
-      }
-      .featured-popup-prices{
-        grid-template-columns:1fr 1fr;
-        gap:7px;
-        margin-top:0;
-      }
-      .featured-popup-price{
-        padding:9px 10px;
-      }
-      .featured-popup-price strong{
-        font-size:16px;
-      }
-      .featured-popup-actions{
-        margin-top:10px;
-      }
-    }
-
-    @media(max-width:390px){
-      .featured-popup-media{
-        min-height:230px;
-        max-height:295px;
-      }
-      .featured-popup-price strong{
-        font-size:15px;
-      }
-    }
-
-
-    /* Popup mobile ultra-compacto para que entre completo en pantalla */
-    @media(max-width:760px){
-      .featured-popup{
-        align-items:center;
-        padding:6px;
-      }
-      .featured-popup-panel{
-        width:100%;
-        max-width:100%;
-        max-height:calc(100dvh - 12px);
-        border-radius:18px;
-        overflow:hidden;
-      }
-      .featured-popup-card{
-        grid-template-columns:1fr;
-        min-height:0;
-      }
-      .featured-popup-media{
-        min-height:170px;
-        max-height:190px;
-      }
-      .featured-popup-media img{
-        object-fit:cover;
-        object-position:center center;
-      }
-      .featured-popup-content{
-        padding:10px 12px 12px;
-      }
-      .featured-popup-prices{
-        grid-template-columns:1fr 1fr;
-        gap:7px;
-        margin-top:0;
-      }
-      .featured-popup-price{
-        padding:8px 9px;
-        border-radius:12px;
-      }
-      .featured-popup-price span{
-        font-size:8px;
-        letter-spacing:.04em;
-      }
-      .featured-popup-price strong{
-        margin-top:3px;
-        font-size:15px;
-        line-height:1.05;
-      }
-      .featured-popup-actions{
-        grid-template-columns:1fr 1fr;
-        gap:7px;
-        margin-top:9px;
-      }
-      .featured-popup-actions button,
-      .featured-popup-actions a{
-        min-height:38px;
-        padding:8px 10px;
-        font-size:11px;
-      }
-      .featured-popup-close{
-        right:8px;
-        top:8px;
-        width:34px;
-        height:34px;
-        font-size:20px;
-      }
-    }
-
-    @media(max-width:420px){
-      .featured-popup-media{
-        min-height:150px;
-        max-height:170px;
-      }
-      .featured-popup-content{
-        padding:9px 10px 10px;
-      }
-      .featured-popup-price{
-        padding:8px;
-      }
-      .featured-popup-price strong{
-        font-size:14px;
-      }
-      .featured-popup-actions button,
-      .featured-popup-actions a{
-        min-height:36px;
-        font-size:10.5px;
-      }
-    }
-
-    @media(max-width:360px){
-      .featured-popup-media{
-        min-height:138px;
-        max-height:155px;
-      }
-      .featured-popup-prices{
-        grid-template-columns:1fr;
-        gap:6px;
-      }
-      .featured-popup-actions{
-        grid-template-columns:1fr;
-      }
-    }
-
-
-    /* Popup mobile: imagen fija 450x360, completa sin recorte */
-    @media(max-width:760px){
-      .featured-popup{
-        align-items:center;
-        justify-content:center;
-        padding:6px;
-      }
-      .featured-popup-panel{
-        width:min(100%, 462px);
-        max-height:calc(100dvh - 12px);
-        overflow:auto;
-        border-radius:18px;
-      }
-      .featured-popup-media{
-        width:min(450px, calc(100vw - 24px));
-        height:min(360px, calc((100vw - 24px) * .8));
-        min-height:0;
-        max-height:none;
-        margin:0 auto;
-        background:#111;
-      }
-      .featured-popup-media img{
-        position:static;
-        width:100%;
-        height:100%;
-        object-fit:contain;
-        object-position:center center;
-        display:block;
-        background:#111;
-      }
-      .featured-popup-media .photo-empty{
-        min-height:0;
-        height:100%;
-      }
-      .featured-popup-content{
-        padding:10px 12px 12px;
-      }
-      .featured-popup-prices{
-        grid-template-columns:1fr 1fr;
-        gap:7px;
-        margin-top:0;
-      }
-      .featured-popup-price{
-        padding:8px 9px;
-        border-radius:12px;
-      }
-      .featured-popup-price strong{
-        font-size:15px;
-        line-height:1.05;
-      }
-      .featured-popup-actions{
-        grid-template-columns:1fr 1fr;
-        gap:7px;
-        margin-top:9px;
-      }
-      .featured-popup-actions button,
-      .featured-popup-actions a{
-        min-height:38px;
-        padding:8px 10px;
-        font-size:11px;
-      }
-    }
-
-    @media(max-width:380px){
-      .featured-popup-panel{
-        width:calc(100vw - 10px);
-      }
-      .featured-popup-media{
-        width:calc(100vw - 22px);
-        height:calc((100vw - 22px) * .8);
-      }
-      .featured-popup-prices{
-        grid-template-columns:1fr;
-      }
-      .featured-popup-actions{
-        grid-template-columns:1fr;
-      }
-    }
-
-
-    /* Popup destacado: desktop con rendimiento + ubicación; mobile simplificado */
+    /* Popup destacado consolidado */
     .featured-popup-location{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      margin-top:14px;
-      padding:10px 12px;
-      border:1px solid var(--line);
-      border-radius:13px;
-      background:#f7f7f4;
-      color:#4f4f4f;
-      font-size:12px;
-      font-weight:850;
-      line-height:1.35
+      display:flex;align-items:center;gap:8px;margin-top:14px;padding:10px 12px;
+      border:1px solid var(--line);border-radius:13px;background:#f7f7f4;
+      color:#4f4f4f;font-size:12px;font-weight:850;line-height:1.35
     }
-    .featured-popup-location svg{
-      width:17px;
-      height:17px;
-      flex:0 0 auto;
-      color:var(--accent)
+    .featured-popup-location svg{width:17px;height:17px;flex:0 0 auto;color:var(--accent)}
+    .featured-popup-score-graphic{margin-top:14px}
+    .featured-popup-score-graphic .score-section{
+      margin:0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff
     }
-    .featured-popup-score{
-      margin-top:14px;
-      padding:13px;
-      border:1px solid var(--line);
-      border-radius:16px;
-      background:#fff
+    .featured-popup-score-graphic .score-header{padding:14px 16px 0}
+    .featured-popup-score-graphic .score-layout{
+      grid-template-columns:minmax(240px,1fr) minmax(190px,.9fr);gap:12px;padding:12px 14px 16px
     }
-    .featured-popup-score-title{
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      align-items:center;
-      margin-bottom:10px
-    }
-    .featured-popup-score-title span{
-      color:var(--muted);
-      font-size:10px;
-      font-weight:950;
-      letter-spacing:.08em;
-      text-transform:uppercase
-    }
-    .featured-popup-score-title strong{
-      font-size:18px;
-      letter-spacing:-.04em
-    }
-    .featured-popup-score-bars{
-      display:grid;
-      gap:6px
-    }
-    .featured-popup-score-row{
-      display:grid;
-      grid-template-columns:72px 1fr 28px;
-      gap:8px;
-      align-items:center
-    }
-    .featured-popup-score-row span{
-      color:#555;
-      font-size:9px;
-      font-weight:850
-    }
-    .featured-popup-score-track{
-      height:7px;
-      overflow:hidden;
-      border-radius:999px;
-      background:#ecece7
-    }
-    .featured-popup-score-fill{
-      height:100%;
-      border-radius:999px;
-      background:linear-gradient(90deg,#bb1d23,#171717)
-    }
-    .featured-popup-score-row strong{
-      text-align:right;
-      font-size:10px
-    }
+    .featured-popup-score-graphic .radar-card{min-height:320px;padding:12px 16px}
+    .featured-popup-score-graphic .radar-chart{max-width:320px}
+    .featured-popup-score-graphic .score-bars{gap:10px}
+    .featured-popup-score-graphic .score-row-label{font-size:12px}
+    .featured-popup-score-graphic .score-number{font-size:16px}
+    .featured-popup-score-graphic .general-score{width:76px;height:76px}
+    .featured-popup-score-graphic .general-score-value strong{font-size:25px}
+    .featured-popup-score-graphic .general-score-value span{font-size:8px}
 
     @media(min-width:761px){
       .featured-popup-panel{width:min(980px,100%)}
       .featured-popup-card{grid-template-columns:minmax(330px,.88fr) minmax(0,1.12fr)}
       .featured-popup-content{padding:28px 30px 26px}
+      .featured-popup-score-graphic .radar-label{font-size:8.5px}
     }
 
     @media(max-width:760px){
-      .featured-popup{
-        align-items:center;
-        justify-content:center;
-        padding:6px
-      }
+      .featured-popup{align-items:center;justify-content:center;padding:6px}
       .featured-popup-panel{
-        width:min(100%, 462px);
-        max-height:calc(100dvh - 12px);
-        overflow:auto;
-        border-radius:18px
+        width:min(450px,calc(100vw - 24px));max-width:min(450px,calc(100vw - 24px));
+        max-height:calc(100dvh - 12px);overflow:auto;border-radius:18px
       }
+      .featured-popup-card{width:100%;grid-template-columns:1fr;min-height:0}
       .featured-popup-media{
-        width:min(450px, calc(100vw - 24px));
-        height:min(360px, calc((100vw - 24px) * .8));
-        min-height:0 !important;
-        max-height:none !important;
-        margin:0 auto;
-        background:#111
+        width:100%;height:min(360px,calc((100vw - 24px) * .8));
+        min-height:0;max-height:none;margin:0;background:#111
       }
       .featured-popup-media img{
-        position:static;
-        width:100%;
-        height:100%;
-        display:block;
-        object-fit:contain !important;
-        object-position:center center !important;
-        background:#111
+        position:static;width:100%;height:100%;display:block;
+        object-fit:contain;object-position:center;background:#111
       }
+      .featured-popup-media .photo-empty{min-height:0;height:100%}
       .featured-popup-ribbon,
-      .featured-popup-kicker,
-      .featured-popup-content h2,
-      .featured-popup-specs,
       .featured-popup-text,
       .featured-popup-location,
-      .featured-popup-score,
       .featured-popup-score-graphic,
-      .featured-popup-view{
-        display:none !important
-      }
-      .featured-popup-content{padding:10px 12px 12px}
-      .featured-popup-prices{
-        grid-template-columns:1fr 1fr;
-        gap:7px;
-        margin-top:0
-      }
-      .featured-popup-price{
-        padding:8px 9px;
-        border-radius:12px
-      }
-      .featured-popup-price span{
-        font-size:8px;
-        letter-spacing:.04em
-      }
-      .featured-popup-price strong{
-        margin-top:3px;
-        font-size:15px;
-        line-height:1.05
-      }
-      .featured-popup-actions{
-        display:grid;
-        grid-template-columns:1fr;
-        gap:0;
-        margin-top:9px
-      }
-      .featured-popup-wa{
-        min-height:40px;
-        padding:9px 12px;
-        font-size:12px
-      }
+      .featured-popup-view{display:none}
+      .featured-popup-content{width:100%;padding:10px 12px 12px}
+      .featured-popup-prices{grid-template-columns:1fr 1fr;gap:7px;margin-top:0}
+      .featured-popup-price{padding:8px 9px;border-radius:12px}
+      .featured-popup-price span{font-size:8px;letter-spacing:.04em}
+      .featured-popup-price strong{margin-top:3px;font-size:15px;line-height:1.05}
+      .featured-popup-actions{display:grid;grid-template-columns:1fr;gap:0;margin-top:9px}
+      .featured-popup-wa{min-height:40px;padding:9px 12px;font-size:12px}
+      .featured-popup-close{right:8px;top:8px;width:34px;height:34px;font-size:20px}
     }
 
     @media(max-width:380px){
-      .featured-popup-media{
-        width:calc(100vw - 22px);
-        height:calc((100vw - 22px) * .8)
-      }
+      .featured-popup-panel{width:calc(100vw - 22px);max-width:calc(100vw - 22px)}
+      .featured-popup-media{height:calc((100vw - 22px) * .8)}
       .featured-popup-prices{grid-template-columns:1fr}
-    }
-
-
-    .featured-popup-score-graphic{
-      margin-top:14px;
-    }
-    .featured-popup-score-graphic .score-section{
-      margin:0;
-      border:1px solid var(--line);
-      border-radius:16px;
-      overflow:hidden;
-      background:#fff;
-    }
-    .featured-popup-score-graphic .score-header{
-      padding:14px 16px 0;
-    }
-    .featured-popup-score-graphic .score-layout{
-      grid-template-columns:minmax(240px,1fr) minmax(190px,.9fr);
-      gap:12px;
-      padding:12px 14px 16px;
-    }
-    .featured-popup-score-graphic .radar-card{
-      min-height:320px;
-      padding:12px 16px;
-    }
-    .featured-popup-score-graphic .radar-chart{
-      max-width:320px;
-    }
-    .featured-popup-score-graphic .score-bars{
-      gap:10px;
-    }
-    .featured-popup-score-graphic .score-row-label{
-      font-size:12px;
-    }
-    .featured-popup-score-graphic .score-number{
-      font-size:16px;
-    }
-    .featured-popup-score-graphic .general-score{
-      width:76px;
-      height:76px;
-    }
-    .featured-popup-score-graphic .general-score-value strong{
-      font-size:25px;
-    }
-    .featured-popup-score-graphic .general-score-value span{
-      font-size:8px;
-    }
-
-    @media(min-width:761px){
-      .featured-popup-score-graphic .radar-label{
-        font-size:8.5px;
-      }
-    }
-
-    @media(max-width:760px){
-      .featured-popup-score-graphic{
-        display:none !important;
-      }
     }
 
 </style>
@@ -2521,9 +2075,16 @@ function percentageNumber(value){
   const parsed=Number(clean(value).replace(',','.').replace(/[^0-9.\-]/g,''));
   return Number.isFinite(parsed)?parsed:null;
 }
+function advancePercentage(v){
+  return percentageNumber(v.anticipoPct);
+}
 function isCashOnly(v){
-  const percentage=percentageNumber(v.anticipoPct);
+  const percentage=advancePercentage(v);
   return percentage!==null && percentage>=100;
+}
+function hasFinancing(v){
+  const percentage=advancePercentage(v);
+  return percentage!==null && percentage<100;
 }
 function vehicleYear(v){
   const parsed=parseInt(clean(v.anio).replace(/[^0-9]/g,''),10);
@@ -2531,10 +2092,23 @@ function vehicleYear(v){
 }
 function acceptsTradeIn(v){
   const year=vehicleYear(v);
-  return year===null || year>=2010;
+  return year!==null && year>=2010;
 }
 function displayedAdvance(v){
   return isCashOnly(v)?money(v.cotizacion):clean(v.anticipo);
+}
+function vehicleBenefitTags(v){
+  const tags=[];
+  if(isCashOnly(v)) tags.push('Solo de Contado');
+  else if(hasFinancing(v)) tags.push('Financiación');
+  if(acceptsTradeIn(v)) tags.push('Tomamos permuta');
+  return tags;
+}
+function vehicleBenefitsMarkup(v){
+  const tags=vehicleBenefitTags(v);
+  return tags.length
+    ? `<div class="card-benefits">${tags.map(tag=>`<span>${escapeHtml(tag)}</span>`).join('')}</div>`
+    : '';
 }
 function badgeFromStatus(status){
   const normalized=normalize(status).normalize('NFD').replace(/[\u0300-\u036f]/g,'');
@@ -2566,7 +2140,7 @@ function badgeItems(v){
   const items=[badgeFromStatus(v.estado)];
 
   if(isCashOnly(v)) items.push({text:'Solo de Contado',className:'feature'});
-  else if(v.anticipoPct || v.anticipo) items.push({text:'Financiación',className:'feature'});
+  else if(hasFinancing(v)) items.push({text:'Financiación',className:'feature'});
   else if(Number(stats.score)>0) items.push({text:'Más consultado',className:'hot'});
   else if(isAutomatic(v)) items.push({text:'Automático',className:'feature'});
   else if(hasGnc(v)) items.push({text:'GNC',className:'feature'});
@@ -2682,13 +2256,6 @@ function popupScoreMarkup(v){
 
 
 function featuredPopupMarkup(v){
-  const specs=[
-    v.anio?`Año ${escapeHtml(v.anio)}`:'',
-    v.kilometraje?escapeHtml(km(v.kilometraje)):'',
-    v.combustible?escapeHtml(v.combustible):'',
-    v.transmision?escapeHtml(v.transmision):''
-  ].filter(Boolean).map(item=>`<span>${item}</span>`).join('');
-
   return `<div class="featured-popup-card">
     <div class="featured-popup-media">
       ${coverImageMarkup(v,0)}
@@ -2798,10 +2365,7 @@ function card(v,index=0){
         ${v.cotizacion?`<div class="price-box ars"><div class="price-label">Valor total en pesos</div><div class="price"><span class="price-prefix">ARS</span>${escapeHtml(money(v.cotizacion))}</div></div>`:''}
       </div>
       ${(v.anticipo||isCashOnly(v))?`<div class="advance">${isCashOnly(v)?`Solo de contado <strong>${escapeHtml(displayedAdvance(v))}</strong>`:`Anticipo desde <strong>${escapeHtml(displayedAdvance(v))}</strong>`}</div>`:''}
-      <div class="card-benefits">
-        <span>${isCashOnly(v)?'Solo de Contado':'Financiación'}</span>
-        ${acceptsTradeIn(v)?'<span>Tomamos permuta</span>':''}
-      </div>
+      ${vehicleBenefitsMarkup(v)}
       <div class="card-actions">
         <button class="detail-btn" data-id="${escapeAttr(v.id)}">Ver vehículo</button>
         ${v.instagram?`<a class="ig-btn" href="${escapeAttr(v.instagram)}" target="_blank" rel="noopener">IG</a>`:''}
