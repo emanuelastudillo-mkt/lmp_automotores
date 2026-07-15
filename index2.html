@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
-<meta name="lmp-build" content="lmp-autos-web-v1.06-correccion-financiacion">
+<meta name="lmp-build" content="lmp-autos-web-v1.07-contraste-copiar-link-cuotas">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   
   <!-- Meta Pixel Code -->
@@ -1385,8 +1385,8 @@ fbq('track', 'PageView');
 
 
     .trust-strip{padding:12px 0 2px}.trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-    .trust-item{display:flex;align-items:center;gap:9px;padding:11px 13px;background:#fff;border:1px solid var(--line);border-radius:14px;font-size:12px;font-weight:850}
-    .trust-item svg{width:19px;height:19px;flex:0 0 auto;color:var(--accent)}
+    .trust-strip .trust-item{display:flex;align-items:center;gap:9px;padding:11px 13px;background:#fff;color:#171717;border:1px solid var(--line);border-radius:14px;font-size:12px;font-weight:850}
+    .trust-strip .trust-item svg{width:19px;height:19px;flex:0 0 auto;color:var(--accent)}
     .card-tools{position:absolute;top:10px;right:10px;display:flex;gap:6px;z-index:4}
     .tool-btn{width:34px;height:34px;border:0;border-radius:50%;background:rgba(255,255,255,.92);display:grid;place-items:center;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,.16);font-size:16px}
     .tool-btn.active{background:#111;color:#fff}.card-actions{grid-template-columns:1fr auto auto}
@@ -1404,7 +1404,26 @@ fbq('track', 'PageView');
     .detail-trust{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}.detail-trust span{padding:10px;background:#f5f5f2;border-radius:11px;text-align:center;font-size:11px;font-weight:850}
     .detail-extra-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.detail-extra-actions button{border:1px solid var(--line);background:#fff;border-radius:12px;padding:11px;font-weight:850;cursor:pointer}
     .mobile-sticky-cta{display:none}.lead-box{margin-top:14px;padding:13px;border:1px solid var(--line);border-radius:14px;background:#fafaf8}.lead-box strong{display:block;margin-bottom:4px}.lead-box p{font-size:12px;color:#666;margin-bottom:9px}.lead-box button{border:0;background:#111;color:#fff;border-radius:11px;padding:10px 12px;font-weight:900;cursor:pointer}
-    @media(max-width:760px){.trust-grid{grid-template-columns:1fr;gap:7px}.trust-item{padding:9px 11px}.card-actions{grid-template-columns:1fr auto}.card-wa{grid-column:1/-1}.compare-grid,.similar-grid,.detail-trust{grid-template-columns:1fr}.mobile-sticky-cta{display:grid;grid-template-columns:1fr auto;gap:8px;position:sticky;bottom:0;z-index:8;padding:10px;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-top:1px solid var(--line)}.mobile-sticky-cta button{border:0;border-radius:12px;padding:12px;font-weight:900;cursor:pointer}.mobile-sticky-wa{background:#1fa855;color:#fff}.mobile-sticky-share{background:#eee;color:#111}}
+    @media(max-width:760px){.trust-strip .trust-grid{grid-template-columns:1fr;gap:7px}.trust-strip .trust-item{padding:9px 11px}.card-actions{grid-template-columns:1fr auto}.card-wa{grid-column:1/-1}.compare-grid,.similar-grid,.detail-trust{grid-template-columns:1fr}.mobile-sticky-cta{display:grid;grid-template-columns:1fr auto;gap:8px;position:sticky;bottom:0;z-index:8;padding:10px;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-top:1px solid var(--line)}.mobile-sticky-cta button{border:0;border-radius:12px;padding:12px;font-weight:900;cursor:pointer}.mobile-sticky-wa{background:#1fa855;color:#fff}.mobile-sticky-share{background:#eee;color:#111}}
+
+
+    .trust-section .trust-card{
+      background:#111;
+      color:#fff
+    }
+    .trust-section .trust-head h2,
+    .trust-section .trust-item strong{
+      color:#fff
+    }
+    .trust-section .trust-head p,
+    .trust-section .trust-item span{
+      color:#c8c8c8
+    }
+    .copy-feedback{
+      display:inline-block;
+      min-width:88px;
+      text-align:center
+    }
 
 </style>
 </head>
@@ -2547,11 +2566,44 @@ function openWhatsappMessage(message){const base=CONFIG.whatsapp?`https://wa.me/
 function emitAnalytics(eventName,params={}){
   try{window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:eventName,...params});if(typeof window.fbq==='function')window.fbq('trackCustom',eventName,params)}catch(_){}
 }
-function shareVehicle(v){
-  const url=vehicleUrl(v);const data={title:`${v.marca} ${v.modelo}`,text:`Mirá este ${v.marca} ${v.modelo} ${v.anio||''}`,url};
-  emitAnalytics('share_vehicle',{vehicle_id:v.id});
-  if(navigator.share)return navigator.share(data).catch(()=>{});
-  navigator.clipboard?.writeText(url);alert('Enlace copiado.');
+async function copyVehicleLink(v,button=null){
+  const url=vehicleUrl(v);
+  let copied=false;
+
+  try{
+    if(navigator.clipboard && window.isSecureContext){
+      await navigator.clipboard.writeText(url);
+      copied=true;
+    }else{
+      const input=document.createElement('textarea');
+      input.value=url;
+      input.setAttribute('readonly','');
+      input.style.position='fixed';
+      input.style.opacity='0';
+      document.body.appendChild(input);
+      input.select();
+      copied=document.execCommand('copy');
+      input.remove();
+    }
+  }catch(_){
+    copied=false;
+  }
+
+  if(copied){
+    emitAnalytics('copy_vehicle_link',{vehicle_id:v.id});
+
+    if(button){
+      const previous=button.textContent;
+      button.textContent='Link copiado';
+      button.disabled=true;
+      setTimeout(()=>{
+        button.textContent=previous;
+        button.disabled=false;
+      },1800);
+    }
+  }else{
+    window.prompt('Copiá este enlace:',url);
+  }
 }
 function similarVehicles(v,limit=3){
   const price=numericPrice(v.cotizacion);
@@ -2567,7 +2619,7 @@ function similarMarkup(v){
 function renderCompare(){
   const selected=[...compareIds].map(id=>vehicles.find(v=>v.id===id)).filter(Boolean);
   $('#compareGrid').innerHTML=selected.map(v=>`<article class="compare-card">${coverImageMarkup(v,20)}<h4>${escapeHtml(v.marca+' '+v.modelo)}</h4><div class="compare-table">
-  <div class="compare-row"><span>Año</span><strong>${escapeHtml(v.anio||'—')}</strong></div><div class="compare-row"><span>Kilómetros</span><strong>${escapeHtml(v.kilometraje?km(v.kilometraje):'—')}</strong></div><div class="compare-row"><span>Precio</span><strong>${escapeHtml(money(v.cotizacion))}</strong></div><div class="compare-row"><span>Anticipo</span><strong>${escapeHtml(displayedAdvance(v)||'—')}</strong></div><div class="compare-row"><span>Transmisión</span><strong>${escapeHtml(v.transmision||'—')}</strong></div><div class="compare-row"><span>Combustible</span><strong>${escapeHtml(v.combustible||'—')}</strong></div><div class="compare-row"><span>General</span><strong>${escapeHtml(generalScore(v))}/100</strong></div></div></article>`).join('');
+  <div class="compare-row"><span>Año</span><strong>${escapeHtml(v.anio||'—')}</strong></div><div class="compare-row"><span>Kilómetros</span><strong>${escapeHtml(v.kilometraje?km(v.kilometraje):'—')}</strong></div><div class="compare-row"><span>Precio</span><strong>${escapeHtml(money(v.cotizacion))}</strong></div><div class="compare-row"><span>Anticipo</span><strong>${escapeHtml(displayedAdvance(v)||'—')}</strong></div><div class="compare-row"><span>Cuotas desde</span><strong>${estimatedInstallment(v)?`${formatArsNumber(estimatedInstallment(v))} / 24 meses`:'No disponible'}</strong></div><div class="compare-row"><span>Transmisión</span><strong>${escapeHtml(v.transmision||'—')}</strong></div><div class="compare-row"><span>Combustible</span><strong>${escapeHtml(v.combustible||'—')}</strong></div><div class="compare-row"><span>General</span><strong>${escapeHtml(generalScore(v))}/100</strong></div></div></article>`).join('');
   $('#compareModal').classList.add('open');$('#compareModal').setAttribute('aria-hidden','false');emitAnalytics('compare_vehicles',{count:selected.length});
 }
 
@@ -3137,7 +3189,7 @@ function openVehicle(id,{updateUrl=true,replaceUrl=false}={}){
       <div class="detail-trust"><span>Más de 10 años</span><span>Gestoría propia</span><span>Entrega 24–48 hs</span></div>
       <div class="detail-actions">
         <button class="whatsapp" id="whatsappBtn" type="button">Consultar este vehículo por WhatsApp</button>
-        <div class="detail-extra-actions"><button id="shareVehicleBtn" type="button">Compartir</button><button id="favoriteVehicleBtn" type="button">${favoriteIds.has(v.id)?'Quitar de favoritos':'Guardar favorito'}</button></div>
+        <div class="detail-extra-actions"><button id="shareVehicleBtn" class="copy-feedback" type="button">Copiar link</button><button id="favoriteVehicleBtn" type="button">${favoriteIds.has(v.id)?'Quitar de favoritos':'Guardar favorito'}</button></div>
         <div class="detail-secondary-actions">
           ${v.instagram?`<a class="detail-link" href="${escapeAttr(v.instagram)}" target="_blank" rel="noopener">Ver Reel</a>`:''}
           ${v.carpeta?`<a class="detail-link" href="${escapeAttr(v.carpeta)}" target="_blank" rel="noopener">Ver todas las fotos</a>`:''}
@@ -3146,15 +3198,15 @@ function openVehicle(id,{updateUrl=true,replaceUrl=false}={}){
       <div class="lead-box"><strong>¿Buscás algo similar?</strong><p>Contanos tu presupuesto y el tipo de vehículo que necesitás.</p><button id="similarAlertBtn" type="button">Avisarme por WhatsApp</button></div>
       ${similarMarkup(v)}
     </div>
-    <div class="mobile-sticky-cta"><button class="mobile-sticky-wa" id="mobileStickyWa" type="button">Consultar por WhatsApp</button><button class="mobile-sticky-share" id="mobileStickyShare" type="button">Compartir</button></div>
+    <div class="mobile-sticky-cta"><button class="mobile-sticky-wa" id="mobileStickyWa" type="button">Consultar por WhatsApp</button><button class="mobile-sticky-share copy-feedback" id="mobileStickyShare" type="button">Copiar link</button></div>
   `;
   $('#vehicleModal').classList.add('open');
   document.body.classList.add('modal-open');
   document.body.style.overflow='hidden';
   $('#whatsappBtn').onclick=()=>contactVehicle(v);
   $('#mobileStickyWa').onclick=()=>contactVehicle(v);
-  $('#shareVehicleBtn').onclick=()=>shareVehicle(v);
-  $('#mobileStickyShare').onclick=()=>shareVehicle(v);
+  $('#shareVehicleBtn').onclick=event=>copyVehicleLink(v,event.currentTarget);
+  $('#mobileStickyShare').onclick=event=>copyVehicleLink(v,event.currentTarget);
   $('#favoriteVehicleBtn').onclick=()=>{toggleFavorite(v.id);$('#favoriteVehicleBtn').textContent=favoriteIds.has(v.id)?'Quitar de favoritos':'Guardar favorito'};
   $('#similarAlertBtn').onclick=()=>openWhatsappMessage(`Hola, quiero que me avisen cuando ingrese un vehículo similar al ${v.marca} ${v.modelo}. Mi presupuesto aproximado es: `);
   $$('#modalContent [data-similar-id]').forEach(button=>button.onclick=()=>openVehicle(button.dataset.similarId));
@@ -3462,6 +3514,6 @@ setTimeout(()=>{
 },0);
 </script>
 
-  <div class="site-version" aria-label="Versión del sitio">lmpautos V1.06</div>
+  <div class="site-version" aria-label="Versión del sitio">lmpautos V1.07</div>
 </body>
 </html>
