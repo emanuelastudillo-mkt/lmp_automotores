@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
-<meta name="lmp-build" content="popup-desktop-rendimiento-mobile-simple-2026-07-03">
+<meta name="lmp-build" content="popup-grafico-real-ficha-2026-07-03">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   
   <!-- Meta Pixel Code -->
@@ -1715,6 +1715,7 @@ fbq('track', 'PageView');
       .featured-popup-text,
       .featured-popup-location,
       .featured-popup-score,
+      .featured-popup-score-graphic,
       .featured-popup-view{
         display:none !important
       }
@@ -1756,6 +1757,64 @@ fbq('track', 'PageView');
         height:calc((100vw - 22px) * .8)
       }
       .featured-popup-prices{grid-template-columns:1fr}
+    }
+
+
+    .featured-popup-score-graphic{
+      margin-top:14px;
+    }
+    .featured-popup-score-graphic .score-section{
+      margin:0;
+      border:1px solid var(--line);
+      border-radius:16px;
+      overflow:hidden;
+      background:#fff;
+    }
+    .featured-popup-score-graphic .score-header{
+      padding:14px 16px 0;
+    }
+    .featured-popup-score-graphic .score-layout{
+      grid-template-columns:minmax(240px,1fr) minmax(190px,.9fr);
+      gap:12px;
+      padding:12px 14px 16px;
+    }
+    .featured-popup-score-graphic .radar-card{
+      min-height:320px;
+      padding:12px 16px;
+    }
+    .featured-popup-score-graphic .radar-chart{
+      max-width:320px;
+    }
+    .featured-popup-score-graphic .score-bars{
+      gap:10px;
+    }
+    .featured-popup-score-graphic .score-row-label{
+      font-size:12px;
+    }
+    .featured-popup-score-graphic .score-number{
+      font-size:16px;
+    }
+    .featured-popup-score-graphic .general-score{
+      width:76px;
+      height:76px;
+    }
+    .featured-popup-score-graphic .general-score-value strong{
+      font-size:25px;
+    }
+    .featured-popup-score-graphic .general-score-value span{
+      font-size:8px;
+    }
+
+    @media(min-width:761px){
+      .featured-popup-score-graphic .radar-label{
+        font-size:8.5px;
+      }
+    }
+
+    @media(max-width:760px){
+      .featured-popup-score-graphic{
+        display:none !important;
+      }
     }
 
 </style>
@@ -2598,44 +2657,11 @@ function markFeaturedPopupSeen(){
   }catch(_){}
 }
 
-function popupScoreData(v){
-  const metrics=[
-    ['Rendimiento',scoreValue(v,'Rendimiento')],
-    ['Confort',scoreValue(v,'Confort')],
-    ['Economía',scoreValue(v,'Economía')],
-    ['Espacio',scoreValue(v,'Espacio')],
-    ['Seguridad',scoreValue(v,'Seguridad')]
-  ].filter(item=>Number.isFinite(item[1]));
-
-  const general=generalScore(v);
-
-  return {metrics,general:Number.isFinite(general)?general:null};
-}
-
 function popupScoreMarkup(v){
-  const data=popupScoreData(v);
+  const graphic=renderScoreGraphic(v);
+  if(!graphic)return '';
 
-  if(!data.metrics.length && data.general===null){
-    return '';
-  }
-
-  const generalText=data.general===null?'—':String(Math.round(data.general));
-  const rows=data.metrics.map(([label,value])=>{
-    const score=Math.max(0,Math.min(100,Math.round(value)));
-    return `<div class="featured-popup-score-row">
-      <span>${escapeHtml(label)}</span>
-      <div class="featured-popup-score-track"><div class="featured-popup-score-fill" style="width:${score}%"></div></div>
-      <strong>${score}</strong>
-    </div>`;
-  }).join('');
-
-  return `<div class="featured-popup-score">
-    <div class="featured-popup-score-title">
-      <span>Rendimiento del vehículo</span>
-      <strong>${generalText}/100</strong>
-    </div>
-    <div class="featured-popup-score-bars">${rows}</div>
-  </div>`;
+  return `<div class="featured-popup-score-graphic">${graphic}</div>`;
 }
 
 
