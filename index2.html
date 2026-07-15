@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
-<meta name="lmp-build" content="popup-grafico-real-ficha-2026-07-03">
+<meta name="lmp-build" content="etiquetas-financiacion-contado-permuta-2010-2026-07-15">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   
   <!-- Meta Pixel Code -->
@@ -2492,7 +2492,9 @@ function mapVehicle(r){
     kilometraje:clean(r.Kilometraje), color:clean(r.Color),
     precioPublicado:clean(r['Precio publicado Uds']), precioContado:clean(r['Precio de contado Uds']),
     cotizacion:clean(r['Cotizacion al día']), maxFinan:clean(r['MAX FINAN']),
-    anticipo:clean(r['Anticipo MINIMO']), estado:normalize(r['Estado actual del auto']),
+    anticipo:clean(r['Anticipo MINIMO']),
+    anticipoPct:clean(r['% de anticipo'] ?? r['% Anticipo'] ?? r['Porcentaje de anticipo'] ?? r['Porcentaje Anticipo']),
+    estado:normalize(r['Estado actual del auto']),
     destacadoPopup:isFeaturedPopupValue(r['Vehículo destacado'] ?? r['Vehiculo destacado'] ?? r.Destacado ?? r['Popup destacado'] ?? r['Destacado popup']),
     combustible:clean(r.Combustible), transmision:clean(r.Transmision),
     instagram:clean(r.Reel).startsWith('http')?clean(r.Reel):'',
@@ -2515,11 +2517,24 @@ function isAutomatic(v){
 function hasGnc(v){
   return /GNC/i.test(normalize(v.combustible));
 }
+function percentageNumber(value){
+  const parsed=Number(clean(value).replace(',','.').replace(/[^0-9.\-]/g,''));
+  return Number.isFinite(parsed)?parsed:null;
+}
 function isCashOnly(v){
-  const raw=clean(v.anticipo);
-  const normalized=normalize(raw).replace(/\s+/g,'');
-
-  return normalized==='100%' || normalized==='100PORCIENTO' || normalized==='100PORCIENT';
+  const percentage=percentageNumber(v.anticipoPct);
+  return percentage!==null && percentage>=100;
+}
+function vehicleYear(v){
+  const parsed=parseInt(clean(v.anio).replace(/[^0-9]/g,''),10);
+  return Number.isFinite(parsed)?parsed:null;
+}
+function acceptsTradeIn(v){
+  const year=vehicleYear(v);
+  return year===null || year>=2010;
+}
+function displayedAdvance(v){
+  return isCashOnly(v)?money(v.cotizacion):clean(v.anticipo);
 }
 function badgeFromStatus(status){
   const normalized=normalize(status).normalize('NFD').replace(/[\u0300-\u036f]/g,'');
@@ -2550,10 +2565,11 @@ function badgeItems(v){
   const stats=vehicleStats[v.id]||{};
   const items=[badgeFromStatus(v.estado)];
 
-  if(Number(stats.score)>0) items.push({text:'Más consultado',className:'hot'});
+  if(isCashOnly(v)) items.push({text:'Solo de Contado',className:'feature'});
+  else if(v.anticipoPct || v.anticipo) items.push({text:'Financiación',className:'feature'});
+  else if(Number(stats.score)>0) items.push({text:'Más consultado',className:'hot'});
   else if(isAutomatic(v)) items.push({text:'Automático',className:'feature'});
   else if(hasGnc(v)) items.push({text:'GNC',className:'feature'});
-  else if(v.anticipo && !isCashOnly(v)) items.push({text:'Financiación',className:'feature'});
 
   return items.slice(0,2);
 }
@@ -2682,7 +2698,7 @@ function featuredPopupMarkup(v){
     <div class="featured-popup-content">
       <div class="featured-popup-prices">
         ${v.cotizacion?`<div class="featured-popup-price"><span>Valor total</span><strong>${escapeHtml(money(v.cotizacion))}</strong></div>`:''}
-        ${v.anticipo?`<div class="featured-popup-price"><span>${isCashOnly(v)?'Condición':'Anticipo desde'}</span><strong>${isCashOnly(v)?'Solo contado':escapeHtml(v.anticipo)}</strong></div>`:''}
+        ${(v.anticipo||isCashOnly(v))?`<div class="featured-popup-price"><span>${isCashOnly(v)?'Solo de contado':'Anticipo desde'}</span><strong>${escapeHtml(displayedAdvance(v))}</strong></div>`:''}
       </div>
 
       <div class="featured-popup-location">
@@ -2781,8 +2797,11 @@ function card(v,index=0){
         ${v.precioPublicado?`<div class="price-box usd"><div class="price-label">Valor en dólares</div><div class="price">${icon('dollar')} ${escapeHtml(money(v.precioPublicado))}</div></div>`:''}
         ${v.cotizacion?`<div class="price-box ars"><div class="price-label">Valor total en pesos</div><div class="price"><span class="price-prefix">ARS</span>${escapeHtml(money(v.cotizacion))}</div></div>`:''}
       </div>
-      ${v.anticipo?`<div class="advance">${isCashOnly(v)?'Solo contado':`Anticipo desde <strong>${escapeHtml(v.anticipo)}</strong>`}</div>`:''}
-      <div class="card-benefits">${isCashOnly(v)?'<span>Solo contado</span>':'<span>Financiación</span>'}<span>Tomamos permuta</span></div>
+      ${(v.anticipo||isCashOnly(v))?`<div class="advance">${isCashOnly(v)?`Solo de contado <strong>${escapeHtml(displayedAdvance(v))}</strong>`:`Anticipo desde <strong>${escapeHtml(displayedAdvance(v))}</strong>`}</div>`:''}
+      <div class="card-benefits">
+        <span>${isCashOnly(v)?'Solo de Contado':'Financiación'}</span>
+        ${acceptsTradeIn(v)?'<span>Tomamos permuta</span>':''}
+      </div>
       <div class="card-actions">
         <button class="detail-btn" data-id="${escapeAttr(v.id)}">Ver vehículo</button>
         ${v.instagram?`<a class="ig-btn" href="${escapeAttr(v.instagram)}" target="_blank" rel="noopener">IG</a>`:''}
@@ -3072,7 +3091,7 @@ function setupInstallmentCalculator(v){
     const toggle=$('#installmentToggle');
 
     if(toggle){
-      toggle.textContent='Solo contado';
+      toggle.textContent='Solo de Contado';
       toggle.disabled=true;
       toggle.style.opacity='.55';
       toggle.style.cursor='not-allowed';
@@ -3080,7 +3099,7 @@ function setupInstallmentCalculator(v){
 
     if(panel){
       panel.classList.remove('open');
-      panel.innerHTML='<div class="installment-warning show">Este vehículo figura solo para pago de contado. No tiene financiación cargada.</div>';
+      panel.innerHTML='<div class="installment-warning show">Este vehículo se vende solo de contado. El anticipo y el valor final son el mismo.</div>';
     }
 
     return;
