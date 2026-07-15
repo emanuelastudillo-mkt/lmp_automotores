@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
-<meta name="lmp-build" content="anticipo-100-solo-contado-2026-07-03">
+<meta name="lmp-build" content="lmp-autos-web-v1.03-validacion-portadas-drive">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   
   <!-- Meta Pixel Code -->
@@ -854,33 +854,11 @@ fbq('track', 'PageView');
       flex-direction:column;
       justify-content:center
     }
-    .featured-popup-kicker{
-      color:var(--accent);
-      font-size:11px;
-      font-weight:950;
-      letter-spacing:.12em;
-      text-transform:uppercase
-    }
     .featured-popup-content h2{
       margin:10px 0 0;
       font-size:clamp(30px,4vw,46px);
       line-height:.98;
       letter-spacing:-.055em
-    }
-    .featured-popup-specs{
-      display:flex;
-      flex-wrap:wrap;
-      gap:7px;
-      margin:17px 0 0
-    }
-    .featured-popup-specs span{
-      padding:8px 10px;
-      border:1px solid var(--line);
-      border-radius:999px;
-      background:#f7f7f4;
-      color:#555;
-      font-size:11px;
-      font-weight:800
     }
     .featured-popup-prices{
       display:grid;
@@ -988,22 +966,10 @@ fbq('track', 'PageView');
       .featured-popup-content{
         padding:13px 13px 12px
       }
-      .featured-popup-kicker{
-        font-size:9px;
-        letter-spacing:.08em
-      }
       .featured-popup-content h2{
         margin-top:6px;
         font-size:clamp(21px,6.5vw,28px);
         line-height:1.02
-      }
-      .featured-popup-specs{
-        gap:5px;
-        margin-top:9px
-      }
-      .featured-popup-specs span{
-        padding:5px 7px;
-        font-size:9px
       }
       .featured-popup-prices{
         grid-template-columns:1fr 1fr;
@@ -1200,22 +1166,10 @@ fbq('track', 'PageView');
       .featured-popup-content{
         padding:15px 14px 14px;
       }
-      .featured-popup-kicker{
-        font-size:9px;
-        letter-spacing:.1em;
-      }
       .featured-popup-content h2{
         margin-top:6px;
         font-size:clamp(23px,7vw,30px);
         line-height:1.02;
-      }
-      .featured-popup-specs{
-        gap:5px;
-        margin-top:10px;
-      }
-      .featured-popup-specs span{
-        padding:5px 7px;
-        font-size:9px;
       }
       .featured-popup-prices{
         grid-template-columns:1fr 1fr;
@@ -1349,250 +1303,72 @@ fbq('track', 'PageView');
     }
 
 
-    @media(max-width:390px){
-      .featured-popup-media{
-        min-height:105px;
-        max-height:132px
-      }
-      .featured-popup-content{
-        padding:12px 11px 11px
-      }
-      .featured-popup-content h2{
-        font-size:20px
-      }
-      .featured-popup-prices{
-        grid-template-columns:1fr
-      }
-      .featured-popup-actions{
-        grid-template-columns:1fr
-      }
+    /* Popup destacado consolidado */
+    .featured-popup-location{
+      display:flex;align-items:center;gap:8px;margin-top:14px;padding:10px 12px;
+      border:1px solid var(--line);border-radius:13px;background:#f7f7f4;
+      color:#4f4f4f;font-size:12px;font-weight:850;line-height:1.35
+    }
+    .featured-popup-location svg{width:17px;height:17px;flex:0 0 auto;color:var(--accent)}
+    .featured-popup-score-graphic{margin-top:14px}
+    .featured-popup-score-graphic .score-section{
+      margin:0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff
+    }
+    .featured-popup-score-graphic .score-header{padding:14px 16px 0}
+    .featured-popup-score-graphic .score-layout{
+      grid-template-columns:minmax(240px,1fr) minmax(190px,.9fr);gap:12px;padding:12px 14px 16px
+    }
+    .featured-popup-score-graphic .radar-card{min-height:320px;padding:12px 16px}
+    .featured-popup-score-graphic .radar-chart{max-width:320px}
+    .featured-popup-score-graphic .score-bars{gap:10px}
+    .featured-popup-score-graphic .score-row-label{font-size:12px}
+    .featured-popup-score-graphic .score-number{font-size:16px}
+    .featured-popup-score-graphic .general-score{width:76px;height:76px}
+    .featured-popup-score-graphic .general-score-value strong{font-size:25px}
+    .featured-popup-score-graphic .general-score-value span{font-size:8px}
+
+    @media(min-width:761px){
+      .featured-popup-panel{width:min(980px,100%)}
+      .featured-popup-card{grid-template-columns:minmax(330px,.88fr) minmax(0,1.12fr)}
+      .featured-popup-content{padding:28px 30px 26px}
+      .featured-popup-score-graphic .radar-label{font-size:8.5px}
     }
 
-
-    /* Popup mobile: foto prioritaria, sin texto redundante */
     @media(max-width:760px){
-      .featured-popup-media{
-        min-height:260px;
-        max-height:330px;
-      }
-      .featured-popup-media img{
-        object-fit:cover;
-        object-position:center center;
-      }
-      .featured-popup-content{
-        padding:12px 13px 13px;
-      }
-      .featured-popup-kicker,
-      .featured-popup-content h2,
-      .featured-popup-specs{
-        display:none !important;
-      }
-      .featured-popup-prices{
-        grid-template-columns:1fr 1fr;
-        gap:7px;
-        margin-top:0;
-      }
-      .featured-popup-price{
-        padding:9px 10px;
-      }
-      .featured-popup-price strong{
-        font-size:16px;
-      }
-      .featured-popup-actions{
-        margin-top:10px;
-      }
-    }
-
-    @media(max-width:390px){
-      .featured-popup-media{
-        min-height:230px;
-        max-height:295px;
-      }
-      .featured-popup-price strong{
-        font-size:15px;
-      }
-    }
-
-
-    /* Popup mobile ultra-compacto para que entre completo en pantalla */
-    @media(max-width:760px){
-      .featured-popup{
-        align-items:center;
-        padding:6px;
-      }
+      .featured-popup{align-items:center;justify-content:center;padding:6px}
       .featured-popup-panel{
-        width:100%;
-        max-width:100%;
-        max-height:calc(100dvh - 12px);
-        border-radius:18px;
-        overflow:hidden;
+        width:min(450px,calc(100vw - 24px));max-width:min(450px,calc(100vw - 24px));
+        max-height:calc(100dvh - 12px);overflow:auto;border-radius:18px
       }
-      .featured-popup-card{
-        grid-template-columns:1fr;
-        min-height:0;
-      }
+      .featured-popup-card{width:100%;grid-template-columns:1fr;min-height:0}
       .featured-popup-media{
-        min-height:170px;
-        max-height:190px;
+        width:100%;height:min(360px,calc((100vw - 24px) * .8));
+        min-height:0;max-height:none;margin:0;background:#111
       }
       .featured-popup-media img{
-        object-fit:cover;
-        object-position:center center;
+        position:static;width:100%;height:100%;display:block;
+        object-fit:contain;object-position:center;background:#111
       }
-      .featured-popup-content{
-        padding:10px 12px 12px;
-      }
-      .featured-popup-prices{
-        grid-template-columns:1fr 1fr;
-        gap:7px;
-        margin-top:0;
-      }
-      .featured-popup-price{
-        padding:8px 9px;
-        border-radius:12px;
-      }
-      .featured-popup-price span{
-        font-size:8px;
-        letter-spacing:.04em;
-      }
-      .featured-popup-price strong{
-        margin-top:3px;
-        font-size:15px;
-        line-height:1.05;
-      }
-      .featured-popup-actions{
-        grid-template-columns:1fr 1fr;
-        gap:7px;
-        margin-top:9px;
-      }
-      .featured-popup-actions button,
-      .featured-popup-actions a{
-        min-height:38px;
-        padding:8px 10px;
-        font-size:11px;
-      }
-      .featured-popup-close{
-        right:8px;
-        top:8px;
-        width:34px;
-        height:34px;
-        font-size:20px;
-      }
-    }
-
-    @media(max-width:420px){
-      .featured-popup-media{
-        min-height:150px;
-        max-height:170px;
-      }
-      .featured-popup-content{
-        padding:9px 10px 10px;
-      }
-      .featured-popup-price{
-        padding:8px;
-      }
-      .featured-popup-price strong{
-        font-size:14px;
-      }
-      .featured-popup-actions button,
-      .featured-popup-actions a{
-        min-height:36px;
-        font-size:10.5px;
-      }
-    }
-
-    @media(max-width:360px){
-      .featured-popup-media{
-        min-height:138px;
-        max-height:155px;
-      }
-      .featured-popup-prices{
-        grid-template-columns:1fr;
-        gap:6px;
-      }
-      .featured-popup-actions{
-        grid-template-columns:1fr;
-      }
-    }
-
-
-    /* Popup mobile: imagen fija 450x360, completa sin recorte */
-    @media(max-width:760px){
-      .featured-popup{
-        align-items:center;
-        justify-content:center;
-        padding:6px;
-      }
-      .featured-popup-panel{
-        width:min(100%, 462px);
-        max-height:calc(100dvh - 12px);
-        overflow:auto;
-        border-radius:18px;
-      }
-      .featured-popup-media{
-        width:min(450px, calc(100vw - 24px));
-        height:min(360px, calc((100vw - 24px) * .8));
-        min-height:0;
-        max-height:none;
-        margin:0 auto;
-        background:#111;
-      }
-      .featured-popup-media img{
-        position:static;
-        width:100%;
-        height:100%;
-        object-fit:contain;
-        object-position:center center;
-        display:block;
-        background:#111;
-      }
-      .featured-popup-media .photo-empty{
-        min-height:0;
-        height:100%;
-      }
-      .featured-popup-content{
-        padding:10px 12px 12px;
-      }
-      .featured-popup-prices{
-        grid-template-columns:1fr 1fr;
-        gap:7px;
-        margin-top:0;
-      }
-      .featured-popup-price{
-        padding:8px 9px;
-        border-radius:12px;
-      }
-      .featured-popup-price strong{
-        font-size:15px;
-        line-height:1.05;
-      }
-      .featured-popup-actions{
-        grid-template-columns:1fr 1fr;
-        gap:7px;
-        margin-top:9px;
-      }
-      .featured-popup-actions button,
-      .featured-popup-actions a{
-        min-height:38px;
-        padding:8px 10px;
-        font-size:11px;
-      }
+      .featured-popup-media .photo-empty{min-height:0;height:100%}
+      .featured-popup-ribbon,
+      .featured-popup-text,
+      .featured-popup-location,
+      .featured-popup-score-graphic,
+      .featured-popup-view{display:none}
+      .featured-popup-content{width:100%;padding:10px 12px 12px}
+      .featured-popup-prices{grid-template-columns:1fr 1fr;gap:7px;margin-top:0}
+      .featured-popup-price{padding:8px 9px;border-radius:12px}
+      .featured-popup-price span{font-size:8px;letter-spacing:.04em}
+      .featured-popup-price strong{margin-top:3px;font-size:15px;line-height:1.05}
+      .featured-popup-actions{display:grid;grid-template-columns:1fr;gap:0;margin-top:9px}
+      .featured-popup-wa{min-height:40px;padding:9px 12px;font-size:12px}
+      .featured-popup-close{right:8px;top:8px;width:34px;height:34px;font-size:20px}
     }
 
     @media(max-width:380px){
-      .featured-popup-panel{
-        width:calc(100vw - 10px);
-      }
-      .featured-popup-media{
-        width:calc(100vw - 22px);
-        height:calc((100vw - 22px) * .8);
-      }
-      .featured-popup-prices{
-        grid-template-columns:1fr;
-      }
-      .featured-popup-actions{
-        grid-template-columns:1fr;
-      }
+      .featured-popup-panel{width:calc(100vw - 22px);max-width:calc(100vw - 22px)}
+      .featured-popup-media{height:calc((100vw - 22px) * .8)}
+      .featured-popup-prices{grid-template-columns:1fr}
     }
 
 </style>
@@ -2119,10 +1895,26 @@ function clearVehicleUrl({replace=true}={}){
   history[method]({},'',url);
   document.title='LMP Autos | Lomas del Mirador';
 }
+function driveFileId(url){
+  const u=clean(url);
+  if(!u)return '';
+
+  const matches=[
+    u.match(/\/file\/d\/([a-zA-Z0-9_-]+)/),
+    u.match(/[?&]id=([a-zA-Z0-9_-]+)/),
+    u.match(/\/d\/([a-zA-Z0-9_-]+)/),
+    u.match(/([a-zA-Z0-9_-]{20,})/)
+  ];
+
+  const match=matches.find(Boolean);
+  return match?match[1]:'';
+}
 function driveImage(url){
-  const u=clean(url); if(!u) return '';
-  const m=u.match(/\/file\/d\/([^/]+)/) || u.match(/[?&]id=([^&]+)/);
-  return m ? `https://drive.google.com/thumbnail?id=${m[1]}&sz=w1600` : u;
+  const u=clean(url);
+  if(!u)return '';
+
+  const id=driveFileId(u);
+  return id?`https://lh3.googleusercontent.com/d/${id}=w1600`:u;
 }
 function money(v){
   const s=clean(v); if(!s || s==='$0' || s==='0') return 'Consultar';
@@ -2270,7 +2062,9 @@ function mapVehicle(r){
     kilometraje:clean(r.Kilometraje), color:clean(r.Color),
     precioPublicado:clean(r['Precio publicado Uds']), precioContado:clean(r['Precio de contado Uds']),
     cotizacion:clean(r['Cotizacion al día']), maxFinan:clean(r['MAX FINAN']),
-    anticipo:clean(r['Anticipo MINIMO']), estado:normalize(r['Estado actual del auto']),
+    anticipo:clean(r['Anticipo MINIMO']),
+    anticipoPct:clean(r['% de anticipo'] ?? r['% Anticipo'] ?? r['Porcentaje de anticipo'] ?? r['Porcentaje Anticipo']),
+    estado:normalize(r['Estado actual del auto']),
     destacadoPopup:isFeaturedPopupValue(r['Vehículo destacado'] ?? r['Vehiculo destacado'] ?? r.Destacado ?? r['Popup destacado'] ?? r['Destacado popup']),
     combustible:clean(r.Combustible), transmision:clean(r.Transmision),
     instagram:clean(r.Reel).startsWith('http')?clean(r.Reel):'',
@@ -2293,11 +2087,44 @@ function isAutomatic(v){
 function hasGnc(v){
   return /GNC/i.test(normalize(v.combustible));
 }
+function percentageNumber(value){
+  const parsed=Number(clean(value).replace(',','.').replace(/[^0-9.\-]/g,''));
+  return Number.isFinite(parsed)?parsed:null;
+}
+function advancePercentage(v){
+  return percentageNumber(v.anticipoPct);
+}
 function isCashOnly(v){
-  const raw=clean(v.anticipo);
-  const normalized=normalize(raw).replace(/\s+/g,'');
-
-  return normalized==='100%' || normalized==='100PORCIENTO' || normalized==='100PORCIENT';
+  const percentage=advancePercentage(v);
+  return percentage!==null && percentage>=100;
+}
+function hasFinancing(v){
+  const percentage=advancePercentage(v);
+  return percentage!==null && percentage<100;
+}
+function vehicleYear(v){
+  const parsed=parseInt(clean(v.anio).replace(/[^0-9]/g,''),10);
+  return Number.isFinite(parsed)?parsed:null;
+}
+function acceptsTradeIn(v){
+  const year=vehicleYear(v);
+  return year!==null && year>=2010;
+}
+function displayedAdvance(v){
+  return isCashOnly(v)?money(v.cotizacion):clean(v.anticipo);
+}
+function vehicleBenefitTags(v){
+  const tags=[];
+  if(isCashOnly(v)) tags.push('Solo de Contado');
+  else if(hasFinancing(v)) tags.push('Financiación');
+  if(acceptsTradeIn(v)) tags.push('Tomamos permuta');
+  return tags;
+}
+function vehicleBenefitsMarkup(v){
+  const tags=vehicleBenefitTags(v);
+  return tags.length
+    ? `<div class="card-benefits">${tags.map(tag=>`<span>${escapeHtml(tag)}</span>`).join('')}</div>`
+    : '';
 }
 function badgeFromStatus(status){
   const normalized=normalize(status).normalize('NFD').replace(/[\u0300-\u036f]/g,'');
@@ -2328,10 +2155,11 @@ function badgeItems(v){
   const stats=vehicleStats[v.id]||{};
   const items=[badgeFromStatus(v.estado)];
 
-  if(Number(stats.score)>0) items.push({text:'Más consultado',className:'hot'});
+  if(isCashOnly(v)) items.push({text:'Solo de Contado',className:'feature'});
+  else if(hasFinancing(v)) items.push({text:'Financiación',className:'feature'});
+  else if(Number(stats.score)>0) items.push({text:'Más consultado',className:'hot'});
   else if(isAutomatic(v)) items.push({text:'Automático',className:'feature'});
   else if(hasGnc(v)) items.push({text:'GNC',className:'feature'});
-  else if(v.anticipo && !isCashOnly(v)) items.push({text:'Financiación',className:'feature'});
 
   return items.slice(0,2);
 }
@@ -2339,22 +2167,30 @@ function badgeItems(v){
 function vehicleCoverId(v){
   return clean(v.id).replace(/\.[a-z0-9]+$/i,'').replace(/[^a-z0-9_-]/gi,'');
 }
-function coverCandidates(v){
+const LOCAL_COVER_VERSION='v103';
+function localCoverUrl(v,{cacheBust=false}={}){
   const id=vehicleCoverId(v);
-  const candidates=[];
+  if(!id)return '';
 
-  if(id){
-    candidates.push(`./img/vehiculos/${id}.webp`);
+  const url=`./img/vehiculos/${id}.webp`;
+  return cacheBust?`${url}?${LOCAL_COVER_VERSION}`:url;
+}
+function coverCandidates(v,{localOnly=false}={}){
+  const candidates=[];
+  const local=localCoverUrl(v,{cacheBust:true});
+
+  if(local){
+    candidates.push(local);
   }
 
-  if(v.fotos && v.fotos[0]){
+  if(!localOnly && v.fotos && v.fotos[0]){
     candidates.push(v.fotos[0]);
   }
 
   return [...new Set(candidates.filter(Boolean))];
 }
-function coverImageMarkup(v,index=0){
-  const candidates=coverCandidates(v);
+function coverImageMarkup(v,index=0,{localOnly=false}={}){
+  const candidates=coverCandidates(v,{localOnly});
 
   if(!candidates.length){
     return `<div class="photo-empty">Fotos próximamente</div>`;
@@ -2372,6 +2208,65 @@ function coverImageMarkup(v,index=0){
     data-cover-candidates="${escapeAttr(JSON.stringify(candidates))}"
     data-cover-index="0"
     onerror="nextCoverCandidate(this)">`;
+}
+async function verifyLocalCover(v){
+  const url=localCoverUrl(v,{cacheBust:true});
+
+  if(!url){
+    v.hasLocalCover=false;
+    return false;
+  }
+
+  try{
+    const response=await fetch(url,{
+      method:'GET',
+      cache:'no-store',
+      credentials:'same-origin'
+    });
+
+    const contentType=(response.headers.get('content-type')||'').toLowerCase();
+
+    if(!response.ok || !contentType.startsWith('image/')){
+      v.hasLocalCover=false;
+      return false;
+    }
+
+    const blob=await response.blob();
+
+    if(!blob.size || !blob.type.toLowerCase().startsWith('image/')){
+      v.hasLocalCover=false;
+      return false;
+    }
+
+    if('createImageBitmap' in window){
+      const bitmap=await createImageBitmap(blob);
+      const valid=bitmap.width>0 && bitmap.height>0;
+      bitmap.close();
+      v.hasLocalCover=valid;
+      return valid;
+    }
+
+    const objectUrl=URL.createObjectURL(blob);
+    const valid=await new Promise(resolve=>{
+      const image=new Image();
+
+      image.onload=()=>resolve(image.naturalWidth>0 && image.naturalHeight>0);
+      image.onerror=()=>resolve(false);
+      image.src=objectUrl;
+    });
+
+    URL.revokeObjectURL(objectUrl);
+    v.hasLocalCover=valid;
+    return valid;
+  }catch(error){
+    console.warn(`No se pudo validar la portada local de ${v.id}:`,error);
+    v.hasLocalCover=false;
+    return false;
+  }
+}
+async function verifyLocalCovers(list){
+  await Promise.all(list.map(verifyLocalCover));
+  return list;
 }
 function nextCoverCandidate(img){
   try{
@@ -2395,7 +2290,7 @@ function nextCoverCandidate(img){
 
 
 function featuredPopupVehicle(){
-  const featured=vehicles.filter(v=>v.destacadoPopup && v.estado!=='VENDIDO');
+  const featured=vehicles.filter(v=>v.destacadoPopup && v.estado!=='VENDIDO' && v.hasLocalCover);
 
   if(!featured.length){
     return null;
@@ -2434,25 +2329,37 @@ function markFeaturedPopupSeen(){
     sessionStorage.setItem('lmp_featured_popup_seen','1');
   }catch(_){}
 }
-function featuredPopupMarkup(v){
-  const specs=[
-    v.anio?`Año ${escapeHtml(v.anio)}`:'',
-    v.kilometraje?escapeHtml(km(v.kilometraje)):'',
-    v.combustible?escapeHtml(v.combustible):'',
-    v.transmision?escapeHtml(v.transmision):''
-  ].filter(Boolean).map(item=>`<span>${item}</span>`).join('');
 
+function popupScoreMarkup(v){
+  const graphic=renderScoreGraphic(v);
+  if(!graphic)return '';
+
+  return `<div class="featured-popup-score-graphic">${graphic}</div>`;
+}
+
+
+function featuredPopupMarkup(v){
   return `<div class="featured-popup-card">
     <div class="featured-popup-media">
-      ${coverImageMarkup(v,0)}
+      ${coverImageMarkup(v,0,{localOnly:true})}
       <div class="featured-popup-ribbon">Vehículo destacado</div>
     </div>
 
     <div class="featured-popup-content">
       <div class="featured-popup-prices">
         ${v.cotizacion?`<div class="featured-popup-price"><span>Valor total</span><strong>${escapeHtml(money(v.cotizacion))}</strong></div>`:''}
-        ${v.anticipo?`<div class="featured-popup-price"><span>${isCashOnly(v)?'Condición':'Anticipo desde'}</span><strong>${isCashOnly(v)?'Solo contado':escapeHtml(v.anticipo)}</strong></div>`:''}
+        ${(v.anticipo||isCashOnly(v))?`<div class="featured-popup-price"><span>${isCashOnly(v)?'Solo de contado':'Anticipo desde'}</span><strong>${escapeHtml(displayedAdvance(v))}</strong></div>`:''}
       </div>
+
+      <div class="featured-popup-location">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 21s7-5.2 7-12a7 7 0 0 0-14 0c0 6.8 7 12 7 12z"></path>
+          <circle cx="12" cy="9" r="2.4"></circle>
+        </svg>
+        <span>Lomas del Mirador · Av. Mosconi 799</span>
+      </div>
+
+      ${popupScoreMarkup(v)}
 
       <p class="featured-popup-text">
         Unidad destacada del catálogo.
@@ -2521,10 +2428,10 @@ function maybeShowFeaturedPopup(){
 }
 
 
-function card(v,index=0){
+function card(v,index=0,{localOnly=false}={}){
   return `<article class="vehicle" style="--delay:${Math.min(index,8)*45}ms">
     <div class="photo">
-      ${coverImageMarkup(v,index)}
+      ${coverImageMarkup(v,index,{localOnly})}
       <div class="badge-stack">${badgeItems(v).map(item=>`<span class="badge ${item.className}">${escapeHtml(item.text)}</span>`).join('')}</div>
     </div>
     <div class="body">
@@ -2540,8 +2447,8 @@ function card(v,index=0){
         ${v.precioPublicado?`<div class="price-box usd"><div class="price-label">Valor en dólares</div><div class="price">${icon('dollar')} ${escapeHtml(money(v.precioPublicado))}</div></div>`:''}
         ${v.cotizacion?`<div class="price-box ars"><div class="price-label">Valor total en pesos</div><div class="price"><span class="price-prefix">ARS</span>${escapeHtml(money(v.cotizacion))}</div></div>`:''}
       </div>
-      ${v.anticipo?`<div class="advance">${isCashOnly(v)?'Solo contado':`Anticipo desde <strong>${escapeHtml(v.anticipo)}</strong>`}</div>`:''}
-      <div class="card-benefits">${isCashOnly(v)?'<span>Solo contado</span>':'<span>Financiación</span>'}<span>Tomamos permuta</span></div>
+      ${(v.anticipo||isCashOnly(v))?`<div class="advance">${isCashOnly(v)?`Solo de contado <strong>${escapeHtml(displayedAdvance(v))}</strong>`:`Anticipo desde <strong>${escapeHtml(displayedAdvance(v))}</strong>`}</div>`:''}
+      ${vehicleBenefitsMarkup(v)}
       <div class="card-actions">
         <button class="detail-btn" data-id="${escapeAttr(v.id)}">Ver vehículo</button>
         ${v.instagram?`<a class="ig-btn" href="${escapeAttr(v.instagram)}" target="_blank" rel="noopener">IG</a>`:''}
@@ -2831,7 +2738,7 @@ function setupInstallmentCalculator(v){
     const toggle=$('#installmentToggle');
 
     if(toggle){
-      toggle.textContent='Solo contado';
+      toggle.textContent='Solo de Contado';
       toggle.disabled=true;
       toggle.style.opacity='.55';
       toggle.style.cursor='not-allowed';
@@ -2839,7 +2746,7 @@ function setupInstallmentCalculator(v){
 
     if(panel){
       panel.classList.remove('open');
-      panel.innerHTML='<div class="installment-warning show">Este vehículo figura solo para pago de contado. No tiene financiación cargada.</div>';
+      panel.innerHTML='<div class="installment-warning show">Este vehículo se vende solo de contado. El anticipo y el valor final son el mismo.</div>';
     }
 
     return;
@@ -2908,8 +2815,8 @@ function addUnique(list,vehicle){
   if(vehicle && !list.some(item=>item.id===vehicle.id))list.push(vehicle);
 }
 function fallbackHighlights(limit){
-  const candidates=vehicles.filter(v=>v.estado==='DISPONIBLE' && v.fotos.length);
-  if(!candidates.length)return vehicles.filter(v=>v.estado==='DISPONIBLE').slice(0,limit);
+  const candidates=vehicles.filter(v=>v.estado==='DISPONIBLE' && v.hasLocalCover);
+  if(!candidates.length)return [];
   const sorted=[...candidates].sort((a,b)=>numericPrice(a.cotizacion)-numericPrice(b.cotizacion));
   const picks=[];
   const positions=[0,Math.floor((sorted.length-1)/3),Math.floor((sorted.length-1)*2/3),sorted.length-1];
@@ -2925,7 +2832,7 @@ function fallbackHighlights(limit){
 }
 function selectHighlights(limit=CONFIG.maxFeatured){
   const ranked=vehicles
-    .filter(v=>v.estado==='DISPONIBLE' && v.fotos.length && vehicleStats[v.id] && Number(vehicleStats[v.id].score)>0)
+    .filter(v=>v.estado==='DISPONIBLE' && v.hasLocalCover && vehicleStats[v.id] && Number(vehicleStats[v.id].score)>0)
     .sort((a,b)=>Number(vehicleStats[b.id].score)-Number(vehicleStats[a.id].score));
   const selected=[];
   ranked.forEach(v=>{if(selected.length<limit)addUnique(selected,v)});
@@ -2933,8 +2840,10 @@ function selectHighlights(limit=CONFIG.maxFeatured){
   return selected.slice(0,limit);
 }
 
-function renderCards(target,list){
-  target.innerHTML=list.length?list.map(card).join(''):`<div class="empty">No encontramos vehículos con estos filtros.</div>`;
+function renderCards(target,list,{localOnly=false}={}){
+  target.innerHTML=list.length
+    ? list.map((vehicle,index)=>card(vehicle,index,{localOnly})).join('')
+    : `<div class="empty">No encontramos vehículos con estos filtros.</div>`;
 
   target.querySelectorAll('.detail-btn').forEach(button=>{
     const vehicle=vehicles.find(item=>item.id===button.dataset.id);
@@ -3017,7 +2926,7 @@ function openVehicle(id,{updateUrl=true,replaceUrl=false}={}){
   const gallery=v.fotos.length?`
     <div class="gallery">
       <div class="main-image" id="mainImageWrap">
-        <img id="modalImage" src="${escapeAttr(v.fotos[0])}" alt="${escapeAttr(v.marca+' '+v.modelo)}">
+        <img id="modalImage" src="${escapeAttr(v.fotos[0])}" alt="${escapeAttr(v.marca+' '+v.modelo)}" referrerpolicy="no-referrer" onerror="this.outerHTML='<div class=&quot;photo-empty&quot;>Imagen no disponible</div>'">
         <button class="fullscreen-photo-btn" id="fullscreenPhotoBtn" type="button">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"></path>
@@ -3025,7 +2934,7 @@ function openVehicle(id,{updateUrl=true,replaceUrl=false}={}){
           Pantalla completa
         </button>
       </div>
-      ${v.fotos.length>1?`<div class="gallery-thumbs" id="galleryThumbs">${v.fotos.map((photo,i)=>`<button class="gallery-thumb ${i===0?'active':''}" type="button" data-gallery-index="${i}" aria-label="Ver foto ${i+1}"><img src="${escapeAttr(photo)}" alt=""></button>`).join('')}</div>`:''}
+      ${v.fotos.length>1?`<div class="gallery-thumbs" id="galleryThumbs">${v.fotos.map((photo,i)=>`<button class="gallery-thumb ${i===0?'active':''}" type="button" data-gallery-index="${i}" aria-label="Ver foto ${i+1}"><img src="${escapeAttr(photo)}" alt="" referrerpolicy="no-referrer" onerror="this.closest('button')?.remove()"></button>`).join('')}</div>`:''}
       <div class="gallery-controls"><button id="prevPhoto" type="button">‹</button><span class="counter" id="photoCounter">1 / ${v.fotos.length}</span><button id="nextPhoto" type="button">›</button></div>
     </div>`:`<div class="gallery"><div class="main-image"><div class="photo-empty">Fotos próximamente</div></div></div>`;
   $('#modalContent').innerHTML=`
@@ -3243,12 +3152,19 @@ async function loadData(){
     }
     vehicles.sort((a,b)=>(a.estado==='DISPONIBLE'?0:1)-(b.estado==='DISPONIBLE'?0:1) || Number(b.anio)-Number(a.anio));
     populateFilters();
-    await loadVehicleStats();
+    await Promise.all([
+      loadVehicleStats(),
+      verifyLocalCovers(vehicles)
+    ]);
     highlightedVehicles=selectHighlights(CONFIG.maxFeatured);
     const hasRealStats=Object.values(vehicleStats).some(item=>Number(item.score)>0);
     $('#featuredTitle').textContent=hasRealStats?'Los más consultados':'Vehículos recomendados';
     $('#featuredSubtitle').textContent=hasRealStats?'Los vehículos que más interés generan entre nuestros visitantes.':'Una selección variada entre distintas marcas y rangos de precio.';
-    renderCards($('#featuredGrid'),highlightedVehicles);
+    if(highlightedVehicles.length){
+      renderCards($('#featuredGrid'),highlightedVehicles,{localOnly:true});
+    }else{
+      $('#featuredGrid').innerHTML='<div class="empty">No hay vehículos con portada local disponible.</div>';
+    }
     const now=new Date();
     applyFilters();
 
