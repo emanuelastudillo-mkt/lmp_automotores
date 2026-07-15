@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
-<meta name="lmp-build" content="mobile-catalogo-popup-compacto-2026-07-03">
+<meta name="lmp-build" content="popup-desktop-rendimiento-mobile-simple-2026-07-03">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   
   <!-- Meta Pixel Code -->
@@ -920,7 +920,7 @@ fbq('track', 'PageView');
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:9px;
-      margin-top:23px
+      margin-top:16px
     }
     .featured-popup-actions button,
     .featured-popup-actions a{
@@ -947,91 +947,99 @@ fbq('track', 'PageView');
     }
     .featured-popup-wa:hover{background:#272727;transform:translateY(-1px)}
     @media(max-width:760px){
-      .featured-popup{padding:12px}
-      .featured-popup-card{grid-template-columns:1fr;min-height:0}
-      .featured-popup-media{min-height:300px}
-      .featured-popup-media .photo-empty{min-height:300px}
-      .featured-popup-content{padding:25px 19px 21px}
-      .featured-popup-prices{grid-template-columns:1fr}
-      .featured-popup-actions{grid-template-columns:1fr}
+      .featured-popup{
+        align-items:flex-start;
+        padding:8px;
+        overflow:auto
+      }
+      .featured-popup-panel{
+        width:100%;
+        max-height:calc(100dvh - 16px);
+        border-radius:18px
+      }
+      .featured-popup-close{
+        right:8px;
+        top:8px;
+        width:34px;
+        height:34px;
+        font-size:20px
+      }
+      .featured-popup-card{
+        grid-template-columns:1fr;
+        min-height:0
+      }
+      .featured-popup-media{
+        min-height:120px;
+        max-height:145px
+      }
+      .featured-popup-media img{
+        object-fit:cover;
+        object-position:center top
+      }
+      .featured-popup-media .photo-empty{
+        min-height:120px
+      }
+      .featured-popup-ribbon{
+        left:10px;
+        top:10px;
+        padding:6px 9px;
+        font-size:8px
+      }
+      .featured-popup-content{
+        padding:13px 13px 12px
+      }
+      .featured-popup-kicker{
+        font-size:9px;
+        letter-spacing:.08em
+      }
+      .featured-popup-content h2{
+        margin-top:6px;
+        font-size:clamp(21px,6.5vw,28px);
+        line-height:1.02
+      }
+      .featured-popup-specs{
+        gap:5px;
+        margin-top:9px
+      }
+      .featured-popup-specs span{
+        padding:5px 7px;
+        font-size:9px
+      }
+      .featured-popup-prices{
+        grid-template-columns:1fr 1fr;
+        gap:7px;
+        margin-top:10px
+      }
+      .featured-popup-price{
+        padding:8px;
+        border-radius:12px
+      }
+      .featured-popup-price span{
+        font-size:8px;
+        letter-spacing:.05em
+      }
+      .featured-popup-price strong{
+        margin-top:3px;
+        font-size:14px;
+        line-height:1.08
+      }
+      .featured-popup-text{
+        display:none
+      }
+      .featured-popup-actions{
+        grid-template-columns:1fr 1fr;
+        gap:7px;
+        margin-top:10px
+      }
+      .featured-popup-actions button,
+      .featured-popup-actions a{
+        min-height:40px;
+        padding:9px 10px;
+        font-size:11px
+      }
     }
 
 
-    .featured-popup-countdown{
-      margin:18px 0 0;
-      padding:14px;
-      border:2px solid #ffd43b;
-      border-radius:17px;
-      background:linear-gradient(135deg,#fff9d8,#fff);
-      box-shadow:0 12px 28px rgba(255,212,59,.22)
-    }
-    .featured-popup-countdown-label{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      color:#171717;
-      font-size:10px;
-      font-weight:950;
-      letter-spacing:.1em;
-      text-transform:uppercase
-    }
-    .featured-popup-countdown-label strong{
-      padding:6px 9px;
-      border-radius:999px;
-      background:#171717;
-      color:#ffd43b;
-      white-space:nowrap
-    }
-    .featured-popup-countdown-time{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:7px;
-      margin-top:10px
-    }
-    .featured-popup-countdown-time div{
-      min-width:0;
-      padding:9px 7px;
-      border-radius:12px;
-      background:#171717;
-      color:#fff;
-      text-align:center
-    }
-    .featured-popup-countdown-time strong{
-      display:block;
-      font-size:22px;
-      line-height:1;
-      letter-spacing:-.04em
-    }
-    .featured-popup-countdown-time span{
-      display:block;
-      margin-top:4px;
-      color:#cfcfcf;
-      font-size:8px;
-      font-weight:850;
-      letter-spacing:.06em;
-      text-transform:uppercase
-    }
-    .featured-popup-deadline{
-      display:block;
-      margin-top:8px;
-      color:#555;
-      font-size:11px;
-      line-height:1.4
-    }
-    .featured-popup-countdown.expired{
-      border-color:#d2d2cc;
-      background:#f5f5f2;
-      box-shadow:none
-    }
-    .featured-popup-countdown.expired .featured-popup-countdown-label strong{
-      background:#555;
-      color:#fff
-    }
-    @media(max-width:760px){
-      .featured-popup-countdown-time strong{font-size:19px}
-      .featured-popup-countdown-label{align-items:flex-start;flex-direction:column}
-    }
 
 
     /* Ajuste mobile compacto: más datos visibles sin abrir la ficha */
@@ -1230,41 +1238,6 @@ fbq('track', 'PageView');
       .featured-popup-text{
         display:none;
       }
-      .featured-popup-countdown{
-        margin-top:10px;
-        padding:9px;
-        border-radius:13px;
-      }
-      .featured-popup-countdown-label{
-        flex-direction:row;
-        align-items:center;
-        font-size:8px;
-        gap:8px;
-        letter-spacing:.06em;
-      }
-      .featured-popup-countdown-label strong{
-        padding:5px 7px;
-        font-size:8px;
-      }
-      .featured-popup-countdown-time{
-        gap:5px;
-        margin-top:7px;
-      }
-      .featured-popup-countdown-time div{
-        padding:7px 4px;
-        border-radius:9px;
-      }
-      .featured-popup-countdown-time strong{
-        font-size:16px;
-      }
-      .featured-popup-countdown-time span{
-        margin-top:3px;
-        font-size:7px;
-      }
-      .featured-popup-deadline{
-        margin-top:6px;
-        font-size:9px;
-      }
       .featured-popup-actions{
         grid-template-columns:1fr 1fr;
         gap:7px;
@@ -1297,6 +1270,492 @@ fbq('track', 'PageView');
       .vehicle .meta span{
         font-size:8.5px;
       }
+    }
+
+
+    /* Correcciones mobile: header con contraste y portadas al borde */
+    @media(max-width:620px){
+      header{
+        background:#101010 !important;
+        border-bottom:1px solid rgba(255,255,255,.12);
+      }
+      .topbar{
+        background:#101010 !important;
+        min-height:62px;
+      }
+      nav{
+        background:#101010 !important;
+        border-radius:0;
+      }
+      nav button,
+      nav a{
+        background:transparent !important;
+        color:#d6d6d6 !important;
+      }
+      nav button.active,
+      nav button:hover,
+      nav a:hover{
+        background:#272727 !important;
+        color:#fff !important;
+      }
+
+      .hero{
+        width:100%;
+        overflow:hidden;
+      }
+      .banner{
+        width:100%;
+        max-width:none;
+        border-radius:0;
+        margin-left:0;
+        margin-right:0;
+      }
+      .banner-track,
+      .banner-slide{
+        width:100%;
+      }
+      .banner-slide img{
+        width:100%;
+        height:100%;
+        object-fit:cover;
+      }
+
+      .vehicle{
+        grid-template-columns:40% 60%;
+        overflow:hidden;
+      }
+      .vehicle .photo{
+        width:100%;
+        height:100%;
+        align-self:stretch;
+        border-radius:0;
+      }
+      .vehicle .photo img{
+        width:100%;
+        height:100%;
+        display:block;
+        object-fit:cover;
+      }
+      .vehicle .body{
+        width:100%;
+        min-width:0;
+      }
+    }
+
+    @media(max-width:390px){
+      .vehicle{
+        grid-template-columns:39% 61%;
+      }
+    }
+
+
+    @media(max-width:390px){
+      .featured-popup-media{
+        min-height:105px;
+        max-height:132px
+      }
+      .featured-popup-content{
+        padding:12px 11px 11px
+      }
+      .featured-popup-content h2{
+        font-size:20px
+      }
+      .featured-popup-prices{
+        grid-template-columns:1fr
+      }
+      .featured-popup-actions{
+        grid-template-columns:1fr
+      }
+    }
+
+
+    /* Popup mobile: foto prioritaria, sin texto redundante */
+    @media(max-width:760px){
+      .featured-popup-media{
+        min-height:260px;
+        max-height:330px;
+      }
+      .featured-popup-media img{
+        object-fit:cover;
+        object-position:center center;
+      }
+      .featured-popup-content{
+        padding:12px 13px 13px;
+      }
+      .featured-popup-kicker,
+      .featured-popup-content h2,
+      .featured-popup-specs{
+        display:none !important;
+      }
+      .featured-popup-prices{
+        grid-template-columns:1fr 1fr;
+        gap:7px;
+        margin-top:0;
+      }
+      .featured-popup-price{
+        padding:9px 10px;
+      }
+      .featured-popup-price strong{
+        font-size:16px;
+      }
+      .featured-popup-actions{
+        margin-top:10px;
+      }
+    }
+
+    @media(max-width:390px){
+      .featured-popup-media{
+        min-height:230px;
+        max-height:295px;
+      }
+      .featured-popup-price strong{
+        font-size:15px;
+      }
+    }
+
+
+    /* Popup mobile ultra-compacto para que entre completo en pantalla */
+    @media(max-width:760px){
+      .featured-popup{
+        align-items:center;
+        padding:6px;
+      }
+      .featured-popup-panel{
+        width:100%;
+        max-width:100%;
+        max-height:calc(100dvh - 12px);
+        border-radius:18px;
+        overflow:hidden;
+      }
+      .featured-popup-card{
+        grid-template-columns:1fr;
+        min-height:0;
+      }
+      .featured-popup-media{
+        min-height:170px;
+        max-height:190px;
+      }
+      .featured-popup-media img{
+        object-fit:cover;
+        object-position:center center;
+      }
+      .featured-popup-content{
+        padding:10px 12px 12px;
+      }
+      .featured-popup-prices{
+        grid-template-columns:1fr 1fr;
+        gap:7px;
+        margin-top:0;
+      }
+      .featured-popup-price{
+        padding:8px 9px;
+        border-radius:12px;
+      }
+      .featured-popup-price span{
+        font-size:8px;
+        letter-spacing:.04em;
+      }
+      .featured-popup-price strong{
+        margin-top:3px;
+        font-size:15px;
+        line-height:1.05;
+      }
+      .featured-popup-actions{
+        grid-template-columns:1fr 1fr;
+        gap:7px;
+        margin-top:9px;
+      }
+      .featured-popup-actions button,
+      .featured-popup-actions a{
+        min-height:38px;
+        padding:8px 10px;
+        font-size:11px;
+      }
+      .featured-popup-close{
+        right:8px;
+        top:8px;
+        width:34px;
+        height:34px;
+        font-size:20px;
+      }
+    }
+
+    @media(max-width:420px){
+      .featured-popup-media{
+        min-height:150px;
+        max-height:170px;
+      }
+      .featured-popup-content{
+        padding:9px 10px 10px;
+      }
+      .featured-popup-price{
+        padding:8px;
+      }
+      .featured-popup-price strong{
+        font-size:14px;
+      }
+      .featured-popup-actions button,
+      .featured-popup-actions a{
+        min-height:36px;
+        font-size:10.5px;
+      }
+    }
+
+    @media(max-width:360px){
+      .featured-popup-media{
+        min-height:138px;
+        max-height:155px;
+      }
+      .featured-popup-prices{
+        grid-template-columns:1fr;
+        gap:6px;
+      }
+      .featured-popup-actions{
+        grid-template-columns:1fr;
+      }
+    }
+
+
+    /* Popup mobile: imagen fija 450x360, completa sin recorte */
+    @media(max-width:760px){
+      .featured-popup{
+        align-items:center;
+        justify-content:center;
+        padding:6px;
+      }
+      .featured-popup-panel{
+        width:min(100%, 462px);
+        max-height:calc(100dvh - 12px);
+        overflow:auto;
+        border-radius:18px;
+      }
+      .featured-popup-media{
+        width:min(450px, calc(100vw - 24px));
+        height:min(360px, calc((100vw - 24px) * .8));
+        min-height:0;
+        max-height:none;
+        margin:0 auto;
+        background:#111;
+      }
+      .featured-popup-media img{
+        position:static;
+        width:100%;
+        height:100%;
+        object-fit:contain;
+        object-position:center center;
+        display:block;
+        background:#111;
+      }
+      .featured-popup-media .photo-empty{
+        min-height:0;
+        height:100%;
+      }
+      .featured-popup-content{
+        padding:10px 12px 12px;
+      }
+      .featured-popup-prices{
+        grid-template-columns:1fr 1fr;
+        gap:7px;
+        margin-top:0;
+      }
+      .featured-popup-price{
+        padding:8px 9px;
+        border-radius:12px;
+      }
+      .featured-popup-price strong{
+        font-size:15px;
+        line-height:1.05;
+      }
+      .featured-popup-actions{
+        grid-template-columns:1fr 1fr;
+        gap:7px;
+        margin-top:9px;
+      }
+      .featured-popup-actions button,
+      .featured-popup-actions a{
+        min-height:38px;
+        padding:8px 10px;
+        font-size:11px;
+      }
+    }
+
+    @media(max-width:380px){
+      .featured-popup-panel{
+        width:calc(100vw - 10px);
+      }
+      .featured-popup-media{
+        width:calc(100vw - 22px);
+        height:calc((100vw - 22px) * .8);
+      }
+      .featured-popup-prices{
+        grid-template-columns:1fr;
+      }
+      .featured-popup-actions{
+        grid-template-columns:1fr;
+      }
+    }
+
+
+    /* Popup destacado: desktop con rendimiento + ubicación; mobile simplificado */
+    .featured-popup-location{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      margin-top:14px;
+      padding:10px 12px;
+      border:1px solid var(--line);
+      border-radius:13px;
+      background:#f7f7f4;
+      color:#4f4f4f;
+      font-size:12px;
+      font-weight:850;
+      line-height:1.35
+    }
+    .featured-popup-location svg{
+      width:17px;
+      height:17px;
+      flex:0 0 auto;
+      color:var(--accent)
+    }
+    .featured-popup-score{
+      margin-top:14px;
+      padding:13px;
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:#fff
+    }
+    .featured-popup-score-title{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:center;
+      margin-bottom:10px
+    }
+    .featured-popup-score-title span{
+      color:var(--muted);
+      font-size:10px;
+      font-weight:950;
+      letter-spacing:.08em;
+      text-transform:uppercase
+    }
+    .featured-popup-score-title strong{
+      font-size:18px;
+      letter-spacing:-.04em
+    }
+    .featured-popup-score-bars{
+      display:grid;
+      gap:6px
+    }
+    .featured-popup-score-row{
+      display:grid;
+      grid-template-columns:72px 1fr 28px;
+      gap:8px;
+      align-items:center
+    }
+    .featured-popup-score-row span{
+      color:#555;
+      font-size:9px;
+      font-weight:850
+    }
+    .featured-popup-score-track{
+      height:7px;
+      overflow:hidden;
+      border-radius:999px;
+      background:#ecece7
+    }
+    .featured-popup-score-fill{
+      height:100%;
+      border-radius:999px;
+      background:linear-gradient(90deg,#bb1d23,#171717)
+    }
+    .featured-popup-score-row strong{
+      text-align:right;
+      font-size:10px
+    }
+
+    @media(min-width:761px){
+      .featured-popup-panel{width:min(980px,100%)}
+      .featured-popup-card{grid-template-columns:minmax(330px,.88fr) minmax(0,1.12fr)}
+      .featured-popup-content{padding:28px 30px 26px}
+    }
+
+    @media(max-width:760px){
+      .featured-popup{
+        align-items:center;
+        justify-content:center;
+        padding:6px
+      }
+      .featured-popup-panel{
+        width:min(100%, 462px);
+        max-height:calc(100dvh - 12px);
+        overflow:auto;
+        border-radius:18px
+      }
+      .featured-popup-media{
+        width:min(450px, calc(100vw - 24px));
+        height:min(360px, calc((100vw - 24px) * .8));
+        min-height:0 !important;
+        max-height:none !important;
+        margin:0 auto;
+        background:#111
+      }
+      .featured-popup-media img{
+        position:static;
+        width:100%;
+        height:100%;
+        display:block;
+        object-fit:contain !important;
+        object-position:center center !important;
+        background:#111
+      }
+      .featured-popup-ribbon,
+      .featured-popup-kicker,
+      .featured-popup-content h2,
+      .featured-popup-specs,
+      .featured-popup-text,
+      .featured-popup-location,
+      .featured-popup-score,
+      .featured-popup-view{
+        display:none !important
+      }
+      .featured-popup-content{padding:10px 12px 12px}
+      .featured-popup-prices{
+        grid-template-columns:1fr 1fr;
+        gap:7px;
+        margin-top:0
+      }
+      .featured-popup-price{
+        padding:8px 9px;
+        border-radius:12px
+      }
+      .featured-popup-price span{
+        font-size:8px;
+        letter-spacing:.04em
+      }
+      .featured-popup-price strong{
+        margin-top:3px;
+        font-size:15px;
+        line-height:1.05
+      }
+      .featured-popup-actions{
+        display:grid;
+        grid-template-columns:1fr;
+        gap:0;
+        margin-top:9px
+      }
+      .featured-popup-wa{
+        min-height:40px;
+        padding:9px 12px;
+        font-size:12px
+      }
+    }
+
+    @media(max-width:380px){
+      .featured-popup-media{
+        width:calc(100vw - 22px);
+        height:calc((100vw - 22px) * .8)
+      }
+      .featured-popup-prices{grid-template-columns:1fr}
     }
 
 </style>
@@ -1429,7 +1888,7 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
 
 
 <div class="featured-popup" id="featuredPopup" aria-hidden="true">
-  <section class="featured-popup-panel" role="dialog" aria-modal="true" aria-labelledby="featuredPopupTitle">
+  <section class="featured-popup-panel" role="dialog" aria-modal="true" aria-label="Vehículo destacado">
     <button class="featured-popup-close" id="featuredPopupClose" type="button" aria-label="Cerrar destacado">×</button>
     <div id="featuredPopupBody"></div>
   </section>
@@ -1997,6 +2456,12 @@ function isAutomatic(v){
 function hasGnc(v){
   return /GNC/i.test(normalize(v.combustible));
 }
+function isCashOnly(v){
+  const raw=clean(v.anticipo);
+  const normalized=normalize(raw).replace(/\s+/g,'');
+
+  return normalized==='100%' || normalized==='100PORCIENTO' || normalized==='100PORCIENT';
+}
 function badgeFromStatus(status){
   const normalized=normalize(status).normalize('NFD').replace(/[\u0300-\u036f]/g,'');
 
@@ -2029,7 +2494,7 @@ function badgeItems(v){
   if(Number(stats.score)>0) items.push({text:'Más consultado',className:'hot'});
   else if(isAutomatic(v)) items.push({text:'Automático',className:'feature'});
   else if(hasGnc(v)) items.push({text:'GNC',className:'feature'});
-  else if(v.anticipo) items.push({text:'Financiación',className:'feature'});
+  else if(v.anticipo && !isCashOnly(v)) items.push({text:'Financiación',className:'feature'});
 
   return items.slice(0,2);
 }
@@ -2090,67 +2555,35 @@ function nextCoverCandidate(img){
 
 
 
-const FEATURED_POPUP_DEADLINE = '2026-07-13T18:00:00-03:00';
-let featuredPopupCountdownTimer = null;
-
-function countdownParts(deadline){
-  const total=Math.max(0,new Date(deadline).getTime()-Date.now());
-  const seconds=Math.floor(total/1000);
-  const days=Math.floor(seconds/86400);
-  const hours=Math.floor((seconds%86400)/3600);
-  const minutes=Math.floor((seconds%3600)/60);
-  const secs=seconds%60;
-
-  return {total,days,hours,minutes,seconds:secs};
-}
-
-function renderFeaturedPopupCountdown(){
-  const box=$('#featuredPopupCountdown');
-  if(!box)return;
-
-  const parts=countdownParts(FEATURED_POPUP_DEADLINE);
-  const pad=value=>String(value).padStart(2,'0');
-
-  if(parts.total<=0){
-    box.classList.add('expired');
-    box.innerHTML=`<div class="featured-popup-countdown-label">
-      <span>Promoción finalizada</span>
-      <strong>Consultá disponibilidad</strong>
-    </div>
-    <small class="featured-popup-deadline">La condición especial vencía el lunes 13 a las 18 hs.</small>`;
-    return;
-  }
-
-  box.classList.remove('expired');
-  box.innerHTML=`<div class="featured-popup-countdown-label">
-    <span>Reservalo antes de que venza</span>
-    <strong>RESERVALO</strong>
-  </div>
-  <div class="featured-popup-countdown-time" aria-label="Tiempo restante de la promoción">
-    <div><strong>${pad(parts.days)}</strong><span>Días</span></div>
-    <div><strong>${pad(parts.hours)}</strong><span>Horas</span></div>
-    <div><strong>${pad(parts.minutes)}</strong><span>Min</span></div>
-    <div><strong>${pad(parts.seconds)}</strong><span>Seg</span></div>
-  </div>
-  <small class="featured-popup-deadline">Vence el lunes 13 a las 18 hs.</small>`;
-}
-
-function startFeaturedPopupCountdown(){
-  stopFeaturedPopupCountdown();
-  renderFeaturedPopupCountdown();
-  featuredPopupCountdownTimer=setInterval(renderFeaturedPopupCountdown,1000);
-}
-
-function stopFeaturedPopupCountdown(){
-  if(featuredPopupCountdownTimer){
-    clearInterval(featuredPopupCountdownTimer);
-    featuredPopupCountdownTimer=null;
-  }
-}
 
 
 function featuredPopupVehicle(){
-  return vehicles.find(v=>v.destacadoPopup && v.estado!=='VENDIDO') || null;
+  const featured=vehicles.filter(v=>v.destacadoPopup && v.estado!=='VENDIDO');
+
+  if(!featured.length){
+    return null;
+  }
+
+  if(featured.length===1){
+    return featured[0];
+  }
+
+  try{
+    const storedId=sessionStorage.getItem('lmp_featured_popup_vehicle_id');
+    const storedVehicle=featured.find(v=>v.id===storedId);
+
+    if(storedVehicle){
+      return storedVehicle;
+    }
+  }catch(_){}
+
+  const selected=featured[Math.floor(Math.random()*featured.length)];
+
+  try{
+    sessionStorage.setItem('lmp_featured_popup_vehicle_id',selected.id);
+  }catch(_){}
+
+  return selected;
 }
 function shouldShowFeaturedPopup(){
   try{
@@ -2164,6 +2597,48 @@ function markFeaturedPopupSeen(){
     sessionStorage.setItem('lmp_featured_popup_seen','1');
   }catch(_){}
 }
+
+function popupScoreData(v){
+  const metrics=[
+    ['Rendimiento',scoreValue(v,'Rendimiento')],
+    ['Confort',scoreValue(v,'Confort')],
+    ['Economía',scoreValue(v,'Economía')],
+    ['Espacio',scoreValue(v,'Espacio')],
+    ['Seguridad',scoreValue(v,'Seguridad')]
+  ].filter(item=>Number.isFinite(item[1]));
+
+  const general=generalScore(v);
+
+  return {metrics,general:Number.isFinite(general)?general:null};
+}
+
+function popupScoreMarkup(v){
+  const data=popupScoreData(v);
+
+  if(!data.metrics.length && data.general===null){
+    return '';
+  }
+
+  const generalText=data.general===null?'—':String(Math.round(data.general));
+  const rows=data.metrics.map(([label,value])=>{
+    const score=Math.max(0,Math.min(100,Math.round(value)));
+    return `<div class="featured-popup-score-row">
+      <span>${escapeHtml(label)}</span>
+      <div class="featured-popup-score-track"><div class="featured-popup-score-fill" style="width:${score}%"></div></div>
+      <strong>${score}</strong>
+    </div>`;
+  }).join('');
+
+  return `<div class="featured-popup-score">
+    <div class="featured-popup-score-title">
+      <span>Rendimiento del vehículo</span>
+      <strong>${generalText}/100</strong>
+    </div>
+    <div class="featured-popup-score-bars">${rows}</div>
+  </div>`;
+}
+
+
 function featuredPopupMarkup(v){
   const specs=[
     v.anio?`Año ${escapeHtml(v.anio)}`:'',
@@ -2179,25 +2654,28 @@ function featuredPopupMarkup(v){
     </div>
 
     <div class="featured-popup-content">
-      <span class="featured-popup-kicker">Oportunidad destacada</span>
-      <h2 id="featuredPopupTitle">${escapeHtml(v.marca)} ${escapeHtml(v.modelo)}</h2>
-
-      <div class="featured-popup-specs">${specs}</div>
-
       <div class="featured-popup-prices">
         ${v.cotizacion?`<div class="featured-popup-price"><span>Valor total</span><strong>${escapeHtml(money(v.cotizacion))}</strong></div>`:''}
-        ${v.anticipo?`<div class="featured-popup-price"><span>Anticipo desde</span><strong>${escapeHtml(v.anticipo)}</strong></div>`:''}
+        ${v.anticipo?`<div class="featured-popup-price"><span>${isCashOnly(v)?'Condición':'Anticipo desde'}</span><strong>${isCashOnly(v)?'Solo contado':escapeHtml(v.anticipo)}</strong></div>`:''}
       </div>
 
-      <p class="featured-popup-text">
-        Unidad destacada del catálogo con condición especial por tiempo limitado.
-      </p>
+      <div class="featured-popup-location">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 21s7-5.2 7-12a7 7 0 0 0-14 0c0 6.8 7 12 7 12z"></path>
+          <circle cx="12" cy="9" r="2.4"></circle>
+        </svg>
+        <span>Lomas del Mirador · Av. Mosconi 799</span>
+      </div>
 
-      <div class="featured-popup-countdown" id="featuredPopupCountdown" aria-live="polite"></div>
+      ${popupScoreMarkup(v)}
+
+      <p class="featured-popup-text">
+        Unidad destacada del catálogo.
+      </p>
 
       <div class="featured-popup-actions">
         <button class="featured-popup-view" type="button" data-featured-view="${escapeAttr(v.id)}">Ver ficha</button>
-        <a class="featured-popup-wa" href="${escapeAttr((CONFIG.whatsapp?`https://wa.me/${CONFIG.whatsapp}`:'https://wa.me/')+'?text='+encodeURIComponent(`Hola, quiero reservar el ${v.modelo} ${v.anio||''} antes de que venza la promoción.`))}" target="_blank" rel="noopener">RESERVALO</a>
+        <a class="featured-popup-wa" href="${escapeAttr((CONFIG.whatsapp?`https://wa.me/${CONFIG.whatsapp}`:'https://wa.me/')+'?text='+encodeURIComponent(`Hola, quiero reservar el ${v.modelo} ${v.anio||''}.`))}" target="_blank" rel="noopener">RESERVALO</a>
       </div>
     </div>
   </div>`;
@@ -2213,7 +2691,6 @@ function openFeaturedPopup(v){
   popup.setAttribute('aria-hidden','false');
   document.body.style.overflow='hidden';
   markFeaturedPopupSeen();
-  startFeaturedPopupCountdown();
 
   const viewButton=body.querySelector('[data-featured-view]');
   if(viewButton){
@@ -2234,7 +2711,6 @@ function closeFeaturedPopup(){
 
   popup.classList.remove('open');
   popup.setAttribute('aria-hidden','true');
-  stopFeaturedPopupCountdown();
 
   const modal=$('#vehicleModal');
   const lightbox=$('#photoLightbox');
@@ -2279,8 +2755,8 @@ function card(v,index=0){
         ${v.precioPublicado?`<div class="price-box usd"><div class="price-label">Valor en dólares</div><div class="price">${icon('dollar')} ${escapeHtml(money(v.precioPublicado))}</div></div>`:''}
         ${v.cotizacion?`<div class="price-box ars"><div class="price-label">Valor total en pesos</div><div class="price"><span class="price-prefix">ARS</span>${escapeHtml(money(v.cotizacion))}</div></div>`:''}
       </div>
-      ${v.anticipo?`<div class="advance">Anticipo desde <strong>${escapeHtml(v.anticipo)}</strong></div>`:''}
-      <div class="card-benefits"><span>Financiación</span><span>Tomamos permuta</span></div>
+      ${v.anticipo?`<div class="advance">${isCashOnly(v)?'Solo contado':`Anticipo desde <strong>${escapeHtml(v.anticipo)}</strong>`}</div>`:''}
+      <div class="card-benefits">${isCashOnly(v)?'<span>Solo contado</span>':'<span>Financiación</span>'}<span>Tomamos permuta</span></div>
       <div class="card-actions">
         <button class="detail-btn" data-id="${escapeAttr(v.id)}">Ver vehículo</button>
         ${v.instagram?`<a class="ig-btn" href="${escapeAttr(v.instagram)}" target="_blank" rel="noopener">IG</a>`:''}
@@ -2565,6 +3041,24 @@ function installmentCalculatorMarkup(v){
 }
 
 function setupInstallmentCalculator(v){
+  if(isCashOnly(v)){
+    const panel=$('#installmentPanel');
+    const toggle=$('#installmentToggle');
+
+    if(toggle){
+      toggle.textContent='Solo contado';
+      toggle.disabled=true;
+      toggle.style.opacity='.55';
+      toggle.style.cursor='not-allowed';
+    }
+
+    if(panel){
+      panel.classList.remove('open');
+      panel.innerHTML='<div class="installment-warning show">Este vehículo figura solo para pago de contado. No tiene financiación cargada.</div>';
+    }
+
+    return;
+  }
   const wrap=$('#installmentsWrap');
   const toggle=$('#installmentsToggle');
   if(!toggle)return;
