@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
-<meta name="lmp-build" content="lmp-autos-web-v1.01-ajustes-popup">
+<meta name="lmp-build" content="lmp-autos-web-v1.05-conversion-rendimiento">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   
   <!-- Meta Pixel Code -->
@@ -1371,6 +1371,41 @@ fbq('track', 'PageView');
       .featured-popup-prices{grid-template-columns:1fr}
     }
 
+
+    .site-version{
+      margin:14px 0 8px;
+      text-align:center;
+      color:#9a9a9a;
+      font-size:9px;
+      font-weight:700;
+      letter-spacing:.04em;
+      line-height:1;
+      user-select:text
+    }
+
+
+    .trust-strip{padding:12px 0 2px}.trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .trust-item{display:flex;align-items:center;gap:9px;padding:11px 13px;background:#fff;border:1px solid var(--line);border-radius:14px;font-size:12px;font-weight:850}
+    .trust-item svg{width:19px;height:19px;flex:0 0 auto;color:var(--accent)}
+    .card-tools{position:absolute;top:10px;right:10px;display:flex;gap:6px;z-index:4}
+    .tool-btn{width:34px;height:34px;border:0;border-radius:50%;background:rgba(255,255,255,.92);display:grid;place-items:center;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,.16);font-size:16px}
+    .tool-btn.active{background:#111;color:#fff}.card-actions{grid-template-columns:1fr auto auto}
+    .card-wa{border:0;background:#1fa855;color:#fff;border-radius:12px;padding:11px 12px;font-weight:900;cursor:pointer}
+    .card-installment{margin-top:8px;padding:9px 11px;background:#f4f4f1;border-radius:11px;font-size:11px;font-weight:800;color:#555}.card-installment strong{color:#171717}
+    .catalog-quickbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 0 14px}.quick-btn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 13px;font-weight:850;cursor:pointer}.quick-btn.active{background:#111;color:#fff;border-color:#111}
+    .compare-bar{position:fixed;left:50%;bottom:14px;transform:translateX(-50%) translateY(130%);z-index:140;width:min(720px,calc(100% - 24px));background:#111;color:#fff;border-radius:16px;padding:10px 12px;display:flex;align-items:center;justify-content:space-between;gap:10px;box-shadow:0 18px 45px rgba(0,0,0,.28);transition:transform .25s ease}
+    .compare-bar.open{transform:translateX(-50%) translateY(0)}.compare-bar button{border:0;border-radius:11px;padding:9px 12px;font-weight:900;cursor:pointer}.compare-open{background:#fff;color:#111}.compare-clear{background:#333;color:#fff}
+    .compare-modal{position:fixed;inset:0;z-index:160;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;padding:16px}.compare-modal.open{display:flex}
+    .compare-panel{width:min(1000px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:20px;padding:18px;position:relative}
+    .compare-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.compare-card{border:1px solid var(--line);border-radius:14px;padding:12px}
+    .compare-card img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;background:#eee}.compare-table{margin-top:10px;display:grid;gap:7px;font-size:12px}.compare-row{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid #eee;padding-bottom:6px}
+    .similar-section{margin-top:24px}.similar-section h4{font-size:19px;margin-bottom:12px}.similar-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .similar-item{border:1px solid var(--line);border-radius:13px;padding:10px;cursor:pointer;background:#fff}.similar-item img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:9px;background:#eee}.similar-item strong{display:block;margin-top:8px;font-size:12px}
+    .detail-trust{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}.detail-trust span{padding:10px;background:#f5f5f2;border-radius:11px;text-align:center;font-size:11px;font-weight:850}
+    .detail-extra-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.detail-extra-actions button{border:1px solid var(--line);background:#fff;border-radius:12px;padding:11px;font-weight:850;cursor:pointer}
+    .mobile-sticky-cta{display:none}.lead-box{margin-top:14px;padding:13px;border:1px solid var(--line);border-radius:14px;background:#fafaf8}.lead-box strong{display:block;margin-bottom:4px}.lead-box p{font-size:12px;color:#666;margin-bottom:9px}.lead-box button{border:0;background:#111;color:#fff;border-radius:11px;padding:10px 12px;font-weight:900;cursor:pointer}
+    @media(max-width:760px){.trust-grid{grid-template-columns:1fr;gap:7px}.trust-item{padding:9px 11px}.card-actions{grid-template-columns:1fr auto}.card-wa{grid-column:1/-1}.compare-grid,.similar-grid,.detail-trust{grid-template-columns:1fr}.mobile-sticky-cta{display:grid;grid-template-columns:1fr auto;gap:8px;position:sticky;bottom:0;z-index:8;padding:10px;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-top:1px solid var(--line)}.mobile-sticky-cta button{border:0;border-radius:12px;padding:12px;font-weight:900;cursor:pointer}.mobile-sticky-wa{background:#1fa855;color:#fff}.mobile-sticky-share{background:#eee;color:#111}}
+
 </style>
 </head>
 <body>
@@ -1458,6 +1493,12 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
   </section>
 </section>
 
+<section class="trust-strip"><div class="shell trust-grid">
+<div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 4v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V7l7-4z"/><path d="m9 12 2 2 4-4"/></svg><span>Más de 10 años de experiencia</span></div>
+<div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20h16M6 20V8l6-4 6 4v12"/><path d="M9 12h6M9 16h6"/></svg><span>Gestoría propia</span></div>
+<div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12h18M12 3v18"/><circle cx="12" cy="12" r="9"/></svg><span>Entrega estimada en 24–48 hs</span></div>
+</div></section>
+
 <section id="catalogView" class="hidden">
   <main class="shell">
     <div class="section-head">
@@ -1490,11 +1531,13 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
           <option value="asc">Más antiguos</option>
         </select>
       </div>
+      <div class="field"><label>Orden comercial</label><select id="smartOrder"><option value="recommended">Recomendados</option><option value="advance">Menor anticipo</option><option value="installment">Menor cuota estimada</option><option value="newest">Más nuevos</option><option value="popular">Más consultados</option></select></div>
       <div class="filter-actions">
         <button class="clear" id="clearFilters" type="button">Limpiar</button>
         <button class="filter-apply" id="applyMobileFilters" type="button">Ver resultados</button>
       </div>
     </div>
+    <div class="catalog-quickbar"><button class="quick-btn" id="favoritesFilter" type="button">Favoritos <span id="favoritesCount">0</span></button><button class="quick-btn" id="clearCatalogMode" type="button">Ver todos</button></div>
     <div class="grid" id="catalogGrid"><div class="loading"><div class="spinner"></div>Cargando stock…</div></div>
   </main>
 </section>
@@ -1513,6 +1556,10 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
     <div id="modalContent"></div>
   </div>
 </div>
+
+
+<div class="compare-bar" id="compareBar"><span id="compareText">0 vehículos seleccionados</span><div><button class="compare-clear" id="compareClear" type="button">Limpiar</button> <button class="compare-open" id="compareOpen" type="button">Comparar</button></div></div>
+<div class="compare-modal" id="compareModal" aria-hidden="true"><div class="compare-panel"><button class="close" id="compareClose" type="button" aria-label="Cerrar">×</button><h3>Comparar vehículos</h3><div class="compare-grid" id="compareGrid"></div></div></div>
 
 <div class="photo-lightbox" id="photoLightbox" aria-hidden="true">
   <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Cerrar pantalla completa">×</button>
@@ -1590,7 +1637,9 @@ const CONFIG = {
   // Debe consultarse desde un backend seguro; no expongas tokens de Meta en este HTML.
   instagramFollowersApi: "",
   bannerInterval: 6500,
-  bannerBases: ["./banner-1.webp"]
+  bannerBases: ["./banner-1.webp"],
+  localCoverManifest: "./img/vehiculos/manifest.json",
+  texts: {financing:"Financiación",cashOnly:"Solo de Contado",tradeIn:"Tomamos permuta",reserve:"RESERVALO"}
 };
 
 let vehicles = [];
@@ -1599,6 +1648,10 @@ let vehicleStats = {};
 let highlightedVehicles = [];
 let currentGallery = {images:[],index:0};
 let galleryTouchStartX = 0;
+let favoriteIds=new Set(JSON.parse(localStorage.getItem('lmp_favorites')||'[]'));
+let compareIds=new Set();
+let catalogMode='all';
+let localCoverManifest=null;
 
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
@@ -1895,10 +1948,26 @@ function clearVehicleUrl({replace=true}={}){
   history[method]({},'',url);
   document.title='LMP Autos | Lomas del Mirador';
 }
+function driveFileId(url){
+  const u=clean(url);
+  if(!u)return '';
+
+  const matches=[
+    u.match(/\/file\/d\/([a-zA-Z0-9_-]+)/),
+    u.match(/[?&]id=([a-zA-Z0-9_-]+)/),
+    u.match(/\/d\/([a-zA-Z0-9_-]+)/),
+    u.match(/([a-zA-Z0-9_-]{20,})/)
+  ];
+
+  const match=matches.find(Boolean);
+  return match?match[1]:'';
+}
 function driveImage(url){
-  const u=clean(url); if(!u) return '';
-  const m=u.match(/\/file\/d\/([^/]+)/) || u.match(/[?&]id=([^&]+)/);
-  return m ? `https://drive.google.com/thumbnail?id=${m[1]}&sz=w1600` : u;
+  const u=clean(url);
+  if(!u)return '';
+
+  const id=driveFileId(u);
+  return id?`https://lh3.googleusercontent.com/d/${id}=w1600`:u;
 }
 function money(v){
   const s=clean(v); if(!s || s==='$0' || s==='0') return 'Consultar';
@@ -2110,6 +2179,31 @@ function vehicleBenefitsMarkup(v){
     ? `<div class="card-benefits">${tags.map(tag=>`<span>${escapeHtml(tag)}</span>`).join('')}</div>`
     : '';
 }
+
+async function loadLocalCoverManifest(){
+  try{
+    const response=await fetch(`${CONFIG.localCoverManifest}?v=105`,{cache:'no-store'});
+    if(!response.ok)return null;
+    const data=await response.json();
+    localCoverManifest=data && typeof data==='object'?data:null;
+    return localCoverManifest;
+  }catch(_){return null}
+}
+function manifestHasCover(v){
+  if(!localCoverManifest)return null;
+  const id=vehicleCoverId(v);
+  return Boolean(localCoverManifest[id] || localCoverManifest[`${id}.webp`]);
+}
+function markNewEntries(list){
+  const ordered=[...list].filter(v=>v.estado!=='VENDIDO').sort((a,b)=>{
+    const na=Number((clean(a.id).match(/\d+/)||['0'])[0]);
+    const nb=Number((clean(b.id).match(/\d+/)||['0'])[0]);
+    return nb-na;
+  });
+  const newest=new Set(ordered.slice(0,3).map(v=>v.id));
+  list.forEach(v=>v.isNewEntry=newest.has(v.id));
+}
+
 function badgeFromStatus(status){
   const normalized=normalize(status).normalize('NFD').replace(/[\u0300-\u036f]/g,'');
 
@@ -2137,7 +2231,8 @@ function badgeFromStatus(status){
 
 function badgeItems(v){
   const stats=vehicleStats[v.id]||{};
-  const items=[badgeFromStatus(v.estado)];
+  const primary=(v.isNewEntry && v.estado==='DISPONIBLE')?{text:'Nuevo ingreso',className:'hot'}:badgeFromStatus(v.estado);
+  const items=[primary];
 
   if(isCashOnly(v)) items.push({text:'Solo de Contado',className:'feature'});
   else if(hasFinancing(v)) items.push({text:'Financiación',className:'feature'});
@@ -2151,22 +2246,30 @@ function badgeItems(v){
 function vehicleCoverId(v){
   return clean(v.id).replace(/\.[a-z0-9]+$/i,'').replace(/[^a-z0-9_-]/gi,'');
 }
-function coverCandidates(v){
+const LOCAL_COVER_VERSION='v103';
+function localCoverUrl(v,{cacheBust=false}={}){
   const id=vehicleCoverId(v);
-  const candidates=[];
+  if(!id)return '';
 
-  if(id){
-    candidates.push(`./img/vehiculos/${id}.webp`);
+  const url=`./img/vehiculos/${id}.webp`;
+  return cacheBust?`${url}?${LOCAL_COVER_VERSION}`:url;
+}
+function coverCandidates(v,{localOnly=false}={}){
+  const candidates=[];
+  const local=localCoverUrl(v,{cacheBust:true});
+
+  if(local){
+    candidates.push(local);
   }
 
-  if(v.fotos && v.fotos[0]){
+  if(!localOnly && v.fotos && v.fotos[0]){
     candidates.push(v.fotos[0]);
   }
 
   return [...new Set(candidates.filter(Boolean))];
 }
-function coverImageMarkup(v,index=0){
-  const candidates=coverCandidates(v);
+function coverImageMarkup(v,index=0,{localOnly=false}={}){
+  const candidates=coverCandidates(v,{localOnly});
 
   if(!candidates.length){
     return `<div class="photo-empty">Fotos próximamente</div>`;
@@ -2184,6 +2287,67 @@ function coverImageMarkup(v,index=0){
     data-cover-candidates="${escapeAttr(JSON.stringify(candidates))}"
     data-cover-index="0"
     onerror="nextCoverCandidate(this)">`;
+}
+async function verifyLocalCover(v){
+  const url=localCoverUrl(v,{cacheBust:true});
+
+  if(!url){
+    v.hasLocalCover=false;
+    return false;
+  }
+
+  try{
+    const response=await fetch(url,{
+      method:'GET',
+      cache:'no-store',
+      credentials:'same-origin'
+    });
+
+    const contentType=(response.headers.get('content-type')||'').toLowerCase();
+
+    if(!response.ok || !contentType.startsWith('image/')){
+      v.hasLocalCover=false;
+      return false;
+    }
+
+    const blob=await response.blob();
+
+    if(!blob.size || !blob.type.toLowerCase().startsWith('image/')){
+      v.hasLocalCover=false;
+      return false;
+    }
+
+    if('createImageBitmap' in window){
+      const bitmap=await createImageBitmap(blob);
+      const valid=bitmap.width>0 && bitmap.height>0;
+      bitmap.close();
+      v.hasLocalCover=valid;
+      return valid;
+    }
+
+    const objectUrl=URL.createObjectURL(blob);
+    const valid=await new Promise(resolve=>{
+      const image=new Image();
+
+      image.onload=()=>resolve(image.naturalWidth>0 && image.naturalHeight>0);
+      image.onerror=()=>resolve(false);
+      image.src=objectUrl;
+    });
+
+    URL.revokeObjectURL(objectUrl);
+    v.hasLocalCover=valid;
+    return valid;
+  }catch(error){
+    console.warn(`No se pudo validar la portada local de ${v.id}:`,error);
+    v.hasLocalCover=false;
+    return false;
+  }
+}
+async function verifyLocalCovers(list){
+  await loadLocalCoverManifest();
+  if(localCoverManifest){list.forEach(v=>v.hasLocalCover=manifestHasCover(v));return list}
+  await Promise.all(list.map(verifyLocalCover));
+  return list;
 }
 function nextCoverCandidate(img){
   try{
@@ -2207,7 +2371,7 @@ function nextCoverCandidate(img){
 
 
 function featuredPopupVehicle(){
-  const featured=vehicles.filter(v=>v.destacadoPopup && v.estado!=='VENDIDO');
+  const featured=vehicles.filter(v=>v.destacadoPopup && v.estado!=='VENDIDO' && v.hasLocalCover);
 
   if(!featured.length){
     return null;
@@ -2258,7 +2422,7 @@ function popupScoreMarkup(v){
 function featuredPopupMarkup(v){
   return `<div class="featured-popup-card">
     <div class="featured-popup-media">
-      ${coverImageMarkup(v,0)}
+      ${coverImageMarkup(v,0,{localOnly:true})}
       <div class="featured-popup-ribbon">Vehículo destacado</div>
     </div>
 
@@ -2345,10 +2509,73 @@ function maybeShowFeaturedPopup(){
 }
 
 
-function card(v,index=0){
+
+function saveFavorites(){localStorage.setItem('lmp_favorites',JSON.stringify([...favoriteIds]));updateFavoritesUi()}
+function updateFavoritesUi(){
+  const node=$('#favoritesCount');if(node)node.textContent=String(favoriteIds.size);
+  $$('.favorite-btn').forEach(btn=>btn.classList.toggle('active',favoriteIds.has(btn.dataset.favoriteId)));
+}
+function toggleFavorite(id){
+  favoriteIds.has(id)?favoriteIds.delete(id):favoriteIds.add(id);saveFavorites();
+  emitAnalytics('favorite_vehicle',{vehicle_id:id,active:favoriteIds.has(id)});
+  if(catalogMode==='favorites')applyFilters();
+}
+function toggleCompare(id){
+  if(compareIds.has(id))compareIds.delete(id);else{if(compareIds.size>=3){alert('Podés comparar hasta 3 vehículos.');return}compareIds.add(id)}
+  updateCompareUi();
+}
+function updateCompareUi(){
+  const count=compareIds.size;
+  $('#compareText').textContent=`${count} vehículo${count===1?'':'s'} seleccionado${count===1?'':'s'}`;
+  $('#compareBar').classList.toggle('open',count>0);
+  $$('.compare-btn').forEach(btn=>btn.classList.toggle('active',compareIds.has(btn.dataset.compareId)));
+}
+function estimatedInstallment(v){
+  if(!hasFinancing(v))return 0;
+  const capital=Math.max(0,numericPrice(v.cotizacion)-numericPrice(v.anticipo));if(!capital)return 0;
+  const plan=financingPlanForYear(Number(v.anio));
+  return plan?.rates?.[24]?Math.round(capital*plan.rates[24]):0;
+}
+function formatArsNumber(value){return value?`$${new Intl.NumberFormat('es-AR').format(value)}`:''}
+function vehicleWhatsappMessage(v,{reservation=false,advance=null}={}){
+  if(reservation)return `Hola, quiero reservar el ${v.marca} ${v.modelo} ${v.anio||''}.`;
+  if(isCashOnly(v))return `Hola, quiero consultar el valor de contado del ${v.marca} ${v.modelo} ${v.anio||''}.`;
+  if(advance)return `Hola, quiero consultar la financiación del ${v.marca} ${v.modelo} ${v.anio||''}. Puedo entregar ${advance}.`;
+  return `Hola, quiero más información del ${v.marca} ${v.modelo} ${v.anio||''}.`;
+}
+function openWhatsappMessage(message){const base=CONFIG.whatsapp?`https://wa.me/${CONFIG.whatsapp}`:'https://wa.me/';window.open(`${base}?text=${encodeURIComponent(message)}`,'_blank','noopener')}
+function emitAnalytics(eventName,params={}){
+  try{window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:eventName,...params});if(typeof window.fbq==='function')window.fbq('trackCustom',eventName,params)}catch(_){}
+}
+function shareVehicle(v){
+  const url=vehicleUrl(v);const data={title:`${v.marca} ${v.modelo}`,text:`Mirá este ${v.marca} ${v.modelo} ${v.anio||''}`,url};
+  emitAnalytics('share_vehicle',{vehicle_id:v.id});
+  if(navigator.share)return navigator.share(data).catch(()=>{});
+  navigator.clipboard?.writeText(url);alert('Enlace copiado.');
+}
+function similarVehicles(v,limit=3){
+  const price=numericPrice(v.cotizacion);
+  return vehicles.filter(x=>x.id!==v.id&&x.estado!=='VENDIDO').map(x=>{
+    let score=0;if(x.marca===v.marca)score+=4;if(x.combustible===v.combustible)score+=2;if(x.transmision===v.transmision)score+=2;
+    const xp=numericPrice(x.cotizacion);if(price&&xp)score+=Math.max(0,4-Math.abs(price-xp)/Math.max(price,1)*10);return{x,score};
+  }).sort((a,b)=>b.score-a.score).slice(0,limit).map(item=>item.x);
+}
+function similarMarkup(v){
+  const similar=similarVehicles(v);if(!similar.length)return '';
+  return `<section class="similar-section"><h4>También podrían interesarte</h4><div class="similar-grid">${similar.map(x=>`<button class="similar-item" type="button" data-similar-id="${escapeAttr(x.id)}">${coverImageMarkup(x,12)}<strong>${escapeHtml(x.marca+' '+x.modelo)}</strong><span>${escapeHtml(money(x.cotizacion))}</span></button>`).join('')}</div></section>`;
+}
+function renderCompare(){
+  const selected=[...compareIds].map(id=>vehicles.find(v=>v.id===id)).filter(Boolean);
+  $('#compareGrid').innerHTML=selected.map(v=>`<article class="compare-card">${coverImageMarkup(v,20)}<h4>${escapeHtml(v.marca+' '+v.modelo)}</h4><div class="compare-table">
+  <div class="compare-row"><span>Año</span><strong>${escapeHtml(v.anio||'—')}</strong></div><div class="compare-row"><span>Kilómetros</span><strong>${escapeHtml(v.kilometraje?km(v.kilometraje):'—')}</strong></div><div class="compare-row"><span>Precio</span><strong>${escapeHtml(money(v.cotizacion))}</strong></div><div class="compare-row"><span>Anticipo</span><strong>${escapeHtml(displayedAdvance(v)||'—')}</strong></div><div class="compare-row"><span>Transmisión</span><strong>${escapeHtml(v.transmision||'—')}</strong></div><div class="compare-row"><span>Combustible</span><strong>${escapeHtml(v.combustible||'—')}</strong></div><div class="compare-row"><span>General</span><strong>${escapeHtml(generalScore(v))}/100</strong></div></div></article>`).join('');
+  $('#compareModal').classList.add('open');$('#compareModal').setAttribute('aria-hidden','false');emitAnalytics('compare_vehicles',{count:selected.length});
+}
+
+function card(v,index=0,{localOnly=false}={}){
   return `<article class="vehicle" style="--delay:${Math.min(index,8)*45}ms">
     <div class="photo">
-      ${coverImageMarkup(v,index)}
+      ${coverImageMarkup(v,index,{localOnly})}
+      <div class="card-tools"><button class="tool-btn favorite-btn ${favoriteIds.has(v.id)?'active':''}" type="button" data-favorite-id="${escapeAttr(v.id)}" aria-label="Guardar favorito">♥</button><button class="tool-btn compare-btn ${compareIds.has(v.id)?'active':''}" type="button" data-compare-id="${escapeAttr(v.id)}" aria-label="Comparar">⇄</button></div>
       <div class="badge-stack">${badgeItems(v).map(item=>`<span class="badge ${item.className}">${escapeHtml(item.text)}</span>`).join('')}</div>
     </div>
     <div class="body">
@@ -2365,10 +2592,12 @@ function card(v,index=0){
         ${v.cotizacion?`<div class="price-box ars"><div class="price-label">Valor total en pesos</div><div class="price"><span class="price-prefix">ARS</span>${escapeHtml(money(v.cotizacion))}</div></div>`:''}
       </div>
       ${(v.anticipo||isCashOnly(v))?`<div class="advance">${isCashOnly(v)?`Solo de contado <strong>${escapeHtml(displayedAdvance(v))}</strong>`:`Anticipo desde <strong>${escapeHtml(displayedAdvance(v))}</strong>`}</div>`:''}
+      ${estimatedInstallment(v)?`<div class="card-installment">Cuota estimada desde <strong>${formatArsNumber(estimatedInstallment(v))}</strong> a 24 meses</div>`:''}
       ${vehicleBenefitsMarkup(v)}
       <div class="card-actions">
         <button class="detail-btn" data-id="${escapeAttr(v.id)}">Ver vehículo</button>
         ${v.instagram?`<a class="ig-btn" href="${escapeAttr(v.instagram)}" target="_blank" rel="noopener">IG</a>`:''}
+        <button class="card-wa" type="button" data-wa-id="${escapeAttr(v.id)}">Consultar</button>
       </div>
     </div>
   </article>`;
@@ -2732,8 +2961,8 @@ function addUnique(list,vehicle){
   if(vehicle && !list.some(item=>item.id===vehicle.id))list.push(vehicle);
 }
 function fallbackHighlights(limit){
-  const candidates=vehicles.filter(v=>v.estado==='DISPONIBLE' && v.fotos.length);
-  if(!candidates.length)return vehicles.filter(v=>v.estado==='DISPONIBLE').slice(0,limit);
+  const candidates=vehicles.filter(v=>v.estado==='DISPONIBLE' && v.hasLocalCover);
+  if(!candidates.length)return [];
   const sorted=[...candidates].sort((a,b)=>numericPrice(a.cotizacion)-numericPrice(b.cotizacion));
   const picks=[];
   const positions=[0,Math.floor((sorted.length-1)/3),Math.floor((sorted.length-1)*2/3),sorted.length-1];
@@ -2749,7 +2978,7 @@ function fallbackHighlights(limit){
 }
 function selectHighlights(limit=CONFIG.maxFeatured){
   const ranked=vehicles
-    .filter(v=>v.estado==='DISPONIBLE' && v.fotos.length && vehicleStats[v.id] && Number(vehicleStats[v.id].score)>0)
+    .filter(v=>v.estado==='DISPONIBLE' && v.hasLocalCover && vehicleStats[v.id] && Number(vehicleStats[v.id].score)>0)
     .sort((a,b)=>Number(vehicleStats[b.id].score)-Number(vehicleStats[a.id].score));
   const selected=[];
   ranked.forEach(v=>{if(selected.length<limit)addUnique(selected,v)});
@@ -2757,8 +2986,10 @@ function selectHighlights(limit=CONFIG.maxFeatured){
   return selected.slice(0,limit);
 }
 
-function renderCards(target,list){
-  target.innerHTML=list.length?list.map(card).join(''):`<div class="empty">No encontramos vehículos con estos filtros.</div>`;
+function renderCards(target,list,{localOnly=false}={}){
+  target.innerHTML=list.length
+    ? list.map((vehicle,index)=>card(vehicle,index,{localOnly})).join('')
+    : `<div class="empty">No encontramos vehículos con estos filtros.</div>`;
 
   target.querySelectorAll('.detail-btn').forEach(button=>{
     const vehicle=vehicles.find(item=>item.id===button.dataset.id);
@@ -2771,6 +3002,15 @@ function renderCards(target,list){
 
     button.addEventListener('click',()=>openVehicle(button.dataset.id));
   });
+
+  target.querySelectorAll('[data-wa-id]').forEach(button=>button.addEventListener('click',()=>{
+    const vehicle=vehicles.find(v=>v.id===button.dataset.waId);
+    if(vehicle){emitAnalytics('click_whatsapp',{vehicle_id:vehicle.id,source:'card'});openWhatsappMessage(vehicleWhatsappMessage(vehicle))}
+  }));
+  target.querySelectorAll('[data-favorite-id]').forEach(button=>button.addEventListener('click',event=>{event.stopPropagation();toggleFavorite(button.dataset.favoriteId)}));
+  target.querySelectorAll('[data-compare-id]').forEach(button=>button.addEventListener('click',event=>{event.stopPropagation();toggleCompare(button.dataset.compareId)}));
+  updateFavoritesUi();
+  updateCompareUi();
 }
 function populateFilters(){
   const brands=[...new Set(vehicles.map(v=>v.marca).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
@@ -2781,7 +3021,7 @@ function populateFilters(){
   $('#fuelFilter').innerHTML='<option value="">Todos</option>'+fuels.map(x=>`<option>${escapeHtml(x)}</option>`).join('');
 }
 function activeFilterCount(){
-  return ['brandFilter','transFilter','fuelFilter','priceOrder','yearOrder'].filter(id=>$('#'+id).value).length;
+  return ['brandFilter','transFilter','fuelFilter','priceOrder','yearOrder'].filter(id=>$('#'+id).value).length + ($('#smartOrder').value!=='recommended'?1:0);
 }
 function updateFilterButton(){
   const count=activeFilterCount();
@@ -2803,11 +3043,13 @@ function applyFilters(){
   const fuel=$('#fuelFilter').value;
   const priceOrder=$('#priceOrder').value;
   const yearOrder=$('#yearOrder').value;
+  const smartOrder=$('#smartOrder').value;
 
   filtered=vehicles.filter(v=>
     (!brand || v.marca===brand) &&
     (!trans || v.transmision===trans) &&
-    (!fuel || v.combustible===fuel)
+    (!fuel || v.combustible===fuel) &&
+    (catalogMode!=='favorites' || favoriteIds.has(v.id))
   );
 
   if(priceOrder){
@@ -2822,7 +3064,16 @@ function applyFilters(){
       const yb=Number(b.anio)||0;
       return yearOrder==='asc'?ya-yb:yb-ya;
     });
+  }else{
+    filtered.sort((a,b)=>{
+      if(smartOrder==='advance')return numericPrice(displayedAdvance(a))-numericPrice(displayedAdvance(b));
+      if(smartOrder==='installment')return (estimatedInstallment(a)||Infinity)-(estimatedInstallment(b)||Infinity);
+      if(smartOrder==='newest')return (Number(b.anio)||0)-(Number(a.anio)||0);
+      if(smartOrder==='popular')return Number(vehicleStats[b.id]?.score||0)-Number(vehicleStats[a.id]?.score||0);
+      return (b.isNewEntry?1:0)-(a.isNewEntry?1:0) || Number(vehicleStats[b.id]?.score||0)-Number(vehicleStats[a.id]?.score||0);
+    });
   }
+  emitAnalytics('filter_catalog',{brand,transmission:trans,fuel,order:smartOrder,mode:catalogMode});
 
   renderCards($('#catalogGrid'),filtered);
   $('#resultCount').textContent=`${filtered.length} vehículo${filtered.length===1?'':'s'} encontrado${filtered.length===1?'':'s'}`;
@@ -2841,7 +3092,7 @@ function openVehicle(id,{updateUrl=true,replaceUrl=false}={}){
   const gallery=v.fotos.length?`
     <div class="gallery">
       <div class="main-image" id="mainImageWrap">
-        <img id="modalImage" src="${escapeAttr(v.fotos[0])}" alt="${escapeAttr(v.marca+' '+v.modelo)}">
+        <img id="modalImage" src="${escapeAttr(v.fotos[0])}" alt="${escapeAttr(v.marca+' '+v.modelo)}" referrerpolicy="no-referrer" onerror="this.outerHTML='<div class=&quot;photo-empty&quot;>Imagen no disponible</div>'">
         <button class="fullscreen-photo-btn" id="fullscreenPhotoBtn" type="button">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"></path>
@@ -2849,7 +3100,7 @@ function openVehicle(id,{updateUrl=true,replaceUrl=false}={}){
           Pantalla completa
         </button>
       </div>
-      ${v.fotos.length>1?`<div class="gallery-thumbs" id="galleryThumbs">${v.fotos.map((photo,i)=>`<button class="gallery-thumb ${i===0?'active':''}" type="button" data-gallery-index="${i}" aria-label="Ver foto ${i+1}"><img src="${escapeAttr(photo)}" alt=""></button>`).join('')}</div>`:''}
+      ${v.fotos.length>1?`<div class="gallery-thumbs" id="galleryThumbs">${v.fotos.map((photo,i)=>`<button class="gallery-thumb ${i===0?'active':''}" type="button" data-gallery-index="${i}" aria-label="Ver foto ${i+1}"><img src="${escapeAttr(photo)}" alt="" referrerpolicy="no-referrer" onerror="this.closest('button')?.remove()"></button>`).join('')}</div>`:''}
       <div class="gallery-controls"><button id="prevPhoto" type="button">‹</button><span class="counter" id="photoCounter">1 / ${v.fotos.length}</span><button id="nextPhoto" type="button">›</button></div>
     </div>`:`<div class="gallery"><div class="main-image"><div class="photo-empty">Fotos próximamente</div></div></div>`;
   $('#modalContent').innerHTML=`
@@ -2883,20 +3134,31 @@ function openVehicle(id,{updateUrl=true,replaceUrl=false}={}){
 
       ${installmentCalculatorMarkup(v)}
 
+      <div class="detail-trust"><span>Más de 10 años</span><span>Gestoría propia</span><span>Entrega 24–48 hs</span></div>
       <div class="detail-actions">
         <button class="whatsapp" id="whatsappBtn" type="button">Consultar este vehículo por WhatsApp</button>
-
+        <div class="detail-extra-actions"><button id="shareVehicleBtn" type="button">Compartir</button><button id="favoriteVehicleBtn" type="button">${favoriteIds.has(v.id)?'Quitar de favoritos':'Guardar favorito'}</button></div>
         <div class="detail-secondary-actions">
           ${v.instagram?`<a class="detail-link" href="${escapeAttr(v.instagram)}" target="_blank" rel="noopener">Ver Reel</a>`:''}
           ${v.carpeta?`<a class="detail-link" href="${escapeAttr(v.carpeta)}" target="_blank" rel="noopener">Ver todas las fotos</a>`:''}
         </div>
       </div>
+      <div class="lead-box"><strong>¿Buscás algo similar?</strong><p>Contanos tu presupuesto y el tipo de vehículo que necesitás.</p><button id="similarAlertBtn" type="button">Avisarme por WhatsApp</button></div>
+      ${similarMarkup(v)}
     </div>
+    <div class="mobile-sticky-cta"><button class="mobile-sticky-wa" id="mobileStickyWa" type="button">Consultar por WhatsApp</button><button class="mobile-sticky-share" id="mobileStickyShare" type="button">Compartir</button></div>
   `;
   $('#vehicleModal').classList.add('open');
   document.body.classList.add('modal-open');
   document.body.style.overflow='hidden';
   $('#whatsappBtn').onclick=()=>contactVehicle(v);
+  $('#mobileStickyWa').onclick=()=>contactVehicle(v);
+  $('#shareVehicleBtn').onclick=()=>shareVehicle(v);
+  $('#mobileStickyShare').onclick=()=>shareVehicle(v);
+  $('#favoriteVehicleBtn').onclick=()=>{toggleFavorite(v.id);$('#favoriteVehicleBtn').textContent=favoriteIds.has(v.id)?'Quitar de favoritos':'Guardar favorito'};
+  $('#similarAlertBtn').onclick=()=>openWhatsappMessage(`Hola, quiero que me avisen cuando ingrese un vehículo similar al ${v.marca} ${v.modelo}. Mi presupuesto aproximado es: `);
+  $$('#modalContent [data-similar-id]').forEach(button=>button.onclick=()=>openVehicle(button.dataset.similarId));
+  emitAnalytics('view_vehicle',{vehicle_id:v.id,brand:v.marca,model:v.modelo});
   setupInstallmentCalculator(v);
   if(v.fotos.length){
     $('#prevPhoto').onclick=()=>moveGallery(-1);
@@ -2950,8 +3212,9 @@ function closePhotoLightbox(){
 }
 function contactVehicle(v){
   trackEvent(v.id,'whatsapp');
-  const msg=`Hola quisiera mas informacion del ${v.modelo} ${v.anio||''}`;
+  const msg=vehicleWhatsappMessage(v);
   const base=CONFIG.whatsapp?`https://wa.me/${CONFIG.whatsapp}`:'https://wa.me/';
+  emitAnalytics('click_whatsapp',{vehicle_id:v.id,source:'detail'});
   window.open(`${base}?text=${encodeURIComponent(msg)}`,'_blank','noopener');
 }
 
@@ -3061,18 +3324,26 @@ async function loadData(){
   try{
     const result=await loadSheetRows();
     vehicles=result.rows.map(mapVehicle).filter(validVehicle);
+    markNewEntries(vehicles);
     if(!vehicles.length){
       const states=[...new Set(result.rows.map(r=>clean(r['Estado actual del auto'])).filter(Boolean))];
       throw new Error(`La hoja cargó ${result.rows.length} filas, pero ninguna pudo convertirse en vehículo. Estados detectados: ${states.join(', ') || 'ninguno'}`);
     }
     vehicles.sort((a,b)=>(a.estado==='DISPONIBLE'?0:1)-(b.estado==='DISPONIBLE'?0:1) || Number(b.anio)-Number(a.anio));
     populateFilters();
-    await loadVehicleStats();
+    await Promise.all([
+      loadVehicleStats(),
+      verifyLocalCovers(vehicles)
+    ]);
     highlightedVehicles=selectHighlights(CONFIG.maxFeatured);
     const hasRealStats=Object.values(vehicleStats).some(item=>Number(item.score)>0);
     $('#featuredTitle').textContent=hasRealStats?'Los más consultados':'Vehículos recomendados';
     $('#featuredSubtitle').textContent=hasRealStats?'Los vehículos que más interés generan entre nuestros visitantes.':'Una selección variada entre distintas marcas y rangos de precio.';
-    renderCards($('#featuredGrid'),highlightedVehicles);
+    if(highlightedVehicles.length){
+      renderCards($('#featuredGrid'),highlightedVehicles,{localOnly:true});
+    }else{
+      $('#featuredGrid').innerHTML='<div class="empty">No hay vehículos con portada local disponible.</div>';
+    }
     const now=new Date();
     applyFilters();
 
@@ -3118,6 +3389,14 @@ $('#clearFilters').onclick=()=>{
   applyFilters();
 };
 $('#mobileFilterTrigger').onclick=openFilters;
+
+$('#favoritesFilter').onclick=()=>{catalogMode='favorites';$('#favoritesFilter').classList.add('active');applyFilters()};
+$('#clearCatalogMode').onclick=()=>{catalogMode='all';$('#favoritesFilter').classList.remove('active');applyFilters()};
+$('#compareClear').onclick=()=>{compareIds.clear();updateCompareUi()};
+$('#compareOpen').onclick=renderCompare;
+$('#compareClose').onclick=()=>{$('#compareModal').classList.remove('open');$('#compareModal').setAttribute('aria-hidden','true')};
+$('#compareModal').onclick=event=>{if(event.target.id==='compareModal')$('#compareClose').click()};
+
 $('#filterClose').onclick=closeFilters;
 $('#filterOverlay').onclick=closeFilters;
 $('#applyMobileFilters').onclick=()=>{applyFilters();closeFilters()};
@@ -3182,5 +3461,7 @@ setTimeout(()=>{
   }
 },0);
 </script>
+
+  <div class="site-version" aria-label="Versión del sitio">lmpautos V1.05</div>
 </body>
 </html>
