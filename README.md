@@ -1,39 +1,43 @@
-# LMP Autos Web v1.04 — Versión visible
+# LMP Autos Web v1.05 — Conversión y rendimiento
 
-## Cambio realizado
+## Venta y conversión
+- WhatsApp directo desde cada tarjeta.
+- CTA fijo de WhatsApp en ficha mobile.
+- Mensajes adaptados a contado, financiación y consulta general.
+- Cuota estimada a 24 meses para vehículos financiables.
+- Vehículos similares al final de la ficha.
+- Aviso por WhatsApp para unidades similares.
+- Compartir vehículo.
+- Favoritos persistentes.
+- Comparador de hasta tres vehículos.
+- Indicadores: Más de 10 años, gestoría propia y entrega 24–48 hs.
 
-Se agregó un indicador de versión al final de la página:
+## Estados comerciales
+- Disponible.
+- Reservado.
+- Preparando.
+- Solo de Contado.
+- Nuevo ingreso para los últimos tres vehículos por orden numérico de ID.
 
-```text
-lmpautos V1.04
-```
+## Orden comercial
+- Recomendados.
+- Menor anticipo.
+- Menor cuota estimada.
+- Más nuevos.
+- Más consultados.
 
-## Objetivo
+## Medición
+Eventos compatibles con dataLayer y Meta Pixel:
+- view_vehicle
+- click_whatsapp
+- favorite_vehicle
+- share_vehicle
+- compare_vehicles
+- filter_catalog
 
-Permite comprobar rápidamente qué versión está publicada y diferenciar:
-
-- un error de implementación;
-- una versión antigua en caché;
-- un archivo nuevo que todavía no fue subido;
-- una publicación que todavía no se actualizó.
-
-## Diseño
-
-- texto centrado;
-- tamaño de 9 px;
-- color gris suave;
-- ubicado debajo de todo el contenido;
-- visible tanto en desktop como en mobile.
-
-## Marca interna
-
-También se actualizó:
-
-```html
-<meta name="lmp-build" content="lmp-autos-web-v1.04-version-visible">
-```
-
-## Validación
-
-- JavaScript validado con `node --check`.
-- Verificada la presencia del indicador visual y de la marca interna.
+## Rendimiento
+- Soporte opcional para `img/vehiculos/manifest.json`.
+- Si no existe, mantiene la validación individual.
+- Los links de Drive continúan activos.
+- No se incluyen códigos internos en mensajes.
+- No se muestran reseñas de Google.
