@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
-<meta name="lmp-build" content="lmp-autos-web-v1.07-contraste-copiar-link-cuotas">
+<meta name="lmp-build" content="lmp-autos-web-v1.08-bloque-simple-sin-orden-comercial">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   
   <!-- Meta Pixel Code -->
@@ -1384,7 +1384,7 @@ fbq('track', 'PageView');
     }
 
 
-    .trust-strip{padding:12px 0 2px}.trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .trust-strip{padding:12px 0 2px}.trust-strip .trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
     .trust-strip .trust-item{display:flex;align-items:center;gap:9px;padding:11px 13px;background:#fff;color:#171717;border:1px solid var(--line);border-radius:14px;font-size:12px;font-weight:850}
     .trust-strip .trust-item svg{width:19px;height:19px;flex:0 0 auto;color:var(--accent)}
     .card-tools{position:absolute;top:10px;right:10px;display:flex;gap:6px;z-index:4}
@@ -1423,6 +1423,31 @@ fbq('track', 'PageView');
       display:inline-block;
       min-width:88px;
       text-align:center
+    }
+
+
+    .trust-section .trust-grid{
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:12px
+    }
+    .trust-section .trust-item{
+      min-width:0
+    }
+    .trust-section .trust-item strong,
+    .trust-section .trust-item span{
+      overflow-wrap:anywhere
+    }
+
+    @media(max-width:980px){
+      .trust-section .trust-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr))
+      }
+    }
+
+    @media(max-width:560px){
+      .trust-section .trust-grid{
+        grid-template-columns:1fr
+      }
     }
 
 </style>
@@ -1550,8 +1575,7 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
           <option value="asc">Más antiguos</option>
         </select>
       </div>
-      <div class="field"><label>Orden comercial</label><select id="smartOrder"><option value="recommended">Recomendados</option><option value="advance">Menor anticipo</option><option value="installment">Menor cuota estimada</option><option value="newest">Más nuevos</option><option value="popular">Más consultados</option></select></div>
-      <div class="filter-actions">
+<div class="filter-actions">
         <button class="clear" id="clearFilters" type="button">Limpiar</button>
         <button class="filter-apply" id="applyMobileFilters" type="button">Ver resultados</button>
       </div>
@@ -3073,7 +3097,7 @@ function populateFilters(){
   $('#fuelFilter').innerHTML='<option value="">Todos</option>'+fuels.map(x=>`<option>${escapeHtml(x)}</option>`).join('');
 }
 function activeFilterCount(){
-  return ['brandFilter','transFilter','fuelFilter','priceOrder','yearOrder'].filter(id=>$('#'+id).value).length + ($('#smartOrder').value!=='recommended'?1:0);
+  return ['brandFilter','transFilter','fuelFilter','priceOrder','yearOrder'].filter(id=>$('#'+id).value).length;
 }
 function updateFilterButton(){
   const count=activeFilterCount();
@@ -3095,7 +3119,6 @@ function applyFilters(){
   const fuel=$('#fuelFilter').value;
   const priceOrder=$('#priceOrder').value;
   const yearOrder=$('#yearOrder').value;
-  const smartOrder=$('#smartOrder').value;
 
   filtered=vehicles.filter(v=>
     (!brand || v.marca===brand) &&
@@ -3117,15 +3140,12 @@ function applyFilters(){
       return yearOrder==='asc'?ya-yb:yb-ya;
     });
   }else{
-    filtered.sort((a,b)=>{
-      if(smartOrder==='advance')return numericPrice(displayedAdvance(a))-numericPrice(displayedAdvance(b));
-      if(smartOrder==='installment')return (estimatedInstallment(a)||Infinity)-(estimatedInstallment(b)||Infinity);
-      if(smartOrder==='newest')return (Number(b.anio)||0)-(Number(a.anio)||0);
-      if(smartOrder==='popular')return Number(vehicleStats[b.id]?.score||0)-Number(vehicleStats[a.id]?.score||0);
-      return (b.isNewEntry?1:0)-(a.isNewEntry?1:0) || Number(vehicleStats[b.id]?.score||0)-Number(vehicleStats[a.id]?.score||0);
-    });
+    filtered.sort((a,b)=>
+      (b.isNewEntry?1:0)-(a.isNewEntry?1:0) ||
+      Number(vehicleStats[b.id]?.score||0)-Number(vehicleStats[a.id]?.score||0)
+    );
   }
-  emitAnalytics('filter_catalog',{brand,transmission:trans,fuel,order:smartOrder,mode:catalogMode});
+  emitAnalytics('filter_catalog',{brand,transmission:trans,fuel,mode:catalogMode});
 
   renderCards($('#catalogGrid'),filtered);
   $('#resultCount').textContent=`${filtered.length} vehículo${filtered.length===1?'':'s'} encontrado${filtered.length===1?'':'s'}`;
@@ -3514,6 +3534,6 @@ setTimeout(()=>{
 },0);
 </script>
 
-  <div class="site-version" aria-label="Versión del sitio">lmpautos V1.07</div>
+  <div class="site-version" aria-label="Versión del sitio">lmpautos V1.08</div>
 </body>
 </html>
