@@ -1,43 +1,54 @@
-# LMP Autos Web v1.05 — Conversión y rendimiento
+# LMP Autos Web v1.08 — Bloque simple y filtros
 
-## Venta y conversión
-- WhatsApp directo desde cada tarjeta.
-- CTA fijo de WhatsApp en ficha mobile.
-- Mensajes adaptados a contado, financiación y consulta general.
-- Cuota estimada a 24 meses para vehículos financiables.
-- Vehículos similares al final de la ficha.
-- Aviso por WhatsApp para unidades similares.
-- Compartir vehículo.
-- Favoritos persistentes.
-- Comparador de hasta tres vehículos.
-- Indicadores: Más de 10 años, gestoría propia y entrega 24–48 hs.
+## Bloque “Comprar tu próximo auto puede ser más simple”
 
-## Estados comerciales
-- Disponible.
-- Reservado.
-- Preparando.
-- Solo de Contado.
-- Nuevo ingreso para los últimos tres vehículos por orden numérico de ID.
+El problema se debía a un selector CSS global:
 
-## Orden comercial
-- Recomendados.
-- Menor anticipo.
-- Menor cuota estimada.
-- Más nuevos.
-- Más consultados.
+```css
+.trust-grid
+```
 
-## Medición
-Eventos compatibles con dataLayer y Meta Pixel:
-- view_vehicle
-- click_whatsapp
-- favorite_vehicle
-- share_vehicle
-- compare_vehicles
-- filter_catalog
+La nueva franja de indicadores estaba sobrescribiendo la grilla del bloque oscuro y la convertía en tres columnas. Como el bloque tiene cuatro tarjetas, la cuarta pasaba a una segunda fila.
 
-## Rendimiento
-- Soporte opcional para `img/vehiculos/manifest.json`.
-- Si no existe, mantiene la validación individual.
-- Los links de Drive continúan activos.
-- No se incluyen códigos internos en mensajes.
-- No se muestran reseñas de Google.
+### Corrección
+
+- El selector quedó limitado a `.trust-strip .trust-grid`.
+- El bloque oscuro utiliza cuatro columnas en desktop.
+- Entre 561 y 980 px utiliza dos columnas.
+- En pantallas de hasta 560 px utiliza una columna.
+- Se agregaron controles para evitar desbordes de texto.
+
+## Filtro eliminado
+
+Se retiró completamente:
+
+```text
+Orden comercial
+```
+
+También se eliminaron:
+
+- el elemento HTML;
+- las lecturas JavaScript;
+- el listener;
+- el reset;
+- las condiciones de orden asociadas.
+
+El catálogo mantiene como orden predeterminado:
+
+1. Nuevos ingresos.
+2. Vehículos más consultados.
+
+Los filtros de precio y año continúan funcionando.
+
+## Versión
+
+```text
+lmpautos V1.08
+```
+
+## Validación
+
+- JavaScript validado con `node --check`.
+- Confirmado que no quedan referencias a `smartOrder`.
+- Confirmado que el bloque usa cuatro columnas en desktop.
