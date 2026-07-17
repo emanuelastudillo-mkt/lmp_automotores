@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
-<meta name="lmp-build" content="lmp-autos-web-v1.08-bloque-simple-sin-orden-comercial">
+<meta name="lmp-build" content="lmp-autos-web-v1.10-catalogo-interno">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   
   <!-- Meta Pixel Code -->
@@ -1450,6 +1450,123 @@ fbq('track', 'PageView');
       }
     }
 
+
+    .stock-check-view{
+      min-height:60vh;
+      padding:28px 0 42px
+    }
+    .stock-check-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:16px;
+      margin-bottom:16px
+    }
+    .stock-check-head h1{
+      margin:0;
+      font-size:30px;
+      letter-spacing:-.04em
+    }
+    .stock-check-head p{
+      margin:5px 0 0;
+      color:var(--muted);
+      font-size:13px
+    }
+    .stock-check-summary{
+      color:#555;
+      font-size:12px;
+      font-weight:850;
+      white-space:nowrap
+    }
+    .stock-check-table-wrap{
+      overflow:auto;
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:#fff
+    }
+    .stock-check-table{
+      width:100%;
+      min-width:1280px;
+      border-collapse:collapse;
+      font-size:11px
+    }
+    .stock-check-table th{
+      position:sticky;
+      top:0;
+      z-index:2;
+      padding:10px 9px;
+      border-bottom:1px solid #d9d9d5;
+      background:#171717;
+      color:#fff;
+      text-align:left;
+      font-size:9px;
+      font-weight:900;
+      letter-spacing:.05em;
+      text-transform:uppercase;
+      white-space:nowrap
+    }
+    .stock-check-table td{
+      padding:9px;
+      border-bottom:1px solid #ecece8;
+      vertical-align:top;
+      white-space:nowrap
+    }
+    .stock-check-table tbody tr:nth-child(even){
+      background:#fafaf8
+    }
+    .stock-check-table tbody tr:last-child td{
+      border-bottom:0
+    }
+    .stock-check-id{
+      font-weight:950
+    }
+    .stock-check-model{
+      min-width:210px;
+      white-space:normal !important;
+      font-weight:850
+    }
+    .stock-check-state{
+      font-weight:900
+    }
+    .stock-check-warning{
+      color:#a21419;
+      font-weight:900
+    }
+    .site-version-row{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:7px;
+      margin:14px 0 8px
+    }
+    .site-version-row .site-version{
+      margin:0
+    }
+    .site-version-link{
+      color:#8b8b8b;
+      font-size:9px;
+      font-weight:800;
+      letter-spacing:.04em;
+      text-decoration:underline;
+      text-underline-offset:2px
+    }
+    .site-version-link:hover{
+      color:#333
+    }
+
+    @media(max-width:760px){
+      .stock-check-view{
+        padding-top:18px
+      }
+      .stock-check-head{
+        align-items:flex-start;
+        flex-direction:column
+      }
+      .stock-check-head h1{
+        font-size:24px
+      }
+    }
+
 </style>
 </head>
 <body>
@@ -1582,6 +1699,45 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
     </div>
     <div class="catalog-quickbar"><button class="quick-btn" id="favoritesFilter" type="button">Favoritos <span id="favoritesCount">0</span></button><button class="quick-btn" id="clearCatalogMode" type="button">Ver todos</button></div>
     <div class="grid" id="catalogGrid"><div class="loading"><div class="spinner"></div>Cargando stock…</div></div>
+  </main>
+</section>
+
+
+<section id="stockCheckView" class="stock-check-view hidden">
+  <main class="shell">
+    <div class="stock-check-head">
+      <div>
+        <h1>Chequeo interno de stock</h1>
+        <p>Listado completo sin fotografías ni acciones comerciales.</p>
+      </div>
+      <div class="stock-check-summary" id="stockCheckSummary">Cargando stock…</div>
+    </div>
+    <div class="stock-check-table-wrap">
+      <table class="stock-check-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Vehículo</th>
+            <th>Año</th>
+            <th>Kilómetros</th>
+            <th>Estado</th>
+            <th>Combustible</th>
+            <th>Transmisión</th>
+            <th>Precio final</th>
+            <th>Anticipo</th>
+            <th>% anticipo</th>
+            <th>Máx. financ.</th>
+            <th>Permuta</th>
+            <th>Foto local</th>
+            <th>Foto Drive</th>
+            <th>General</th>
+          </tr>
+        </thead>
+        <tbody id="stockCheckBody">
+          <tr><td colspan="15">Cargando información…</td></tr>
+        </tbody>
+      </table>
+    </div>
   </main>
 </section>
 
@@ -2297,6 +2453,13 @@ function localCoverUrl(v,{cacheBust=false}={}){
   const url=`./img/vehiculos/${id}.webp`;
   return cacheBust?`${url}?${LOCAL_COVER_VERSION}`:url;
 }
+function hasImageCandidate(v){
+  return Boolean(v.hasLocalCover || (Array.isArray(v.fotos) && v.fotos.length));
+}
+function imageAvailabilityRank(v){
+  return v.imageUnavailable || !hasImageCandidate(v) ? 1 : 0;
+}
+
 function coverCandidates(v,{localOnly=false}={}){
   const candidates=[];
   const local=localCoverUrl(v,{cacheBust:true});
@@ -2315,6 +2478,7 @@ function coverImageMarkup(v,index=0,{localOnly=false}={}){
   const candidates=coverCandidates(v,{localOnly});
 
   if(!candidates.length){
+    v.imageUnavailable=true;
     return `<div class="photo-empty">Fotos próximamente</div>`;
   }
 
@@ -2406,7 +2570,19 @@ function nextCoverCandidate(img){
     console.warn('No se pudo cargar la portada local:',error);
   }
 
+  const card=img.closest('.vehicle');
+  const vehicleId=card?.dataset.vehicleId;
+  const vehicle=vehicles.find(item=>item.id===vehicleId);
+
+  if(vehicle){
+    vehicle.imageUnavailable=true;
+  }
+
   img.outerHTML='<div class="photo-empty">Imagen no disponible</div>';
+
+  if(card?.parentElement){
+    card.parentElement.appendChild(card);
+  }
 }
 
 
@@ -2648,7 +2824,7 @@ function renderCompare(){
 }
 
 function card(v,index=0,{localOnly=false}={}){
-  return `<article class="vehicle" style="--delay:${Math.min(index,8)*45}ms">
+  return `<article class="vehicle" data-vehicle-id="${escapeAttr(v.id)}" style="--delay:${Math.min(index,8)*45}ms">
     <div class="photo">
       ${coverImageMarkup(v,index,{localOnly})}
       <div class="card-tools"><button class="tool-btn favorite-btn ${favoriteIds.has(v.id)?'active':''}" type="button" data-favorite-id="${escapeAttr(v.id)}" aria-label="Guardar favorito">♥</button><button class="tool-btn compare-btn ${compareIds.has(v.id)?'active':''}" type="button" data-compare-id="${escapeAttr(v.id)}" aria-label="Comparar">⇄</button></div>
@@ -3063,8 +3239,12 @@ function selectHighlights(limit=CONFIG.maxFeatured){
 }
 
 function renderCards(target,list,{localOnly=false}={}){
-  target.innerHTML=list.length
-    ? list.map((vehicle,index)=>card(vehicle,index,{localOnly})).join('')
+  const orderedList=localOnly
+    ? list
+    : [...list].sort((a,b)=>imageAvailabilityRank(a)-imageAvailabilityRank(b));
+
+  target.innerHTML=orderedList.length
+    ? orderedList.map((vehicle,index)=>card(vehicle,index,{localOnly})).join('')
     : `<div class="empty">No encontramos vehículos con estos filtros.</div>`;
 
   target.querySelectorAll('.detail-btn').forEach(button=>{
@@ -3147,6 +3327,7 @@ function applyFilters(){
   }
   emitAnalytics('filter_catalog',{brand,transmission:trans,fuel,mode:catalogMode});
 
+  filtered.sort((a,b)=>imageAvailabilityRank(a)-imageAvailabilityRank(b));
   renderCards($('#catalogGrid'),filtered);
   $('#resultCount').textContent=`${filtered.length} vehículo${filtered.length===1?'':'s'} encontrado${filtered.length===1?'':'s'}`;
   updateFilterButton();
@@ -3298,8 +3479,75 @@ function closeModal({updateUrl=true}={}){
   if(updateUrl && currentVehicleSlugFromUrl())clearVehicleUrl({replace:true});
   else if(!currentVehicleSlugFromUrl())document.title='LMP Autos | Lomas del Mirador';
 }
+
+function isInternalStockMode(){
+  return new URLSearchParams(window.location.search).get('stock')==='interno';
+}
+function stockImageStatus(v){
+  return {
+    local:v.hasLocalCover?'Sí':'No',
+    drive:Array.isArray(v.fotos) && v.fotos.length?'Sí':'No'
+  };
+}
+function renderStockCheck(){
+  const body=$('#stockCheckBody');
+  const summary=$('#stockCheckSummary');
+  if(!body || !summary)return;
+
+  const ordered=[...vehicles].sort((a,b)=>{
+    const na=Number((clean(a.id).match(/\d+/)||['0'])[0]);
+    const nb=Number((clean(b.id).match(/\d+/)||['0'])[0]);
+    return nb-na;
+  });
+
+  summary.textContent=`${ordered.length} vehículos activos`;
+
+  body.innerHTML=ordered.map(v=>{
+    const image=stockImageStatus(v);
+    const missingImage=image.local==='No' && image.drive==='No';
+    const state=isCashOnly(v)?'Solo de Contado':titleCase(v.estado||'—');
+
+    return `<tr>
+      <td class="stock-check-id">${escapeHtml(v.id)}</td>
+      <td class="stock-check-model">${escapeHtml(`${v.marca} ${v.modelo}`)}</td>
+      <td>${escapeHtml(v.anio||'—')}</td>
+      <td>${escapeHtml(v.kilometraje?km(v.kilometraje):'—')}</td>
+      <td class="stock-check-state">${escapeHtml(state)}</td>
+      <td>${escapeHtml(v.combustible||'—')}</td>
+      <td>${escapeHtml(v.transmision||'—')}</td>
+      <td>${escapeHtml(money(v.cotizacion))}</td>
+      <td>${escapeHtml(displayedAdvance(v)||'—')}</td>
+      <td>${escapeHtml(v.anticipoPct||'—')}</td>
+      <td>${escapeHtml(v.maxFinan||'—')}</td>
+      <td>${acceptsTradeIn(v)?'Sí':'No'}</td>
+      <td>${image.local}</td>
+      <td class="${missingImage?'stock-check-warning':''}">${image.drive}</td>
+      <td>${escapeHtml(generalScore(v))}/100</td>
+    </tr>`;
+  }).join('');
+}
+function activateInternalStockMode(){
+  if(!isInternalStockMode())return false;
+
+  $('#homeView').classList.add('hidden');
+  $('#catalogView').classList.add('hidden');
+  $('#stockCheckView').classList.remove('hidden');
+
+  const trustStrip=document.querySelector('.trust-strip');
+  if(trustStrip)trustStrip.classList.add('hidden');
+
+  const ticker=document.querySelector('.sales-ticker');
+  if(ticker)ticker.classList.add('hidden');
+
+  renderStockCheck();
+  document.title='Chequeo interno de stock | LMP Autos';
+  window.scrollTo({top:0});
+  return true;
+}
+
 function switchView(view){
   const home=view==='home';
+  $('#stockCheckView').classList.add('hidden');
   $('#homeView').classList.toggle('hidden',!home);$('#catalogView').classList.toggle('hidden',home);
   $$('[data-view]').forEach(x=>x.classList.toggle('active',x.dataset.view===view));
   window.scrollTo({top:0,behavior:'smooth'});
@@ -3419,6 +3667,10 @@ async function loadData(){
     const now=new Date();
     applyFilters();
 
+    if(activateInternalStockMode()){
+      return;
+    }
+
     const requestedSlug=currentVehicleSlugFromUrl();
     if(requestedSlug){
       const requestedVehicle=vehicleFromSlug(requestedSlug);
@@ -3438,6 +3690,10 @@ async function loadData(){
     $('#featuredGrid').innerHTML=error;
     $('#catalogGrid').innerHTML=error;
     $('#resultCount').textContent='No se pudo cargar el catálogo';
+    if($('#stockCheckBody')){
+      $('#stockCheckBody').innerHTML=`<tr><td colspan="15">${error}</td></tr>`;
+      $('#stockCheckSummary').textContent='Error al cargar el stock';
+    }
     $$('.retry-catalog').forEach(button=>button.addEventListener('click',loadData));
   }
 }
@@ -3534,6 +3790,10 @@ setTimeout(()=>{
 },0);
 </script>
 
-  <div class="site-version" aria-label="Versión del sitio">lmpautos V1.08</div>
+  <div class="site-version-row">
+    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.10</div>
+    <span class="site-version" aria-hidden="true">·</span>
+    <a class="site-version-link" href="?stock=interno">catálogo</a>
+  </div>
 </body>
 </html>

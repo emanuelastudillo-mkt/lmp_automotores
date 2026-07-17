@@ -1,54 +1,72 @@
-# LMP Autos Web v1.08 — Bloque simple y filtros
+# LMP Autos Web v1.10 — Catálogo interno
 
-## Bloque “Comprar tu próximo auto puede ser más simple”
+## Vista agregada
 
-El problema se debía a un selector CSS global:
+Se incorporó un modo de chequeo interno de stock sin:
 
-```css
-.trust-grid
-```
+- fotografías;
+- botones de consulta;
+- botones de favoritos;
+- botones de comparación;
+- acciones comerciales.
 
-La nueva franja de indicadores estaba sobrescribiendo la grilla del bloque oscuro y la convertía en tres columnas. Como el bloque tiene cuatro tarjetas, la cuarta pasaba a una segunda fila.
+## Acceso
 
-### Corrección
-
-- El selector quedó limitado a `.trust-strip .trust-grid`.
-- El bloque oscuro utiliza cuatro columnas en desktop.
-- Entre 561 y 980 px utiliza dos columnas.
-- En pantallas de hasta 560 px utiliza una columna.
-- Se agregaron controles para evitar desbordes de texto.
-
-## Filtro eliminado
-
-Se retiró completamente:
+Al lado de la versión visible se agregó el enlace:
 
 ```text
-Orden comercial
+catálogo
 ```
 
-También se eliminaron:
+El enlace abre:
 
-- el elemento HTML;
-- las lecturas JavaScript;
-- el listener;
-- el reset;
-- las condiciones de orden asociadas.
+```text
+?stock=interno
+```
 
-El catálogo mantiene como orden predeterminado:
+## Información mostrada
 
-1. Nuevos ingresos.
-2. Vehículos más consultados.
+La tabla incluye:
 
-Los filtros de precio y año continúan funcionando.
+- ID;
+- marca y modelo;
+- año;
+- kilometraje;
+- estado comercial;
+- combustible;
+- transmisión;
+- precio final;
+- anticipo;
+- porcentaje de anticipo;
+- máximo financiable;
+- posibilidad de permuta;
+- existencia de portada local;
+- existencia de enlace de Drive;
+- calificación general.
+
+## Orden
+
+Los vehículos se ordenan por ID numérico descendente para facilitar la revisión de los últimos ingresos.
+
+## Alcance
+
+La lista utiliza los vehículos activos del sitio:
+
+- Disponible.
+- Reservado.
+- Preparando.
+- Solo de Contado.
+
+Los vehículos marcados como vendidos continúan excluidos por la lógica actual del catálogo.
 
 ## Versión
 
 ```text
-lmpautos V1.08
+lmpautos V1.10
 ```
 
 ## Validación
 
 - JavaScript validado con `node --check`.
-- Confirmado que no quedan referencias a `smartOrder`.
-- Confirmado que el bloque usa cuatro columnas en desktop.
+- Confirmada la vista sin imágenes ni botones.
+- Confirmado el enlace inferior junto a la versión.
