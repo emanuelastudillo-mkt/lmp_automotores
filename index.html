@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
-<meta name="lmp-build" content="lmp-autos-web-v1.10-catalogo-interno">
+<meta name="lmp-build" content="lmp-autos-web-v1.11-catalogo-interno-tarjetas">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   
   <!-- Meta Pixel Code -->
@@ -1478,60 +1478,144 @@ fbq('track', 'PageView');
       font-weight:850;
       white-space:nowrap
     }
-    .stock-check-table-wrap{
-      overflow:auto;
+    .stock-check-grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:12px
+    }
+    .stock-mini-card{
+      display:flex;
+      flex-direction:column;
+      min-width:0;
+      overflow:hidden;
       border:1px solid var(--line);
       border-radius:16px;
-      background:#fff
+      background:#fff;
+      box-shadow:0 5px 18px rgba(0,0,0,.055)
     }
-    .stock-check-table{
-      width:100%;
-      min-width:1280px;
-      border-collapse:collapse;
-      font-size:11px
+    .stock-mini-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:10px;
+      padding:12px 13px 9px
     }
-    .stock-check-table th{
-      position:sticky;
-      top:0;
-      z-index:2;
-      padding:10px 9px;
-      border-bottom:1px solid #d9d9d5;
-      background:#171717;
-      color:#fff;
-      text-align:left;
+    .stock-mini-id{
+      color:var(--muted);
+      font-size:10px;
+      font-weight:950;
+      letter-spacing:.06em
+    }
+    .stock-mini-badges{
+      display:flex;
+      justify-content:flex-end;
+      gap:5px;
+      flex-wrap:wrap
+    }
+    .stock-mini-badges .badge{
+      position:static;
+      padding:5px 7px;
+      font-size:8px;
+      box-shadow:none
+    }
+    .stock-mini-body{
+      display:flex;
+      flex:1;
+      flex-direction:column;
+      padding:0 13px 13px
+    }
+    .stock-mini-body .make{
+      margin-top:1px
+    }
+    .stock-mini-body h3{
+      min-height:42px;
+      margin:3px 0 9px;
+      font-size:18px;
+      line-height:1.16
+    }
+    .stock-mini-body .meta{
+      margin-bottom:10px
+    }
+    .stock-mini-body .meta span{
+      font-size:10px
+    }
+    .stock-mini-body .price-stack{
+      gap:7px
+    }
+    .stock-mini-body .price-box{
+      padding:9px 10px
+    }
+    .stock-mini-body .price{
+      font-size:17px
+    }
+    .stock-mini-body .advance{
+      margin-top:8px;
+      padding:8px 10px;
+      font-size:10px
+    }
+    .stock-mini-body .card-installment{
+      margin-top:7px
+    }
+    .stock-mini-body .card-benefits{
+      margin-top:8px
+    }
+    .stock-mini-diagnostics{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:5px;
+      margin-top:auto;
+      padding-top:10px
+    }
+    .stock-mini-diagnostic{
+      padding:7px 8px;
+      border:1px solid #ecece8;
+      border-radius:9px;
+      background:#fafaf8;
+      color:#666;
       font-size:9px;
-      font-weight:900;
-      letter-spacing:.05em;
-      text-transform:uppercase;
-      white-space:nowrap
+      font-weight:800
     }
-    .stock-check-table td{
-      padding:9px;
-      border-bottom:1px solid #ecece8;
-      vertical-align:top;
-      white-space:nowrap
+    .stock-mini-diagnostic strong{
+      display:block;
+      margin-top:2px;
+      color:#202020;
+      font-size:10px
     }
-    .stock-check-table tbody tr:nth-child(even){
-      background:#fafaf8
+    .stock-mini-diagnostic.warning strong{
+      color:#a21419
     }
-    .stock-check-table tbody tr:last-child td{
-      border-bottom:0
+
+    @media(max-width:1120px){
+      .stock-check-grid{
+        grid-template-columns:repeat(3,minmax(0,1fr))
+      }
     }
-    .stock-check-id{
-      font-weight:950
+    @media(max-width:820px){
+      .stock-check-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr))
+      }
     }
-    .stock-check-model{
-      min-width:210px;
-      white-space:normal !important;
-      font-weight:850
+    @media(max-width:760px){
+      .stock-check-view{
+        padding-top:18px
+      }
+      .stock-check-head{
+        align-items:flex-start;
+        flex-direction:column
+      }
+      .stock-check-head h1{
+        font-size:24px
+      }
     }
-    .stock-check-state{
-      font-weight:900
+    @media(max-width:520px){
+      .stock-check-grid{
+        grid-template-columns:1fr
+      }
+      .stock-mini-body h3{
+        min-height:0
+      }
     }
-    .stock-check-warning{
-      color:#a21419;
-      font-weight:900
-    }
+
     .site-version-row{
       display:flex;
       justify-content:center;
@@ -1708,35 +1792,12 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
     <div class="stock-check-head">
       <div>
         <h1>Chequeo interno de stock</h1>
-        <p>Listado completo sin fotografías ni acciones comerciales.</p>
+        <p>Mini tarjetas para revisar stock e información, sin fotografías ni acciones.</p>
       </div>
       <div class="stock-check-summary" id="stockCheckSummary">Cargando stock…</div>
     </div>
-    <div class="stock-check-table-wrap">
-      <table class="stock-check-table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Vehículo</th>
-            <th>Año</th>
-            <th>Kilómetros</th>
-            <th>Estado</th>
-            <th>Combustible</th>
-            <th>Transmisión</th>
-            <th>Precio final</th>
-            <th>Anticipo</th>
-            <th>% anticipo</th>
-            <th>Máx. financ.</th>
-            <th>Permuta</th>
-            <th>Foto local</th>
-            <th>Foto Drive</th>
-            <th>General</th>
-          </tr>
-        </thead>
-        <tbody id="stockCheckBody">
-          <tr><td colspan="15">Cargando información…</td></tr>
-        </tbody>
-      </table>
+    <div class="stock-check-grid" id="stockCheckBody">
+      <div class="empty">Cargando información…</div>
     </div>
   </main>
 </section>
@@ -3489,6 +3550,87 @@ function stockImageStatus(v){
     drive:Array.isArray(v.fotos) && v.fotos.length?'Sí':'No'
   };
 }
+function internalStatusText(v){
+  if(isCashOnly(v))return 'Solo de Contado';
+
+  const status=normalize(v.estado);
+  const labels={
+    DISPONIBLE:'Disponible',
+    RESERVADO:'Reservado',
+    PREPARANDO:'Preparando',
+    'CON DESCUENTO':'Con descuento',
+    DESCUENTO:'Con descuento',
+    'EN DESCUENTO':'Con descuento',
+    PROMO:'Con descuento',
+    PROMOCION:'Con descuento',
+    'PROMOCIÓN':'Con descuento'
+  };
+
+  return labels[status] || clean(v.estado) || 'Sin estado';
+}
+function stockMiniCard(v){
+  const image=stockImageStatus(v);
+  const missingImage=image.local==='No' && image.drive==='No';
+  const badges=badgeItems(v);
+  const installment=estimatedInstallment(v);
+
+  return `<article class="stock-mini-card">
+    <div class="stock-mini-top">
+      <span class="stock-mini-id">${escapeHtml(v.id)}</span>
+      <div class="stock-mini-badges">
+        ${badges.map(item=>`<span class="badge ${item.className}">${escapeHtml(item.text)}</span>`).join('')}
+      </div>
+    </div>
+
+    <div class="stock-mini-body">
+      <div class="make">${escapeHtml(v.marca)}</div>
+      <h3>${escapeHtml(v.modelo)}</h3>
+
+      <div class="meta">
+        ${v.anio?`<span>${icon('calendar')}${escapeHtml(v.anio)}</span>`:''}
+        ${v.kilometraje?`<span>${icon('odometer')}${escapeHtml(km(v.kilometraje))}</span>`:''}
+        ${v.transmision?`<span>${icon('transmission')}${escapeHtml(v.transmision)}</span>`:''}
+        ${v.combustible?`<span>${icon('fuel')}${escapeHtml(v.combustible)}</span>`:''}
+      </div>
+
+      <div class="price-stack">
+        ${v.precioPublicado?`<div class="price-box usd"><div class="price-label">Valor en dólares</div><div class="price">${icon('dollar')} ${escapeHtml(money(v.precioPublicado))}</div></div>`:''}
+        ${v.cotizacion?`<div class="price-box ars"><div class="price-label">Valor total en pesos</div><div class="price"><span class="price-prefix">ARS</span>${escapeHtml(money(v.cotizacion))}</div></div>`:''}
+      </div>
+
+      ${(v.anticipo||isCashOnly(v))
+        ? `<div class="advance">${isCashOnly(v)
+            ? `Solo de contado <strong>${escapeHtml(displayedAdvance(v))}</strong>`
+            : `Anticipo desde <strong>${escapeHtml(displayedAdvance(v))}</strong>`}</div>`
+        : ''}
+
+      ${installment
+        ? `<div class="card-installment">Cuota estimada desde <strong>${formatArsNumber(installment)}</strong> a 24 meses</div>`
+        : ''}
+
+      ${vehicleBenefitsMarkup(v)}
+
+      <div class="stock-mini-diagnostics">
+        <div class="stock-mini-diagnostic">
+          Estado
+          <strong>${escapeHtml(internalStatusText(v))}</strong>
+        </div>
+        <div class="stock-mini-diagnostic">
+          Calificación
+          <strong>${escapeHtml(generalScore(v))}/100</strong>
+        </div>
+        <div class="stock-mini-diagnostic ${image.local==='No'?'warning':''}">
+          Foto local
+          <strong>${image.local}</strong>
+        </div>
+        <div class="stock-mini-diagnostic ${missingImage?'warning':''}">
+          Foto Drive
+          <strong>${image.drive}</strong>
+        </div>
+      </div>
+    </div>
+  </article>`;
+}
 function renderStockCheck(){
   const body=$('#stockCheckBody');
   const summary=$('#stockCheckSummary');
@@ -3501,31 +3643,11 @@ function renderStockCheck(){
   });
 
   summary.textContent=`${ordered.length} vehículos activos`;
-
-  body.innerHTML=ordered.map(v=>{
-    const image=stockImageStatus(v);
-    const missingImage=image.local==='No' && image.drive==='No';
-    const state=isCashOnly(v)?'Solo de Contado':titleCase(v.estado||'—');
-
-    return `<tr>
-      <td class="stock-check-id">${escapeHtml(v.id)}</td>
-      <td class="stock-check-model">${escapeHtml(`${v.marca} ${v.modelo}`)}</td>
-      <td>${escapeHtml(v.anio||'—')}</td>
-      <td>${escapeHtml(v.kilometraje?km(v.kilometraje):'—')}</td>
-      <td class="stock-check-state">${escapeHtml(state)}</td>
-      <td>${escapeHtml(v.combustible||'—')}</td>
-      <td>${escapeHtml(v.transmision||'—')}</td>
-      <td>${escapeHtml(money(v.cotizacion))}</td>
-      <td>${escapeHtml(displayedAdvance(v)||'—')}</td>
-      <td>${escapeHtml(v.anticipoPct||'—')}</td>
-      <td>${escapeHtml(v.maxFinan||'—')}</td>
-      <td>${acceptsTradeIn(v)?'Sí':'No'}</td>
-      <td>${image.local}</td>
-      <td class="${missingImage?'stock-check-warning':''}">${image.drive}</td>
-      <td>${escapeHtml(generalScore(v))}/100</td>
-    </tr>`;
-  }).join('');
+  body.innerHTML=ordered.length
+    ? ordered.map(stockMiniCard).join('')
+    : '<div class="empty">No hay vehículos para revisar.</div>';
 }
+
 function activateInternalStockMode(){
   if(!isInternalStockMode())return false;
 
@@ -3691,7 +3813,7 @@ async function loadData(){
     $('#catalogGrid').innerHTML=error;
     $('#resultCount').textContent='No se pudo cargar el catálogo';
     if($('#stockCheckBody')){
-      $('#stockCheckBody').innerHTML=`<tr><td colspan="15">${error}</td></tr>`;
+      $('#stockCheckBody').innerHTML=error;
       $('#stockCheckSummary').textContent='Error al cargar el stock';
     }
     $$('.retry-catalog').forEach(button=>button.addEventListener('click',loadData));
@@ -3791,7 +3913,7 @@ setTimeout(()=>{
 </script>
 
   <div class="site-version-row">
-    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.10</div>
+    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.11</div>
     <span class="site-version" aria-hidden="true">·</span>
     <a class="site-version-link" href="?stock=interno">catálogo</a>
   </div>

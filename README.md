@@ -1,72 +1,87 @@
-# LMP Autos Web v1.10 — Catálogo interno
+# LMP Autos Web v1.11 — Catálogo interno con mini tarjetas
 
-## Vista agregada
+## Error corregido
 
-Se incorporó un modo de chequeo interno de stock sin:
+La versión 1.10 utilizaba una función inexistente:
+
+```javascript
+titleCase()
+```
+
+Esto interrumpía la carga con:
+
+```text
+titleCase is not defined
+```
+
+La función fue reemplazada por `internalStatusText()`, que convierte los estados conocidos a textos legibles sin depender de una función externa.
+
+## Nuevo diseño del catálogo interno
+
+La tabla fue reemplazada por mini tarjetas similares a las tarjetas comerciales actuales.
+
+Cada tarjeta incluye:
+
+- ID interno;
+- etiquetas de estado;
+- marca y modelo;
+- año;
+- kilometraje;
+- transmisión;
+- combustible;
+- precio en dólares;
+- precio en pesos;
+- anticipo o condición de contado;
+- cuota estimada;
+- financiación;
+- permuta;
+- estado comercial;
+- calificación general;
+- disponibilidad de foto local;
+- disponibilidad de foto de Drive.
+
+## Elementos excluidos
+
+La vista interna no muestra:
 
 - fotografías;
-- botones de consulta;
-- botones de favoritos;
-- botones de comparación;
-- acciones comerciales.
+- botón Ver vehículo;
+- botón Consultar;
+- Instagram;
+- favoritos;
+- comparación;
+- otras acciones comerciales.
+
+## Diseño responsive
+
+- 4 columnas en desktop amplio.
+- 3 columnas en resoluciones intermedias.
+- 2 columnas en tablets.
+- 1 columna en mobile.
 
 ## Acceso
 
-Al lado de la versión visible se agregó el enlace:
+Continúa disponible desde el enlace inferior:
 
 ```text
 catálogo
 ```
 
-El enlace abre:
+o mediante:
 
 ```text
 ?stock=interno
 ```
 
-## Información mostrada
-
-La tabla incluye:
-
-- ID;
-- marca y modelo;
-- año;
-- kilometraje;
-- estado comercial;
-- combustible;
-- transmisión;
-- precio final;
-- anticipo;
-- porcentaje de anticipo;
-- máximo financiable;
-- posibilidad de permuta;
-- existencia de portada local;
-- existencia de enlace de Drive;
-- calificación general.
-
-## Orden
-
-Los vehículos se ordenan por ID numérico descendente para facilitar la revisión de los últimos ingresos.
-
-## Alcance
-
-La lista utiliza los vehículos activos del sitio:
-
-- Disponible.
-- Reservado.
-- Preparando.
-- Solo de Contado.
-
-Los vehículos marcados como vendidos continúan excluidos por la lógica actual del catálogo.
-
 ## Versión
 
 ```text
-lmpautos V1.10
+lmpautos V1.11
 ```
 
 ## Validación
 
 - JavaScript validado con `node --check`.
-- Confirmada la vista sin imágenes ni botones.
-- Confirmado el enlace inferior junto a la versión.
+- Confirmada la eliminación de `titleCase()`.
+- Confirmada la eliminación de la tabla anterior.
+- Confirmada la ausencia de fotos y botones de acción.
