@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
-<meta name="lmp-build" content="lmp-autos-web-v1.14-presupuestos-multiples">
+<meta name="lmp-build" content="lmp-autos-web-v1.15-herramientas-agencia">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   
   <!-- Meta Pixel Code -->
@@ -1770,6 +1770,328 @@ fbq('track', 'PageView');
       }
     }
 
+
+    .stock-head-status{text-align:right}
+    .stock-updated-at{margin-top:4px;color:#777;font-size:10px;font-weight:800}
+    .agency-panel{
+      margin-bottom:13px;
+      padding:12px;
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:#fff
+    }
+    .agency-search-row{
+      display:grid;
+      grid-template-columns:minmax(260px,1fr) auto auto auto;
+      gap:8px;
+      align-items:end
+    }
+    .agency-search{display:grid;gap:5px}
+    .agency-search span{
+      color:#666;
+      font-size:9px;
+      font-weight:900;
+      letter-spacing:.06em;
+      text-transform:uppercase
+    }
+    .agency-search input,
+    .internal-form-grid input,
+    .internal-form-grid select,
+    .internal-form-grid textarea,
+    .stock-custom-advance input{
+      width:100%;
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:#fff;
+      color:#171717;
+      font:inherit
+    }
+    .agency-search input{padding:11px 12px;font-size:12px}
+    .agency-control-btn,
+    .agency-view-actions button,
+    .stock-quick-filters button{
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:#fff;
+      color:#171717;
+      font-size:10px;
+      font-weight:900;
+      cursor:pointer
+    }
+    .agency-control-btn{padding:11px 12px}
+    .agency-control-btn.active,
+    .agency-view-actions button.active,
+    .stock-quick-filters button.active{
+      border-color:#171717;
+      background:#171717;
+      color:#fff
+    }
+    .stock-quick-filters{
+      display:flex;
+      gap:6px;
+      flex-wrap:wrap;
+      margin-top:10px
+    }
+    .stock-quick-filters button{padding:7px 9px}
+    .agency-meta-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-top:10px;
+      padding-top:10px;
+      border-top:1px solid #ecece8
+    }
+    .client-profile-summary{
+      color:#555;
+      font-size:10px;
+      font-weight:800
+    }
+    .agency-view-actions{display:flex;gap:6px}
+    .agency-view-actions button{padding:8px 10px}
+    .stock-alerts-panel{
+      display:flex;
+      gap:7px;
+      flex-wrap:wrap;
+      margin-top:10px;
+      padding-top:10px;
+      border-top:1px solid #ecece8
+    }
+    .stock-alert-chip{
+      border:1px solid #e3b4b6;
+      border-radius:999px;
+      padding:7px 9px;
+      background:#fff4f4;
+      color:#8d161b;
+      font-size:9px;
+      font-weight:900;
+      cursor:pointer
+    }
+    .stock-alert-chip.active{background:#8d161b;color:#fff}
+    .stock-alert-clear{
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:7px 9px;
+      background:#fff;
+      color:#333;
+      font-size:9px;
+      font-weight:900;
+      cursor:pointer
+    }
+    .stock-mini-card.has-warning{border-color:#e0aaaa}
+    .stock-mini-issues{
+      display:flex;
+      gap:4px;
+      flex-wrap:wrap;
+      margin:8px 0 0
+    }
+    .stock-mini-issue{
+      padding:4px 6px;
+      border-radius:999px;
+      background:#fff0f0;
+      color:#941b20;
+      font-size:8px;
+      font-weight:900
+    }
+    .stock-mini-internal{
+      margin-top:9px;
+      padding:9px;
+      border:1px dashed #d7d7d2;
+      border-radius:10px;
+      background:#fafaf8
+    }
+    .stock-priority{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      font-size:9px;
+      font-weight:900
+    }
+    .stock-priority input{accent-color:#171717}
+    .stock-note{
+      width:100%;
+      min-height:54px;
+      margin-top:7px;
+      padding:8px;
+      resize:vertical;
+      border:1px solid var(--line);
+      border-radius:9px;
+      background:#fff;
+      font-size:9px
+    }
+    .stock-custom-advance{
+      margin-top:9px;
+      padding:9px;
+      border-radius:10px;
+      background:#f3f3ef
+    }
+    .stock-custom-advance label{
+      display:grid;
+      gap:4px;
+      color:#555;
+      font-size:8px;
+      font-weight:900;
+      text-transform:uppercase
+    }
+    .stock-custom-advance input{padding:8px;font-size:11px}
+    .stock-custom-installments{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:5px;
+      margin-top:7px
+    }
+    .stock-custom-installment{
+      padding:6px;
+      border-radius:8px;
+      background:#fff;
+      text-align:center
+    }
+    .stock-custom-installment span{
+      display:block;
+      color:#777;
+      font-size:7px
+    }
+    .stock-custom-installment strong{
+      display:block;
+      margin-top:2px;
+      font-size:9px
+    }
+    .stock-mini-action-group{display:flex;gap:5px}
+    .stock-mini-reserve{
+      border:1px solid #171717;
+      border-radius:10px;
+      padding:9px 10px;
+      background:#fff;
+      color:#171717;
+      font-size:9px;
+      font-weight:950;
+      cursor:pointer
+    }
+    .compact-mode .stock-check-grid{
+      grid-template-columns:repeat(5,minmax(0,1fr))
+    }
+    .compact-mode .stock-mini-body h3{
+      min-height:35px;
+      font-size:16px
+    }
+    .compact-mode .stock-mini-internal,
+    .compact-mode .stock-custom-advance{
+      padding:7px
+    }
+    .detail-mode .stock-check-grid{
+      grid-template-columns:repeat(3,minmax(0,1fr))
+    }
+    .client-mode .internal-only,
+    .client-mode .stock-budget-toolbar,
+    .client-mode .stock-alerts-panel,
+    .client-mode .stock-mini-badges .badge:first-child{
+      display:none !important
+    }
+    .client-mode .stock-mini-card{
+      border-color:#d9d9d5;
+      box-shadow:0 8px 24px rgba(0,0,0,.07)
+    }
+    .client-mode .agency-panel{
+      border-color:#171717
+    }
+    .internal-dialog{
+      position:fixed;
+      inset:0;
+      z-index:220;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:16px;
+      background:rgba(0,0,0,.68)
+    }
+    .internal-dialog.open{display:flex}
+    .internal-dialog-panel{
+      position:relative;
+      width:min(760px,100%);
+      max-height:92vh;
+      overflow:auto;
+      border-radius:20px;
+      background:#fff;
+      padding:20px
+    }
+    .internal-dialog-panel h3{margin:0 0 5px;font-size:22px}
+    .internal-dialog-panel>p{margin:0 0 15px;color:#666;font-size:11px}
+    .internal-dialog-close{
+      position:absolute;
+      top:12px;
+      right:12px;
+      width:34px;
+      height:34px;
+      border:0;
+      border-radius:50%;
+      background:#eee;
+      font-size:20px;
+      cursor:pointer
+    }
+    .internal-form-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:10px
+    }
+    .internal-form-grid label{
+      display:grid;
+      gap:5px;
+      color:#555;
+      font-size:9px;
+      font-weight:900;
+      text-transform:uppercase
+    }
+    .internal-form-grid input,
+    .internal-form-grid select,
+    .internal-form-grid textarea{
+      padding:10px;
+      font-size:12px;
+      text-transform:none
+    }
+    .internal-form-grid .span-2{grid-column:1/-1}
+    .internal-dialog-actions{
+      display:flex;
+      justify-content:flex-end;
+      gap:8px;
+      margin-top:15px
+    }
+    .internal-dialog-actions button{
+      border:0;
+      border-radius:11px;
+      padding:10px 13px;
+      font-size:10px;
+      font-weight:950;
+      cursor:pointer
+    }
+    .internal-dialog-actions .secondary{background:#eee;color:#171717}
+    .internal-dialog-actions .primary{background:#171717;color:#fff}
+    .cache-warning{
+      margin:0 0 12px;
+      padding:10px 12px;
+      border:1px solid #e5c36a;
+      border-radius:12px;
+      background:#fff8dd;
+      color:#694e00;
+      font-size:10px;
+      font-weight:850
+    }
+    @media(max-width:1180px){
+      .compact-mode .stock-check-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+    }
+    @media(max-width:940px){
+      .agency-search-row{grid-template-columns:1fr 1fr}
+      .compact-mode .stock-check-grid,
+      .detail-mode .stock-check-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    }
+    @media(max-width:650px){
+      .agency-search-row{grid-template-columns:1fr}
+      .agency-meta-row{align-items:flex-start;flex-direction:column}
+      .internal-form-grid{grid-template-columns:1fr}
+      .internal-form-grid .span-2{grid-column:auto}
+      .compact-mode .stock-check-grid,
+      .detail-mode .stock-check-grid{grid-template-columns:1fr}
+    }
+
 </style>
 </head>
 <body>
@@ -1910,23 +2232,71 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
   <main class="shell">
     <div class="stock-check-head">
       <div>
-        <h1>Chequeo interno de stock</h1>
-        <p>Mini tarjetas para revisar stock y generar presupuestos individuales o múltiples.</p>
+        <h1>Stock interno</h1>
+        <p>Herramienta de atención, comparación, presupuestos y control de información.</p>
       </div>
-      <div class="stock-check-summary" id="stockCheckSummary">Cargando stock…</div>
+
+      <div class="stock-head-status">
+        <div class="stock-check-summary" id="stockCheckSummary">Cargando stock…</div>
+        <div class="stock-updated-at" id="stockUpdatedAt">Sin actualizar</div>
+      </div>
     </div>
+
+    <section class="agency-panel">
+      <div class="agency-search-row">
+        <label class="agency-search">
+          <span>Buscar</span>
+          <input id="stockSearch" type="search" placeholder="Marca, modelo, año, combustible, precio o anticipo">
+        </label>
+
+        <button class="agency-control-btn" id="refreshStock" type="button">Actualizar ahora</button>
+        <button class="agency-control-btn" id="openClientProfile" type="button">Ficha cliente</button>
+        <button class="agency-control-btn" id="toggleClientMode" type="button">Modo cliente</button>
+      </div>
+
+      <div class="stock-quick-filters" id="stockQuickFilters">
+        <button type="button" data-stock-filter="all">Todos</button>
+        <button type="button" data-stock-filter="available">Disponibles</button>
+        <button type="button" data-stock-filter="new">Nuevos ingresos</button>
+        <button type="button" data-stock-filter="financing">Financiables</button>
+        <button type="button" data-stock-filter="cash">Solo contado</button>
+        <button type="button" data-stock-filter="trade">Toman permuta</button>
+        <button type="button" data-stock-filter="reserved">Reservados</button>
+        <button type="button" data-stock-filter="preparing">Preparando</button>
+        <button type="button" data-stock-filter="priority">Prioridad</button>
+        <button type="button" data-stock-filter="profile">Perfil cliente</button>
+        <button type="button" data-stock-filter="under10">Hasta $10 M</button>
+        <button type="button" data-stock-filter="10to15">$10-15 M</button>
+        <button type="button" data-stock-filter="15to20">$15-20 M</button>
+        <button type="button" data-stock-filter="over20">Más de $20 M</button>
+      </div>
+
+      <div class="agency-meta-row">
+        <div class="client-profile-summary" id="clientProfileSummary">Sin ficha de cliente activa.</div>
+
+        <div class="agency-view-actions">
+          <button id="stockAlertsToggle" type="button">Alertas <span id="stockAlertsCount">0</span></button>
+          <button id="stockCompactView" type="button">Compacta</button>
+          <button id="stockDetailView" type="button">Amplia</button>
+        </div>
+      </div>
+
+      <div class="stock-alerts-panel hidden" id="stockAlertsPanel"></div>
+    </section>
 
     <div class="stock-budget-toolbar">
       <label class="stock-select-all">
         <input id="selectAllStockBudgets" type="checkbox">
-        <span>Seleccionar todos</span>
+        <span>Seleccionar visibles</span>
       </label>
 
       <span class="stock-selection-count" id="budgetSelectionCount">0 seleccionados</span>
 
       <div class="stock-budget-actions">
+        <button id="compareSelectedStock" type="button" disabled>Comparar</button>
+        <button id="copySelectedSummary" type="button" disabled>Copiar resumen</button>
         <button id="clearBudgetSelection" type="button" disabled>Limpiar</button>
-        <button id="printSelectedBudgets" type="button" disabled>Imprimir seleccionados</button>
+        <button id="printSelectedBudgets" type="button" disabled>Presupuesto</button>
       </div>
     </div>
 
@@ -1935,6 +2305,63 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
     </div>
   </main>
 </section>
+
+
+<div class="internal-dialog" id="budgetDialog" aria-hidden="true">
+  <div class="internal-dialog-panel">
+    <button class="internal-dialog-close" data-close-internal-dialog="budgetDialog" type="button">×</button>
+    <h3 id="budgetDialogTitle">Preparar presupuesto</h3>
+    <p id="budgetDialogDescription">Completá los datos que deben aparecer en el documento.</p>
+
+    <div class="internal-form-grid">
+      <label>Nombre del cliente<input id="budgetClientName" type="text"></label>
+      <label>Teléfono<input id="budgetClientPhone" type="text"></label>
+      <label>Vendedor / asesor<input id="budgetSeller" type="text"></label>
+      <label>Válido hasta<input id="budgetValidity" type="date"></label>
+      <label>Presupuesto máximo<input id="budgetMaxBudget" type="text" inputmode="numeric"></label>
+      <label>Anticipo habitual<input id="budgetDefaultAdvance" type="text" inputmode="numeric"></label>
+      <label>Transmisión buscada
+        <select id="budgetTransmission">
+          <option value="">Sin preferencia</option>
+          <option value="AUTOMATICA">Automática</option>
+          <option value="MANUAL">Manual</option>
+        </select>
+      </label>
+      <label>Combustible buscado<input id="budgetFuel" type="text"></label>
+      <label>Vehículo en parte de pago<input id="budgetTradeVehicle" type="text"></label>
+      <label>Valor estimado de permuta<input id="budgetTradeValue" type="text" inputmode="numeric"></label>
+      <label class="budget-single-advance">Anticipo para este vehículo<input id="budgetSingleAdvance" type="text" inputmode="numeric"></label>
+      <label class="span-2">Observaciones<textarea id="budgetObservations" rows="3"></textarea></label>
+    </div>
+
+    <div class="internal-dialog-actions">
+      <button class="secondary" id="applyClientProfile" type="button">Guardar y filtrar</button>
+      <button class="secondary" id="saveClientProfile" type="button">Guardar ficha</button>
+      <button class="primary" id="confirmBudgetPrint" type="button">Imprimir presupuesto</button>
+    </div>
+  </div>
+</div>
+
+<div class="internal-dialog" id="reservationDialog" aria-hidden="true">
+  <div class="internal-dialog-panel">
+    <button class="internal-dialog-close" data-close-internal-dialog="reservationDialog" type="button">×</button>
+    <h3>Reserva preliminar</h3>
+    <p id="reservationVehicleLabel"></p>
+
+    <div class="internal-form-grid">
+      <label>Cliente<input id="reservationClientName" type="text"></label>
+      <label>Teléfono<input id="reservationClientPhone" type="text"></label>
+      <label>Vendedor<input id="reservationSeller" type="text"></label>
+      <label>Seña / reserva<input id="reservationAmount" type="text" inputmode="numeric"></label>
+      <label>Válida hasta<input id="reservationValidity" type="date"></label>
+      <label class="span-2">Observaciones<textarea id="reservationObservations" rows="3"></textarea></label>
+    </div>
+
+    <div class="internal-dialog-actions">
+      <button class="primary" id="confirmReservationPrint" type="button">Imprimir comprobante</button>
+    </div>
+  </div>
+</div>
 
 
 <div class="featured-popup" id="featuredPopup" aria-hidden="true">
@@ -2046,7 +2473,59 @@ let favoriteIds=new Set(JSON.parse(localStorage.getItem('lmp_favorites')||'[]'))
 let compareIds=new Set();
 let catalogMode='all';
 let localCoverManifest=null;
-let budgetSelection=new Set();
+
+const INTERNAL_STATE_KEY='lmp_internal_stock_state_v115';
+const INTERNAL_CACHE_KEY='lmp_internal_stock_cache_v115';
+
+let internalState=(()=>{
+  const defaults={
+    search:'',
+    quickFilter:'all',
+    validationFilter:'',
+    layout:'compact',
+    clientMode:false,
+    notes:{},
+    priorities:[],
+    customAdvances:{},
+    profile:{
+      name:'',
+      phone:'',
+      seller:'',
+      maxBudget:'',
+      defaultAdvance:'',
+      transmission:'',
+      fuel:'',
+      tradeVehicle:'',
+      tradeValue:'',
+      validity:'',
+      observations:''
+    },
+    selection:[],
+    scrollY:0
+  };
+
+  try{
+    const stored=JSON.parse(localStorage.getItem(INTERNAL_STATE_KEY)||'{}');
+    return {
+      ...defaults,
+      ...stored,
+      notes:{...defaults.notes,...(stored.notes||{})},
+      customAdvances:{...defaults.customAdvances,...(stored.customAdvances||{})},
+      profile:{...defaults.profile,...(stored.profile||{})},
+      priorities:Array.isArray(stored.priorities)?stored.priorities:[],
+      selection:Array.isArray(stored.selection)?stored.selection:[]
+    };
+  }catch(_){
+    return defaults;
+  }
+})();
+
+let budgetSelection=new Set(internalState.selection);
+let pendingBudgetVehicles=[];
+let pendingReservationVehicle=null;
+let budgetDialogMode='print';
+let internalControlsBound=false;
+let lastStockUpdatedAt=null;
 
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
@@ -3698,13 +4177,43 @@ function internalStatusText(v){
   return labels[status] || clean(v.estado) || 'Sin estado';
 }
 
-function budgetInstallments(v){
-  const result={12:null,18:null,24:null};
+function saveInternalState(){
+  internalState.selection=[...budgetSelection];
 
+  try{
+    localStorage.setItem(INTERNAL_STATE_KEY,JSON.stringify(internalState));
+  }catch(_){}
+}
+function internalPrioritySet(){
+  return new Set(Array.isArray(internalState.priorities)?internalState.priorities:[]);
+}
+function isPriorityVehicle(id){
+  return internalPrioritySet().has(id);
+}
+function setPriorityVehicle(id,active){
+  const priorities=internalPrioritySet();
+
+  if(active)priorities.add(id);
+  else priorities.delete(id);
+
+  internalState.priorities=[...priorities];
+  saveInternalState();
+}
+function internalAdvanceFor(v){
+  const own=numericPrice(internalState.customAdvances?.[v.id]);
+  if(own>0)return own;
+
+  const profileAdvance=numericPrice(internalState.profile?.defaultAdvance);
+  if(profileAdvance>0)return profileAdvance;
+
+  return numericPrice(v.anticipo);
+}
+function customInstallmentsFor(v,advanceValue=internalAdvanceFor(v)){
+  const result={12:null,18:null,24:null};
   if(!hasFinancing(v))return result;
 
   const total=numericPrice(v.cotizacion);
-  const advance=numericPrice(v.anticipo);
+  const advance=Math.min(total,Math.max(0,Number(advanceValue)||0));
   const capital=Math.max(0,total-advance);
 
   if(!capital)return result;
@@ -3712,31 +4221,48 @@ function budgetInstallments(v){
   const band=financingBand(v.anio);
 
   [12,18,24].forEach(term=>{
-    const value=quotaValue(capital,band.rates[term]);
-    result[term]=value || null;
+    result[term]=quotaValue(capital,band.rates[term])||null;
+  });
+
+  return result;
+}
+function budgetInstallments(v,context={}){
+  const result={12:null,18:null,24:null,advance:0,capital:0};
+
+  if(!hasFinancing(v))return result;
+
+  const total=numericPrice(v.cotizacion);
+  const contextAdvance=numericPrice(context.advances?.[v.id]);
+  const storedAdvance=internalAdvanceFor(v);
+  const advance=Math.min(total,Math.max(0,contextAdvance||storedAdvance||numericPrice(v.anticipo)));
+  const capital=Math.max(0,total-advance);
+
+  result.advance=advance;
+  result.capital=capital;
+
+  if(!capital)return result;
+
+  const band=financingBand(v.anio);
+
+  [12,18,24].forEach(term=>{
+    result[term]=quotaValue(capital,band.rates[term])||null;
   });
 
   return result;
 }
 function budgetValue(value,fallback='—'){
   const text=clean(value);
-  return text || fallback;
+  return text||fallback;
 }
 function budgetMoney(value){
   const text=money(value);
   return text==='Consultar'?'—':text;
 }
 function budgetInfoRow(label,value){
-  return `<div class="info-row">
-    <span>${escapeHtml(label)}</span>
-    <strong>${escapeHtml(budgetValue(value))}</strong>
-  </div>`;
+  return `<div class="info-row"><span>${escapeHtml(label)}</span><strong>${escapeHtml(budgetValue(value))}</strong></div>`;
 }
 function budgetPriceCard(label,value,{primary=false}={}){
-  return `<div class="price-card ${primary?'':'secondary'}">
-    <span>${escapeHtml(label)}</span>
-    <strong>${escapeHtml(budgetValue(value))}</strong>
-  </div>`;
+  return `<div class="price-card ${primary?'':'secondary'}"><span>${escapeHtml(label)}</span><strong>${escapeHtml(budgetValue(value))}</strong></div>`;
 }
 function budgetScoreRows(v){
   return vehicleScoreData(v).map(item=>{
@@ -3748,11 +4274,28 @@ function budgetGeneralScore(v){
   const score=generalScore(v);
   return Number(score)>0?String(score):'—';
 }
-function budgetPageHtml(v,index,total,today){
-  const installments=budgetInstallments(v);
+function budgetClientBlock(context){
+  const profile=context.profile||{};
+  return `<section class="budget-section client-budget-block">
+    <h2>Datos de la atención</h2>
+    <div class="info-grid">
+      ${budgetInfoRow('Cliente',profile.name)}
+      ${budgetInfoRow('Teléfono',profile.phone)}
+      ${budgetInfoRow('Asesor',profile.seller)}
+      ${budgetInfoRow('Válido hasta',profile.validity)}
+      ${budgetInfoRow('Presupuesto máximo',profile.maxBudget?money(profile.maxBudget):'')}
+      ${budgetInfoRow('Vehículo en parte de pago',profile.tradeVehicle)}
+      ${budgetInfoRow('Valor estimado de permuta',profile.tradeValue?money(profile.tradeValue):'')}
+      ${budgetInfoRow('Observaciones',profile.observations)}
+    </div>
+  </section>`;
+}
+function budgetPageHtml(v,index,total,today,context={}){
+  const installments=budgetInstallments(v,context);
   const status=internalStatusText(v);
   const cashOnly=isCashOnly(v);
   const general=budgetGeneralScore(v);
+  const consideredAdvance=installments.advance||numericPrice(displayedAdvance(v));
   const meta=[
     `Año ${budgetValue(v.anio)}`,
     v.kilometraje?km(v.kilometraje):'Kilometraje —',
@@ -3761,7 +4304,7 @@ function budgetPageHtml(v,index,total,today){
   ].join(' · ');
 
   const financingNote=hasFinancing(v)
-    ? 'Cálculo estimativo sobre el capital financiado según el anticipo mínimo informado.'
+    ? 'Cálculo estimativo sobre el capital financiado según el anticipo considerado.'
     : cashOnly
       ? 'Esta unidad se ofrece únicamente bajo condición de contado.'
       : 'Financiación no informada para esta unidad. Consultar condiciones vigentes.';
@@ -3770,10 +4313,7 @@ function budgetPageHtml(v,index,total,today){
     <header class="header">
       <div>
         <div class="brand">LMP <span>Autos</span></div>
-        <div class="agency">
-          Av. Mosconi 799, Lomas del Mirador<br>
-          WhatsApp: 11 3262-7744 · www.lmpautos.com
-        </div>
+        <div class="agency">Av. Mosconi 799, Lomas del Mirador<br>WhatsApp: 11 3262-7744 · www.lmpautos.com</div>
       </div>
       <div class="doc">
         <strong>Presupuesto informativo</strong>
@@ -3788,6 +4328,8 @@ function budgetPageHtml(v,index,total,today){
       <div class="vehicle-meta">${escapeHtml(meta)}</div>
       <span class="status">${escapeHtml(status)}</span>
     </section>
+
+    ${budgetClientBlock(context)}
 
     <section class="budget-section">
       <h2>Información del vehículo</h2>
@@ -3809,9 +4351,8 @@ function budgetPageHtml(v,index,total,today){
         ${budgetPriceCard('Valor total en pesos',budgetMoney(v.cotizacion),{primary:true})}
         ${budgetPriceCard('Valor publicado en dólares',budgetMoney(v.precioPublicado))}
         ${budgetPriceCard('Valor de contado en dólares',budgetMoney(v.precioContado))}
-        ${budgetPriceCard(cashOnly?'Valor de contado':'Anticipo mínimo',budgetValue(displayedAdvance(v)))}
+        ${budgetPriceCard(cashOnly?'Valor de contado':'Anticipo considerado',consideredAdvance?formatArsNumber(consideredAdvance):'—')}
       </div>
-
       <div class="info-grid values-extra">
         ${budgetInfoRow('Porcentaje de anticipo',v.anticipoPct)}
         ${budgetInfoRow('Máximo financiable',v.maxFinan)}
@@ -3836,15 +4377,8 @@ function budgetPageHtml(v,index,total,today){
     <section class="budget-section">
       <h2>Perfil del vehículo</h2>
       <div class="score-layout-print">
-        <div class="general-print">
-          <div class="general-print-content">
-            <strong>${escapeHtml(general)}</strong>
-            <span>GENERAL / 100</span>
-          </div>
-        </div>
-        <table class="scores-table">
-          <tbody>${budgetScoreRows(v)}</tbody>
-        </table>
+        <div class="general-print"><div class="general-print-content"><strong>${escapeHtml(general)}</strong><span>GENERAL / 100</span></div></div>
+        <table class="scores-table"><tbody>${budgetScoreRows(v)}</tbody></table>
       </div>
     </section>
 
@@ -3861,14 +4395,9 @@ function budgetPageHtml(v,index,total,today){
     </footer>
   </main>`;
 }
-function vehicleBudgetDocumentHtml(list){
+function vehicleBudgetDocumentHtml(list,context={}){
   const selected=Array.isArray(list)?list.filter(Boolean):[];
-  const today=new Intl.DateTimeFormat('es-AR',{
-    day:'2-digit',
-    month:'2-digit',
-    year:'numeric'
-  }).format(new Date());
-
+  const today=new Intl.DateTimeFormat('es-AR',{day:'2-digit',month:'2-digit',year:'numeric'}).format(new Date());
   const title=selected.length>1
     ? `Presupuesto comparativo - ${selected.length} vehículos`
     : selected.length
@@ -3885,254 +4414,140 @@ function vehicleBudgetDocumentHtml(list){
   *{box-sizing:border-box}
   html,body{margin:0;padding:0}
   body{background:#ececea;color:#171717;font-family:Arial,Helvetica,sans-serif}
-  .budget-page{
-    width:210mm;
-    min-height:297mm;
-    margin:0 auto 8mm;
-    background:#fff;
-    padding:9mm 11mm 8mm;
-    break-after:page;
-    page-break-after:always
-  }
-  .budget-page:last-child{
-    margin-bottom:0;
-    break-after:auto;
-    page-break-after:auto
-  }
-  .header{
-    display:flex;
-    justify-content:space-between;
-    gap:16px;
-    padding-bottom:8px;
-    border-bottom:2px solid #171717
-  }
-  .brand{font-size:21px;font-weight:900;letter-spacing:-.04em}
-  .brand span{color:#bb1d23}
-  .agency{margin-top:3px;color:#555;font-size:9px;line-height:1.35}
-  .doc{text-align:right}
-  .doc strong{display:block;font-size:14px}
-  .doc span{display:block;margin-top:3px;color:#666;font-size:9px}
-  .hero{padding:10px 0 6px}
-  .eyebrow{color:#bb1d23;font-size:8px;font-weight:900;letter-spacing:.11em;text-transform:uppercase}
-  h1{margin:4px 0 3px;font-size:24px;line-height:1.02;letter-spacing:-.04em}
-  .vehicle-meta{color:#555;font-size:9px}
-  .status{
-    display:inline-block;
-    margin-top:6px;
-    padding:5px 8px;
-    border-radius:999px;
-    background:#171717;
-    color:#fff;
-    font-size:8px;
-    font-weight:900
-  }
-  .budget-section{
-    margin-top:7px;
-    padding:8px 9px;
-    border:1px solid #deded9;
-    border-radius:9px;
-    break-inside:avoid;
-    page-break-inside:avoid
-  }
-  .budget-section h2{
-    margin:0 0 6px;
-    font-size:10px;
-    text-transform:uppercase;
-    letter-spacing:.06em
-  }
-  .info-grid{
-    display:grid;
-    grid-template-columns:repeat(4,minmax(0,1fr));
-    gap:5px 10px
-  }
-  .values-extra{margin-top:6px}
-  .info-row{
-    display:block;
-    min-width:0;
-    padding:3px 0 4px;
-    border-bottom:1px solid #ecece8;
-    font-size:8px
-  }
-  .info-row span{
-    display:block;
-    margin-bottom:2px;
-    color:#777;
-    font-size:7px;
-    font-weight:700;
-    text-transform:uppercase;
-    letter-spacing:.03em
-  }
-  .info-row strong{
-    display:block;
-    overflow-wrap:anywhere;
-    text-align:left;
-    font-size:8.5px
-  }
-  .price-grid{
-    display:grid;
-    grid-template-columns:repeat(4,minmax(0,1fr));
-    gap:6px
-  }
-  .price-card{
-    min-width:0;
-    padding:8px;
-    border-radius:8px;
-    background:#171717;
-    color:#fff
-  }
-  .price-card.secondary{
-    background:#f1f1ed;
-    color:#171717;
-    border:1px solid #deded9
-  }
-  .price-card span{
-    display:block;
-    font-size:6.5px;
-    font-weight:900;
-    line-height:1.2;
-    text-transform:uppercase;
-    letter-spacing:.04em
-  }
-  .price-card strong{
-    display:block;
-    margin-top:4px;
-    overflow-wrap:anywhere;
-    font-size:13px;
-    line-height:1.05
-  }
-  .installment-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:6px
-  }
-  .installment-card{
-    padding:7px;
-    border-radius:8px;
-    background:#f3f3ef;
-    text-align:center
-  }
-  .installment-card.unavailable{
-    background:#f8f8f6;
-    border:1px dashed #d6d6d1
-  }
-  .installment-card span,.installment-card small{
-    display:block;
-    color:#666;
-    font-size:7px
-  }
-  .installment-card strong{
-    display:block;
-    margin:4px 0;
-    font-size:13px
-  }
-  .installment-card.unavailable strong{
-    color:#777;
-    font-size:10px
-  }
-  .score-layout-print{
-    display:grid;
-    grid-template-columns:82px 1fr;
-    gap:10px;
-    align-items:center
-  }
-  .general-print{
-    width:72px;
-    height:72px;
-    border:6px solid #bb1d23;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center
-  }
-  .general-print-content{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    width:100%;
-    min-height:100%
-  }
-  .general-print strong{
-    display:block;
-    margin:0;
-    font-size:22px;
-    line-height:.9
-  }
-  .general-print span{
-    display:block;
-    margin-top:4px;
-    color:#666;
-    font-size:6px;
-    font-weight:900;
-    line-height:1
-  }
-  .scores-table{
-    width:100%;
-    border-collapse:collapse;
-    font-size:8px
-  }
-  .scores-table td{
-    padding:3px 5px;
-    border-bottom:1px solid #ecece8
-  }
-  .scores-table td:last-child{text-align:right}
-  .benefits{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:6px;
-    margin-top:7px
-  }
-  .benefit{
-    padding:6px 7px;
-    border-radius:7px;
-    background:#171717;
-    color:#fff;
-    text-align:center;
-    font-size:7.5px;
-    font-weight:900
-  }
-  .note{
-    margin:5px 0 0;
-    color:#777;
-    font-size:7px;
-    line-height:1.3
-  }
-  .footer{
-    margin-top:7px;
-    padding-top:6px;
-    border-top:1px solid #d9d9d5;
-    color:#666;
-    font-size:6.8px;
-    line-height:1.35
-  }
-  .footer strong{color:#171717}
+  .budget-page{width:210mm;min-height:297mm;margin:0 auto 8mm;background:#fff;padding:7mm 10mm 6mm;break-after:page;page-break-after:always}
+  .budget-page:last-child{margin-bottom:0;break-after:auto;page-break-after:auto}
+  .header{display:flex;justify-content:space-between;gap:14px;padding-bottom:6px;border-bottom:2px solid #171717}
+  .brand{font-size:19px;font-weight:900;letter-spacing:-.04em}.brand span{color:#bb1d23}
+  .agency{margin-top:3px;color:#555;font-size:8px;line-height:1.3}
+  .doc{text-align:right}.doc strong{display:block;font-size:12px}.doc span{display:block;margin-top:2px;color:#666;font-size:8px}
+  .hero{padding:7px 0 4px}.eyebrow{color:#bb1d23;font-size:7px;font-weight:900;letter-spacing:.11em;text-transform:uppercase}
+  h1{margin:3px 0 2px;font-size:21px;line-height:1.02;letter-spacing:-.04em}.vehicle-meta{color:#555;font-size:8px}
+  .status{display:inline-block;margin-top:4px;padding:4px 7px;border-radius:999px;background:#171717;color:#fff;font-size:7px;font-weight:900}
+  .budget-section{margin-top:5px;padding:6px 8px;border:1px solid #deded9;border-radius:8px;break-inside:avoid;page-break-inside:avoid}
+  .budget-section h2{margin:0 0 4px;font-size:8.5px;text-transform:uppercase;letter-spacing:.06em}
+  .info-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:3px 8px}
+  .values-extra{margin-top:4px}
+  .info-row{display:block;min-width:0;padding:2px 0 3px;border-bottom:1px solid #ecece8;font-size:7px}
+  .info-row span{display:block;margin-bottom:1px;color:#777;font-size:6px;font-weight:700;text-transform:uppercase;letter-spacing:.03em}
+  .info-row strong{display:block;overflow-wrap:anywhere;text-align:left;font-size:7.5px}
+  .client-budget-block .info-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .price-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}
+  .price-card{min-width:0;padding:6px;border-radius:7px;background:#171717;color:#fff}
+  .price-card.secondary{background:#f1f1ed;color:#171717;border:1px solid #deded9}
+  .price-card span{display:block;font-size:5.8px;font-weight:900;line-height:1.2;text-transform:uppercase;letter-spacing:.04em}
+  .price-card strong{display:block;margin-top:3px;overflow-wrap:anywhere;font-size:11px;line-height:1.05}
+  .installment-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+  .installment-card{padding:5px;border-radius:7px;background:#f3f3ef;text-align:center}
+  .installment-card.unavailable{background:#f8f8f6;border:1px dashed #d6d6d1}
+  .installment-card span,.installment-card small{display:block;color:#666;font-size:6px}
+  .installment-card strong{display:block;margin:3px 0;font-size:11px}
+  .installment-card.unavailable strong{color:#777;font-size:8px}
+  .score-layout-print{display:grid;grid-template-columns:70px 1fr;gap:8px;align-items:center}
+  .general-print{width:62px;height:62px;border:5px solid #bb1d23;border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center}
+  .general-print-content{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;min-height:100%}
+  .general-print strong{display:block;margin:0;font-size:19px;line-height:.9}
+  .general-print span{display:block;margin-top:3px;color:#666;font-size:5px;font-weight:900;line-height:1}
+  .scores-table{width:100%;border-collapse:collapse;font-size:7px}.scores-table td{padding:2px 4px;border-bottom:1px solid #ecece8}.scores-table td:last-child{text-align:right}
+  .benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:5px}
+  .benefit{padding:5px 6px;border-radius:6px;background:#171717;color:#fff;text-align:center;font-size:6.5px;font-weight:900}
+  .note{margin:3px 0 0;color:#777;font-size:6px;line-height:1.25}
+  .footer{margin-top:5px;padding-top:4px;border-top:1px solid #d9d9d5;color:#666;font-size:5.8px;line-height:1.25}.footer strong{color:#171717}
   @media print{
-    html,body{
-      width:210mm;
-      background:#fff
-    }
-    .budget-page{
-      width:210mm;
-      min-height:297mm;
-      height:297mm;
-      margin:0;
-      padding:8mm 10mm 7mm;
-      overflow:hidden
-    }
-    @page{
-      size:A4 portrait;
-      margin:0
-    }
+    html,body{width:210mm;background:#fff}
+    .budget-page{width:210mm;min-height:297mm;height:297mm;margin:0;padding:6mm 9mm 5mm;overflow:hidden}
+    @page{size:A4 portrait;margin:0}
   }
 </style>
 </head>
 <body>
-  ${selected.map((vehicle,index)=>budgetPageHtml(vehicle,index,selected.length,today)).join('')}
+  ${selected.map((vehicle,index)=>budgetPageHtml(vehicle,index,selected.length,today,context)).join('')}
 </body>
 </html>`;
 }
-function printVehicleBudgets(list){
+function collectProfileFromDialog(){
+  return {
+    name:clean($('#budgetClientName').value),
+    phone:clean($('#budgetClientPhone').value),
+    seller:clean($('#budgetSeller').value),
+    validity:clean($('#budgetValidity').value),
+    maxBudget:clean($('#budgetMaxBudget').value),
+    defaultAdvance:clean($('#budgetDefaultAdvance').value),
+    transmission:clean($('#budgetTransmission').value),
+    fuel:clean($('#budgetFuel').value),
+    tradeVehicle:clean($('#budgetTradeVehicle').value),
+    tradeValue:clean($('#budgetTradeValue').value),
+    observations:clean($('#budgetObservations').value)
+  };
+}
+function fillBudgetDialogProfile(){
+  const profile=internalState.profile||{};
+
+  $('#budgetClientName').value=profile.name||'';
+  $('#budgetClientPhone').value=profile.phone||'';
+  $('#budgetSeller').value=profile.seller||'';
+  $('#budgetValidity').value=profile.validity||'';
+  $('#budgetMaxBudget').value=profile.maxBudget||'';
+  $('#budgetDefaultAdvance').value=profile.defaultAdvance||'';
+  $('#budgetTransmission').value=profile.transmission||'';
+  $('#budgetFuel').value=profile.fuel||'';
+  $('#budgetTradeVehicle').value=profile.tradeVehicle||'';
+  $('#budgetTradeValue').value=profile.tradeValue||'';
+  $('#budgetObservations').value=profile.observations||'';
+}
+function saveProfileFromDialog(){
+  internalState.profile=collectProfileFromDialog();
+  saveInternalState();
+  renderClientProfileSummary();
+}
+function openInternalDialog(id){
+  const dialog=$('#'+id);
+  if(!dialog)return;
+
+  dialog.classList.add('open');
+  dialog.setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+}
+function closeInternalDialog(id){
+  const dialog=$('#'+id);
+  if(!dialog)return;
+
+  dialog.classList.remove('open');
+  dialog.setAttribute('aria-hidden','true');
+
+  if(!$$('.internal-dialog.open').length){
+    document.body.style.overflow='';
+  }
+}
+function openBudgetDialog(list,{mode='print'}={}){
+  pendingBudgetVehicles=Array.isArray(list)?list.filter(Boolean):[];
+  budgetDialogMode=mode;
+  fillBudgetDialogProfile();
+
+  const single=pendingBudgetVehicles.length===1;
+  const title=$('#budgetDialogTitle');
+  const description=$('#budgetDialogDescription');
+  const printButton=$('#confirmBudgetPrint');
+  const singleField=$('.budget-single-advance');
+
+  title.textContent=mode==='profile'?'Ficha de atención':'Preparar presupuesto';
+  description.textContent=mode==='profile'
+    ? 'Guardá los datos del cliente para filtrar, calcular y completar presupuestos.'
+    : `${pendingBudgetVehicles.length} vehículo${pendingBudgetVehicles.length===1?'':'s'} seleccionado${pendingBudgetVehicles.length===1?'':'s'}.`;
+
+  printButton.classList.toggle('hidden',mode==='profile');
+  singleField.classList.toggle('hidden',!single || mode==='profile');
+
+  if(single){
+    $('#budgetSingleAdvance').value=internalAdvanceFor(pendingBudgetVehicles[0])
+      ? moneyInputValue(internalAdvanceFor(pendingBudgetVehicles[0]))
+      : '';
+  }else{
+    $('#budgetSingleAdvance').value='';
+  }
+
+  openInternalDialog('budgetDialog');
+}
+function printVehicleBudgets(list,context={}){
   const selected=Array.isArray(list)?list.filter(Boolean):[];
 
   if(!selected.length){
@@ -4148,7 +4563,7 @@ function printVehicleBudgets(list){
   }
 
   printWindow.document.open();
-  printWindow.document.write(vehicleBudgetDocumentHtml(selected));
+  printWindow.document.write(vehicleBudgetDocumentHtml(selected,context));
   printWindow.document.close();
 
   setTimeout(()=>{
@@ -4162,17 +4577,579 @@ function printVehicleBudgets(list){
   });
 }
 function printVehicleBudget(v){
-  printVehicleBudgets([v]);
+  openBudgetDialog([v]);
 }
+function reservationDocumentHtml(v,data){
+  const today=new Intl.DateTimeFormat('es-AR',{day:'2-digit',month:'2-digit',year:'numeric'}).format(new Date());
 
+  return `<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Reserva preliminar ${escapeHtml(v.marca)} ${escapeHtml(v.modelo)}</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#ececea;color:#171717;font-family:Arial,Helvetica,sans-serif}
+  .page{width:210mm;min-height:297mm;margin:0 auto;background:#fff;padding:16mm}
+  .header{display:flex;justify-content:space-between;padding-bottom:14px;border-bottom:3px solid #171717}
+  .brand{font-size:25px;font-weight:900}.brand span{color:#bb1d23}
+  .doc{text-align:right}.doc strong{display:block;font-size:18px}.doc span{display:block;margin-top:4px;color:#666;font-size:10px}
+  h1{margin:22px 0 4px;font-size:28px}
+  .subtitle{color:#666;font-size:11px}
+  .section{margin-top:18px;padding:15px;border:1px solid #ddd;border-radius:12px}
+  .section h2{margin:0 0 12px;font-size:13px;text-transform:uppercase}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 20px}
+  .row{padding:8px 0;border-bottom:1px solid #eee}
+  .row span{display:block;color:#777;font-size:8px;text-transform:uppercase}
+  .row strong{display:block;margin-top:3px;font-size:12px}
+  .amount{margin-top:18px;padding:16px;border-radius:12px;background:#171717;color:#fff}
+  .amount span{display:block;font-size:9px;text-transform:uppercase}.amount strong{display:block;margin-top:5px;font-size:26px}
+  .note{margin-top:22px;color:#666;font-size:10px;line-height:1.5}
+  .signatures{display:grid;grid-template-columns:1fr 1fr;gap:50px;margin-top:70px}
+  .signature{padding-top:8px;border-top:1px solid #171717;text-align:center;font-size:9px}
+  @media print{body{background:#fff}.page{width:auto;min-height:auto;margin:0}@page{size:A4;margin:0}}
+</style>
+</head>
+<body>
+<main class="page">
+  <header class="header">
+    <div class="brand">LMP <span>Autos</span></div>
+    <div class="doc"><strong>Reserva preliminar</strong><span>Emitida el ${escapeHtml(today)}</span></div>
+  </header>
+
+  <h1>${escapeHtml(v.marca)} ${escapeHtml(v.modelo)}</h1>
+  <div class="subtitle">${escapeHtml(v.anio||'—')} · ${escapeHtml(v.kilometraje?km(v.kilometraje):'—')} · ${escapeHtml(v.transmision||'—')}</div>
+
+  <section class="section">
+    <h2>Datos de la operación</h2>
+    <div class="grid">
+      <div class="row"><span>Cliente</span><strong>${escapeHtml(data.name||'—')}</strong></div>
+      <div class="row"><span>Teléfono</span><strong>${escapeHtml(data.phone||'—')}</strong></div>
+      <div class="row"><span>Vendedor</span><strong>${escapeHtml(data.seller||'—')}</strong></div>
+      <div class="row"><span>Válida hasta</span><strong>${escapeHtml(data.validity||'—')}</strong></div>
+      <div class="row"><span>Valor del vehículo</span><strong>${escapeHtml(money(v.cotizacion))}</strong></div>
+      <div class="row"><span>Estado actual</span><strong>${escapeHtml(internalStatusText(v))}</strong></div>
+    </div>
+    <div class="amount"><span>Importe entregado / comprometido</span><strong>${escapeHtml(data.amount?money(data.amount):'—')}</strong></div>
+  </section>
+
+  <section class="section">
+    <h2>Observaciones</h2>
+    <div>${escapeHtml(data.observations||'Sin observaciones.')}</div>
+  </section>
+
+  <p class="note">
+    Este comprobante es preliminar y no modifica automáticamente el estado del vehículo.
+    La reserva queda sujeta a confirmación de LMP Autos, disponibilidad, acreditación del importe y cumplimiento de la documentación requerida.
+  </p>
+
+  <div class="signatures">
+    <div class="signature">Firma del cliente</div>
+    <div class="signature">Firma de LMP Autos</div>
+  </div>
+</main>
+</body>
+</html>`;
+}
+function openReservationDialog(v){
+  pendingReservationVehicle=v;
+  const profile=internalState.profile||{};
+
+  $('#reservationVehicleLabel').textContent=`${v.marca} ${v.modelo} ${v.anio||''}`;
+  $('#reservationClientName').value=profile.name||'';
+  $('#reservationClientPhone').value=profile.phone||'';
+  $('#reservationSeller').value=profile.seller||'';
+  $('#reservationAmount').value='';
+  $('#reservationValidity').value=profile.validity||'';
+  $('#reservationObservations').value='';
+
+  openInternalDialog('reservationDialog');
+}
+function printReservation(){
+  const v=pendingReservationVehicle;
+  if(!v)return;
+
+  const data={
+    name:clean($('#reservationClientName').value),
+    phone:clean($('#reservationClientPhone').value),
+    seller:clean($('#reservationSeller').value),
+    amount:clean($('#reservationAmount').value),
+    validity:clean($('#reservationValidity').value),
+    observations:clean($('#reservationObservations').value)
+  };
+
+  const printWindow=window.open('','_blank','width=900,height=720');
+
+  if(!printWindow){
+    alert('El navegador bloqueó la ventana de impresión.');
+    return;
+  }
+
+  printWindow.document.open();
+  printWindow.document.write(reservationDocumentHtml(v,data));
+  printWindow.document.close();
+
+  setTimeout(()=>{
+    printWindow.focus();
+    printWindow.print();
+  },300);
+
+  closeInternalDialog('reservationDialog');
+}
+function profileMatchesVehicle(v){
+  const profile=internalState.profile||{};
+  const maxBudget=numericPrice(profile.maxBudget);
+  const transmission=normalize(profile.transmission);
+  const fuel=normalize(profile.fuel);
+  const price=numericPrice(v.cotizacion);
+
+  return (!maxBudget || !price || price<=maxBudget) &&
+    (!transmission || normalize(v.transmision).includes(transmission)) &&
+    (!fuel || normalize(v.combustible).includes(fuel));
+}
+const VALIDATION_LABELS={
+  missing_price:'Sin precio en pesos',
+  missing_advance:'Sin anticipo',
+  missing_km:'Sin kilometraje',
+  missing_year:'Sin año',
+  missing_transmission:'Sin transmisión',
+  missing_fuel:'Sin combustible',
+  advance_over_price:'Anticipo mayor al precio',
+  finance_over_balance:'Financiación supera saldo',
+  percentage_mismatch:'% de anticipo inconsistente'
+};
+function vehicleValidationIssues(v){
+  const issues=[];
+  const total=numericPrice(v.cotizacion);
+  const advance=numericPrice(v.anticipo);
+  const maximum=numericPrice(v.maxFinan);
+  const pct=advancePercentage(v);
+
+  if(!total)issues.push('missing_price');
+  if(hasFinancing(v) && !advance)issues.push('missing_advance');
+  if(!numericPrice(v.kilometraje))issues.push('missing_km');
+  if(!vehicleYear(v))issues.push('missing_year');
+  if(!clean(v.transmision))issues.push('missing_transmission');
+  if(!clean(v.combustible))issues.push('missing_fuel');
+  if(total && advance>total)issues.push('advance_over_price');
+  if(total && maximum>Math.max(0,total-advance))issues.push('finance_over_balance');
+
+  if(total && advance && pct!==null){
+    const calculated=(advance/total)*100;
+    if(Math.abs(calculated-pct)>5)issues.push('percentage_mismatch');
+  }
+
+  return issues;
+}
+function validationCounts(){
+  const counts={};
+
+  vehicles.forEach(v=>{
+    vehicleValidationIssues(v).forEach(code=>{
+      counts[code]=(counts[code]||0)+1;
+    });
+  });
+
+  return counts;
+}
+function renderStockAlerts(){
+  const panel=$('#stockAlertsPanel');
+  const countNode=$('#stockAlertsCount');
+
+  if(!panel || !countNode)return;
+
+  const counts=validationCounts();
+  const total=Object.values(counts).reduce((sum,value)=>sum+value,0);
+
+  countNode.textContent=String(total);
+
+  panel.innerHTML=Object.entries(counts).length
+    ? Object.entries(counts).map(([code,count])=>`
+        <button class="stock-alert-chip ${internalState.validationFilter===code?'active':''}" type="button" data-validation-filter="${escapeAttr(code)}">
+          ${escapeHtml(VALIDATION_LABELS[code]||code)}: ${count}
+        </button>`).join('')+
+      `<button class="stock-alert-clear" type="button" data-validation-filter="">Ver todos</button>`
+    : '<span class="client-profile-summary">No se detectaron inconsistencias básicas.</span>';
+
+  panel.querySelectorAll('[data-validation-filter]').forEach(button=>{
+    button.onclick=()=>{
+      internalState.validationFilter=button.dataset.validationFilter;
+      saveInternalState();
+      renderStockCheck();
+      renderStockAlerts();
+    };
+  });
+}
+function quickFilterMatches(v,filter){
+  const price=numericPrice(v.cotizacion);
+  const status=normalize(v.estado);
+
+  if(filter==='available')return status==='DISPONIBLE';
+  if(filter==='new')return Boolean(v.isNewEntry);
+  if(filter==='financing')return hasFinancing(v);
+  if(filter==='cash')return isCashOnly(v);
+  if(filter==='trade')return acceptsTradeIn(v);
+  if(filter==='reserved')return status==='RESERVADO';
+  if(filter==='preparing')return status==='PREPARANDO';
+  if(filter==='priority')return isPriorityVehicle(v.id);
+  if(filter==='profile')return profileMatchesVehicle(v);
+  if(filter==='under10')return price>0 && price<10000000;
+  if(filter==='10to15')return price>=10000000 && price<15000000;
+  if(filter==='15to20')return price>=15000000 && price<20000000;
+  if(filter==='over20')return price>=20000000;
+
+  return true;
+}
+function stockSearchMatches(v,query){
+  const text=[
+    v.id,v.marca,v.modelo,v.anio,v.kilometraje,v.color,v.combustible,v.transmision,
+    v.cotizacion,v.anticipo,v.precioPublicado,v.precioContado,internalStatusText(v)
+  ].map(normalize).join(' ');
+
+  const terms=normalize(query).split(/\s+/).filter(Boolean);
+  return terms.every(term=>text.includes(term));
+}
+function internalFilteredVehicles(){
+  const query=internalState.search||'';
+  const quick=internalState.quickFilter||'all';
+  const validation=internalState.validationFilter||'';
+
+  return orderedStockVehicles().filter(v=>
+    stockSearchMatches(v,query) &&
+    quickFilterMatches(v,quick) &&
+    (!validation || vehicleValidationIssues(v).includes(validation))
+  );
+}
+function renderClientProfileSummary(){
+  const node=$('#clientProfileSummary');
+  if(!node)return;
+
+  const profile=internalState.profile||{};
+  const parts=[
+    profile.name?`Cliente: ${profile.name}`:'',
+    profile.maxBudget?`Máximo: ${money(profile.maxBudget)}`:'',
+    profile.defaultAdvance?`Anticipo: ${money(profile.defaultAdvance)}`:'',
+    profile.transmission?profile.transmission:'',
+    profile.fuel?profile.fuel:''
+  ].filter(Boolean);
+
+  node.textContent=parts.length?parts.join(' · '):'Sin ficha de cliente activa.';
+}
+function setInternalLayout(layout){
+  internalState.layout=layout==='detail'?'detail':'compact';
+  saveInternalState();
+  applyInternalViewClasses();
+}
+function toggleInternalClientMode(force=null){
+  internalState.clientMode=force===null?!internalState.clientMode:Boolean(force);
+  saveInternalState();
+  applyInternalViewClasses();
+}
+function applyInternalViewClasses(){
+  const view=$('#stockCheckView');
+  if(!view)return;
+
+  view.classList.toggle('compact-mode',internalState.layout!=='detail');
+  view.classList.toggle('detail-mode',internalState.layout==='detail');
+  view.classList.toggle('client-mode',Boolean(internalState.clientMode));
+
+  const modeButton=$('#toggleClientMode');
+  if(modeButton){
+    modeButton.classList.toggle('active',Boolean(internalState.clientMode));
+    modeButton.textContent=internalState.clientMode?'Salir modo cliente':'Modo cliente';
+  }
+
+  $('#stockCompactView')?.classList.toggle('active',internalState.layout!=='detail');
+  $('#stockDetailView')?.classList.toggle('active',internalState.layout==='detail');
+}
+function copyTextFallback(text){
+  const area=document.createElement('textarea');
+  area.value=text;
+  area.style.position='fixed';
+  area.style.opacity='0';
+  document.body.appendChild(area);
+  area.select();
+  const ok=document.execCommand('copy');
+  area.remove();
+  return ok;
+}
+async function copyInternalText(text,button=null){
+  let copied=false;
+
+  try{
+    if(navigator.clipboard && window.isSecureContext){
+      await navigator.clipboard.writeText(text);
+      copied=true;
+    }else{
+      copied=copyTextFallback(text);
+    }
+  }catch(_){
+    copied=false;
+  }
+
+  if(!copied){
+    window.prompt('Copiá este texto:',text);
+    return;
+  }
+
+  if(button){
+    const previous=button.textContent;
+    button.textContent='Copiado';
+    setTimeout(()=>button.textContent=previous,1600);
+  }
+}
+function selectedVehiclesSummary(){
+  const profile=internalState.profile||{};
+  const selected=selectedBudgetVehicles();
+  const lines=[];
+
+  if(profile.name)lines.push(`Hola ${profile.name}, estas son las opciones que vimos:`);
+  else lines.push('Estas son las opciones que vimos:');
+
+  selected.forEach(v=>{
+    const installments=customInstallmentsFor(v);
+    lines.push('');
+    lines.push(`${v.marca} ${v.modelo} ${v.anio||''}`);
+    lines.push(v.kilometraje?km(v.kilometraje):'Kilometraje a consultar');
+    lines.push(`Valor: ${money(v.cotizacion)}`);
+    lines.push(isCashOnly(v)
+      ? `Solo de contado: ${displayedAdvance(v)}`
+      : `Anticipo considerado: ${formatArsNumber(internalAdvanceFor(v))}`);
+    if(installments[24])lines.push(`24 cuotas estimadas de ${formatArsNumber(installments[24])}`);
+  });
+
+  lines.push('');
+  lines.push('Valores sujetos a disponibilidad y actualización.');
+
+  return lines.join('\n');
+}
+function renderInternalComparison(list){
+  const selected=Array.isArray(list)?list.slice(0,3):[];
+
+  $('#compareGrid').innerHTML=selected.map(v=>{
+    const installments=customInstallmentsFor(v);
+    return `<article class="compare-card">
+      <h4>${escapeHtml(v.marca+' '+v.modelo)}</h4>
+      <div class="compare-table">
+        <div class="compare-row"><span>Año</span><strong>${escapeHtml(v.anio||'—')}</strong></div>
+        <div class="compare-row"><span>Kilómetros</span><strong>${escapeHtml(v.kilometraje?km(v.kilometraje):'—')}</strong></div>
+        <div class="compare-row"><span>Precio</span><strong>${escapeHtml(money(v.cotizacion))}</strong></div>
+        <div class="compare-row"><span>Anticipo</span><strong>${escapeHtml(formatArsNumber(internalAdvanceFor(v))||'—')}</strong></div>
+        <div class="compare-row"><span>12 cuotas</span><strong>${installments[12]?escapeHtml(formatArsNumber(installments[12])):'—'}</strong></div>
+        <div class="compare-row"><span>18 cuotas</span><strong>${installments[18]?escapeHtml(formatArsNumber(installments[18])):'—'}</strong></div>
+        <div class="compare-row"><span>24 cuotas</span><strong>${installments[24]?escapeHtml(formatArsNumber(installments[24])):'—'}</strong></div>
+        <div class="compare-row"><span>Combustible</span><strong>${escapeHtml(v.combustible||'—')}</strong></div>
+        <div class="compare-row"><span>Transmisión</span><strong>${escapeHtml(v.transmision||'—')}</strong></div>
+        <div class="compare-row"><span>Calificación</span><strong>${escapeHtml(generalScore(v))}/100</strong></div>
+      </div>
+    </article>`;
+  }).join('');
+
+  $('#compareModal').classList.add('open');
+  $('#compareModal').setAttribute('aria-hidden','false');
+}
+function saveStockCache(){
+  const payload={
+    timestamp:new Date().toISOString(),
+    vehicles,
+    vehicleStats
+  };
+
+  try{
+    localStorage.setItem(INTERNAL_CACHE_KEY,JSON.stringify(payload));
+    lastStockUpdatedAt=new Date(payload.timestamp);
+  }catch(_){}
+}
+function loadStockCache(){
+  try{
+    const cached=JSON.parse(localStorage.getItem(INTERNAL_CACHE_KEY)||'null');
+
+    if(!cached || !Array.isArray(cached.vehicles) || !cached.vehicles.length)return null;
+    return cached;
+  }catch(_){
+    return null;
+  }
+}
+function renderUpdatedAt({cached=false}={}){
+  const node=$('#stockUpdatedAt');
+  if(!node)return;
+
+  if(!lastStockUpdatedAt){
+    node.textContent='Sin actualizar';
+    return;
+  }
+
+  const formatted=new Intl.DateTimeFormat('es-AR',{
+    day:'2-digit',
+    month:'2-digit',
+    hour:'2-digit',
+    minute:'2-digit'
+  }).format(lastStockUpdatedAt);
+
+  node.textContent=`${cached?'Datos guardados':'Actualizado'}: ${formatted}`;
+}
+function restoreCachedStock(error){
+  const cached=loadStockCache();
+  if(!cached)return false;
+
+  vehicles=cached.vehicles;
+  vehicleStats=cached.vehicleStats||{};
+  lastStockUpdatedAt=new Date(cached.timestamp);
+  markNewEntries(vehicles);
+  populateFilters();
+  applyFilters();
+
+  if(isInternalStockMode()){
+    activateInternalStockMode();
+    const main=$('#stockCheckView main');
+    if(main && !main.querySelector('.cache-warning')){
+      main.insertAdjacentHTML('afterbegin',`<div class="cache-warning">Mostrando el último stock guardado porque no se pudo actualizar. ${escapeHtml(error?.message||'')}</div>`);
+    }
+    renderUpdatedAt({cached:true});
+  }
+
+  return true;
+}
+function bindInternalStaticControls(){
+  if(internalControlsBound)return;
+  internalControlsBound=true;
+
+  const search=$('#stockSearch');
+  search.value=internalState.search||'';
+
+  search.addEventListener('input',()=>{
+    internalState.search=search.value;
+    saveInternalState();
+    renderStockCheck();
+  });
+
+  $('#stockQuickFilters').querySelectorAll('[data-stock-filter]').forEach(button=>{
+    button.onclick=()=>{
+      internalState.quickFilter=button.dataset.stockFilter;
+      saveInternalState();
+      renderStockCheck();
+    };
+  });
+
+  $('#refreshStock').onclick=async()=>{
+    const button=$('#refreshStock');
+    button.disabled=true;
+    button.textContent='Actualizando…';
+    await loadData({force:true});
+    button.disabled=false;
+    button.textContent='Actualizar ahora';
+  };
+
+  $('#openClientProfile').onclick=()=>openBudgetDialog([],{mode:'profile'});
+  $('#toggleClientMode').onclick=()=>toggleInternalClientMode();
+  $('#stockCompactView').onclick=()=>setInternalLayout('compact');
+  $('#stockDetailView').onclick=()=>setInternalLayout('detail');
+  $('#stockAlertsToggle').onclick=()=>$('#stockAlertsPanel').classList.toggle('hidden');
+
+  $$('[data-close-internal-dialog]').forEach(button=>{
+    button.onclick=()=>closeInternalDialog(button.dataset.closeInternalDialog);
+  });
+
+  $('#saveClientProfile').onclick=()=>{
+    saveProfileFromDialog();
+    closeInternalDialog('budgetDialog');
+    renderStockCheck();
+  };
+
+  $('#applyClientProfile').onclick=()=>{
+    saveProfileFromDialog();
+    internalState.quickFilter='profile';
+    saveInternalState();
+    closeInternalDialog('budgetDialog');
+    renderStockCheck();
+  };
+
+  $('#confirmBudgetPrint').onclick=()=>{
+    saveProfileFromDialog();
+
+    const advances={...internalState.customAdvances};
+
+    if(pendingBudgetVehicles.length===1){
+      const custom=numericPrice($('#budgetSingleAdvance').value);
+      if(custom>0){
+        advances[pendingBudgetVehicles[0].id]=custom;
+        internalState.customAdvances[pendingBudgetVehicles[0].id]=custom;
+      }
+    }
+
+    saveInternalState();
+    closeInternalDialog('budgetDialog');
+    printVehicleBudgets(pendingBudgetVehicles,{
+      profile:internalState.profile,
+      advances
+    });
+  };
+
+  $('#confirmReservationPrint').onclick=printReservation;
+
+  document.addEventListener('keydown',event=>{
+    if(!isInternalStockMode())return;
+
+    const active=document.activeElement;
+    const typing=active && ['INPUT','TEXTAREA','SELECT'].includes(active.tagName);
+
+    if(event.key==='/' && !typing){
+      event.preventDefault();
+      search.focus();
+      return;
+    }
+
+    if(event.key==='Escape'){
+      if(typing){
+        active.blur();
+        return;
+      }
+      internalState.search='';
+      search.value='';
+      saveInternalState();
+      renderStockCheck();
+      return;
+    }
+
+    if(typing)return;
+
+    const key=event.key.toLowerCase();
+
+    if(key==='m'){
+      event.preventDefault();
+      toggleInternalClientMode();
+    }else if(key==='c'){
+      event.preventDefault();
+      const selected=selectedBudgetVehicles();
+      if(selected.length>3)alert('Seleccioná hasta 3 vehículos para comparar.');
+      else if(selected.length)renderInternalComparison(selected);
+    }else if(key==='p'){
+      event.preventDefault();
+      const selected=selectedBudgetVehicles();
+      if(selected.length)openBudgetDialog(selected);
+    }else if(key==='r'){
+      event.preventDefault();
+      $('#refreshStock').click();
+    }
+  });
+
+  window.addEventListener('beforeunload',()=>{
+    internalState.scrollY=window.scrollY;
+    saveInternalState();
+  });
+}
 function stockMiniCard(v){
   const badges=badgeItems(v);
   const installment=estimatedInstallment(v);
   const selected=budgetSelection.has(v.id);
+  const priority=isPriorityVehicle(v.id);
+  const issues=vehicleValidationIssues(v);
+  const customAdvance=internalAdvanceFor(v);
+  const customInstallments=customInstallmentsFor(v,customAdvance);
 
-  return `<article class="stock-mini-card ${selected?'selected':''}" data-stock-card-id="${escapeAttr(v.id)}">
+  return `<article class="stock-mini-card ${selected?'selected':''} ${issues.length?'has-warning':''}" data-stock-card-id="${escapeAttr(v.id)}">
     <div class="stock-mini-top">
-      <div class="stock-mini-id-group">
+      <div class="stock-mini-id-group internal-only">
         <span class="stock-mini-id">${escapeHtml(v.id)}</span>
         <label class="stock-mini-select">
           <input type="checkbox" data-budget-select="${escapeAttr(v.id)}" ${selected?'checked':''}>
@@ -4213,8 +5190,35 @@ function stockMiniCard(v){
 
       ${vehicleBenefitsMarkup(v)}
 
+      <div class="stock-custom-advance client-usable">
+        <label>Anticipo del cliente
+          <input type="text" inputmode="numeric" data-custom-advance="${escapeAttr(v.id)}" value="${customAdvance?escapeAttr(moneyInputValue(customAdvance)):''}" placeholder="Ingresar anticipo">
+        </label>
+
+        <div class="stock-custom-installments" data-custom-results="${escapeAttr(v.id)}">
+          ${[12,18,24].map(term=>`
+            <div class="stock-custom-installment">
+              <span>${term} cuotas</span>
+              <strong>${customInstallments[term]?escapeHtml(formatArsNumber(customInstallments[term])):'—'}</strong>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      ${issues.length
+        ? `<div class="stock-mini-issues internal-only">${issues.map(code=>`<span class="stock-mini-issue">${escapeHtml(VALIDATION_LABELS[code]||code)}</span>`).join('')}</div>`
+        : ''}
+
+      <div class="stock-mini-internal internal-only">
+        <label class="stock-priority">
+          <input type="checkbox" data-priority-id="${escapeAttr(v.id)}" ${priority?'checked':''}>
+          Prioridad de venta
+        </label>
+
+        <textarea class="stock-note" data-note-id="${escapeAttr(v.id)}" placeholder="Nota interna: cliente interesado, detalle, documentación…">${escapeHtml(internalState.notes?.[v.id]||'')}</textarea>
+      </div>
+
       <div class="stock-mini-footer">
-        <div class="stock-mini-diagnostics">
+        <div class="stock-mini-diagnostics internal-only">
           <div class="stock-mini-diagnostic">
             Estado
             <strong>${escapeHtml(internalStatusText(v))}</strong>
@@ -4224,7 +5228,11 @@ function stockMiniCard(v){
             <strong>${escapeHtml(generalScore(v))}/100</strong>
           </div>
         </div>
-        <button class="stock-mini-pdf" type="button" data-budget-id="${escapeAttr(v.id)}">PDF</button>
+
+        <div class="stock-mini-action-group">
+          <button class="stock-mini-reserve internal-only" type="button" data-reserve-id="${escapeAttr(v.id)}">Reserva</button>
+          <button class="stock-mini-pdf" type="button" data-budget-id="${escapeAttr(v.id)}">PDF</button>
+        </div>
       </div>
     </div>
   </article>`;
@@ -4232,6 +5240,9 @@ function stockMiniCard(v){
 
 function orderedStockVehicles(){
   return [...vehicles].sort((a,b)=>{
+    const priorityDiff=(isPriorityVehicle(b.id)?1:0)-(isPriorityVehicle(a.id)?1:0);
+    if(priorityDiff)return priorityDiff;
+
     const na=Number((clean(a.id).match(/\d+/)||['0'])[0]);
     const nb=Number((clean(b.id).match(/\d+/)||['0'])[0]);
     return nb-na;
@@ -4240,43 +5251,76 @@ function orderedStockVehicles(){
 function selectedBudgetVehicles(){
   return orderedStockVehicles().filter(vehicle=>budgetSelection.has(vehicle.id));
 }
-function updateBudgetSelectionUi(){
+function updateBudgetSelectionUi(visible=[]){
   const count=budgetSelection.size;
-  const total=vehicles.length;
+  const visibleIds=new Set(visible.map(vehicle=>vehicle.id));
+  const selectedVisible=[...budgetSelection].filter(id=>visibleIds.has(id)).length;
   const countNode=$('#budgetSelectionCount');
   const printButton=$('#printSelectedBudgets');
   const clearButton=$('#clearBudgetSelection');
+  const compareButton=$('#compareSelectedStock');
+  const copyButton=$('#copySelectedSummary');
   const selectAll=$('#selectAllStockBudgets');
 
   if(countNode)countNode.textContent=`${count} seleccionado${count===1?'':'s'}`;
   if(printButton)printButton.disabled=count===0;
   if(clearButton)clearButton.disabled=count===0;
+  if(compareButton)compareButton.disabled=count===0;
+  if(copyButton)copyButton.disabled=count===0;
 
   if(selectAll){
-    selectAll.checked=total>0 && count===total;
-    selectAll.indeterminate=count>0 && count<total;
+    selectAll.checked=visible.length>0 && selectedVisible===visible.length;
+    selectAll.indeterminate=selectedVisible>0 && selectedVisible<visible.length;
   }
 
   $$('.stock-mini-card[data-stock-card-id]').forEach(card=>{
     card.classList.toggle('selected',budgetSelection.has(card.dataset.stockCardId));
   });
+
+  saveInternalState();
+}
+function updateCustomInstallmentCard(card,v,advance){
+  const results=customInstallmentsFor(v,advance);
+  const resultNode=card.querySelector(`[data-custom-results="${CSS.escape(v.id)}"]`);
+
+  if(!resultNode)return;
+
+  resultNode.innerHTML=[12,18,24].map(term=>`
+    <div class="stock-custom-installment">
+      <span>${term} cuotas</span>
+      <strong>${results[term]?escapeHtml(formatArsNumber(results[term])):'—'}</strong>
+    </div>`).join('');
 }
 function renderStockCheck(){
   const body=$('#stockCheckBody');
   const summary=$('#stockCheckSummary');
+
   if(!body || !summary)return;
 
-  const ordered=orderedStockVehicles();
+  const visible=internalFilteredVehicles();
 
-  summary.textContent=`${ordered.length} vehículos activos`;
-  body.innerHTML=ordered.length
-    ? ordered.map(stockMiniCard).join('')
-    : '<div class="empty">No hay vehículos para revisar.</div>';
+  summary.textContent=`${visible.length} de ${vehicles.length} vehículos`;
+  body.innerHTML=visible.length
+    ? visible.map(stockMiniCard).join('')
+    : '<div class="empty">No hay vehículos que coincidan con la búsqueda o los filtros.</div>';
+
+  $('#stockSearch').value=internalState.search||'';
+
+  $('#stockQuickFilters').querySelectorAll('[data-stock-filter]').forEach(button=>{
+    button.classList.toggle('active',button.dataset.stockFilter===internalState.quickFilter);
+  });
 
   body.querySelectorAll('[data-budget-id]').forEach(button=>{
     button.addEventListener('click',()=>{
       const vehicle=vehicles.find(item=>item.id===button.dataset.budgetId);
       if(vehicle)printVehicleBudget(vehicle);
+    });
+  });
+
+  body.querySelectorAll('[data-reserve-id]').forEach(button=>{
+    button.addEventListener('click',()=>{
+      const vehicle=vehicles.find(item=>item.id===button.dataset.reserveId);
+      if(vehicle)openReservationDialog(vehicle);
     });
   });
 
@@ -4287,39 +5331,88 @@ function renderStockCheck(){
       if(input.checked)budgetSelection.add(id);
       else budgetSelection.delete(id);
 
-      updateBudgetSelectionUi();
+      updateBudgetSelectionUi(visible);
+    });
+  });
+
+  body.querySelectorAll('[data-priority-id]').forEach(input=>{
+    input.addEventListener('change',()=>{
+      setPriorityVehicle(input.dataset.priorityId,input.checked);
+      renderStockCheck();
+    });
+  });
+
+  body.querySelectorAll('[data-note-id]').forEach(area=>{
+    area.addEventListener('input',()=>{
+      internalState.notes[area.dataset.noteId]=area.value;
+      saveInternalState();
+    });
+  });
+
+  body.querySelectorAll('[data-custom-advance]').forEach(input=>{
+    input.addEventListener('input',()=>{
+      const id=input.dataset.customAdvance;
+      const vehicle=vehicles.find(item=>item.id===id);
+      if(!vehicle)return;
+
+      const value=numericPrice(input.value);
+
+      if(value>0)internalState.customAdvances[id]=value;
+      else delete internalState.customAdvances[id];
+
+      saveInternalState();
+      updateCustomInstallmentCard(input.closest('.stock-mini-card'),vehicle,value);
+    });
+
+    input.addEventListener('blur',()=>{
+      const value=numericPrice(input.value);
+      input.value=value?moneyInputValue(value):'';
     });
   });
 
   const selectAll=$('#selectAllStockBudgets');
   const clearButton=$('#clearBudgetSelection');
   const printButton=$('#printSelectedBudgets');
+  const compareButton=$('#compareSelectedStock');
+  const copyButton=$('#copySelectedSummary');
 
-  if(selectAll){
-    selectAll.onchange=()=>{
-      if(selectAll.checked){
-        ordered.forEach(vehicle=>budgetSelection.add(vehicle.id));
-      }else{
-        budgetSelection.clear();
-      }
-      renderStockCheck();
-    };
-  }
+  selectAll.onchange=()=>{
+    if(selectAll.checked){
+      visible.forEach(vehicle=>budgetSelection.add(vehicle.id));
+    }else{
+      visible.forEach(vehicle=>budgetSelection.delete(vehicle.id));
+    }
+    renderStockCheck();
+  };
 
-  if(clearButton){
-    clearButton.onclick=()=>{
-      budgetSelection.clear();
-      renderStockCheck();
-    };
-  }
+  clearButton.onclick=()=>{
+    budgetSelection.clear();
+    renderStockCheck();
+  };
 
-  if(printButton){
-    printButton.onclick=()=>{
-      printVehicleBudgets(selectedBudgetVehicles());
-    };
-  }
+  printButton.onclick=()=>{
+    const selected=selectedBudgetVehicles();
+    if(selected.length)openBudgetDialog(selected);
+  };
 
-  updateBudgetSelectionUi();
+  compareButton.onclick=()=>{
+    const selected=selectedBudgetVehicles();
+
+    if(selected.length>3){
+      alert('Seleccioná hasta 3 vehículos para comparar.');
+      return;
+    }
+
+    if(selected.length)renderInternalComparison(selected);
+  };
+
+  copyButton.onclick=()=>copyInternalText(selectedVehiclesSummary(),copyButton);
+
+  renderClientProfileSummary();
+  renderStockAlerts();
+  applyInternalViewClasses();
+  updateBudgetSelectionUi(visible);
+  renderUpdatedAt();
 }
 
 function activateInternalStockMode(){
@@ -4335,9 +5428,14 @@ function activateInternalStockMode(){
   const ticker=document.querySelector('.sales-ticker');
   if(ticker)ticker.classList.add('hidden');
 
+  bindInternalStaticControls();
   renderStockCheck();
-  document.title='Chequeo interno de stock | LMP Autos';
-  window.scrollTo({top:0});
+  document.title='Stock interno | LMP Autos';
+
+  requestAnimationFrame(()=>{
+    window.scrollTo({top:Number(internalState.scrollY)||0});
+  });
+
   return true;
 }
 
@@ -4345,7 +5443,14 @@ function switchView(view){
   const home=view==='home';
   $('#stockCheckView').classList.add('hidden');
   $('#homeView').classList.toggle('hidden',!home);$('#catalogView').classList.toggle('hidden',home);
-  $$('[data-view]').forEach(x=>x.classList.toggle('active',x.dataset.view===view));
+  
+$$('.internal-dialog').forEach(dialog=>{
+  dialog.addEventListener('click',event=>{
+    if(event.target===dialog)closeInternalDialog(dialog.id);
+  });
+});
+
+$$('[data-view]').forEach(x=>x.classList.toggle('active',x.dataset.view===view));
   window.scrollTo({top:0,behavior:'smooth'});
   if(!home) applyFilters();
 }
@@ -4436,7 +5541,7 @@ async function loadSheetRows(){
   throw new Error(errors.join(' | '));
 }
 
-async function loadData(){
+async function loadData({force=false}={}){
   try{
     const result=await loadSheetRows();
     vehicles=result.rows.map(mapVehicle).filter(validVehicle);
@@ -4451,6 +5556,8 @@ async function loadData(){
       loadVehicleStats(),
       verifyLocalCovers(vehicles)
     ]);
+    saveStockCache();
+    renderUpdatedAt();
     highlightedVehicles=selectHighlights(CONFIG.maxFeatured);
     const hasRealStats=Object.values(vehicleStats).some(item=>Number(item.score)>0);
     $('#featuredTitle').textContent=hasRealStats?'Los más consultados':'Vehículos recomendados';
@@ -4481,6 +5588,11 @@ async function loadData(){
     }
   }catch(err){
     console.error('Error de conexión con Google Sheets:',err);
+
+    if(restoreCachedStock(err)){
+      return;
+    }
+
     const message=escapeHtml(err.message||'Revisá la conexión, la publicación de la hoja o intentá nuevamente.');
     const error=`<div class="empty"><strong>No se pudo cargar el catálogo.</strong><small>${message}</small><button class="retry-catalog" type="button">Reintentar</button></div>`;
     $('#featuredGrid').innerHTML=error;
@@ -4587,7 +5699,7 @@ setTimeout(()=>{
 </script>
 
   <div class="site-version-row">
-    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.14</div>
+    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.15</div>
     <span class="site-version" aria-hidden="true">·</span>
     <a class="site-version-link" href="?stock=interno">catálogo</a>
   </div>
