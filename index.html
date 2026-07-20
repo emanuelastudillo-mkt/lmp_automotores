@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
-<meta name="lmp-build" content="lmp-autos-web-v1.12-presupuesto-pdf">
+<meta name="lmp-build" content="lmp-autos-web-v1.13-pdf-una-pagina">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   
   <!-- Meta Pixel Code -->
@@ -3654,7 +3654,7 @@ function vehicleBudgetHtml(v){
     ? `<section class="budget-section">
         <h2>Perfil del vehículo</h2>
         <div class="score-layout-print">
-          <div class="general-print"><strong>${escapeHtml(general)}</strong><span>GENERAL / 100</span></div>
+          <div class="general-print"><div class="general-print-content"><strong>${escapeHtml(general)}</strong><span>GENERAL / 100</span></div></div>
           <table class="scores-table"><tbody>${scoreRows}</tbody></table>
         </div>
       </section>`
@@ -3668,32 +3668,234 @@ function vehicleBudgetHtml(v){
 <title>Presupuesto ${escapeHtml(v.marca)} ${escapeHtml(v.modelo)}</title>
 <style>
   *{box-sizing:border-box}
-  body{margin:0;background:#ececea;color:#171717;font-family:Arial,Helvetica,sans-serif}
-  .page{width:210mm;min-height:297mm;margin:0 auto;background:#fff;padding:15mm 16mm 13mm}
-  .header{display:flex;justify-content:space-between;gap:20px;padding-bottom:14px;border-bottom:3px solid #171717}
-  .brand{font-size:25px;font-weight:900;letter-spacing:-.04em}.brand span{color:#bb1d23}
-  .agency{margin-top:5px;color:#555;font-size:11px;line-height:1.5}
-  .doc{text-align:right}.doc strong{display:block;font-size:18px}.doc span{display:block;margin-top:5px;color:#666;font-size:11px}
-  .hero{padding:18px 0 13px}.eyebrow{color:#bb1d23;font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
-  h1{margin:6px 0 4px;font-size:30px;line-height:1.05;letter-spacing:-.04em}.vehicle-meta{color:#555;font-size:12px}
-  .status{display:inline-block;margin-top:10px;padding:7px 10px;border-radius:999px;background:#171717;color:#fff;font-size:10px;font-weight:900}
-  .budget-section{margin-top:15px;padding:14px;border:1px solid #deded9;border-radius:12px;break-inside:avoid}
-  .budget-section h2{margin:0 0 11px;font-size:13px;text-transform:uppercase;letter-spacing:.06em}
-  .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}.info-row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid #ecece8;font-size:11px}
-  .info-row span{color:#666}.info-row strong{text-align:right}
-  .price-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.price-card{padding:13px;border-radius:10px;background:#171717;color:#fff}
-  .price-card.secondary{background:#f1f1ed;color:#171717;border:1px solid #deded9}.price-card span{display:block;font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.06em}
-  .price-card strong{display:block;margin-top:6px;font-size:21px}
-  .installment-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.installment-card{padding:12px;border-radius:10px;background:#f3f3ef;text-align:center}
-  .installment-card span,.installment-card small{display:block;color:#666;font-size:9px}.installment-card strong{display:block;margin:6px 0;font-size:17px}
-  .cash-section{background:#f3f3ef}.cash-section strong{font-size:18px}
-  .score-layout-print{display:grid;grid-template-columns:115px 1fr;gap:16px;align-items:center}.general-print{width:105px;height:105px;border:9px solid #bb1d23;border-radius:50%;display:grid;place-items:center;text-align:center}
-  .general-print strong{display:block;font-size:30px;line-height:1}.general-print span{display:block;margin-top:4px;color:#666;font-size:8px;font-weight:900}
-  .scores-table{width:100%;border-collapse:collapse;font-size:11px}.scores-table td{padding:7px;border-bottom:1px solid #ecece8}.scores-table td:last-child{text-align:right}
-  .benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:15px}.benefit{padding:10px;border-radius:9px;background:#171717;color:#fff;text-align:center;font-size:10px;font-weight:900}
-  .note{margin:9px 0 0;color:#777;font-size:9px;line-height:1.45}.footer{margin-top:18px;padding-top:12px;border-top:1px solid #d9d9d5;color:#666;font-size:9px;line-height:1.55}
+  html,body{margin:0;padding:0}
+  body{background:#ececea;color:#171717;font-family:Arial,Helvetica,sans-serif}
+  .page{
+    width:210mm;
+    min-height:297mm;
+    margin:0 auto;
+    background:#fff;
+    padding:9mm 11mm 8mm;
+  }
+  .header{
+    display:flex;
+    justify-content:space-between;
+    gap:16px;
+    padding-bottom:8px;
+    border-bottom:2px solid #171717
+  }
+  .brand{font-size:21px;font-weight:900;letter-spacing:-.04em}
+  .brand span{color:#bb1d23}
+  .agency{margin-top:3px;color:#555;font-size:9px;line-height:1.35}
+  .doc{text-align:right}
+  .doc strong{display:block;font-size:14px}
+  .doc span{display:block;margin-top:3px;color:#666;font-size:9px}
+  .hero{padding:10px 0 6px}
+  .eyebrow{color:#bb1d23;font-size:8px;font-weight:900;letter-spacing:.11em;text-transform:uppercase}
+  h1{margin:4px 0 3px;font-size:24px;line-height:1.02;letter-spacing:-.04em}
+  .vehicle-meta{color:#555;font-size:9px}
+  .status{
+    display:inline-block;
+    margin-top:6px;
+    padding:5px 8px;
+    border-radius:999px;
+    background:#171717;
+    color:#fff;
+    font-size:8px;
+    font-weight:900
+  }
+  .budget-section{
+    margin-top:7px;
+    padding:8px 9px;
+    border:1px solid #deded9;
+    border-radius:9px;
+    break-inside:avoid;
+    page-break-inside:avoid
+  }
+  .budget-section h2{
+    margin:0 0 6px;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:.06em
+  }
+  .info-grid{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:5px 10px
+  }
+  .info-row{
+    display:block;
+    min-width:0;
+    padding:3px 0 4px;
+    border-bottom:1px solid #ecece8;
+    font-size:8px
+  }
+  .info-row span{
+    display:block;
+    margin-bottom:2px;
+    color:#777;
+    font-size:7px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.03em
+  }
+  .info-row strong{
+    display:block;
+    overflow-wrap:anywhere;
+    text-align:left;
+    font-size:8.5px
+  }
+  .price-grid{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:6px
+  }
+  .price-card{
+    min-width:0;
+    padding:8px;
+    border-radius:8px;
+    background:#171717;
+    color:#fff
+  }
+  .price-card.secondary{
+    background:#f1f1ed;
+    color:#171717;
+    border:1px solid #deded9
+  }
+  .price-card span{
+    display:block;
+    font-size:6.5px;
+    font-weight:900;
+    line-height:1.2;
+    text-transform:uppercase;
+    letter-spacing:.04em
+  }
+  .price-card strong{
+    display:block;
+    margin-top:4px;
+    overflow-wrap:anywhere;
+    font-size:13px;
+    line-height:1.05
+  }
+  .installment-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:6px
+  }
+  .installment-card{
+    padding:7px;
+    border-radius:8px;
+    background:#f3f3ef;
+    text-align:center
+  }
+  .installment-card span,.installment-card small{
+    display:block;
+    color:#666;
+    font-size:7px
+  }
+  .installment-card strong{
+    display:block;
+    margin:4px 0;
+    font-size:13px
+  }
+  .cash-section{background:#f3f3ef}
+  .cash-section strong{font-size:14px}
+  .score-layout-print{
+    display:grid;
+    grid-template-columns:82px 1fr;
+    gap:10px;
+    align-items:center
+  }
+  .general-print{
+    width:72px;
+    height:72px;
+    border:6px solid #bb1d23;
+    border-radius:50%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center
+  }
+  .general-print-content{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    width:100%
+  }
+  .general-print strong{
+    display:block;
+    margin:0;
+    font-size:22px;
+    line-height:.9
+  }
+  .general-print span{
+    display:block;
+    margin-top:4px;
+    color:#666;
+    font-size:6px;
+    font-weight:900;
+    line-height:1
+  }
+  .scores-table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:8px
+  }
+  .scores-table td{
+    padding:3px 5px;
+    border-bottom:1px solid #ecece8
+  }
+  .scores-table td:last-child{text-align:right}
+  .benefits{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:6px;
+    margin-top:7px
+  }
+  .benefit{
+    padding:6px 7px;
+    border-radius:7px;
+    background:#171717;
+    color:#fff;
+    text-align:center;
+    font-size:7.5px;
+    font-weight:900
+  }
+  .note{
+    margin:5px 0 0;
+    color:#777;
+    font-size:7px;
+    line-height:1.3
+  }
+  .footer{
+    margin-top:7px;
+    padding-top:6px;
+    border-top:1px solid #d9d9d5;
+    color:#666;
+    font-size:6.8px;
+    line-height:1.35
+  }
   .footer strong{color:#171717}
-  @media print{body{background:#fff}.page{width:auto;min-height:auto;margin:0;padding:11mm 13mm}@page{size:A4;margin:0}}
+  @media print{
+    html,body{
+      width:210mm;
+      height:297mm;
+      background:#fff
+    }
+    .page{
+      width:210mm;
+      min-height:0;
+      height:auto;
+      margin:0;
+      padding:8mm 10mm 7mm
+    }
+    @page{
+      size:A4 portrait;
+      margin:0
+    }
+  }
 </style>
 </head>
 <body>
@@ -4130,7 +4332,7 @@ setTimeout(()=>{
 </script>
 
   <div class="site-version-row">
-    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.12</div>
+    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.13</div>
     <span class="site-version" aria-hidden="true">·</span>
     <a class="site-version-link" href="?stock=interno">catálogo</a>
   </div>

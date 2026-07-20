@@ -1,83 +1,50 @@
-# LMP Autos Web v1.12 — Presupuesto PDF
+# LMP Autos Web v1.13 — PDF de una página
 
-## Catálogo interno
+## Presupuesto adaptado a una página A4
 
-Se retiró la información:
+Se compactó el diseño completo:
 
-- Foto local.
-- Foto Drive.
+- márgenes reducidos;
+- encabezado más compacto;
+- información técnica en cuatro columnas;
+- valores en una sola fila de hasta cuatro bloques;
+- cuotas más compactas;
+- sección de calificaciones reducida;
+- indicadores y aclaraciones con menor altura;
+- control de cortes mediante `break-inside: avoid`.
 
-Las mini tarjetas internas mantienen los datos comerciales y técnicos necesarios para revisar cada unidad.
+## Puntaje general
 
-## Botón PDF
+El puntaje utiliza un contenedor interno centrado con Flexbox:
 
-Cada mini tarjeta incorpora un botón:
-
-```text
-PDF
+```css
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
 ```
 
-El botón abre un presupuesto en una nueva ventana y activa el diálogo de impresión del navegador.
+Esto corrige el desplazamiento vertical dentro del círculo.
 
-Desde allí se puede seleccionar:
+## Validación
 
-```text
-Guardar como PDF
-```
+Se generó un presupuesto de prueba con nombre largo, cuatro valores comerciales, tres planes de cuotas y cinco calificaciones.
 
-## Formato del presupuesto
-
-El documento está orientado a clientes y no incluye fotografías ni código interno.
-
-Contiene:
-
-- encabezado de LMP Autos;
-- dirección, WhatsApp y sitio web;
-- fecha de emisión;
-- marca y modelo;
-- año;
-- kilometraje;
-- color;
-- transmisión;
-- combustible;
-- estado comercial;
-- precio en pesos;
-- valor publicado en dólares;
-- valor de contado en dólares;
-- anticipo mínimo o valor de contado;
-- porcentaje de anticipo;
-- máximo financiable;
-- cuotas estimadas de 12, 18 y 24 meses;
-- cinco calificaciones del vehículo;
-- calificación general;
-- indicadores de confianza;
-- aclaraciones comerciales.
-
-## Funcionamiento
-
-El documento usa el sistema de impresión nativo del navegador y no requiere librerías externas.
-
-Si la ventana emergente está bloqueada, el sitio muestra una advertencia.
-
-## Medición
-
-Se agregó el evento:
+Resultado:
 
 ```text
-print_vehicle_pdf
+Pages: 1
 ```
-
-compatible con Meta Pixel y `dataLayer`.
 
 ## Versión
 
 ```text
-lmpautos V1.12
+lmpautos V1.13
 ```
 
-## Validación
+## Validación técnica
 
 - JavaScript validado con `node --check`.
-- Confirmada la eliminación de la información de fotografías.
-- Confirmada la generación del presupuesto imprimible.
-- Confirmado el botón PDF en todas las mini tarjetas internas.
+- PDF de muestra generado con WeasyPrint.
+- Cantidad de páginas comprobada con `pdfinfo`.
+- Render visual generado a 150 DPI.
