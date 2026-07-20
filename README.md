@@ -1,87 +1,83 @@
-# LMP Autos Web v1.11 — Catálogo interno con mini tarjetas
+# LMP Autos Web v1.12 — Presupuesto PDF
 
-## Error corregido
+## Catálogo interno
 
-La versión 1.10 utilizaba una función inexistente:
+Se retiró la información:
 
-```javascript
-titleCase()
-```
+- Foto local.
+- Foto Drive.
 
-Esto interrumpía la carga con:
+Las mini tarjetas internas mantienen los datos comerciales y técnicos necesarios para revisar cada unidad.
+
+## Botón PDF
+
+Cada mini tarjeta incorpora un botón:
 
 ```text
-titleCase is not defined
+PDF
 ```
 
-La función fue reemplazada por `internalStatusText()`, que convierte los estados conocidos a textos legibles sin depender de una función externa.
+El botón abre un presupuesto en una nueva ventana y activa el diálogo de impresión del navegador.
 
-## Nuevo diseño del catálogo interno
+Desde allí se puede seleccionar:
 
-La tabla fue reemplazada por mini tarjetas similares a las tarjetas comerciales actuales.
+```text
+Guardar como PDF
+```
 
-Cada tarjeta incluye:
+## Formato del presupuesto
 
-- ID interno;
-- etiquetas de estado;
+El documento está orientado a clientes y no incluye fotografías ni código interno.
+
+Contiene:
+
+- encabezado de LMP Autos;
+- dirección, WhatsApp y sitio web;
+- fecha de emisión;
 - marca y modelo;
 - año;
 - kilometraje;
+- color;
 - transmisión;
 - combustible;
-- precio en dólares;
-- precio en pesos;
-- anticipo o condición de contado;
-- cuota estimada;
-- financiación;
-- permuta;
 - estado comercial;
+- precio en pesos;
+- valor publicado en dólares;
+- valor de contado en dólares;
+- anticipo mínimo o valor de contado;
+- porcentaje de anticipo;
+- máximo financiable;
+- cuotas estimadas de 12, 18 y 24 meses;
+- cinco calificaciones del vehículo;
 - calificación general;
-- disponibilidad de foto local;
-- disponibilidad de foto de Drive.
+- indicadores de confianza;
+- aclaraciones comerciales.
 
-## Elementos excluidos
+## Funcionamiento
 
-La vista interna no muestra:
+El documento usa el sistema de impresión nativo del navegador y no requiere librerías externas.
 
-- fotografías;
-- botón Ver vehículo;
-- botón Consultar;
-- Instagram;
-- favoritos;
-- comparación;
-- otras acciones comerciales.
+Si la ventana emergente está bloqueada, el sitio muestra una advertencia.
 
-## Diseño responsive
+## Medición
 
-- 4 columnas en desktop amplio.
-- 3 columnas en resoluciones intermedias.
-- 2 columnas en tablets.
-- 1 columna en mobile.
-
-## Acceso
-
-Continúa disponible desde el enlace inferior:
+Se agregó el evento:
 
 ```text
-catálogo
+print_vehicle_pdf
 ```
 
-o mediante:
-
-```text
-?stock=interno
-```
+compatible con Meta Pixel y `dataLayer`.
 
 ## Versión
 
 ```text
-lmpautos V1.11
+lmpautos V1.12
 ```
 
 ## Validación
 
 - JavaScript validado con `node --check`.
-- Confirmada la eliminación de `titleCase()`.
-- Confirmada la eliminación de la tabla anterior.
-- Confirmada la ausencia de fotos y botones de acción.
+- Confirmada la eliminación de la información de fotografías.
+- Confirmada la generación del presupuesto imprimible.
+- Confirmado el botón PDF en todas las mini tarjetas internas.
