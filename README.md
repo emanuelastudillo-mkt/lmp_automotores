@@ -1,50 +1,76 @@
-# LMP Autos Web v1.13 — PDF de una página
+# LMP Autos Web v1.14 — Presupuestos múltiples
 
-## Presupuesto adaptado a una página A4
+## PDFs estandarizados
 
-Se compactó el diseño completo:
+Todos los vehículos utilizan exactamente los mismos bloques, aunque falte información:
 
-- márgenes reducidos;
-- encabezado más compacto;
-- información técnica en cuatro columnas;
-- valores en una sola fila de hasta cuatro bloques;
-- cuotas más compactas;
-- sección de calificaciones reducida;
-- indicadores y aclaraciones con menor altura;
-- control de cortes mediante `break-inside: avoid`.
+1. Encabezado de LMP Autos.
+2. Identificación del vehículo.
+3. Información del vehículo.
+4. Valores.
+5. Condiciones comerciales.
+6. Alternativas de financiación.
+7. Perfil y calificaciones.
+8. Indicadores de confianza.
+9. Aclaraciones comerciales.
 
-## Puntaje general
+Los datos faltantes se muestran como:
 
-El puntaje utiliza un contenedor interno centrado con Flexbox:
-
-```css
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
+```text
+—
 ```
 
-Esto corrige el desplazamiento vertical dentro del círculo.
+Los vehículos sin financiación mantienen las tres tarjetas de 12, 18 y 24 cuotas, indicando:
+
+```text
+No disponible
+```
+
+Las cinco calificaciones siempre aparecen. Cuando un puntaje no está informado se muestra `—`.
+
+## Presupuesto de varios vehículos
+
+El catálogo interno permite:
+
+- seleccionar vehículos individualmente;
+- seleccionar todos;
+- limpiar la selección;
+- imprimir todos los seleccionados dentro del mismo documento.
+
+Cada vehículo ocupa una página A4 independiente dentro del mismo PDF. El encabezado indica:
+
+```text
+Opción 1 de 3
+Opción 2 de 3
+Opción 3 de 3
+```
+
+El botón PDF individual continúa disponible.
 
 ## Validación
 
-Se generó un presupuesto de prueba con nombre largo, cuatro valores comerciales, tres planes de cuotas y cinco calificaciones.
+Se generó un documento de prueba con:
 
-Resultado:
+- un vehículo financiable;
+- un vehículo solo de contado;
+- datos completos y datos faltantes;
+- bloques idénticos en ambos casos.
+
+Resultado comprobado:
 
 ```text
-Pages: 1
+Pages: 2
 ```
 
 ## Versión
 
 ```text
-lmpautos V1.13
+lmpautos V1.14
 ```
 
 ## Validación técnica
 
 - JavaScript validado con `node --check`.
-- PDF de muestra generado con WeasyPrint.
+- PDF múltiple generado con WeasyPrint.
 - Cantidad de páginas comprobada con `pdfinfo`.
-- Render visual generado a 150 DPI.
+- Dos páginas renderizadas para control visual.

@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
-<meta name="lmp-build" content="lmp-autos-web-v1.13-pdf-una-pagina">
+<meta name="lmp-build" content="lmp-autos-web-v1.14-presupuestos-multiples">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   
   <!-- Meta Pixel Code -->
@@ -1682,6 +1682,94 @@ fbq('track', 'PageView');
       background:var(--accent)
     }
 
+
+    .stock-budget-toolbar{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin:0 0 15px;
+      padding:10px 12px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:#fff
+    }
+    .stock-select-all{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      font-size:11px;
+      font-weight:900;
+      cursor:pointer
+    }
+    .stock-select-all input,
+    .stock-mini-select input{
+      width:16px;
+      height:16px;
+      accent-color:#171717;
+      cursor:pointer
+    }
+    .stock-selection-count{
+      color:#666;
+      font-size:11px;
+      font-weight:800
+    }
+    .stock-budget-actions{
+      display:flex;
+      gap:7px;
+      margin-left:auto
+    }
+    .stock-budget-actions button{
+      border:1px solid var(--line);
+      border-radius:10px;
+      padding:9px 11px;
+      background:#fff;
+      color:#171717;
+      font-size:10px;
+      font-weight:950;
+      cursor:pointer
+    }
+    .stock-budget-actions #printSelectedBudgets{
+      border-color:#171717;
+      background:#171717;
+      color:#fff
+    }
+    .stock-budget-actions button:disabled{
+      opacity:.38;
+      cursor:not-allowed
+    }
+    .stock-mini-card.selected{
+      border-color:#171717;
+      box-shadow:0 0 0 2px #171717,0 8px 22px rgba(0,0,0,.08)
+    }
+    .stock-mini-id-group{
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+      gap:7px
+    }
+    .stock-mini-select{
+      display:inline-flex;
+      align-items:center;
+      gap:5px;
+      color:#555;
+      font-size:9px;
+      font-weight:850;
+      cursor:pointer
+    }
+    @media(max-width:700px){
+      .stock-budget-toolbar{
+        align-items:flex-start;
+        flex-wrap:wrap
+      }
+      .stock-budget-actions{
+        width:100%;
+        margin-left:0
+      }
+      .stock-budget-actions button{
+        flex:1
+      }
+    }
+
 </style>
 </head>
 <body>
@@ -1823,10 +1911,25 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
     <div class="stock-check-head">
       <div>
         <h1>Chequeo interno de stock</h1>
-        <p>Mini tarjetas para revisar stock e imprimir presupuestos sin fotografías.</p>
+        <p>Mini tarjetas para revisar stock y generar presupuestos individuales o múltiples.</p>
       </div>
       <div class="stock-check-summary" id="stockCheckSummary">Cargando stock…</div>
     </div>
+
+    <div class="stock-budget-toolbar">
+      <label class="stock-select-all">
+        <input id="selectAllStockBudgets" type="checkbox">
+        <span>Seleccionar todos</span>
+      </label>
+
+      <span class="stock-selection-count" id="budgetSelectionCount">0 seleccionados</span>
+
+      <div class="stock-budget-actions">
+        <button id="clearBudgetSelection" type="button" disabled>Limpiar</button>
+        <button id="printSelectedBudgets" type="button" disabled>Imprimir seleccionados</button>
+      </div>
+    </div>
+
     <div class="stock-check-grid" id="stockCheckBody">
       <div class="empty">Cargando información…</div>
     </div>
@@ -1943,6 +2046,7 @@ let favoriteIds=new Set(JSON.parse(localStorage.getItem('lmp_favorites')||'[]'))
 let compareIds=new Set();
 let catalogMode='all';
 let localCoverManifest=null;
+let budgetSelection=new Set();
 
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
@@ -3595,87 +3699,205 @@ function internalStatusText(v){
 }
 
 function budgetInstallments(v){
-  if(!hasFinancing(v))return [];
+  const result={12:null,18:null,24:null};
+
+  if(!hasFinancing(v))return result;
 
   const total=numericPrice(v.cotizacion);
   const advance=numericPrice(v.anticipo);
   const capital=Math.max(0,total-advance);
-  if(!capital)return [];
+
+  if(!capital)return result;
 
   const band=financingBand(v.anio);
 
-  return [12,18,24].map(term=>({
-    term,
-    value:quotaValue(capital,band.rates[term])
-  }));
+  [12,18,24].forEach(term=>{
+    const value=quotaValue(capital,band.rates[term]);
+    result[term]=value || null;
+  });
+
+  return result;
 }
-function budgetScoreRows(v){
-  return vehicleScoreData(v)
-    .filter(item=>Number(item.value)>0)
-    .map(item=>`<tr><td>${escapeHtml(item.label)}</td><td><strong>${escapeHtml(item.value)}/100</strong></td></tr>`)
-    .join('');
+function budgetValue(value,fallback='—'){
+  const text=clean(value);
+  return text || fallback;
+}
+function budgetMoney(value){
+  const text=money(value);
+  return text==='Consultar'?'—':text;
 }
 function budgetInfoRow(label,value){
-  if(!clean(value))return '';
-  return `<div class="info-row"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></div>`;
+  return `<div class="info-row">
+    <span>${escapeHtml(label)}</span>
+    <strong>${escapeHtml(budgetValue(value))}</strong>
+  </div>`;
 }
-function vehicleBudgetHtml(v){
+function budgetPriceCard(label,value,{primary=false}={}){
+  return `<div class="price-card ${primary?'':'secondary'}">
+    <span>${escapeHtml(label)}</span>
+    <strong>${escapeHtml(budgetValue(value))}</strong>
+  </div>`;
+}
+function budgetScoreRows(v){
+  return vehicleScoreData(v).map(item=>{
+    const score=Number(item.value)>0?`${item.value}/100`:'—';
+    return `<tr><td>${escapeHtml(item.label)}</td><td><strong>${escapeHtml(score)}</strong></td></tr>`;
+  }).join('');
+}
+function budgetGeneralScore(v){
+  const score=generalScore(v);
+  return Number(score)>0?String(score):'—';
+}
+function budgetPageHtml(v,index,total,today){
   const installments=budgetInstallments(v);
+  const status=internalStatusText(v);
+  const cashOnly=isCashOnly(v);
+  const general=budgetGeneralScore(v);
+  const meta=[
+    `Año ${budgetValue(v.anio)}`,
+    v.kilometraje?km(v.kilometraje):'Kilometraje —',
+    budgetValue(v.transmision),
+    budgetValue(v.combustible)
+  ].join(' · ');
+
+  const financingNote=hasFinancing(v)
+    ? 'Cálculo estimativo sobre el capital financiado según el anticipo mínimo informado.'
+    : cashOnly
+      ? 'Esta unidad se ofrece únicamente bajo condición de contado.'
+      : 'Financiación no informada para esta unidad. Consultar condiciones vigentes.';
+
+  return `<main class="budget-page">
+    <header class="header">
+      <div>
+        <div class="brand">LMP <span>Autos</span></div>
+        <div class="agency">
+          Av. Mosconi 799, Lomas del Mirador<br>
+          WhatsApp: 11 3262-7744 · www.lmpautos.com
+        </div>
+      </div>
+      <div class="doc">
+        <strong>Presupuesto informativo</strong>
+        <span>Emitido el ${escapeHtml(today)}</span>
+        <span>Opción ${index+1} de ${total}</span>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="eyebrow">Vehículo seleccionado</div>
+      <h1>${escapeHtml(v.marca)} ${escapeHtml(v.modelo)}</h1>
+      <div class="vehicle-meta">${escapeHtml(meta)}</div>
+      <span class="status">${escapeHtml(status)}</span>
+    </section>
+
+    <section class="budget-section">
+      <h2>Información del vehículo</h2>
+      <div class="info-grid">
+        ${budgetInfoRow('Marca',v.marca)}
+        ${budgetInfoRow('Modelo',v.modelo)}
+        ${budgetInfoRow('Año',v.anio)}
+        ${budgetInfoRow('Kilometraje',v.kilometraje?km(v.kilometraje):'')}
+        ${budgetInfoRow('Color',v.color)}
+        ${budgetInfoRow('Combustible',v.combustible)}
+        ${budgetInfoRow('Transmisión',v.transmision)}
+        ${budgetInfoRow('Estado',status)}
+      </div>
+    </section>
+
+    <section class="budget-section">
+      <h2>Valores</h2>
+      <div class="price-grid">
+        ${budgetPriceCard('Valor total en pesos',budgetMoney(v.cotizacion),{primary:true})}
+        ${budgetPriceCard('Valor publicado en dólares',budgetMoney(v.precioPublicado))}
+        ${budgetPriceCard('Valor de contado en dólares',budgetMoney(v.precioContado))}
+        ${budgetPriceCard(cashOnly?'Valor de contado':'Anticipo mínimo',budgetValue(displayedAdvance(v)))}
+      </div>
+
+      <div class="info-grid values-extra">
+        ${budgetInfoRow('Porcentaje de anticipo',v.anticipoPct)}
+        ${budgetInfoRow('Máximo financiable',v.maxFinan)}
+        ${budgetInfoRow('Permuta',acceptsTradeIn(v)?'Sí':'No')}
+        ${budgetInfoRow('Condición comercial',cashOnly?'Solo contado':hasFinancing(v)?'Financiable':'Consultar')}
+      </div>
+    </section>
+
+    <section class="budget-section">
+      <h2>Alternativas de financiación</h2>
+      <div class="installment-grid">
+        ${[12,18,24].map(term=>`
+          <div class="installment-card ${installments[term]?'':'unavailable'}">
+            <span>${term} cuotas</span>
+            <strong>${installments[term]?escapeHtml(formatArsNumber(installments[term])):'No disponible'}</strong>
+            <small>${installments[term]?'Cuota estimada':'Consultar condiciones'}</small>
+          </div>`).join('')}
+      </div>
+      <p class="note">${escapeHtml(financingNote)}</p>
+    </section>
+
+    <section class="budget-section">
+      <h2>Perfil del vehículo</h2>
+      <div class="score-layout-print">
+        <div class="general-print">
+          <div class="general-print-content">
+            <strong>${escapeHtml(general)}</strong>
+            <span>GENERAL / 100</span>
+          </div>
+        </div>
+        <table class="scores-table">
+          <tbody>${budgetScoreRows(v)}</tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="benefits">
+      <div class="benefit">Más de 10 años de experiencia</div>
+      <div class="benefit">Gestoría propia</div>
+      <div class="benefit">Entrega estimada 24-48 hs</div>
+    </div>
+
+    <footer class="footer">
+      <strong>Información importante:</strong> presupuesto informativo sujeto a disponibilidad de la unidad y actualización de valores.
+      Las cuotas son estimativas y pueden variar según las condiciones vigentes al momento de concretar la operación.
+      La entrega está sujeta a la finalización de la documentación y preparación del vehículo.
+    </footer>
+  </main>`;
+}
+function vehicleBudgetDocumentHtml(list){
+  const selected=Array.isArray(list)?list.filter(Boolean):[];
   const today=new Intl.DateTimeFormat('es-AR',{
     day:'2-digit',
     month:'2-digit',
     year:'numeric'
   }).format(new Date());
 
-  const status=internalStatusText(v);
-  const cashOnly=isCashOnly(v);
-  const scoreRows=budgetScoreRows(v);
-  const general=generalScore(v);
-
-  const installmentMarkup=installments.length
-    ? `<section class="budget-section">
-        <h2>Alternativas de financiación</h2>
-        <div class="installment-grid">
-          ${installments.map(item=>`
-            <div class="installment-card">
-              <span>${item.term} cuotas</span>
-              <strong>${escapeHtml(formatArsNumber(item.value))}</strong>
-              <small>Cuota estimada</small>
-            </div>`).join('')}
-        </div>
-        <p class="note">Cálculo estimativo sobre el capital financiado según el anticipo mínimo informado.</p>
-      </section>`
-    : `<section class="budget-section cash-section">
-        <h2>Condición comercial</h2>
-        <strong>Venta solo de contado</strong>
-      </section>`;
-
-  const scoresMarkup=scoreRows
-    ? `<section class="budget-section">
-        <h2>Perfil del vehículo</h2>
-        <div class="score-layout-print">
-          <div class="general-print"><div class="general-print-content"><strong>${escapeHtml(general)}</strong><span>GENERAL / 100</span></div></div>
-          <table class="scores-table"><tbody>${scoreRows}</tbody></table>
-        </div>
-      </section>`
-    : '';
+  const title=selected.length>1
+    ? `Presupuesto comparativo - ${selected.length} vehículos`
+    : selected.length
+      ? `Presupuesto ${selected[0].marca} ${selected[0].modelo}`
+      : 'Presupuesto LMP Autos';
 
   return `<!doctype html>
 <html lang="es">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Presupuesto ${escapeHtml(v.marca)} ${escapeHtml(v.modelo)}</title>
+<title>${escapeHtml(title)}</title>
 <style>
   *{box-sizing:border-box}
   html,body{margin:0;padding:0}
   body{background:#ececea;color:#171717;font-family:Arial,Helvetica,sans-serif}
-  .page{
+  .budget-page{
     width:210mm;
     min-height:297mm;
-    margin:0 auto;
+    margin:0 auto 8mm;
     background:#fff;
     padding:9mm 11mm 8mm;
+    break-after:page;
+    page-break-after:always
+  }
+  .budget-page:last-child{
+    margin-bottom:0;
+    break-after:auto;
+    page-break-after:auto
   }
   .header{
     display:flex;
@@ -3723,6 +3945,7 @@ function vehicleBudgetHtml(v){
     grid-template-columns:repeat(4,minmax(0,1fr));
     gap:5px 10px
   }
+  .values-extra{margin-top:6px}
   .info-row{
     display:block;
     min-width:0;
@@ -3788,6 +4011,10 @@ function vehicleBudgetHtml(v){
     background:#f3f3ef;
     text-align:center
   }
+  .installment-card.unavailable{
+    background:#f8f8f6;
+    border:1px dashed #d6d6d1
+  }
   .installment-card span,.installment-card small{
     display:block;
     color:#666;
@@ -3798,8 +4025,10 @@ function vehicleBudgetHtml(v){
     margin:4px 0;
     font-size:13px
   }
-  .cash-section{background:#f3f3ef}
-  .cash-section strong{font-size:14px}
+  .installment-card.unavailable strong{
+    color:#777;
+    font-size:10px
+  }
   .score-layout-print{
     display:grid;
     grid-template-columns:82px 1fr;
@@ -3812,7 +4041,6 @@ function vehicleBudgetHtml(v){
     border:6px solid #bb1d23;
     border-radius:50%;
     display:flex;
-    flex-direction:column;
     align-items:center;
     justify-content:center;
     text-align:center
@@ -3822,7 +4050,8 @@ function vehicleBudgetHtml(v){
     flex-direction:column;
     align-items:center;
     justify-content:center;
-    width:100%
+    width:100%;
+    min-height:100%
   }
   .general-print strong{
     display:block;
@@ -3881,15 +4110,15 @@ function vehicleBudgetHtml(v){
   @media print{
     html,body{
       width:210mm;
-      height:297mm;
       background:#fff
     }
-    .page{
+    .budget-page{
       width:210mm;
-      min-height:0;
-      height:auto;
+      min-height:297mm;
+      height:297mm;
       margin:0;
-      padding:8mm 10mm 7mm
+      padding:8mm 10mm 7mm;
+      overflow:hidden
     }
     @page{
       size:A4 portrait;
@@ -3899,74 +4128,18 @@ function vehicleBudgetHtml(v){
 </style>
 </head>
 <body>
-<main class="page">
-  <header class="header">
-    <div>
-      <div class="brand">LMP <span>Autos</span></div>
-      <div class="agency">Av. Mosconi 799, Lomas del Mirador<br>WhatsApp: 11 3262-7744 · www.lmpautos.com</div>
-    </div>
-    <div class="doc"><strong>Presupuesto informativo</strong><span>Emitido el ${escapeHtml(today)}</span></div>
-  </header>
-
-  <section class="hero">
-    <div class="eyebrow">Vehículo seleccionado</div>
-    <h1>${escapeHtml(v.marca)} ${escapeHtml(v.modelo)}</h1>
-    <div class="vehicle-meta">${[
-      v.anio?`Año ${escapeHtml(v.anio)}`:'',
-      v.kilometraje?escapeHtml(km(v.kilometraje)):'',
-      v.transmision?escapeHtml(v.transmision):'',
-      v.combustible?escapeHtml(v.combustible):''
-    ].filter(Boolean).join(' · ')}</div>
-    <span class="status">${escapeHtml(status)}</span>
-  </section>
-
-  <section class="budget-section">
-    <h2>Información del vehículo</h2>
-    <div class="info-grid">
-      ${budgetInfoRow('Marca',v.marca)}
-      ${budgetInfoRow('Modelo',v.modelo)}
-      ${budgetInfoRow('Año',v.anio)}
-      ${budgetInfoRow('Kilometraje',v.kilometraje?km(v.kilometraje):'')}
-      ${budgetInfoRow('Color',v.color)}
-      ${budgetInfoRow('Combustible',v.combustible)}
-      ${budgetInfoRow('Transmisión',v.transmision)}
-      ${budgetInfoRow('Estado',status)}
-    </div>
-  </section>
-
-  <section class="budget-section">
-    <h2>Valores</h2>
-    <div class="price-grid">
-      ${v.cotizacion?`<div class="price-card"><span>Valor total en pesos</span><strong>${escapeHtml(money(v.cotizacion))}</strong></div>`:''}
-      ${v.precioPublicado?`<div class="price-card secondary"><span>Valor publicado en dólares</span><strong>${escapeHtml(money(v.precioPublicado))}</strong></div>`:''}
-      ${v.precioContado?`<div class="price-card secondary"><span>Valor de contado en dólares</span><strong>${escapeHtml(money(v.precioContado))}</strong></div>`:''}
-      <div class="price-card secondary"><span>${cashOnly?'Valor de contado':'Anticipo mínimo'}</span><strong>${escapeHtml(displayedAdvance(v)||'Consultar')}</strong></div>
-    </div>
-    <div class="info-grid" style="margin-top:9px">
-      ${budgetInfoRow('Porcentaje de anticipo',v.anticipoPct)}
-      ${budgetInfoRow('Máximo financiable',v.maxFinan)}
-    </div>
-  </section>
-
-  ${installmentMarkup}
-  ${scoresMarkup}
-
-  <div class="benefits">
-    <div class="benefit">Más de 10 años de experiencia</div>
-    <div class="benefit">Gestoría propia</div>
-    <div class="benefit">Entrega estimada 24-48 hs</div>
-  </div>
-
-  <footer class="footer">
-    <strong>Información importante:</strong> presupuesto informativo sujeto a disponibilidad de la unidad y actualización de valores.
-    Las cuotas son estimativas y pueden variar según las condiciones vigentes al momento de concretar la operación.
-    La entrega está sujeta a la finalización de la documentación y preparación del vehículo.
-  </footer>
-</main>
+  ${selected.map((vehicle,index)=>budgetPageHtml(vehicle,index,selected.length,today)).join('')}
 </body>
 </html>`;
 }
-function printVehicleBudget(v){
+function printVehicleBudgets(list){
+  const selected=Array.isArray(list)?list.filter(Boolean):[];
+
+  if(!selected.length){
+    alert('Seleccioná al menos un vehículo.');
+    return;
+  }
+
   const printWindow=window.open('','_blank','width=980,height=760');
 
   if(!printWindow){
@@ -3975,24 +4148,38 @@ function printVehicleBudget(v){
   }
 
   printWindow.document.open();
-  printWindow.document.write(vehicleBudgetHtml(v));
+  printWindow.document.write(vehicleBudgetDocumentHtml(selected));
   printWindow.document.close();
-  printWindow.addEventListener('load',()=>{
-    setTimeout(()=>{
-      printWindow.focus();
-      printWindow.print();
-    },250);
+
+  setTimeout(()=>{
+    printWindow.focus();
+    printWindow.print();
+  },350);
+
+  emitAnalytics('print_vehicle_pdf',{
+    count:selected.length,
+    vehicle_ids:selected.map(vehicle=>vehicle.id).join(',')
   });
-  emitAnalytics('print_vehicle_pdf',{vehicle_id:v.id});
+}
+function printVehicleBudget(v){
+  printVehicleBudgets([v]);
 }
 
 function stockMiniCard(v){
   const badges=badgeItems(v);
   const installment=estimatedInstallment(v);
+  const selected=budgetSelection.has(v.id);
 
-  return `<article class="stock-mini-card">
+  return `<article class="stock-mini-card ${selected?'selected':''}" data-stock-card-id="${escapeAttr(v.id)}">
     <div class="stock-mini-top">
-      <span class="stock-mini-id">${escapeHtml(v.id)}</span>
+      <div class="stock-mini-id-group">
+        <span class="stock-mini-id">${escapeHtml(v.id)}</span>
+        <label class="stock-mini-select">
+          <input type="checkbox" data-budget-select="${escapeAttr(v.id)}" ${selected?'checked':''}>
+          <span>Seleccionar</span>
+        </label>
+      </div>
+
       <div class="stock-mini-badges">
         ${badges.map(item=>`<span class="badge ${item.className}">${escapeHtml(item.text)}</span>`).join('')}
       </div>
@@ -4043,16 +4230,43 @@ function stockMiniCard(v){
   </article>`;
 }
 
+function orderedStockVehicles(){
+  return [...vehicles].sort((a,b)=>{
+    const na=Number((clean(a.id).match(/\d+/)||['0'])[0]);
+    const nb=Number((clean(b.id).match(/\d+/)||['0'])[0]);
+    return nb-na;
+  });
+}
+function selectedBudgetVehicles(){
+  return orderedStockVehicles().filter(vehicle=>budgetSelection.has(vehicle.id));
+}
+function updateBudgetSelectionUi(){
+  const count=budgetSelection.size;
+  const total=vehicles.length;
+  const countNode=$('#budgetSelectionCount');
+  const printButton=$('#printSelectedBudgets');
+  const clearButton=$('#clearBudgetSelection');
+  const selectAll=$('#selectAllStockBudgets');
+
+  if(countNode)countNode.textContent=`${count} seleccionado${count===1?'':'s'}`;
+  if(printButton)printButton.disabled=count===0;
+  if(clearButton)clearButton.disabled=count===0;
+
+  if(selectAll){
+    selectAll.checked=total>0 && count===total;
+    selectAll.indeterminate=count>0 && count<total;
+  }
+
+  $$('.stock-mini-card[data-stock-card-id]').forEach(card=>{
+    card.classList.toggle('selected',budgetSelection.has(card.dataset.stockCardId));
+  });
+}
 function renderStockCheck(){
   const body=$('#stockCheckBody');
   const summary=$('#stockCheckSummary');
   if(!body || !summary)return;
 
-  const ordered=[...vehicles].sort((a,b)=>{
-    const na=Number((clean(a.id).match(/\d+/)||['0'])[0]);
-    const nb=Number((clean(b.id).match(/\d+/)||['0'])[0]);
-    return nb-na;
-  });
+  const ordered=orderedStockVehicles();
 
   summary.textContent=`${ordered.length} vehículos activos`;
   body.innerHTML=ordered.length
@@ -4065,6 +4279,47 @@ function renderStockCheck(){
       if(vehicle)printVehicleBudget(vehicle);
     });
   });
+
+  body.querySelectorAll('[data-budget-select]').forEach(input=>{
+    input.addEventListener('change',()=>{
+      const id=input.dataset.budgetSelect;
+
+      if(input.checked)budgetSelection.add(id);
+      else budgetSelection.delete(id);
+
+      updateBudgetSelectionUi();
+    });
+  });
+
+  const selectAll=$('#selectAllStockBudgets');
+  const clearButton=$('#clearBudgetSelection');
+  const printButton=$('#printSelectedBudgets');
+
+  if(selectAll){
+    selectAll.onchange=()=>{
+      if(selectAll.checked){
+        ordered.forEach(vehicle=>budgetSelection.add(vehicle.id));
+      }else{
+        budgetSelection.clear();
+      }
+      renderStockCheck();
+    };
+  }
+
+  if(clearButton){
+    clearButton.onclick=()=>{
+      budgetSelection.clear();
+      renderStockCheck();
+    };
+  }
+
+  if(printButton){
+    printButton.onclick=()=>{
+      printVehicleBudgets(selectedBudgetVehicles());
+    };
+  }
+
+  updateBudgetSelectionUi();
 }
 
 function activateInternalStockMode(){
@@ -4332,7 +4587,7 @@ setTimeout(()=>{
 </script>
 
   <div class="site-version-row">
-    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.13</div>
+    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.14</div>
     <span class="site-version" aria-hidden="true">·</span>
     <a class="site-version-link" href="?stock=interno">catálogo</a>
   </div>
