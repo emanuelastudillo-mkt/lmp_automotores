@@ -1,100 +1,77 @@
-# LMP Autos Web v1.15 — Herramientas para la agencia
+# LMP Autos Web v1.16 - Descuento y cuotas
 
-## Mejoras incorporadas sin modificar la hoja
+## Alcance
 
-### Atención y búsqueda
-- Buscador instantáneo por marca, modelo, año, combustible, transmisión, precios, anticipo y estado.
-- Filtros rápidos por disponibilidad, financiación, contado, permuta, estado, prioridad y rangos de precio.
-- Filtro automático mediante la ficha del cliente.
-- Modo cliente para ocultar identificadores, notas, estados internos y controles administrativos.
-- Vista compacta y vista amplia.
+La función se agregó exclusivamente dentro de Stock interno. El catálogo público no muestra ni utiliza descuentos internos.
 
-### Ficha del cliente
-Se pueden guardar localmente:
-- nombre;
-- teléfono;
-- asesor;
-- presupuesto máximo;
-- anticipo habitual;
-- transmisión y combustible buscados;
-- vehículo entregado;
-- valor estimado de permuta;
-- vigencia;
-- observaciones.
+## Descuento por vehículo
 
-Los datos se incorporan a los presupuestos sin modificar Google Sheets.
+Cada mini tarjeta incorpora un campo:
 
-### Financiación personalizada
-Cada tarjeta permite ingresar el anticipo del cliente y recalcular:
-- 12 cuotas;
-- 18 cuotas;
-- 24 cuotas.
+```text
+Descuento
+```
 
-El anticipo se conserva localmente por vehículo.
+El descuento se ingresa como importe en pesos y se conserva localmente en la computadora de la agencia.
 
-### Presupuestos
-- PDF individual o múltiple.
-- Datos del cliente incluidos.
-- Anticipo personalizado.
-- Bloques estandarizados.
-- Un vehículo por página A4.
-- Comparación de hasta tres vehículos.
-- Copia de resumen para WhatsApp.
+El sistema calcula:
 
-### Control interno
-- Alertas automáticas de datos faltantes o inconsistentes.
-- Filtros por tipo de alerta.
-- Notas internas por vehículo.
-- Prioridad de venta local.
-- Fecha y hora de actualización.
-- Botón Actualizar ahora.
+```text
+Valor final = precio de lista - descuento
+Capital financiado = valor final - anticipo del cliente
+```
 
-### Reserva preliminar
-Cada tarjeta incluye un botón para imprimir un comprobante preliminar con:
-- cliente;
-- teléfono;
-- vendedor;
-- seña;
-- vigencia;
-- observaciones.
+Las cuotas de 12, 18 y 24 meses se recalculan inmediatamente.
 
-La reserva no modifica automáticamente el estado en la hoja.
+## Persistencia
 
-### Continuidad operativa
-- Caché local del último stock válido.
-- Si Google Sheets falla, se muestra el último stock guardado.
-- Persistencia local de:
-  - búsqueda;
-  - filtros;
-  - vista;
-  - modo cliente;
-  - ficha del cliente;
-  - selección;
-  - notas;
-  - prioridades;
-  - anticipos;
-  - posición de desplazamiento.
+Los descuentos quedan guardados por vehículo en `localStorage`, junto con:
 
-### Atajos de teclado
-- `/`: enfocar buscador.
-- `Esc`: limpiar búsqueda.
-- `M`: activar o desactivar modo cliente.
-- `C`: comparar seleccionados.
-- `P`: preparar presupuesto.
-- `R`: actualizar stock.
+- anticipos personalizados;
+- notas;
+- prioridades;
+- ficha del cliente;
+- selección de vehículos.
 
-## Funciones no agregadas
+No se modifica Google Sheets.
 
-No se agregó el indicador de días en stock porque requiere una fecha de ingreso en la hoja.
+## Presupuestos
+
+Los presupuestos individuales y múltiples muestran de forma estandarizada:
+
+- precio de lista;
+- descuento aplicado;
+- valor final con descuento;
+- anticipo considerado;
+- saldo a financiar;
+- cuotas recalculadas.
+
+Para un presupuesto individual también puede modificarse el descuento desde el cuadro previo a imprimir.
+
+## Comparación y resumen
+
+El descuento también se aplica en:
+
+- comparación interna;
+- resumen para copiar por WhatsApp;
+- presupuesto individual;
+- presupuesto múltiple.
+
+## Seguridad de cálculo
+
+- El descuento nunca puede superar el precio total.
+- El valor final nunca puede ser negativo.
+- El anticipo se limita al valor final con descuento.
+- Las cuotas se calculan sobre el saldo real restante.
 
 ## Validación
+
 - JavaScript validado con `node --check`.
-- PDF de muestra generado en una página A4.
-- Render de control creado a 150 DPI.
-- Caché, búsqueda, filtros y herramientas se ejecutan sin nuevas columnas.
+- PDF con descuento validado en una página A4.
+- Render de control generado a 150 DPI.
 
 ## Versión
 
 ```text
-lmpautos V1.15
+lmpautos V1.16
 ```

@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
-<meta name="lmp-build" content="lmp-autos-web-v1.15-herramientas-agencia">
+<meta name="lmp-build" content="lmp-autos-web-v1.16-descuento-cuotas">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   
   <!-- Meta Pixel Code -->
@@ -2092,6 +2092,33 @@ fbq('track', 'PageView');
       .detail-mode .stock-check-grid{grid-template-columns:1fr}
     }
 
+
+    .stock-custom-inputs{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:7px
+    }
+    .stock-discounted-total{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      margin-top:7px;
+      padding:7px 8px;
+      border-radius:8px;
+      background:#171717;
+      color:#fff;
+      font-size:8px;
+      font-weight:850
+    }
+    .stock-discounted-total strong{
+      font-size:10px
+    }
+    @media(max-width:520px){
+      .stock-custom-inputs{
+        grid-template-columns:1fr
+      }
+    }
+
 </style>
 </head>
 <body>
@@ -2331,6 +2358,7 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
       <label>Vehículo en parte de pago<input id="budgetTradeVehicle" type="text"></label>
       <label>Valor estimado de permuta<input id="budgetTradeValue" type="text" inputmode="numeric"></label>
       <label class="budget-single-advance">Anticipo para este vehículo<input id="budgetSingleAdvance" type="text" inputmode="numeric"></label>
+      <label class="budget-single-discount">Descuento para este vehículo<input id="budgetSingleDiscount" type="text" inputmode="numeric"></label>
       <label class="span-2">Observaciones<textarea id="budgetObservations" rows="3"></textarea></label>
     </div>
 
@@ -2487,6 +2515,7 @@ let internalState=(()=>{
     notes:{},
     priorities:[],
     customAdvances:{},
+    customDiscounts:{},
     profile:{
       name:'',
       phone:'',
@@ -2511,6 +2540,7 @@ let internalState=(()=>{
       ...stored,
       notes:{...defaults.notes,...(stored.notes||{})},
       customAdvances:{...defaults.customAdvances,...(stored.customAdvances||{})},
+      customDiscounts:{...defaults.customDiscounts,...(stored.customDiscounts||{})},
       profile:{...defaults.profile,...(stored.profile||{})},
       priorities:Array.isArray(stored.priorities)?stored.priorities:[],
       selection:Array.isArray(stored.selection)?stored.selection:[]
@@ -4208,11 +4238,21 @@ function internalAdvanceFor(v){
 
   return numericPrice(v.anticipo);
 }
-function customInstallmentsFor(v,advanceValue=internalAdvanceFor(v)){
+function internalDiscountFor(v){
+  const total=numericPrice(v.cotizacion);
+  const stored=numericPrice(internalState.customDiscounts?.[v.id]);
+  return Math.min(total,Math.max(0,stored));
+}
+function discountedTotalFor(v,discountValue=internalDiscountFor(v)){
+  const total=numericPrice(v.cotizacion);
+  const discount=Math.min(total,Math.max(0,Number(discountValue)||0));
+  return Math.max(0,total-discount);
+}
+function customInstallmentsFor(v,advanceValue=internalAdvanceFor(v),discountValue=internalDiscountFor(v)){
   const result={12:null,18:null,24:null};
   if(!hasFinancing(v))return result;
 
-  const total=numericPrice(v.cotizacion);
+  const total=discountedTotalFor(v,discountValue);
   const advance=Math.min(total,Math.max(0,Number(advanceValue)||0));
   const capital=Math.max(0,total-advance);
 
@@ -4227,25 +4267,43 @@ function customInstallmentsFor(v,advanceValue=internalAdvanceFor(v)){
   return result;
 }
 function budgetInstallments(v,context={}){
-  const result={12:null,18:null,24:null,advance:0,capital:0};
+  const result={
+    12:null,
+    18:null,
+    24:null,
+    advance:0,
+    capital:0,
+    originalTotal:0,
+    discount:0,
+    discountedTotal:0
+  };
 
-  if(!hasFinancing(v))return result;
+  const originalTotal=numericPrice(v.cotizacion);
+  const contextDiscount=numericPrice(context.discounts?.[v.id]);
+  const storedDiscount=internalDiscountFor(v);
+  const discount=Math.min(originalTotal,Math.max(0,contextDiscount||storedDiscount));
+  const discountedTotal=Math.max(0,originalTotal-discount);
 
-  const total=numericPrice(v.cotizacion);
+  result.originalTotal=originalTotal;
+  result.discount=discount;
+  result.discountedTotal=discountedTotal;
+
   const contextAdvance=numericPrice(context.advances?.[v.id]);
   const storedAdvance=internalAdvanceFor(v);
-  const advance=Math.min(total,Math.max(0,contextAdvance||storedAdvance||numericPrice(v.anticipo)));
-  const capital=Math.max(0,total-advance);
+  const advance=Math.min(
+    discountedTotal,
+    Math.max(0,contextAdvance||storedAdvance||numericPrice(v.anticipo))
+  );
 
   result.advance=advance;
-  result.capital=capital;
+  result.capital=Math.max(0,discountedTotal-advance);
 
-  if(!capital)return result;
+  if(!hasFinancing(v) || !result.capital)return result;
 
   const band=financingBand(v.anio);
 
   [12,18,24].forEach(term=>{
-    result[term]=quotaValue(capital,band.rates[term])||null;
+    result[term]=quotaValue(result.capital,band.rates[term])||null;
   });
 
   return result;
@@ -4295,7 +4353,12 @@ function budgetPageHtml(v,index,total,today,context={}){
   const status=internalStatusText(v);
   const cashOnly=isCashOnly(v);
   const general=budgetGeneralScore(v);
-  const consideredAdvance=installments.advance||numericPrice(displayedAdvance(v));
+  const originalTotal=installments.originalTotal||numericPrice(v.cotizacion);
+  const discount=installments.discount||0;
+  const discountedTotal=installments.discountedTotal||originalTotal;
+  const consideredAdvance=cashOnly
+    ? discountedTotal
+    : installments.advance||numericPrice(displayedAdvance(v));
   const meta=[
     `Año ${budgetValue(v.anio)}`,
     v.kilometraje?km(v.kilometraje):'Kilometraje —',
@@ -4304,7 +4367,7 @@ function budgetPageHtml(v,index,total,today,context={}){
   ].join(' · ');
 
   const financingNote=hasFinancing(v)
-    ? 'Cálculo estimativo sobre el capital financiado según el anticipo considerado.'
+    ? 'Cálculo estimativo sobre el valor final con descuento y el anticipo considerado.'
     : cashOnly
       ? 'Esta unidad se ofrece únicamente bajo condición de contado.'
       : 'Financiación no informada para esta unidad. Consultar condiciones vigentes.';
@@ -4348,16 +4411,20 @@ function budgetPageHtml(v,index,total,today,context={}){
     <section class="budget-section">
       <h2>Valores</h2>
       <div class="price-grid">
-        ${budgetPriceCard('Valor total en pesos',budgetMoney(v.cotizacion),{primary:true})}
-        ${budgetPriceCard('Valor publicado en dólares',budgetMoney(v.precioPublicado))}
-        ${budgetPriceCard('Valor de contado en dólares',budgetMoney(v.precioContado))}
+        ${budgetPriceCard('Precio de lista',originalTotal?formatArsNumber(originalTotal):'—',{primary:true})}
+        ${budgetPriceCard('Descuento aplicado',formatArsNumber(discount))}
+        ${budgetPriceCard('Valor final con descuento',discountedTotal?formatArsNumber(discountedTotal):'—')}
         ${budgetPriceCard(cashOnly?'Valor de contado':'Anticipo considerado',consideredAdvance?formatArsNumber(consideredAdvance):'—')}
       </div>
       <div class="info-grid values-extra">
+        ${budgetInfoRow('Valor publicado en dólares',budgetMoney(v.precioPublicado))}
+        ${budgetInfoRow('Valor de contado en dólares',budgetMoney(v.precioContado))}
         ${budgetInfoRow('Porcentaje de anticipo',v.anticipoPct)}
         ${budgetInfoRow('Máximo financiable',v.maxFinan)}
         ${budgetInfoRow('Permuta',acceptsTradeIn(v)?'Sí':'No')}
         ${budgetInfoRow('Condición comercial',cashOnly?'Solo contado':hasFinancing(v)?'Financiable':'Consultar')}
+        ${budgetInfoRow('Saldo a financiar',installments.capital?formatArsNumber(installments.capital):'—')}
+        ${budgetInfoRow('Descuento',discount?formatArsNumber(discount):'$0')}
       </div>
     </section>
 
@@ -4528,6 +4595,7 @@ function openBudgetDialog(list,{mode='print'}={}){
   const description=$('#budgetDialogDescription');
   const printButton=$('#confirmBudgetPrint');
   const singleField=$('.budget-single-advance');
+  const singleDiscountField=$('.budget-single-discount');
 
   title.textContent=mode==='profile'?'Ficha de atención':'Preparar presupuesto';
   description.textContent=mode==='profile'
@@ -4536,13 +4604,18 @@ function openBudgetDialog(list,{mode='print'}={}){
 
   printButton.classList.toggle('hidden',mode==='profile');
   singleField.classList.toggle('hidden',!single || mode==='profile');
+  singleDiscountField.classList.toggle('hidden',!single || mode==='profile');
 
   if(single){
     $('#budgetSingleAdvance').value=internalAdvanceFor(pendingBudgetVehicles[0])
       ? moneyInputValue(internalAdvanceFor(pendingBudgetVehicles[0]))
       : '';
+    $('#budgetSingleDiscount').value=internalDiscountFor(pendingBudgetVehicles[0])
+      ? moneyInputValue(internalDiscountFor(pendingBudgetVehicles[0]))
+      : '';
   }else{
     $('#budgetSingleAdvance').value='';
+    $('#budgetSingleDiscount').value='';
   }
 
   openInternalDialog('budgetDialog');
@@ -4716,7 +4789,8 @@ const VALIDATION_LABELS={
   missing_fuel:'Sin combustible',
   advance_over_price:'Anticipo mayor al precio',
   finance_over_balance:'Financiación supera saldo',
-  percentage_mismatch:'% de anticipo inconsistente'
+  percentage_mismatch:'% de anticipo inconsistente',
+  discount_over_price:'Descuento mayor al precio'
 };
 function vehicleValidationIssues(v){
   const issues=[];
@@ -4724,6 +4798,7 @@ function vehicleValidationIssues(v){
   const advance=numericPrice(v.anticipo);
   const maximum=numericPrice(v.maxFinan);
   const pct=advancePercentage(v);
+  const rawDiscount=numericPrice(internalState.customDiscounts?.[v.id]);
 
   if(!total)issues.push('missing_price');
   if(hasFinancing(v) && !advance)issues.push('missing_advance');
@@ -4733,6 +4808,7 @@ function vehicleValidationIssues(v){
   if(!clean(v.combustible))issues.push('missing_fuel');
   if(total && advance>total)issues.push('advance_over_price');
   if(total && maximum>Math.max(0,total-advance))issues.push('finance_over_balance');
+  if(total && rawDiscount>total)issues.push('discount_over_price');
 
   if(total && advance && pct!==null){
     const calculated=(advance/total)*100;
@@ -4907,14 +4983,26 @@ function selectedVehiclesSummary(){
   else lines.push('Estas son las opciones que vimos:');
 
   selected.forEach(v=>{
-    const installments=customInstallmentsFor(v);
+    const discount=internalDiscountFor(v);
+    const finalTotal=discountedTotalFor(v,discount);
+    const installments=customInstallmentsFor(v,internalAdvanceFor(v),discount);
+
     lines.push('');
     lines.push(`${v.marca} ${v.modelo} ${v.anio||''}`);
     lines.push(v.kilometraje?km(v.kilometraje):'Kilometraje a consultar');
-    lines.push(`Valor: ${money(v.cotizacion)}`);
+
+    if(discount>0){
+      lines.push(`Precio de lista: ${money(v.cotizacion)}`);
+      lines.push(`Descuento: ${formatArsNumber(discount)}`);
+      lines.push(`Valor final: ${formatArsNumber(finalTotal)}`);
+    }else{
+      lines.push(`Valor: ${money(v.cotizacion)}`);
+    }
+
     lines.push(isCashOnly(v)
-      ? `Solo de contado: ${displayedAdvance(v)}`
+      ? `Solo de contado: ${formatArsNumber(finalTotal)}`
       : `Anticipo considerado: ${formatArsNumber(internalAdvanceFor(v))}`);
+
     if(installments[24])lines.push(`24 cuotas estimadas de ${formatArsNumber(installments[24])}`);
   });
 
@@ -4927,13 +5015,18 @@ function renderInternalComparison(list){
   const selected=Array.isArray(list)?list.slice(0,3):[];
 
   $('#compareGrid').innerHTML=selected.map(v=>{
-    const installments=customInstallmentsFor(v);
+    const discount=internalDiscountFor(v);
+    const finalTotal=discountedTotalFor(v,discount);
+    const installments=customInstallmentsFor(v,internalAdvanceFor(v),discount);
+
     return `<article class="compare-card">
       <h4>${escapeHtml(v.marca+' '+v.modelo)}</h4>
       <div class="compare-table">
         <div class="compare-row"><span>Año</span><strong>${escapeHtml(v.anio||'—')}</strong></div>
         <div class="compare-row"><span>Kilómetros</span><strong>${escapeHtml(v.kilometraje?km(v.kilometraje):'—')}</strong></div>
-        <div class="compare-row"><span>Precio</span><strong>${escapeHtml(money(v.cotizacion))}</strong></div>
+        <div class="compare-row"><span>Precio de lista</span><strong>${escapeHtml(money(v.cotizacion))}</strong></div>
+        <div class="compare-row"><span>Descuento</span><strong>${discount?escapeHtml(formatArsNumber(discount)):'$0'}</strong></div>
+        <div class="compare-row"><span>Valor final</span><strong>${escapeHtml(formatArsNumber(finalTotal))}</strong></div>
         <div class="compare-row"><span>Anticipo</span><strong>${escapeHtml(formatArsNumber(internalAdvanceFor(v))||'—')}</strong></div>
         <div class="compare-row"><span>12 cuotas</span><strong>${installments[12]?escapeHtml(formatArsNumber(installments[12])):'—'}</strong></div>
         <div class="compare-row"><span>18 cuotas</span><strong>${installments[18]?escapeHtml(formatArsNumber(installments[18])):'—'}</strong></div>
@@ -5068,12 +5161,27 @@ function bindInternalStaticControls(){
     saveProfileFromDialog();
 
     const advances={...internalState.customAdvances};
+    const discounts={...internalState.customDiscounts};
 
     if(pendingBudgetVehicles.length===1){
+      const vehicle=pendingBudgetVehicles[0];
       const custom=numericPrice($('#budgetSingleAdvance').value);
+      const discount=numericPrice($('#budgetSingleDiscount').value);
+
       if(custom>0){
-        advances[pendingBudgetVehicles[0].id]=custom;
-        internalState.customAdvances[pendingBudgetVehicles[0].id]=custom;
+        advances[vehicle.id]=custom;
+        internalState.customAdvances[vehicle.id]=custom;
+      }else{
+        delete advances[vehicle.id];
+        delete internalState.customAdvances[vehicle.id];
+      }
+
+      if(discount>0){
+        discounts[vehicle.id]=discount;
+        internalState.customDiscounts[vehicle.id]=discount;
+      }else{
+        delete discounts[vehicle.id];
+        delete internalState.customDiscounts[vehicle.id];
       }
     }
 
@@ -5081,7 +5189,8 @@ function bindInternalStaticControls(){
     closeInternalDialog('budgetDialog');
     printVehicleBudgets(pendingBudgetVehicles,{
       profile:internalState.profile,
-      advances
+      advances,
+      discounts
     });
   };
 
@@ -5145,7 +5254,9 @@ function stockMiniCard(v){
   const priority=isPriorityVehicle(v.id);
   const issues=vehicleValidationIssues(v);
   const customAdvance=internalAdvanceFor(v);
-  const customInstallments=customInstallmentsFor(v,customAdvance);
+  const customDiscount=internalDiscountFor(v);
+  const discountedTotal=discountedTotalFor(v,customDiscount);
+  const customInstallments=customInstallmentsFor(v,customAdvance,customDiscount);
 
   return `<article class="stock-mini-card ${selected?'selected':''} ${issues.length?'has-warning':''}" data-stock-card-id="${escapeAttr(v.id)}">
     <div class="stock-mini-top">
@@ -5191,9 +5302,20 @@ function stockMiniCard(v){
       ${vehicleBenefitsMarkup(v)}
 
       <div class="stock-custom-advance client-usable">
-        <label>Anticipo del cliente
-          <input type="text" inputmode="numeric" data-custom-advance="${escapeAttr(v.id)}" value="${customAdvance?escapeAttr(moneyInputValue(customAdvance)):''}" placeholder="Ingresar anticipo">
-        </label>
+        <div class="stock-custom-inputs">
+          <label>Anticipo del cliente
+            <input type="text" inputmode="numeric" data-custom-advance="${escapeAttr(v.id)}" value="${customAdvance?escapeAttr(moneyInputValue(customAdvance)):''}" placeholder="Ingresar anticipo">
+          </label>
+
+          <label>Descuento
+            <input type="text" inputmode="numeric" data-custom-discount="${escapeAttr(v.id)}" value="${customDiscount?escapeAttr(moneyInputValue(customDiscount)):''}" placeholder="Ingresar descuento">
+          </label>
+        </div>
+
+        <div class="stock-discounted-total" data-discounted-total="${escapeAttr(v.id)}">
+          <span>Valor final con descuento</span>
+          <strong>${escapeHtml(formatArsNumber(discountedTotal))}</strong>
+        </div>
 
         <div class="stock-custom-installments" data-custom-results="${escapeAttr(v.id)}">
           ${[12,18,24].map(term=>`
@@ -5279,9 +5401,19 @@ function updateBudgetSelectionUi(visible=[]){
 
   saveInternalState();
 }
-function updateCustomInstallmentCard(card,v,advance){
-  const results=customInstallmentsFor(v,advance);
+function updateCustomInstallmentCard(
+  card,
+  v,
+  advance=internalAdvanceFor(v),
+  discount=internalDiscountFor(v)
+){
+  const results=customInstallmentsFor(v,advance,discount);
   const resultNode=card.querySelector(`[data-custom-results="${CSS.escape(v.id)}"]`);
+  const totalNode=card.querySelector(`[data-discounted-total="${CSS.escape(v.id)}"] strong`);
+
+  if(totalNode){
+    totalNode.textContent=formatArsNumber(discountedTotalFor(v,discount));
+  }
 
   if(!resultNode)return;
 
@@ -5361,11 +5493,44 @@ function renderStockCheck(){
       else delete internalState.customAdvances[id];
 
       saveInternalState();
-      updateCustomInstallmentCard(input.closest('.stock-mini-card'),vehicle,value);
+      updateCustomInstallmentCard(
+        input.closest('.stock-mini-card'),
+        vehicle,
+        value,
+        internalDiscountFor(vehicle)
+      );
     });
 
     input.addEventListener('blur',()=>{
       const value=numericPrice(input.value);
+      input.value=value?moneyInputValue(value):'';
+    });
+  });
+
+  body.querySelectorAll('[data-custom-discount]').forEach(input=>{
+    input.addEventListener('input',()=>{
+      const id=input.dataset.customDiscount;
+      const vehicle=vehicles.find(item=>item.id===id);
+      if(!vehicle)return;
+
+      const value=Math.min(numericPrice(vehicle.cotizacion),numericPrice(input.value));
+
+      if(value>0)internalState.customDiscounts[id]=value;
+      else delete internalState.customDiscounts[id];
+
+      saveInternalState();
+      updateCustomInstallmentCard(
+        input.closest('.stock-mini-card'),
+        vehicle,
+        internalAdvanceFor(vehicle),
+        value
+      );
+    });
+
+    input.addEventListener('blur',()=>{
+      const vehicle=vehicles.find(item=>item.id===input.dataset.customDiscount);
+      const total=numericPrice(vehicle?.cotizacion);
+      const value=Math.min(total,numericPrice(input.value));
       input.value=value?moneyInputValue(value):'';
     });
   });
@@ -5699,7 +5864,7 @@ setTimeout(()=>{
 </script>
 
   <div class="site-version-row">
-    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.15</div>
+    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.16</div>
     <span class="site-version" aria-hidden="true">·</span>
     <a class="site-version-link" href="?stock=interno">catálogo</a>
   </div>
