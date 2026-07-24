@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
-<meta name="lmp-build" content="lmp-autos-web-v1.16-descuento-cuotas">
+<meta name="lmp-build" content="lmp-autos-web-v1.18-perfiles-ultimos-vehiculos">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   
   <!-- Meta Pixel Code -->
@@ -2898,6 +2898,8 @@ function vehicleScoreData(v){
   ];
 }
 function generalScore(v){
+  ensureVehicleScoreProfile(v);
+
   if(v.calificacionGeneral)return v.calificacionGeneral;
   const values=vehicleScoreData(v).map(item=>item.value).filter(Boolean);
   return values.length?Math.round(values.reduce((sum,value)=>sum+value,0)/values.length):0;
@@ -2934,6 +2936,8 @@ function radarMobileLabelPoint(index){
   };
 }
 function renderScoreGraphic(v){
+  ensureVehicleScoreProfile(v);
+
   const scores=vehicleScoreData(v);
   if(!scores.some(item=>item.value>0))return '';
 
@@ -3008,33 +3012,221 @@ function isFeaturedPopupValue(value){
   return ['SI','TRUE','1','DESTACADO','POPUP','PRINCIPAL','X'].includes(normalized);
 }
 
+
+function rowValueByHeader(row,...names){
+  for(const name of names){
+    if(Object.prototype.hasOwnProperty.call(row,name)){
+      const direct=clean(row[name]);
+      if(direct)return direct;
+    }
+  }
+
+  const normalizedNames=new Set(names.map(normalize));
+
+  for(const [key,value] of Object.entries(row)){
+    if(normalizedNames.has(normalize(key))){
+      const text=clean(value);
+      if(text)return text;
+    }
+  }
+
+  return '';
+}
+function scoreMatchText(value){
+  return normalize(value).replace(/[^A-Z0-9]+/g,'');
+}
+const VEHICLE_SCORE_FALLBACKS=[
+  {
+    marca:'FORD',
+    modeloTokens:['ECOSPORT','15','FREESTYLE'],
+    anio:'2017',
+    rendimiento:72,
+    confort:74,
+    economia:70,
+    espacio:75,
+    seguridad:78
+  },
+  {
+    marca:'RENAULT',
+    modeloTokens:['CLIO','12','AUTHENTIQUE'],
+    anio:'2011',
+    rendimiento:52,
+    confort:51,
+    economia:76,
+    espacio:56,
+    seguridad:35
+  },
+  {
+    marca:'PEUGEOT',
+    modeloTokens:['PARTNER','16','PATAGONICA'],
+    anio:'2012',
+    rendimiento:63,
+    confort:65,
+    economia:87,
+    espacio:91,
+    seguridad:43
+  },
+  {
+    marca:'RENAULT',
+    modeloTokens:['SANDERO','16','AUTHENTIQUE'],
+    anio:'2017',
+    rendimiento:67,
+    confort:66,
+    economia:77,
+    espacio:80,
+    seguridad:52
+  }
+];
+function vehicleScoreFallback(marca,modelo,anio){
+  const normalizedBrand=normalize(marca);
+  const normalizedModel=scoreMatchText(modelo);
+  const normalizedYear=clean(anio);
+
+  const match=VEHICLE_SCORE_FALLBACKS.find(profile=>
+    normalizedBrand===profile.marca &&
+    normalizedYear===profile.anio &&
+    profile.modeloTokens.every(token=>normalizedModel.includes(scoreMatchText(token)))
+  );
+
+  if(!match)return null;
+
+  const values=[
+    match.rendimiento,
+    match.confort,
+    match.economia,
+    match.espacio,
+    match.seguridad
+  ];
+
+  return {
+    ...match,
+    general:Math.round(values.reduce((sum,value)=>sum+value,0)/values.length)
+  };
+}
+function ensureVehicleScoreProfile(vehicle){
+  if(!vehicle)return vehicle;
+
+  const fallback=vehicleScoreFallback(vehicle.marca,vehicle.modelo,vehicle.anio);
+  if(!fallback)return vehicle;
+
+  const fields=['rendimiento','confort','economia','espacio','seguridad'];
+  let fallbackApplied=false;
+
+  fields.forEach(field=>{
+    const current=scoreValue(vehicle[field]);
+
+    if(current>0){
+      vehicle[field]=current;
+    }else{
+      vehicle[field]=fallback[field];
+      fallbackApplied=true;
+    }
+  });
+
+  const values=fields.map(field=>scoreValue(vehicle[field])).filter(value=>value>0);
+  const calculated=values.length
+    ? Math.round(values.reduce((sum,value)=>sum+value,0)/values.length)
+    : 0;
+
+  vehicle.calificacionGeneral=scoreValue(vehicle.calificacionGeneral) || fallback.general || calculated;
+  vehicle.scoreFallbackApplied=Boolean(vehicle.scoreFallbackApplied || fallbackApplied);
+
+  return vehicle;
+}
+
 function mapVehicle(r){
   const firstValue=Object.values(r)[0];
   const rawId=clean(r.ID || r[' '] || r[''] || r.A || firstValue);
   const fallbackId=[r.Marca,r.Modelo,r['Año']].map(clean).filter(Boolean).join('-')
     .normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9]+/g,'-').replace(/^-|-$/g,'').toUpperCase();
   const id=rawId || fallbackId;
-  return {
-    id, marca:clean(r.Marca), modelo:clean(r.Modelo), anio:clean(r['Año']),
-    kilometraje:clean(r.Kilometraje), color:clean(r.Color),
-    precioPublicado:clean(r['Precio publicado Uds']), precioContado:clean(r['Precio de contado Uds']),
-    cotizacion:clean(r['Cotizacion al día']), maxFinan:clean(r['MAX FINAN']),
+
+  const marca=clean(r.Marca);
+  const modelo=clean(r.Modelo);
+  const anio=clean(r['Año']);
+  const scoreFallback=vehicleScoreFallback(marca,modelo,anio);
+
+  const rendimiento=scoreValue(rowValueByHeader(
+    r,
+    'Rendimiento',
+    'Puntaje Rendimiento',
+    'Score Rendimiento'
+  )) || scoreFallback?.rendimiento || 0;
+
+  const confort=scoreValue(rowValueByHeader(
+    r,
+    'Confort',
+    'Puntaje Confort',
+    'Score Confort'
+  )) || scoreFallback?.confort || 0;
+
+  const economia=scoreValue(rowValueByHeader(
+    r,
+    'Economía',
+    'Economia',
+    'Puntaje Economía',
+    'Puntaje Economia',
+    'Score Economía',
+    'Score Economia'
+  )) || scoreFallback?.economia || 0;
+
+  const espacio=scoreValue(rowValueByHeader(
+    r,
+    'Espacio',
+    'Puntaje Espacio',
+    'Score Espacio'
+  )) || scoreFallback?.espacio || 0;
+
+  const seguridad=scoreValue(rowValueByHeader(
+    r,
+    'Seguridad',
+    'Puntaje Seguridad',
+    'Score Seguridad'
+  )) || scoreFallback?.seguridad || 0;
+
+  const explicitGeneral=scoreValue(rowValueByHeader(
+    r,
+    'Calificacion General',
+    'Calificación General',
+    'Puntaje General',
+    'Score General'
+  ));
+
+  const availableScores=[rendimiento,confort,economia,espacio,seguridad].filter(value=>value>0);
+  const calculatedGeneral=availableScores.length
+    ? Math.round(availableScores.reduce((sum,value)=>sum+value,0)/availableScores.length)
+    : 0;
+
+  return ensureVehicleScoreProfile({
+    id,
+    marca,
+    modelo,
+    anio,
+    kilometraje:clean(r.Kilometraje),
+    color:clean(r.Color),
+    precioPublicado:clean(r['Precio publicado Uds']),
+    precioContado:clean(r['Precio de contado Uds']),
+    cotizacion:clean(r['Cotizacion al día']),
+    maxFinan:clean(r['MAX FINAN']),
     anticipo:clean(r['Anticipo MINIMO']),
     anticipoPct:clean(r['% de anticipo'] ?? r['% Anticipo'] ?? r['Porcentaje de anticipo'] ?? r['Porcentaje Anticipo']),
     estado:normalize(r['Estado actual del auto']),
     destacadoPopup:isFeaturedPopupValue(r['Vehículo destacado'] ?? r['Vehiculo destacado'] ?? r.Destacado ?? r['Popup destacado'] ?? r['Destacado popup']),
-    combustible:clean(r.Combustible), transmision:clean(r.Transmision),
+    combustible:clean(r.Combustible),
+    transmision:clean(r.Transmision),
     instagram:clean(r.Reel).startsWith('http')?clean(r.Reel):'',
     carpeta:clean(r['Link de fotos/videos']),
-    rendimiento:scoreValue(r.Rendimiento),
-    confort:scoreValue(r.Confort),
-    economia:scoreValue(r['Economía'] ?? r.Economia),
-    espacio:scoreValue(r.Espacio),
-    seguridad:scoreValue(r.Seguridad),
-    calificacionGeneral:scoreValue(r['Calificacion General'] ?? r['Calificación General']),
+    rendimiento,
+    confort,
+    economia,
+    espacio,
+    seguridad,
+    calificacionGeneral:explicitGeneral || scoreFallback?.general || calculatedGeneral,
+    scoreFallbackApplied:Boolean(scoreFallback && !explicitGeneral),
     fotos:[r['Foto 1'],r['Foto 2'],r['Foto 3'],r['Foto 4']].map(driveImage).filter(Boolean)
-  };
+  });
 }
+
 function validVehicle(v){
   return Boolean(v.id && v.marca && v.modelo && v.estado && v.estado!=='VENDIDO');
 }
@@ -5042,6 +5234,8 @@ function renderInternalComparison(list){
   $('#compareModal').setAttribute('aria-hidden','false');
 }
 function saveStockCache(){
+  vehicles=vehicles.map(vehicle=>ensureVehicleScoreProfile(vehicle));
+
   const payload={
     timestamp:new Date().toISOString(),
     vehicles,
@@ -5085,7 +5279,9 @@ function restoreCachedStock(error){
   const cached=loadStockCache();
   if(!cached)return false;
 
-  vehicles=cached.vehicles;
+  vehicles=cached.vehicles
+    .map(vehicle=>ensureVehicleScoreProfile(vehicle))
+    .filter(validVehicle);
   vehicleStats=cached.vehicleStats||{};
   lastStockUpdatedAt=new Date(cached.timestamp);
   markNewEntries(vehicles);
@@ -5864,7 +6060,7 @@ setTimeout(()=>{
 </script>
 
   <div class="site-version-row">
-    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.16</div>
+    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.18</div>
     <span class="site-version" aria-hidden="true">·</span>
     <a class="site-version-link" href="?stock=interno">catálogo</a>
   </div>

@@ -1,77 +1,82 @@
-# LMP Autos Web v1.16 - Descuento y cuotas
+# LMP Autos Web v1.18 - Perfiles de últimos vehículos
+
+## Corrección
+
+Se corrigió la ausencia del rombo de Perfil del vehículo en los últimos ingresos.
+
+El problema podía aparecer por dos causas:
+
+1. Los puntajes de los últimos renglones llegaban vacíos desde Google Sheets.
+2. El navegador recuperaba un caché creado por una versión anterior, sin los perfiles de respaldo.
+
+## Perfiles incluidos
+
+### Ford EcoSport 1.5 Freestyle 2017
+
+- Rendimiento: 72
+- Confort: 74
+- Economía: 70
+- Espacio: 75
+- Seguridad: 78
+- General: 74
+
+### Renault Clio 1.2 Authentique 2011
+
+- Rendimiento: 52
+- Confort: 51
+- Economía: 76
+- Espacio: 56
+- Seguridad: 35
+- General: 54
+
+### Peugeot Partner 1.6 Patagónica 2012
+
+- Rendimiento: 63
+- Confort: 65
+- Economía: 87
+- Espacio: 91
+- Seguridad: 43
+- General: 70
+
+### Renault Sandero 1.6 Authentique 2017
+
+- Rendimiento: 67
+- Confort: 66
+- Economía: 77
+- Espacio: 80
+- Seguridad: 52
+- General: 68
+
+## Mejoras técnicas
+
+- Reconoce `1.5`, `1,5`, `1-5` y variantes similares.
+- Reconoce modelos con o sin acentos.
+- Completa solo los puntajes faltantes.
+- Mantiene cualquier puntaje válido existente en Google Sheets.
+- Repara automáticamente vehículos recuperados desde el caché local.
+- Vuelve a validar el perfil antes de abrir una ficha, comparar o generar un PDF.
 
 ## Alcance
 
-La función se agregó exclusivamente dentro de Stock interno. El catálogo público no muestra ni utiliza descuentos internos.
+La corrección se aplica en:
 
-## Descuento por vehículo
-
-Cada mini tarjeta incorpora un campo:
-
-```text
-Descuento
-```
-
-El descuento se ingresa como importe en pesos y se conserva localmente en la computadora de la agencia.
-
-El sistema calcula:
-
-```text
-Valor final = precio de lista - descuento
-Capital financiado = valor final - anticipo del cliente
-```
-
-Las cuotas de 12, 18 y 24 meses se recalculan inmediatamente.
-
-## Persistencia
-
-Los descuentos quedan guardados por vehículo en `localStorage`, junto con:
-
-- anticipos personalizados;
-- notas;
-- prioridades;
-- ficha del cliente;
-- selección de vehículos.
-
-No se modifica Google Sheets.
-
-## Presupuestos
-
-Los presupuestos individuales y múltiples muestran de forma estandarizada:
-
-- precio de lista;
-- descuento aplicado;
-- valor final con descuento;
-- anticipo considerado;
-- saldo a financiar;
-- cuotas recalculadas.
-
-Para un presupuesto individual también puede modificarse el descuento desde el cuadro previo a imprimir.
-
-## Comparación y resumen
-
-El descuento también se aplica en:
-
-- comparación interna;
-- resumen para copiar por WhatsApp;
-- presupuesto individual;
-- presupuesto múltiple.
-
-## Seguridad de cálculo
-
-- El descuento nunca puede superar el precio total.
-- El valor final nunca puede ser negativo.
-- El anticipo se limita al valor final con descuento.
-- Las cuotas se calculan sobre el saldo real restante.
+- ficha pública;
+- rombo de puntajes;
+- barras laterales;
+- calificación general;
+- Stock interno;
+- comparación;
+- PDF individual;
+- PDF múltiple.
 
 ## Validación
 
 - JavaScript validado con `node --check`.
-- PDF con descuento validado en una página A4.
-- Render de control generado a 150 DPI.
+- Se probaron variantes con punto, coma y acentos.
+- Se comprobó la reparación de vehículos cargados desde caché.
 
 ## Versión
 
 ```text
-lmpautos V1.16
+lmpautos V1.18
 ```
