@@ -1,82 +1,56 @@
-# LMP Autos Web v1.18 - Perfiles de últimos vehículos
+# LMP Autos Web v1.19 — Popup de destacados compacto
 
-## Corrección
+## Cambio principal
 
-Se corrigió la ausencia del rombo de Perfil del vehículo en los últimos ingresos.
+Se redujo el panel del popup de vehículos destacados para que nunca supere la mitad de la pantalla.
 
-El problema podía aparecer por dos causas:
+### Escritorio
 
-1. Los puntajes de los últimos renglones llegaban vacíos desde Google Sheets.
-2. El navegador recuperaba un caché creado por una versión anterior, sin los perfiles de respaldo.
+- Ancho máximo: `50vw`.
+- Alto máximo: `50vh`.
+- Distribución compacta en dos columnas.
+- Contenido interno desplazable si fuera necesario.
 
-## Perfiles incluidos
+### Tablets y celulares
 
-### Ford EcoSport 1.5 Freestyle 2017
+- Alto máximo: `50dvh`.
+- En teléfonos puede utilizar casi todo el ancho, pero mantiene como límite la mitad de la altura de la pantalla.
+- Imagen e información se muestran lado a lado para evitar un popup vertical excesivo.
 
-- Rendimiento: 72
-- Confort: 74
-- Economía: 70
-- Espacio: 75
-- Seguridad: 78
-- General: 74
+## Contenido simplificado
 
-### Renault Clio 1.2 Authentique 2011
+Para conservar legibilidad dentro del espacio reducido, el popup oculta:
 
-- Rendimiento: 52
-- Confort: 51
-- Economía: 76
-- Espacio: 56
-- Seguridad: 35
-- General: 54
+- gráfico completo de puntajes;
+- texto descriptivo secundario.
 
-### Peugeot Partner 1.6 Patagónica 2012
+Mantiene:
 
-- Rendimiento: 63
-- Confort: 65
-- Economía: 87
-- Espacio: 91
-- Seguridad: 43
-- General: 70
-
-### Renault Sandero 1.6 Authentique 2017
-
-- Rendimiento: 67
-- Confort: 66
-- Economía: 77
-- Espacio: 80
-- Seguridad: 52
-- General: 68
-
-## Mejoras técnicas
-
-- Reconoce `1.5`, `1,5`, `1-5` y variantes similares.
-- Reconoce modelos con o sin acentos.
-- Completa solo los puntajes faltantes.
-- Mantiene cualquier puntaje válido existente en Google Sheets.
-- Repara automáticamente vehículos recuperados desde el caché local.
-- Vuelve a validar el perfil antes de abrir una ficha, comparar o generar un PDF.
+- fotografía;
+- etiqueta de destacado;
+- precio;
+- anticipo o condición de contado;
+- ubicación en escritorio;
+- acceso a la ficha;
+- botón de reserva.
 
 ## Alcance
 
-La corrección se aplica en:
+Solo se modificó el popup automático de vehículos destacados. No cambia:
 
-- ficha pública;
-- rombo de puntajes;
-- barras laterales;
-- calificación general;
+- ficha del vehículo;
+- catálogo;
 - Stock interno;
-- comparación;
-- PDF individual;
-- PDF múltiple.
+- presupuestos PDF;
+- gráficos de puntajes de las fichas.
 
 ## Validación
 
 - JavaScript validado con `node --check`.
-- Se probaron variantes con punto, coma y acentos.
-- Se comprobó la reparación de vehículos cargados desde caché.
+- Reglas finales con prioridad sobre los estilos responsive anteriores.
 
 ## Versión
 
 ```text
-lmpautos V1.18
+lmpautos V1.19
 ```
