@@ -1,87 +1,67 @@
-# LMP Autos Web v1.20 — Puntajes dinámicos desde Google Sheets
+# LMP Autos Web v1.21 — Ordenar catálogo por puntajes
 
-## Problema corregido
+## Nuevo filtro
 
-Los vehículos nuevos podían cargar correctamente:
-
-- foto;
-- nombre;
-- precios;
-- ficha completa;
-
-pero quedar sin rombo de puntajes.
-
-La causa era que la web aceptaba la primera respuesta válida de Google Sheets. En algunas cargas, la fuente JSONP devolvía las columnas nuevas con encabezados genéricos o diferentes, aunque el catálogo general sí se pudiera leer.
-
-## Nuevo comportamiento
-
-La página ahora consulta en paralelo:
-
-1. Google Sheets mediante JSONP.
-2. El CSV publicado.
-
-Después:
-
-- verifica cuál de las dos respuestas contiene más puntajes reconocibles;
-- utiliza esa respuesta como fuente principal;
-- combina la otra fuente para completar datos faltantes;
-- genera el vehículo una sola vez;
-- conserva el caché como último respaldo.
-
-## Encabezados reconocidos
-
-Ya no se exige que el encabezado sea idéntico. Se reconocen variantes como:
+Dentro de `Ver catálogo completo` se agregó:
 
 ```text
-Rendimiento
-Puntaje Rendimiento
-Puntaje
-Rendimiento (1-100)
-Rendimiento / 100
-Score Rendimiento
+Ordenar por puntaje
 ```
 
-La misma tolerancia se aplica a:
+Permite ordenar por:
 
-- Confort;
-- Economía;
-- Espacio;
-- Seguridad;
+- Rendimiento.
+- Confort.
+- Economía.
+- Espacio.
+- Seguridad.
 - Calificación General.
 
-## Formatos de puntaje admitidos
+Cada criterio puede utilizarse de dos formas:
 
-```text
-72
-72/100
-72 pts
-72%
-72,0
-```
+- mayor puntaje primero;
+- menor puntaje primero.
 
-La web toma correctamente el primer valor numérico.
+## Comportamiento
 
-## Respaldo por modelo
+El orden por puntaje es excluyente con:
 
-Los perfiles específicos agregados en versiones anteriores se mantienen como último recurso, pero los nuevos vehículos ya no necesitan una modificación manual del `index.html` cuando sus puntajes están cargados en la hoja.
+- orden por precio;
+- orden por año.
 
-## Actualización
+Al seleccionar uno, los otros se limpian automáticamente.
 
-Después de cargar un vehículo nuevo:
+Los filtros de:
 
-1. completar los cinco puntajes en Google Sheets;
-2. esperar que la publicación refleje los cambios;
-3. recargar la página o presionar `Actualizar ahora` en Stock interno.
+- marca;
+- transmisión;
+- combustible;
+- favoritos;
+
+continúan funcionando junto con el orden elegido.
+
+## Vehículos sin puntajes
+
+Los vehículos que no tengan un valor válido para el criterio seleccionado siempre aparecen al final, tanto en orden ascendente como descendente.
+
+## Corrección adicional
+
+Se corrigió la prioridad de ordenamiento para que la disponibilidad de imagen no anule el orden seleccionado por:
+
+- precio;
+- año;
+- puntaje.
+
+La imagen solo se utiliza como desempate.
 
 ## Validación
 
 - JavaScript validado con `node --check`.
-- Probados encabezados con saltos de línea, sufijos y símbolos.
-- Probados valores `72/100`, `70 pts` y números simples.
-- Probada combinación entre JSONP y CSV.
+- Orden ascendente y descendente probado.
+- Vehículos sin puntaje comprobados al final.
 
 ## Versión
 
 ```text
-lmpautos V1.20
+lmpautos V1.21
 ```

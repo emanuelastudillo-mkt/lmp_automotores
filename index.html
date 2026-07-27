@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
-<meta name="lmp-build" content="lmp-autos-web-v1.20-puntajes-dinamicos-sheets">
+<meta name="lmp-build" content="lmp-autos-web-v1.21-orden-por-puntajes">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   
   <!-- Meta Pixel Code -->
@@ -2287,6 +2287,13 @@ fbq('track', 'PageView');
       }
     }
 
+
+    @media(min-width:961px){
+      #catalogView .filters{
+        grid-template-columns:repeat(6,minmax(0,1fr)) auto
+      }
+    }
+
 </style>
 </head>
 <body>
@@ -2410,6 +2417,27 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
           <option value="">Sin ordenar</option>
           <option value="desc">Más nuevos</option>
           <option value="asc">Más antiguos</option>
+        </select>
+      </div>
+      <div class="field"><label>Ordenar por puntaje</label>
+        <select id="scoreOrder">
+          <option value="">Sin ordenar</option>
+          <optgroup label="Mayor puntaje">
+            <option value="rendimiento-desc">Mayor rendimiento</option>
+            <option value="confort-desc">Mayor confort</option>
+            <option value="economia-desc">Mayor economía</option>
+            <option value="espacio-desc">Mayor espacio</option>
+            <option value="seguridad-desc">Mayor seguridad</option>
+            <option value="general-desc">Mayor calificación general</option>
+          </optgroup>
+          <optgroup label="Menor puntaje">
+            <option value="rendimiento-asc">Menor rendimiento</option>
+            <option value="confort-asc">Menor confort</option>
+            <option value="economia-asc">Menor economía</option>
+            <option value="espacio-asc">Menor espacio</option>
+            <option value="seguridad-asc">Menor seguridad</option>
+            <option value="general-asc">Menor calificación general</option>
+          </optgroup>
         </select>
       </div>
 <div class="filter-actions">
@@ -4412,7 +4440,8 @@ function populateFilters(){
   $('#fuelFilter').innerHTML='<option value="">Todos</option>'+fuels.map(x=>`<option>${escapeHtml(x)}</option>`).join('');
 }
 function activeFilterCount(){
-  return ['brandFilter','transFilter','fuelFilter','priceOrder','yearOrder'].filter(id=>$('#'+id).value).length;
+  return ['brandFilter','transFilter','fuelFilter','priceOrder','yearOrder','scoreOrder']
+    .filter(id=>$('#'+id).value).length;
 }
 function updateFilterButton(){
   const count=activeFilterCount();
@@ -4428,12 +4457,36 @@ function closeFilters(){
   $('#filterOverlay').classList.remove('open');
   if(!$('#vehicleModal').classList.contains('open')) document.body.style.overflow='';
 }
+
+function catalogScoreValue(vehicle,metric){
+  if(metric==='general')return Number(generalScore(vehicle))||0;
+  return scoreValue(vehicle?.[metric]);
+}
+function compareCatalogScores(a,b,metric,direction){
+  const scoreA=catalogScoreValue(a,metric);
+  const scoreB=catalogScoreValue(b,metric);
+  const missingA=scoreA<=0;
+  const missingB=scoreB<=0;
+
+  // Los vehículos sin puntaje siempre quedan al final.
+  if(missingA!==missingB)return missingA?1:-1;
+  if(scoreA===scoreB){
+    return imageAvailabilityRank(a)-imageAvailabilityRank(b) ||
+      Number(b.anio||0)-Number(a.anio||0);
+  }
+
+  return direction==='asc'
+    ? scoreA-scoreB
+    : scoreB-scoreA;
+}
+
 function applyFilters(){
   const brand=$('#brandFilter').value;
   const trans=$('#transFilter').value;
   const fuel=$('#fuelFilter').value;
   const priceOrder=$('#priceOrder').value;
   const yearOrder=$('#yearOrder').value;
+  const scoreOrder=$('#scoreOrder').value;
 
   filtered=vehicles.filter(v=>
     (!brand || v.marca===brand) &&
@@ -4446,23 +4499,38 @@ function applyFilters(){
     filtered.sort((a,b)=>{
       const pa=cashPriceArs(a)||numericPrice(a.cotizacion)||numericPrice(a.precioPublicado);
       const pb=cashPriceArs(b)||numericPrice(b.cotizacion)||numericPrice(b.precioPublicado);
+
+      if(pa===pb)return imageAvailabilityRank(a)-imageAvailabilityRank(b);
       return priceOrder==='asc'?pa-pb:pb-pa;
     });
   }else if(yearOrder){
     filtered.sort((a,b)=>{
       const ya=Number(a.anio)||0;
       const yb=Number(b.anio)||0;
+
+      if(ya===yb)return imageAvailabilityRank(a)-imageAvailabilityRank(b);
       return yearOrder==='asc'?ya-yb:yb-ya;
     });
+  }else if(scoreOrder){
+    const [metric,direction]=scoreOrder.split('-');
+    filtered.sort((a,b)=>compareCatalogScores(a,b,metric,direction));
   }else{
     filtered.sort((a,b)=>
       (b.isNewEntry?1:0)-(a.isNewEntry?1:0) ||
+      imageAvailabilityRank(a)-imageAvailabilityRank(b) ||
       Number(vehicleStats[b.id]?.score||0)-Number(vehicleStats[a.id]?.score||0)
     );
   }
-  emitAnalytics('filter_catalog',{brand,transmission:trans,fuel,mode:catalogMode});
 
-  filtered.sort((a,b)=>imageAvailabilityRank(a)-imageAvailabilityRank(b));
+  emitAnalytics('filter_catalog',{
+    brand,
+    transmission:trans,
+    fuel,
+    price_order:priceOrder,
+    year_order:yearOrder,
+    score_order:scoreOrder,
+    mode:catalogMode
+  });
   renderCards($('#catalogGrid'),filtered);
   $('#resultCount').textContent=`${filtered.length} vehículo${filtered.length===1?'':'s'} encontrado${filtered.length===1?'':'s'}`;
   updateFilterButton();
@@ -6230,11 +6298,24 @@ async function loadData({force=false}={}){
 $$('[data-view]').forEach(x=>x.addEventListener('click',e=>{e.preventDefault();switchView(x.dataset.view)}));
 ['brandFilter','transFilter','fuelFilter'].forEach(id=>$('#'+id).addEventListener('change',applyFilters));
 $('#priceOrder').addEventListener('change',()=>{
-  if($('#priceOrder').value)$('#yearOrder').value='';
+  if($('#priceOrder').value){
+    $('#yearOrder').value='';
+    $('#scoreOrder').value='';
+  }
   applyFilters();
 });
 $('#yearOrder').addEventListener('change',()=>{
-  if($('#yearOrder').value)$('#priceOrder').value='';
+  if($('#yearOrder').value){
+    $('#priceOrder').value='';
+    $('#scoreOrder').value='';
+  }
+  applyFilters();
+});
+$('#scoreOrder').addEventListener('change',()=>{
+  if($('#scoreOrder').value){
+    $('#priceOrder').value='';
+    $('#yearOrder').value='';
+  }
   applyFilters();
 });
 $('#clearFilters').onclick=()=>{
@@ -6243,6 +6324,7 @@ $('#clearFilters').onclick=()=>{
   $('#fuelFilter').value='';
   $('#priceOrder').value='';
   $('#yearOrder').value='';
+  $('#scoreOrder').value='';
   applyFilters();
 };
 $('#mobileFilterTrigger').onclick=openFilters;
@@ -6320,7 +6402,7 @@ setTimeout(()=>{
 </script>
 
   <div class="site-version-row">
-    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.20</div>
+    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.21</div>
     <span class="site-version" aria-hidden="true">·</span>
     <a class="site-version-link" href="?stock=interno">catálogo</a>
   </div>
