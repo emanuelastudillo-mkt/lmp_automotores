@@ -1,34 +1,54 @@
-# LMP Autos Web v1.22 — Puntajes de mayor a menor
+# LMP Autos Web v1.23 — Ocultar vehículos de baja
 
-## Ajuste realizado
+## Cambio
 
-Dentro de `Ver catálogo completo`, el filtro `Ordenar por puntaje` conserva únicamente:
+Los vehículos cuyo campo:
 
-- Rendimiento.
-- Confort.
-- Economía.
-- Espacio.
-- Seguridad.
-- Calificación general.
+```text
+Estado actual del auto
+```
 
-Todos los criterios ordenan automáticamente de mayor a menor.
+tenga el valor:
 
-Se eliminaron todas las opciones de menor a mayor para simplificar el selector.
+```text
+de baja
+```
 
-## Comportamiento
+quedan ocultos del sitio público.
 
-- El vehículo con mayor puntaje aparece primero.
-- Los vehículos sin puntaje permanecen al final.
-- Continúa siendo excluyente con el orden por precio y por año.
-- Marca, transmisión, combustible y favoritos siguen funcionando normalmente.
+La comparación no distingue mayúsculas, minúsculas ni acentos. Por ejemplo, se reconocen igual:
+
+```text
+de baja
+DE BAJA
+De Baja
+```
+
+## Lugares donde se ocultan
+
+- Catálogo completo.
+- Resultados filtrados.
+- Favoritos públicos.
+- Popup de destacados.
+- Vehículos similares.
+- Comparador público.
+- Acceso mediante enlace directo a la ficha.
+
+También se evita que una marca, transmisión o combustible aparezca en los filtros cuando solo pertenece a vehículos de baja.
+
+## Stock interno
+
+Las unidades con estado `de baja` continúan visibles dentro de Stock interno para consulta administrativa.
+
+No se modifica ni elimina información de Google Sheets.
 
 ## Validación
 
 - JavaScript validado con `node --check`.
-- Confirmada la eliminación de todas las opciones ascendentes.
+- Probados estados `DE BAJA`, `de baja`, `VENDIDO`, `DISPONIBLE` y `RESERVADO`.
 
 ## Versión
 
 ```text
-lmpautos V1.22
+lmpautos V1.23
 ```

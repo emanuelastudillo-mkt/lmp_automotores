@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
-<meta name="lmp-build" content="lmp-autos-web-v1.22-puntajes-mayor-a-menor">
+<meta name="lmp-build" content="lmp-autos-web-v1.23-ocultar-de-baja">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   
   <!-- Meta Pixel Code -->
@@ -3018,7 +3018,10 @@ function vehicleSlug(v){
 }
 function vehicleFromSlug(slug){
   const normalizedSlug=slugify(slug);
-  return vehicles.find(v=>vehicleSlug(v)===normalizedSlug) || null;
+  return vehicles.find(v=>
+    isPublicCatalogVehicle(v) &&
+    vehicleSlug(v)===normalizedSlug
+  ) || null;
 }
 function currentVehicleSlugFromUrl(){
   const params=new URLSearchParams(window.location.search);
@@ -3486,6 +3489,12 @@ function mapVehicle(r){
 function validVehicle(v){
   return Boolean(v.id && v.marca && v.modelo && v.estado && v.estado!=='VENDIDO');
 }
+function isDecommissionedVehicle(v){
+  return normalize(v?.estado)==='DE BAJA';
+}
+function isPublicCatalogVehicle(v){
+  return Boolean(v && v.estado!=='VENDIDO' && !isDecommissionedVehicle(v));
+}
 function isAutomatic(v){
   return /AUT|AUTO|AT|CVT|DSG/i.test(normalize(v.transmision));
 }
@@ -3743,7 +3752,11 @@ function nextCoverCandidate(img){
 
 
 function featuredPopupVehicle(){
-  const featured=vehicles.filter(v=>v.destacadoPopup && v.estado!=='VENDIDO' && v.hasLocalCover);
+  const featured=vehicles.filter(v=>
+    v.destacadoPopup &&
+    isPublicCatalogVehicle(v) &&
+    v.hasLocalCover
+  );
 
   if(!featured.length){
     return null;
@@ -3960,7 +3973,7 @@ async function copyVehicleLink(v,button=null){
 }
 function similarVehicles(v,limit=3){
   const price=numericPrice(v.cotizacion);
-  return vehicles.filter(x=>x.id!==v.id&&x.estado!=='VENDIDO').map(x=>{
+  return vehicles.filter(x=>x.id!==v.id && isPublicCatalogVehicle(x)).map(x=>{
     let score=0;if(x.marca===v.marca)score+=4;if(x.combustible===v.combustible)score+=2;if(x.transmision===v.transmision)score+=2;
     const xp=numericPrice(x.cotizacion);if(price&&xp)score+=Math.max(0,4-Math.abs(price-xp)/Math.max(price,1)*10);return{x,score};
   }).sort((a,b)=>b.score-a.score).slice(0,limit).map(item=>item.x);
@@ -3970,7 +3983,16 @@ function similarMarkup(v){
   return `<section class="similar-section"><h4>También podrían interesarte</h4><div class="similar-grid">${similar.map(x=>`<button class="similar-item" type="button" data-similar-id="${escapeAttr(x.id)}">${coverImageMarkup(x,12)}<strong>${escapeHtml(x.marca+' '+x.modelo)}</strong><span>${escapeHtml(money(x.cotizacion))}</span></button>`).join('')}</div></section>`;
 }
 function renderCompare(){
-  const selected=[...compareIds].map(id=>vehicles.find(v=>v.id===id)).filter(Boolean);
+  const selected=[...compareIds]
+    .map(id=>vehicles.find(v=>v.id===id))
+    .filter(isPublicCatalogVehicle);
+
+  [...compareIds].forEach(id=>{
+    const vehicle=vehicles.find(v=>v.id===id);
+    if(!isPublicCatalogVehicle(vehicle))compareIds.delete(id);
+  });
+  saveCompare();
+
   $('#compareGrid').innerHTML=selected.map(v=>`<article class="compare-card">${coverImageMarkup(v,20)}<h4>${escapeHtml(v.marca+' '+v.modelo)}</h4><div class="compare-table">
   <div class="compare-row"><span>Año</span><strong>${escapeHtml(v.anio||'—')}</strong></div><div class="compare-row"><span>Kilómetros</span><strong>${escapeHtml(v.kilometraje?km(v.kilometraje):'—')}</strong></div><div class="compare-row"><span>Precio</span><strong>${escapeHtml(money(v.cotizacion))}</strong></div><div class="compare-row"><span>Anticipo</span><strong>${escapeHtml(displayedAdvance(v)||'—')}</strong></div><div class="compare-row"><span>Cuotas desde</span><strong>${estimatedInstallment(v)?`${formatArsNumber(estimatedInstallment(v))} / 24 meses`:'No disponible'}</strong></div><div class="compare-row"><span>Transmisión</span><strong>${escapeHtml(v.transmision||'—')}</strong></div><div class="compare-row"><span>Combustible</span><strong>${escapeHtml(v.combustible||'—')}</strong></div><div class="compare-row"><span>General</span><strong>${escapeHtml(generalScore(v))}/100</strong></div></div></article>`).join('');
   $('#compareModal').classList.add('open');$('#compareModal').setAttribute('aria-hidden','false');emitAnalytics('compare_vehicles',{count:selected.length});
@@ -4422,11 +4444,15 @@ function renderCards(target,list,{localOnly=false}={}){
   updateCompareUi();
 }
 function populateFilters(){
-  const brands=[...new Set(vehicles.map(v=>v.marca).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+  const publicVehicles=vehicles.filter(isPublicCatalogVehicle);
+
+  const brands=[...new Set(publicVehicles.map(v=>v.marca).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
   $('#brandFilter').innerHTML='<option value="">Todas</option>'+brands.map(x=>`<option>${escapeHtml(x)}</option>`).join('');
-  const trans=[...new Set(vehicles.map(v=>v.transmision).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+
+  const trans=[...new Set(publicVehicles.map(v=>v.transmision).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
   $('#transFilter').innerHTML='<option value="">Todas</option>'+trans.map(x=>`<option>${escapeHtml(x)}</option>`).join('');
-  const fuels=[...new Set(vehicles.map(v=>v.combustible).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+
+  const fuels=[...new Set(publicVehicles.map(v=>v.combustible).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
   $('#fuelFilter').innerHTML='<option value="">Todos</option>'+fuels.map(x=>`<option>${escapeHtml(x)}</option>`).join('');
 }
 function activeFilterCount(){
@@ -4479,6 +4505,7 @@ function applyFilters(){
   const scoreOrder=$('#scoreOrder').value;
 
   filtered=vehicles.filter(v=>
+    isPublicCatalogVehicle(v) &&
     (!brand || v.marca===brand) &&
     (!trans || v.transmision===trans) &&
     (!fuel || v.combustible===fuel) &&
@@ -4526,7 +4553,8 @@ function applyFilters(){
   updateFilterButton();
 }
 function openVehicle(id,{updateUrl=true,replaceUrl=false}={}){
-  const v=vehicles.find(x=>x.id===id); if(!v)return;
+  const v=vehicles.find(x=>x.id===id);
+  if(!v || !isPublicCatalogVehicle(v))return;
   if(updateUrl)updateVehicleUrl(v,{replace:replaceUrl});
   trackEvent(v.id,'vista');
   currentGallery={images:v.fotos,index:0};
@@ -6392,7 +6420,7 @@ setTimeout(()=>{
 </script>
 
   <div class="site-version-row">
-    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.22</div>
+    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.23</div>
     <span class="site-version" aria-hidden="true">·</span>
     <a class="site-version-link" href="?stock=interno">catálogo</a>
   </div>
