@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
-<meta name="lmp-build" content="lmp-autos-web-v1.21-orden-por-puntajes">
+<meta name="lmp-build" content="lmp-autos-web-v1.22-puntajes-mayor-a-menor">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   
   <!-- Meta Pixel Code -->
@@ -2422,22 +2422,12 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
       <div class="field"><label>Ordenar por puntaje</label>
         <select id="scoreOrder">
           <option value="">Sin ordenar</option>
-          <optgroup label="Mayor puntaje">
-            <option value="rendimiento-desc">Mayor rendimiento</option>
-            <option value="confort-desc">Mayor confort</option>
-            <option value="economia-desc">Mayor economía</option>
-            <option value="espacio-desc">Mayor espacio</option>
-            <option value="seguridad-desc">Mayor seguridad</option>
-            <option value="general-desc">Mayor calificación general</option>
-          </optgroup>
-          <optgroup label="Menor puntaje">
-            <option value="rendimiento-asc">Menor rendimiento</option>
-            <option value="confort-asc">Menor confort</option>
-            <option value="economia-asc">Menor economía</option>
-            <option value="espacio-asc">Menor espacio</option>
-            <option value="seguridad-asc">Menor seguridad</option>
-            <option value="general-asc">Menor calificación general</option>
-          </optgroup>
+          <option value="rendimiento-desc">Rendimiento</option>
+          <option value="confort-desc">Confort</option>
+          <option value="economia-desc">Economía</option>
+          <option value="espacio-desc">Espacio</option>
+          <option value="seguridad-desc">Seguridad</option>
+          <option value="general-desc">Calificación general</option>
         </select>
       </div>
 <div class="filter-actions">
@@ -6402,7 +6392,7 @@ setTimeout(()=>{
 </script>
 
   <div class="site-version-row">
-    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.21</div>
+    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.22</div>
     <span class="site-version" aria-hidden="true">·</span>
     <a class="site-version-link" href="?stock=interno">catálogo</a>
   </div>

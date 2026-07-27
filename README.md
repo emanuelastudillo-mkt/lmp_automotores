@@ -1,67 +1,34 @@
-# LMP Autos Web v1.21 — Ordenar catálogo por puntajes
+# LMP Autos Web v1.22 — Puntajes de mayor a menor
 
-## Nuevo filtro
+## Ajuste realizado
 
-Dentro de `Ver catálogo completo` se agregó:
-
-```text
-Ordenar por puntaje
-```
-
-Permite ordenar por:
+Dentro de `Ver catálogo completo`, el filtro `Ordenar por puntaje` conserva únicamente:
 
 - Rendimiento.
 - Confort.
 - Economía.
 - Espacio.
 - Seguridad.
-- Calificación General.
+- Calificación general.
 
-Cada criterio puede utilizarse de dos formas:
+Todos los criterios ordenan automáticamente de mayor a menor.
 
-- mayor puntaje primero;
-- menor puntaje primero.
+Se eliminaron todas las opciones de menor a mayor para simplificar el selector.
 
 ## Comportamiento
 
-El orden por puntaje es excluyente con:
-
-- orden por precio;
-- orden por año.
-
-Al seleccionar uno, los otros se limpian automáticamente.
-
-Los filtros de:
-
-- marca;
-- transmisión;
-- combustible;
-- favoritos;
-
-continúan funcionando junto con el orden elegido.
-
-## Vehículos sin puntajes
-
-Los vehículos que no tengan un valor válido para el criterio seleccionado siempre aparecen al final, tanto en orden ascendente como descendente.
-
-## Corrección adicional
-
-Se corrigió la prioridad de ordenamiento para que la disponibilidad de imagen no anule el orden seleccionado por:
-
-- precio;
-- año;
-- puntaje.
-
-La imagen solo se utiliza como desempate.
+- El vehículo con mayor puntaje aparece primero.
+- Los vehículos sin puntaje permanecen al final.
+- Continúa siendo excluyente con el orden por precio y por año.
+- Marca, transmisión, combustible y favoritos siguen funcionando normalmente.
 
 ## Validación
 
 - JavaScript validado con `node --check`.
-- Orden ascendente y descendente probado.
-- Vehículos sin puntaje comprobados al final.
+- Confirmada la eliminación de todas las opciones ascendentes.
 
 ## Versión
 
 ```text
-lmpautos V1.21
+lmpautos V1.22
 ```
