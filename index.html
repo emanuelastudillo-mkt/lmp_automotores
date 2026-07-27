@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
-<meta name="lmp-build" content="lmp-autos-web-v1.19-popup-destacados-compacto">
+<meta name="lmp-build" content="lmp-autos-web-v1.20-puntajes-dinamicos-sheets">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   
   <!-- Meta Pixel Code -->
@@ -3053,8 +3053,15 @@ function km(v){
   return new Intl.NumberFormat('es-AR').format(real)+' km';
 }
 function scoreValue(value){
-  const parsed=Number(clean(value).replace(',','.').replace(/[^0-9.\-]/g,''));
-  return Number.isFinite(parsed)?Math.max(0,Math.min(100,Math.round(parsed))):0;
+  const text=clean(value).replace(',','.');
+  const match=text.match(/-?\d+(?:\.\d+)?/);
+
+  if(!match)return 0;
+
+  const parsed=Number(match[0]);
+  return Number.isFinite(parsed)
+    ? Math.max(0,Math.min(100,Math.round(parsed)))
+    : 0;
 }
 function vehicleScoreData(v){
   return [
@@ -3200,6 +3207,103 @@ function rowValueByHeader(row,...names){
 
   return '';
 }
+
+function normalizedHeaderText(value){
+  return normalize(value)
+    .replace(/[^A-Z0-9]+/g,' ')
+    .replace(/\s+/g,' ')
+    .trim();
+}
+const SCORE_HEADER_ALIASES={
+  rendimiento:['RENDIMIENTO','PUNTAJE RENDIMIENTO','SCORE RENDIMIENTO','RENDIMIENTO 1 100'],
+  confort:['CONFORT','PUNTAJE CONFORT','SCORE CONFORT','CONFORT 1 100'],
+  economia:['ECONOMIA','PUNTAJE ECONOMIA','SCORE ECONOMIA','ECONOMIA 1 100'],
+  espacio:['ESPACIO','PUNTAJE ESPACIO','SCORE ESPACIO','ESPACIO 1 100'],
+  seguridad:['SEGURIDAD','PUNTAJE SEGURIDAD','SCORE SEGURIDAD','SEGURIDAD 1 100'],
+  general:['CALIFICACION GENERAL','PUNTAJE GENERAL','SCORE GENERAL','GENERAL 1 100']
+};
+function rowScoreValue(row,metric){
+  const aliases=SCORE_HEADER_ALIASES[metric]||[];
+  const aliasSet=new Set(aliases.map(normalizedHeaderText));
+
+  // Primero busca coincidencias exactas normalizadas.
+  for(const [key,value] of Object.entries(row)){
+    if(aliasSet.has(normalizedHeaderText(key))){
+      const score=scoreValue(value);
+      if(score>0)return score;
+    }
+  }
+
+  // Después busca el nombre de la métrica dentro de encabezados más largos.
+  const token=normalizedHeaderText(metric);
+  for(const [key,value] of Object.entries(row)){
+    const header=normalizedHeaderText(key);
+
+    if(!header)continue;
+    if(metric!=='general' && header.includes('GENERAL'))continue;
+
+    const matches=metric==='general'
+      ? header.includes('GENERAL') && (
+          header.includes('CALIFICACION') ||
+          header.includes('PUNTAJE') ||
+          header.includes('SCORE')
+        )
+      : header.split(' ').includes(token);
+
+    if(matches){
+      const score=scoreValue(value);
+      if(score>0)return score;
+    }
+  }
+
+  return 0;
+}
+function rowVehicleIdentity(row){
+  const direct=clean(row.ID || row[' '] || row[''] || row.A || Object.values(row)[0]);
+  if(direct)return normalize(direct);
+
+  return normalize([
+    rowValueByHeader(row,'Marca'),
+    rowValueByHeader(row,'Modelo'),
+    rowValueByHeader(row,'Año','Ano')
+  ].join('|'));
+}
+function rowScoreCompleteness(row){
+  return ['rendimiento','confort','economia','espacio','seguridad']
+    .reduce((total,metric)=>total+(rowScoreValue(row,metric)>0?1:0),0);
+}
+function sourceScoreQuality(rows){
+  return (Array.isArray(rows)?rows:[]).reduce(
+    (total,row)=>total+rowScoreCompleteness(row),
+    0
+  );
+}
+function mergeSheetRows(primaryRows,secondaryRows){
+  const primary=Array.isArray(primaryRows)?primaryRows:[];
+  const secondary=Array.isArray(secondaryRows)?secondaryRows:[];
+  const secondaryById=new Map(
+    secondary.map(row=>[rowVehicleIdentity(row),row])
+  );
+
+  const merged=primary.map(row=>{
+    const identity=rowVehicleIdentity(row);
+    const other=secondaryById.get(identity);
+
+    if(!other)return row;
+
+    // El objeto de la fuente principal conserva los datos generales.
+    // La otra fuente completa columnas vacías y encabezados no reconocidos.
+    return {...other,...row};
+  });
+
+  const known=new Set(merged.map(rowVehicleIdentity));
+  secondary.forEach(row=>{
+    if(!known.has(rowVehicleIdentity(row)))merged.push(row);
+  });
+
+  return merged;
+}
+
 function scoreMatchText(value){
   return normalize(value).replace(/[^A-Z0-9]+/g,'');
 }
@@ -3314,51 +3418,17 @@ function mapVehicle(r){
   const anio=clean(r['Año']);
   const scoreFallback=vehicleScoreFallback(marca,modelo,anio);
 
-  const rendimiento=scoreValue(rowValueByHeader(
-    r,
-    'Rendimiento',
-    'Puntaje Rendimiento',
-    'Score Rendimiento'
-  )) || scoreFallback?.rendimiento || 0;
+  const rendimiento=rowScoreValue(r,'rendimiento') || scoreFallback?.rendimiento || 0;
 
-  const confort=scoreValue(rowValueByHeader(
-    r,
-    'Confort',
-    'Puntaje Confort',
-    'Score Confort'
-  )) || scoreFallback?.confort || 0;
+  const confort=rowScoreValue(r,'confort') || scoreFallback?.confort || 0;
 
-  const economia=scoreValue(rowValueByHeader(
-    r,
-    'Economía',
-    'Economia',
-    'Puntaje Economía',
-    'Puntaje Economia',
-    'Score Economía',
-    'Score Economia'
-  )) || scoreFallback?.economia || 0;
+  const economia=rowScoreValue(r,'economia') || scoreFallback?.economia || 0;
 
-  const espacio=scoreValue(rowValueByHeader(
-    r,
-    'Espacio',
-    'Puntaje Espacio',
-    'Score Espacio'
-  )) || scoreFallback?.espacio || 0;
+  const espacio=rowScoreValue(r,'espacio') || scoreFallback?.espacio || 0;
 
-  const seguridad=scoreValue(rowValueByHeader(
-    r,
-    'Seguridad',
-    'Puntaje Seguridad',
-    'Score Seguridad'
-  )) || scoreFallback?.seguridad || 0;
+  const seguridad=rowScoreValue(r,'seguridad') || scoreFallback?.seguridad || 0;
 
-  const explicitGeneral=scoreValue(rowValueByHeader(
-    r,
-    'Calificacion General',
-    'Calificación General',
-    'Puntaje General',
-    'Score General'
-  ));
+  const explicitGeneral=rowScoreValue(r,'general');
 
   const availableScores=[rendimiento,confort,economia,espacio,seguridad].filter(value=>value>0);
   const calculatedGeneral=availableScores.length
@@ -6056,18 +6126,40 @@ async function loadPublishedCsv(){
 }
 
 async function loadSheetRows(){
-  const errors=[];
-  try{
-    return await loadGoogleSheetJsonp();
-  }catch(error){
-    errors.push(error.message);
+  const [jsonpResult,csvResult]=await Promise.allSettled([
+    loadGoogleSheetJsonp(),
+    loadPublishedCsv()
+  ]);
+
+  const available=[];
+
+  if(jsonpResult.status==='fulfilled')available.push(jsonpResult.value);
+  if(csvResult.status==='fulfilled')available.push(csvResult.value);
+
+  if(!available.length){
+    const errors=[
+      jsonpResult.status==='rejected'?jsonpResult.reason?.message:'',
+      csvResult.status==='rejected'?csvResult.reason?.message:''
+    ].filter(Boolean);
+
+    throw new Error(errors.join(' | ') || 'Google Sheets no respondió');
   }
-  try{
-    return await loadPublishedCsv();
-  }catch(error){
-    errors.push(error.message);
-  }
-  throw new Error(errors.join(' | '));
+
+  if(available.length===1)return available[0];
+
+  const [first,second]=available;
+  const firstQuality=sourceScoreQuality(first.rows);
+  const secondQuality=sourceScoreQuality(second.rows);
+
+  const primary=secondQuality>firstQuality?second:first;
+  const secondary=primary===first?second:first;
+  const mergedRows=mergeSheetRows(primary.rows,secondary.rows);
+
+  return {
+    rows:mergedRows,
+    source:`${primary.source} + respaldo ${secondary.source}`,
+    scoreQuality:sourceScoreQuality(mergedRows)
+  };
 }
 
 async function loadData({force=false}={}){
@@ -6228,7 +6320,7 @@ setTimeout(()=>{
 </script>
 
   <div class="site-version-row">
-    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.19</div>
+    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.20</div>
     <span class="site-version" aria-hidden="true">·</span>
     <a class="site-version-link" href="?stock=interno">catálogo</a>
   </div>

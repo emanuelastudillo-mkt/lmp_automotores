@@ -1,56 +1,87 @@
-# LMP Autos Web v1.19 — Popup de destacados compacto
+# LMP Autos Web v1.20 — Puntajes dinámicos desde Google Sheets
 
-## Cambio principal
+## Problema corregido
 
-Se redujo el panel del popup de vehículos destacados para que nunca supere la mitad de la pantalla.
+Los vehículos nuevos podían cargar correctamente:
 
-### Escritorio
+- foto;
+- nombre;
+- precios;
+- ficha completa;
 
-- Ancho máximo: `50vw`.
-- Alto máximo: `50vh`.
-- Distribución compacta en dos columnas.
-- Contenido interno desplazable si fuera necesario.
+pero quedar sin rombo de puntajes.
 
-### Tablets y celulares
+La causa era que la web aceptaba la primera respuesta válida de Google Sheets. En algunas cargas, la fuente JSONP devolvía las columnas nuevas con encabezados genéricos o diferentes, aunque el catálogo general sí se pudiera leer.
 
-- Alto máximo: `50dvh`.
-- En teléfonos puede utilizar casi todo el ancho, pero mantiene como límite la mitad de la altura de la pantalla.
-- Imagen e información se muestran lado a lado para evitar un popup vertical excesivo.
+## Nuevo comportamiento
 
-## Contenido simplificado
+La página ahora consulta en paralelo:
 
-Para conservar legibilidad dentro del espacio reducido, el popup oculta:
+1. Google Sheets mediante JSONP.
+2. El CSV publicado.
 
-- gráfico completo de puntajes;
-- texto descriptivo secundario.
+Después:
 
-Mantiene:
+- verifica cuál de las dos respuestas contiene más puntajes reconocibles;
+- utiliza esa respuesta como fuente principal;
+- combina la otra fuente para completar datos faltantes;
+- genera el vehículo una sola vez;
+- conserva el caché como último respaldo.
 
-- fotografía;
-- etiqueta de destacado;
-- precio;
-- anticipo o condición de contado;
-- ubicación en escritorio;
-- acceso a la ficha;
-- botón de reserva.
+## Encabezados reconocidos
 
-## Alcance
+Ya no se exige que el encabezado sea idéntico. Se reconocen variantes como:
 
-Solo se modificó el popup automático de vehículos destacados. No cambia:
+```text
+Rendimiento
+Puntaje Rendimiento
+Puntaje
+Rendimiento (1-100)
+Rendimiento / 100
+Score Rendimiento
+```
 
-- ficha del vehículo;
-- catálogo;
-- Stock interno;
-- presupuestos PDF;
-- gráficos de puntajes de las fichas.
+La misma tolerancia se aplica a:
+
+- Confort;
+- Economía;
+- Espacio;
+- Seguridad;
+- Calificación General.
+
+## Formatos de puntaje admitidos
+
+```text
+72
+72/100
+72 pts
+72%
+72,0
+```
+
+La web toma correctamente el primer valor numérico.
+
+## Respaldo por modelo
+
+Los perfiles específicos agregados en versiones anteriores se mantienen como último recurso, pero los nuevos vehículos ya no necesitan una modificación manual del `index.html` cuando sus puntajes están cargados en la hoja.
+
+## Actualización
+
+Después de cargar un vehículo nuevo:
+
+1. completar los cinco puntajes en Google Sheets;
+2. esperar que la publicación refleje los cambios;
+3. recargar la página o presionar `Actualizar ahora` en Stock interno.
 
 ## Validación
 
 - JavaScript validado con `node --check`.
-- Reglas finales con prioridad sobre los estilos responsive anteriores.
+- Probados encabezados con saltos de línea, sufijos y símbolos.
+- Probados valores `72/100`, `70 pts` y números simples.
+- Probada combinación entre JSONP y CSV.
 
 ## Versión
 
 ```text
-lmpautos V1.19
+lmpautos V1.20
 ```
