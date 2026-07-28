@@ -1,54 +1,171 @@
-# LMP Autos Web v1.23 — Ocultar vehículos de baja
+# LMP Autos Web v1.24 — Revisión integral
 
-## Cambio
+## Alcance de la revisión
 
-Los vehículos cuyo campo:
+Se revisaron el sitio público, el catálogo completo, las fichas de vehículos, el comparador, los filtros, los rombos de puntajes, el popup de destacados y Stock interno.
 
-```text
-Estado actual del auto
-```
+La versión fue probada mediante navegación automatizada en Chromium con una respuesta simulada de Google Sheets que incluye vehículos financiables, unidades solo de contado, reservados, en preparación, una unidad de baja, fotografías locales y de Drive, puntajes completos e información faltante para activar alertas.
 
-tenga el valor:
+## Errores corregidos
 
-```text
-de baja
-```
+### Copiar enlace
 
-quedan ocultos del sitio público.
-
-La comparación no distingue mayúsculas, minúsculas ni acentos. Por ejemplo, se reconocen igual:
+El botón `Copiar link` llamaba a una función inexistente:
 
 ```text
-de baja
-DE BAJA
-De Baja
+vehicleUrl is not defined
 ```
 
-## Lugares donde se ocultan
+Se agregó la función correspondiente y se estandarizó la construcción de enlaces de vehículos.
 
-- Catálogo completo.
-- Resultados filtrados.
-- Favoritos públicos.
-- Popup de destacados.
-- Vehículos similares.
-- Comparador público.
-- Acceso mediante enlace directo a la ficha.
+### Comparador
 
-También se evita que una marca, transmisión o combustible aparezca en los filtros cuando solo pertenece a vehículos de baja.
+El botón para abrir la comparación podía detenerse por una función inexistente:
 
-## Stock interno
+```text
+saveCompare is not defined
+```
 
-Las unidades con estado `de baja` continúan visibles dentro de Stock interno para consulta administrativa.
+Se agregó persistencia de la selección en `sessionStorage` y se corrigieron agregar, quitar, limpiar y abrir la comparación.
 
-No se modifica ni elimina información de Google Sheets.
+### Ordenamiento del catálogo
 
-## Validación
+La función que dibujaba las tarjetas volvía a ordenar los vehículos según la disponibilidad de imagen. Esto podía alterar el orden seleccionado por precio, año o puntajes. Ahora conserva exactamente el orden calculado por los filtros.
 
-- JavaScript validado con `node --check`.
-- Probados estados `DE BAJA`, `de baja`, `VENDIDO`, `DISPONIBLE` y `RESERVADO`.
+### Ventanas internas
+
+Los eventos para cerrar ventanas al hacer clic fuera del contenido se agregaban nuevamente cada vez que se cambiaba entre Inicio y Vehículos. Se movieron a una inicialización única.
+
+### Favoritos y unidades de baja
+
+Los favoritos y comparaciones guardados se limpian automáticamente cuando un vehículo fue vendido, está de baja o dejó de ser visible en el catálogo público. Stock interno continúa mostrando esas unidades.
+
+### Vehículos solo de contado
+
+En la ficha pública ahora se muestra `Valor de contado` en lugar de `Anticipo mínimo` cuando el porcentaje de anticipo es del 100 %.
+
+## Popup de destacados
+
+### Mobile
+
+El popup queda completamente desactivado en teléfonos, navegadores identificados como móviles y pantallas de hasta 767 px. También se cierra automáticamente si una ventana de escritorio se reduce hasta ese tamaño.
+
+### Escritorio
+
+Continúa limitado a un máximo de:
+
+```text
+50vw × 50vh
+```
+
+Se agregó:
+
+- marca y modelo;
+- estado actual;
+- año;
+- kilometraje;
+- transmisión;
+- combustible;
+- valor total;
+- anticipo o condición de contado;
+- cuota estimada;
+- financiación y permuta;
+- calificación general;
+- los cinco puntajes;
+- ubicación;
+- botones Ver ficha y Reservalo.
+
+El gráfico radar completo permanece en la ficha del vehículo. El popup usa una versión compacta de los puntajes.
+
+## Rombo de puntajes
+
+Se abrió y verificó la ficha de cada vehículo público utilizado en la prueba. Para cada uno se comprobó la presencia de:
+
+- sección Perfil del vehículo;
+- polígono del rombo;
+- cinco métricas;
+- calificación general.
+
+Los puntajes continúan tomándose dinámicamente desde Google Sheets.
+
+## Pruebas de botones y funciones
+
+### Sitio público de escritorio
+
+Se probaron:
+
+- navegación Inicio / Vehículos;
+- popup destacado;
+- cerrar popup;
+- Ver ficha desde popup;
+- filtros;
+- orden por precio;
+- orden por año;
+- orden por puntajes;
+- limpiar filtros;
+- abrir y cerrar ficha;
+- simulador de cuotas;
+- cambio de anticipo;
+- galería;
+- foto siguiente;
+- pantalla completa;
+- favorito;
+- copiar enlace;
+- consulta por WhatsApp;
+- comparar;
+- abrir, cerrar y limpiar comparación.
+
+### Mobile
+
+Se comprobó:
+
+- ausencia total del popup;
+- apertura de filtros;
+- aplicación de filtros;
+- cierre del panel;
+- catálogo reducido según el filtro.
+
+### Stock interno
+
+Se probaron:
+
+- buscador;
+- filtros rápidos;
+- alertas;
+- vista compacta y amplia;
+- modo cliente;
+- ficha del cliente;
+- cierre del diálogo al tocar el fondo;
+- anticipo personalizado;
+- descuento;
+- recálculo de valor final y cuotas;
+- notas internas;
+- prioridad de venta;
+- selección múltiple;
+- comparación interna;
+- copiar resumen;
+- presupuesto múltiple e individual;
+- comprobante de reserva;
+- limpiar selección;
+- actualizar stock.
+
+## Resultados técnicos
+
+```text
+JavaScript: node --check OK
+IDs estáticos: 98
+IDs duplicados: 0
+Botones estáticos revisados: 48
+Prueba pública de escritorio: OK
+Prueba mobile: OK
+Prueba Stock interno: OK
+Errores JavaScript durante las pruebas: 0
+```
+
+Los presupuestos y comprobantes se probaron interceptando la ventana de impresión y verificando que el documento generado contuviera el contenido esperado.
 
 ## Versión
 
 ```text
-lmpautos V1.23
+lmpautos V1.24
 ```

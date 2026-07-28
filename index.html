@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
-<meta name="lmp-build" content="lmp-autos-web-v1.23-ocultar-de-baja">
+<meta name="lmp-build" content="lmp-autos-web-v1.24-revision-integral">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   
   <!-- Meta Pixel Code -->
@@ -2294,6 +2294,148 @@ fbq('track', 'PageView');
       }
     }
 
+
+    /* V1.24: popup desktop informativo, compacto y desactivado en móvil */
+    .featured-popup-content{
+      display:flex !important;
+      flex-direction:column !important;
+      justify-content:flex-start !important;
+      gap:8px !important;
+      padding:15px 16px !important
+    }
+    .featured-popup-heading{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+      padding-right:30px
+    }
+    .featured-popup-make{
+      display:block;
+      color:var(--accent);
+      font-size:8px;
+      font-weight:950;
+      letter-spacing:.11em;
+      text-transform:uppercase
+    }
+    .featured-popup-heading h2{
+      margin:2px 0 0 !important;
+      font-size:20px !important;
+      line-height:1.02 !important;
+      letter-spacing:-.035em !important
+    }
+    .featured-popup-status{
+      flex:0 0 auto;
+      padding:5px 7px;
+      border-radius:999px;
+      background:#171717;
+      color:#fff;
+      font-size:7px;
+      font-weight:950
+    }
+    .featured-popup-meta{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:4px 8px
+    }
+    .featured-popup-meta-item{
+      min-width:0;
+      padding:4px 0;
+      border-bottom:1px solid #ecece8
+    }
+    .featured-popup-meta-item span{
+      display:block;
+      color:#777;
+      font-size:6px;
+      font-weight:850;
+      text-transform:uppercase
+    }
+    .featured-popup-meta-item strong{
+      display:block;
+      margin-top:1px;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      font-size:9px
+    }
+    .featured-popup-commercial{
+      display:flex;
+      flex-wrap:wrap;
+      gap:5px
+    }
+    .featured-popup-commercial span{
+      padding:5px 7px;
+      border-radius:999px;
+      background:#f1f1ed;
+      color:#333;
+      font-size:7px;
+      font-weight:850
+    }
+    .featured-popup-score-summary{
+      display:grid;
+      grid-template-columns:58px minmax(0,1fr);
+      align-items:center;
+      gap:8px;
+      padding:7px;
+      border:1px solid #e0e0db;
+      border-radius:11px;
+      background:#fafaf8
+    }
+    .featured-popup-general-score{
+      width:52px;
+      height:52px;
+      border:4px solid var(--accent);
+      border-radius:50%;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center
+    }
+    .featured-popup-general-score strong{
+      font-size:18px;
+      line-height:.9
+    }
+    .featured-popup-general-score span{
+      margin-top:3px;
+      color:#777;
+      font-size:5px;
+      font-weight:950
+    }
+    .featured-popup-score-list{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:4px
+    }
+    .featured-popup-score-item{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:4px;
+      min-width:0;
+      padding:4px 5px;
+      border-radius:6px;
+      background:#fff;
+      font-size:6.5px
+    }
+    .featured-popup-score-item span{
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      color:#666
+    }
+    .featured-popup-score-item strong{font-size:8px}
+    .featured-popup-location{
+      margin-top:0 !important;
+      padding:6px 7px !important;
+      font-size:8px !important
+    }
+    .featured-popup-location svg{width:13px !important;height:13px !important}
+    .featured-popup-actions{margin-top:auto !important}
+    @media(max-width:767px){
+      #featuredPopup{display:none !important}
+    }
+
 </style>
 </head>
 <body>
@@ -2683,8 +2825,19 @@ let vehicleStats = {};
 let highlightedVehicles = [];
 let currentGallery = {images:[],index:0};
 let galleryTouchStartX = 0;
-let favoriteIds=new Set(JSON.parse(localStorage.getItem('lmp_favorites')||'[]'));
-let compareIds=new Set();
+function readStoredIdSet(storageName,key){
+  try{
+    const storage=window[storageName];
+    const parsed=JSON.parse(storage.getItem(key)||'[]');
+    return new Set(Array.isArray(parsed)?parsed.map(clean):[]);
+  }catch(_){
+    return new Set();
+  }
+}
+const FAVORITES_STORAGE_KEY='lmp_favorites';
+const COMPARE_STORAGE_KEY='lmp_compare_ids';
+let favoriteIds=readStoredIdSet('localStorage',FAVORITES_STORAGE_KEY);
+let compareIds=readStoredIdSet('sessionStorage',COMPARE_STORAGE_KEY);
 let catalogMode='all';
 let localCoverManifest=null;
 
@@ -3040,6 +3193,12 @@ function clearVehicleUrl({replace=true}={}){
   const method=replace?'replaceState':'pushState';
   history[method]({},'',url);
   document.title='LMP Autos | Lomas del Mirador';
+}
+function vehicleUrl(v){
+  const url=new URL(window.location.href);
+  url.searchParams.delete('stock');
+  url.searchParams.set('vehiculo',vehicleSlug(v));
+  return url.toString();
 }
 function driveFileId(url){
   const u=clean(url);
@@ -3556,7 +3715,7 @@ function manifestHasCover(v){
   return Boolean(localCoverManifest[id] || localCoverManifest[`${id}.webp`]);
 }
 function markNewEntries(list){
-  const ordered=[...list].filter(v=>v.estado!=='VENDIDO').sort((a,b)=>{
+  const ordered=[...list].filter(isPublicCatalogVehicle).sort((a,b)=>{
     const na=Number((clean(a.id).match(/\d+/)||['0'])[0]);
     const nb=Number((clean(b.id).match(/\d+/)||['0'])[0]);
     return nb-na;
@@ -3783,7 +3942,12 @@ function featuredPopupVehicle(){
 
   return selected;
 }
+function isMobileFeaturedPopupViewport(){
+  const mobileUserAgent=/Android|iPhone|iPad|iPod|IEMobile|Opera Mini/i.test(navigator.userAgent||'');
+  return mobileUserAgent || window.matchMedia('(max-width: 767px)').matches;
+}
 function shouldShowFeaturedPopup(){
+  if(isMobileFeaturedPopupViewport())return false;
   try{
     return !sessionStorage.getItem('lmp_featured_popup_seen');
   }catch(_){
@@ -3797,14 +3961,33 @@ function markFeaturedPopupSeen(){
 }
 
 function popupScoreMarkup(v){
-  const graphic=renderScoreGraphic(v);
-  if(!graphic)return '';
+  ensureVehicleScoreProfile(v);
+  const scores=vehicleScoreData(v).filter(item=>Number(item.value)>0);
+  if(!scores.length)return '';
 
-  return `<div class="featured-popup-score-graphic">${graphic}</div>`;
+  return `<div class="featured-popup-score-summary">
+    <div class="featured-popup-general-score">
+      <strong>${escapeHtml(generalScore(v))}</strong>
+      <span>GENERAL</span>
+    </div>
+    <div class="featured-popup-score-list">
+      ${scores.map(item=>`<div class="featured-popup-score-item"><span>${escapeHtml(item.label)}</span><strong>${escapeHtml(item.value)}</strong></div>`).join('')}
+    </div>
+  </div>`;
 }
-
-
+function featuredPopupMeta(v){
+  return [
+    ['Año',v.anio],
+    ['Kilómetros',v.kilometraje?km(v.kilometraje):''],
+    ['Transmisión',v.transmision],
+    ['Combustible',v.combustible]
+  ].filter(item=>item[1]).map(item=>`<div class="featured-popup-meta-item"><span>${escapeHtml(item[0])}</span><strong>${escapeHtml(item[1])}</strong></div>`).join('');
+}
 function featuredPopupMarkup(v){
+  const installment=estimatedInstallment(v);
+  const status=badgeFromStatus(v.estado).text;
+  const benefits=vehicleBenefitTags(v);
+
   return `<div class="featured-popup-card">
     <div class="featured-popup-media">
       ${coverImageMarkup(v,0,{localOnly:true})}
@@ -3812,10 +3995,27 @@ function featuredPopupMarkup(v){
     </div>
 
     <div class="featured-popup-content">
+      <div class="featured-popup-heading">
+        <div>
+          <span class="featured-popup-make">${escapeHtml(v.marca)}</span>
+          <h2>${escapeHtml(v.modelo)}</h2>
+        </div>
+        <span class="featured-popup-status">${escapeHtml(status)}</span>
+      </div>
+
+      <div class="featured-popup-meta">${featuredPopupMeta(v)}</div>
+
       <div class="featured-popup-prices">
         ${v.cotizacion?`<div class="featured-popup-price"><span>Valor total</span><strong>${escapeHtml(money(v.cotizacion))}</strong></div>`:''}
         ${(v.anticipo||isCashOnly(v))?`<div class="featured-popup-price"><span>${isCashOnly(v)?'Solo de contado':'Anticipo desde'}</span><strong>${escapeHtml(displayedAdvance(v))}</strong></div>`:''}
       </div>
+
+      <div class="featured-popup-commercial">
+        ${installment?`<span>24 cuotas estimadas desde <strong>${escapeHtml(formatArsNumber(installment))}</strong></span>`:''}
+        ${benefits.map(tag=>`<span>${escapeHtml(tag)}</span>`).join('')}
+      </div>
+
+      ${popupScoreMarkup(v)}
 
       <div class="featured-popup-location">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -3825,15 +4025,9 @@ function featuredPopupMarkup(v){
         <span>Lomas del Mirador · Av. Mosconi 799</span>
       </div>
 
-      ${popupScoreMarkup(v)}
-
-      <p class="featured-popup-text">
-        Unidad destacada del catálogo.
-      </p>
-
       <div class="featured-popup-actions">
         <button class="featured-popup-view" type="button" data-featured-view="${escapeAttr(v.id)}">Ver ficha</button>
-        <a class="featured-popup-wa" href="${escapeAttr((CONFIG.whatsapp?`https://wa.me/${CONFIG.whatsapp}`:'https://wa.me/')+'?text='+encodeURIComponent(`Hola, quiero reservar el ${v.modelo} ${v.anio||''}.`))}" target="_blank" rel="noopener">RESERVALO</a>
+        <a class="featured-popup-wa" href="${escapeAttr((CONFIG.whatsapp?`https://wa.me/${CONFIG.whatsapp}`:'https://wa.me/')+'?text='+encodeURIComponent(`Hola, quiero reservar el ${v.marca} ${v.modelo} ${v.anio||''}.`))}" target="_blank" rel="noopener">RESERVALO</a>
       </div>
     </div>
   </div>`;
@@ -3842,7 +4036,7 @@ function openFeaturedPopup(v){
   const popup=$('#featuredPopup');
   const body=$('#featuredPopupBody');
 
-  if(!popup || !body || !v)return;
+  if(!popup || !body || !v || isMobileFeaturedPopupViewport())return;
 
   body.innerHTML=featuredPopupMarkup(v);
   popup.classList.add('open');
@@ -3876,7 +4070,14 @@ function closeFeaturedPopup(){
     document.body.style.overflow='';
   }
 }
+window.addEventListener('resize',()=>{
+  if(isMobileFeaturedPopupViewport() && $('#featuredPopup')?.classList.contains('open')){
+    closeFeaturedPopup();
+  }
+});
 function maybeShowFeaturedPopup(){
+  if(isMobileFeaturedPopupViewport())return;
+
   const v=featuredPopupVehicle();
 
   if(!v || !shouldShowFeaturedPopup() || currentVehicleSlugFromUrl()){
@@ -3895,18 +4096,38 @@ function maybeShowFeaturedPopup(){
 
 
 
-function saveFavorites(){localStorage.setItem('lmp_favorites',JSON.stringify([...favoriteIds]));updateFavoritesUi()}
+function saveFavorites(){
+  try{localStorage.setItem(FAVORITES_STORAGE_KEY,JSON.stringify([...favoriteIds]))}catch(_){}
+  updateFavoritesUi();
+}
+function saveCompare(){
+  try{sessionStorage.setItem(COMPARE_STORAGE_KEY,JSON.stringify([...compareIds]))}catch(_){}
+}
+function sanitizePublicSelections(){
+  const visibleIds=new Set(vehicles.filter(isPublicCatalogVehicle).map(vehicle=>vehicle.id));
+  favoriteIds=new Set([...favoriteIds].filter(id=>visibleIds.has(id)));
+  compareIds=new Set([...compareIds].filter(id=>visibleIds.has(id)));
+  saveFavorites();
+  saveCompare();
+  updateCompareUi();
+}
 function updateFavoritesUi(){
   const node=$('#favoritesCount');if(node)node.textContent=String(favoriteIds.size);
   $$('.favorite-btn').forEach(btn=>btn.classList.toggle('active',favoriteIds.has(btn.dataset.favoriteId)));
 }
 function toggleFavorite(id){
-  favoriteIds.has(id)?favoriteIds.delete(id):favoriteIds.add(id);saveFavorites();
+  const vehicle=vehicles.find(item=>item.id===id);
+  if(!isPublicCatalogVehicle(vehicle))return;
+  favoriteIds.has(id)?favoriteIds.delete(id):favoriteIds.add(id);
+  saveFavorites();
   emitAnalytics('favorite_vehicle',{vehicle_id:id,active:favoriteIds.has(id)});
   if(catalogMode==='favorites')applyFilters();
 }
 function toggleCompare(id){
+  const vehicle=vehicles.find(item=>item.id===id);
+  if(!isPublicCatalogVehicle(vehicle))return;
   if(compareIds.has(id))compareIds.delete(id);else{if(compareIds.size>=3){alert('Podés comparar hasta 3 vehículos.');return}compareIds.add(id)}
+  saveCompare();
   updateCompareUi();
 }
 function updateCompareUi(){
@@ -4414,9 +4635,7 @@ function selectHighlights(limit=CONFIG.maxFeatured){
 }
 
 function renderCards(target,list,{localOnly=false}={}){
-  const orderedList=localOnly
-    ? list
-    : [...list].sort((a,b)=>imageAvailabilityRank(a)-imageAvailabilityRank(b));
+  const orderedList=[...list];
 
   target.innerHTML=orderedList.length
     ? orderedList.map((vehicle,index)=>card(vehicle,index,{localOnly})).join('')
@@ -4425,9 +4644,7 @@ function renderCards(target,list,{localOnly=false}={}){
   target.querySelectorAll('.detail-btn').forEach(button=>{
     const vehicle=vehicles.find(item=>item.id===button.dataset.id);
     if(vehicle){
-      const url=new URL(window.location.href);
-      url.searchParams.set('vehiculo',vehicleSlug(vehicle));
-      button.dataset.vehicleUrl=url.toString();
+      button.dataset.vehicleUrl=vehicleUrl(vehicle);
       button.setAttribute('aria-label',`Ver ${vehicle.marca} ${vehicle.modelo}${vehicle.anio?` ${vehicle.anio}`:''}`);
     }
 
@@ -4596,8 +4813,8 @@ function openVehicle(id,{updateUrl=true,replaceUrl=false}={}){
             <strong class="finance-value">${escapeHtml(v.cotizacion?money(v.cotizacion):'Consultar')}</strong>
           </div>
           <div class="finance-advance">
-            <span class="finance-label">Anticipo mínimo</span>
-            <strong class="finance-value">${escapeHtml(v.anticipo?money(v.anticipo):'Consultar')}</strong>
+            <span class="finance-label">${isCashOnly(v)?'Valor de contado':'Anticipo mínimo'}</span>
+            <strong class="finance-value">${escapeHtml(displayedAdvance(v)||'Consultar')}</strong>
           </div>
         </div>
       </div>
@@ -5606,6 +5823,7 @@ function restoreCachedStock(error){
   vehicles=cached.vehicles
     .map(vehicle=>ensureVehicleScoreProfile(vehicle))
     .filter(validVehicle);
+  sanitizePublicSelections();
   vehicleStats=cached.vehicleStats||{};
   lastStockUpdatedAt=new Date(cached.timestamp);
   markNewEntries(vehicles);
@@ -6127,17 +6345,11 @@ function activateInternalStockMode(){
 function switchView(view){
   const home=view==='home';
   $('#stockCheckView').classList.add('hidden');
-  $('#homeView').classList.toggle('hidden',!home);$('#catalogView').classList.toggle('hidden',home);
-  
-$$('.internal-dialog').forEach(dialog=>{
-  dialog.addEventListener('click',event=>{
-    if(event.target===dialog)closeInternalDialog(dialog.id);
-  });
-});
-
-$$('[data-view]').forEach(x=>x.classList.toggle('active',x.dataset.view===view));
+  $('#homeView').classList.toggle('hidden',!home);
+  $('#catalogView').classList.toggle('hidden',home);
+  $$('[data-view]').forEach(x=>x.classList.toggle('active',x.dataset.view===view));
   window.scrollTo({top:0,behavior:'smooth'});
-  if(!home) applyFilters();
+  if(!home)applyFilters();
 }
 function loadGoogleSheetJsonp(){
   return new Promise((resolve,reject)=>{
@@ -6252,6 +6464,7 @@ async function loadData({force=false}={}){
   try{
     const result=await loadSheetRows();
     vehicles=result.rows.map(mapVehicle).filter(validVehicle);
+    sanitizePublicSelections();
     markNewEntries(vehicles);
     if(!vehicles.length){
       const states=[...new Set(result.rows.map(r=>clean(r['Estado actual del auto'])).filter(Boolean))];
@@ -6313,6 +6526,12 @@ async function loadData({force=false}={}){
   }
 }
 
+$$('.internal-dialog').forEach(dialog=>{
+  dialog.addEventListener('click',event=>{
+    if(event.target===dialog)closeInternalDialog(dialog.id);
+  });
+});
+
 $$('[data-view]').forEach(x=>x.addEventListener('click',e=>{e.preventDefault();switchView(x.dataset.view)}));
 ['brandFilter','transFilter','fuelFilter'].forEach(id=>$('#'+id).addEventListener('change',applyFilters));
 $('#priceOrder').addEventListener('change',()=>{
@@ -6349,7 +6568,7 @@ $('#mobileFilterTrigger').onclick=openFilters;
 
 $('#favoritesFilter').onclick=()=>{catalogMode='favorites';$('#favoritesFilter').classList.add('active');applyFilters()};
 $('#clearCatalogMode').onclick=()=>{catalogMode='all';$('#favoritesFilter').classList.remove('active');applyFilters()};
-$('#compareClear').onclick=()=>{compareIds.clear();updateCompareUi()};
+$('#compareClear').onclick=()=>{compareIds.clear();saveCompare();updateCompareUi()};
 $('#compareOpen').onclick=renderCompare;
 $('#compareClose').onclick=()=>{$('#compareModal').classList.remove('open');$('#compareModal').setAttribute('aria-hidden','true')};
 $('#compareModal').onclick=event=>{if(event.target.id==='compareModal')$('#compareClose').click()};
@@ -6420,7 +6639,7 @@ setTimeout(()=>{
 </script>
 
   <div class="site-version-row">
-    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.23</div>
+    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.24</div>
     <span class="site-version" aria-hidden="true">·</span>
     <a class="site-version-link" href="?stock=interno">catálogo</a>
   </div>
