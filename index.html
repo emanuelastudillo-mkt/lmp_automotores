@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
-<meta name="lmp-build" content="lmp-autos-web-v1.24-revision-integral">
+<meta name="lmp-build" content="lmp-autos-web-v1.25-drive-y-orden-filtros">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   
   <!-- Meta Pixel Code -->
@@ -3200,26 +3200,51 @@ function vehicleUrl(v){
   url.searchParams.set('vehiculo',vehicleSlug(v));
   return url.toString();
 }
+function isDriveFolderUrl(url){
+  const u=clean(url);
+  return /drive\.google\.com\/(?:drive\/u\/\d+\/)?folders\//i.test(u) || /\/folders\//i.test(u);
+}
 function driveFileId(url){
   const u=clean(url);
-  if(!u)return '';
+  if(!u || isDriveFolderUrl(u))return '';
+
+  if(/^[a-zA-Z0-9_-]{20,}$/.test(u))return u;
 
   const matches=[
-    u.match(/\/file\/d\/([a-zA-Z0-9_-]+)/),
-    u.match(/[?&]id=([a-zA-Z0-9_-]+)/),
-    u.match(/\/d\/([a-zA-Z0-9_-]+)/),
-    u.match(/([a-zA-Z0-9_-]{20,})/)
+    u.match(/\/file\/d\/([a-zA-Z0-9_-]+)/i),
+    u.match(/\/d\/([a-zA-Z0-9_-]+)/i),
+    u.match(/[?&]id=([a-zA-Z0-9_-]+)/i)
   ];
 
   const match=matches.find(Boolean);
   return match?match[1]:'';
 }
-function driveImage(url){
+function isDirectImageReference(url){
   const u=clean(url);
-  if(!u)return '';
+  if(!u || isDriveFolderUrl(u))return false;
+  if(driveFileId(u))return true;
+  return /\.(?:jpe?g|png|webp|gif|avif)(?:[?#].*)?$/i.test(u) || /^data:image\//i.test(u);
+}
+function driveImageCandidates(url){
+  const u=clean(url);
+  if(!u || isDriveFolderUrl(u))return [];
 
   const id=driveFileId(u);
-  return id?`https://lh3.googleusercontent.com/d/${id}=w1600`:u;
+  if(!id)return [u];
+
+  const candidates=[];
+  if(/^https?:\/\/lh3\.googleusercontent\.com\//i.test(u))candidates.push(u);
+
+  candidates.push(
+    `https://drive.google.com/thumbnail?id=${encodeURIComponent(id)}&sz=w1600`,
+    `https://lh3.googleusercontent.com/d/${id}=w1600`,
+    `https://drive.google.com/uc?export=view&id=${encodeURIComponent(id)}`
+  );
+
+  return [...new Set(candidates.filter(Boolean))];
+}
+function driveImage(url){
+  return driveImageCandidates(url)[0] || '';
 }
 function money(v){
   const s=clean(v); if(!s || s==='$0' || s==='0') return 'Consultar';
@@ -3597,6 +3622,27 @@ function mapVehicle(r){
   const modelo=clean(r.Modelo);
   const anio=clean(r['Año']);
   const scoreFallback=vehicleScoreFallback(marca,modelo,anio);
+  const mediaFolderLink=rowValueByHeader(
+    r,
+    'Link de fotos/videos',
+    'Link de fotos y videos',
+    'Link fotos/videos',
+    'Carpeta de fotos',
+    'Carpeta Drive'
+  );
+  const rawPhotoLinks=[1,2,3,4].map(index=>rowValueByHeader(
+    r,
+    `Foto ${index}`,
+    `Foto${index}`,
+    `Imagen ${index}`,
+    `Imagen${index}`
+  )).filter(Boolean);
+
+  if(isDirectImageReference(mediaFolderLink))rawPhotoLinks.push(mediaFolderLink);
+
+  const fotoSets=[...new Set(rawPhotoLinks)]
+    .map(driveImageCandidates)
+    .filter(candidates=>candidates.length);
 
   const rendimiento=rowScoreValue(r,'rendimiento') || scoreFallback?.rendimiento || 0;
 
@@ -3633,7 +3679,7 @@ function mapVehicle(r){
     combustible:clean(r.Combustible),
     transmision:clean(r.Transmision),
     instagram:clean(r.Reel).startsWith('http')?clean(r.Reel):'',
-    carpeta:clean(r['Link de fotos/videos']),
+    carpeta:mediaFolderLink,
     rendimiento,
     confort,
     economia,
@@ -3641,7 +3687,8 @@ function mapVehicle(r){
     seguridad,
     calificacionGeneral:explicitGeneral || scoreFallback?.general || calculatedGeneral,
     scoreFallbackApplied:Boolean(scoreFallback && !explicitGeneral),
-    fotos:[r['Foto 1'],r['Foto 2'],r['Foto 3'],r['Foto 4']].map(driveImage).filter(Boolean)
+    fotoSets,
+    fotos:fotoSets.map(candidates=>candidates[0]).filter(Boolean)
   });
 }
 
@@ -3775,25 +3822,46 @@ function localCoverUrl(v,{cacheBust=false}={}){
   return cacheBust?`${url}?${LOCAL_COVER_VERSION}`:url;
 }
 function hasImageCandidate(v){
-  return Boolean(v.hasLocalCover || (Array.isArray(v.fotos) && v.fotos.length));
+  return Boolean(
+    v.hasLocalCover ||
+    (Array.isArray(v.fotoSets) && v.fotoSets.some(set=>Array.isArray(set) && set.length)) ||
+    (Array.isArray(v.fotos) && v.fotos.length)
+  );
 }
 function imageAvailabilityRank(v){
   return v.imageUnavailable || !hasImageCandidate(v) ? 1 : 0;
 }
 
+function vehiclePhotoSets(v){
+  if(Array.isArray(v?.fotoSets) && v.fotoSets.length){
+    return v.fotoSets
+      .map(set=>Array.isArray(set)?set.filter(Boolean):[])
+      .filter(set=>set.length);
+  }
+
+  return (Array.isArray(v?.fotos)?v.fotos:[])
+    .map(driveImageCandidates)
+    .filter(set=>set.length);
+}
 function coverCandidates(v,{localOnly=false}={}){
   const candidates=[];
   const local=localCoverUrl(v,{cacheBust:true});
 
-  if(local){
-    candidates.push(local);
-  }
+  // Solo intentar la portada local cuando ya fue validada.
+  if(v.hasLocalCover && local)candidates.push(local);
 
-  if(!localOnly && v.fotos && v.fotos[0]){
-    candidates.push(v.fotos[0]);
+  if(!localOnly){
+    vehiclePhotoSets(v).forEach(set=>candidates.push(...set));
   }
 
   return [...new Set(candidates.filter(Boolean))];
+}
+function markCoverLoaded(img){
+  const card=img.closest('.vehicle');
+  const vehicleId=card?.dataset.vehicleId;
+  const vehicle=vehicles.find(item=>item.id===vehicleId);
+
+  if(vehicle)vehicle.imageUnavailable=false;
 }
 function coverImageMarkup(v,index=0,{localOnly=false}={}){
   const candidates=coverCandidates(v,{localOnly});
@@ -3803,6 +3871,7 @@ function coverImageMarkup(v,index=0,{localOnly=false}={}){
     return `<div class="photo-empty">Fotos próximamente</div>`;
   }
 
+  v.imageUnavailable=false;
   const priority=index<6;
   const fetchPriority=index<3?'high':'auto';
 
@@ -3812,8 +3881,10 @@ function coverImageMarkup(v,index=0,{localOnly=false}={}){
     loading="${priority?'eager':'lazy'}"
     decoding="async"
     fetchpriority="${fetchPriority}"
+    referrerpolicy="no-referrer"
     data-cover-candidates="${escapeAttr(JSON.stringify(candidates))}"
     data-cover-index="0"
+    onload="markCoverLoaded(this)"
     onerror="nextCoverCandidate(this)">`;
 }
 async function verifyLocalCover(v){
@@ -3888,25 +3959,18 @@ function nextCoverCandidate(img){
       return;
     }
   }catch(error){
-    console.warn('No se pudo cargar la portada local:',error);
+    console.warn('No se pudo cargar la imagen del vehículo:',error);
   }
 
   const card=img.closest('.vehicle');
   const vehicleId=card?.dataset.vehicleId;
   const vehicle=vehicles.find(item=>item.id===vehicleId);
 
-  if(vehicle){
-    vehicle.imageUnavailable=true;
-  }
+  if(vehicle)vehicle.imageUnavailable=true;
 
+  // No reubicar la tarjeta: mover el nodo alteraba el orden de los filtros.
   img.outerHTML='<div class="photo-empty">Imagen no disponible</div>';
-
-  if(card?.parentElement){
-    card.parentElement.appendChild(card);
-  }
 }
-
-
 
 
 
@@ -4691,26 +4755,44 @@ function closeFilters(){
   if(!$('#vehicleModal').classList.contains('open')) document.body.style.overflow='';
 }
 
+function catalogIdNumber(vehicle){
+  return Number((clean(vehicle?.id).match(/\d+/)||['0'])[0])||0;
+}
+function catalogTieBreak(a,b){
+  const yearDifference=(Number(b?.anio)||0)-(Number(a?.anio)||0);
+  if(yearDifference)return yearDifference;
+
+  const idDifference=catalogIdNumber(b)-catalogIdNumber(a);
+  if(idDifference)return idDifference;
+
+  return `${clean(a?.marca)} ${clean(a?.modelo)}`.localeCompare(
+    `${clean(b?.marca)} ${clean(b?.modelo)}`,
+    'es'
+  );
+}
+function compareCatalogNumeric(a,b,valueGetter,direction='desc'){
+  const valueA=Number(valueGetter(a))||0;
+  const valueB=Number(valueGetter(b))||0;
+  const missingA=valueA<=0;
+  const missingB=valueB<=0;
+
+  if(missingA!==missingB)return missingA?1:-1;
+  if(valueA===valueB)return catalogTieBreak(a,b);
+
+  return direction==='asc'?valueA-valueB:valueB-valueA;
+}
+
 function catalogScoreValue(vehicle,metric){
   if(metric==='general')return Number(generalScore(vehicle))||0;
   return scoreValue(vehicle?.[metric]);
 }
 function compareCatalogScores(a,b,metric,direction){
-  const scoreA=catalogScoreValue(a,metric);
-  const scoreB=catalogScoreValue(b,metric);
-  const missingA=scoreA<=0;
-  const missingB=scoreB<=0;
-
-  // Los vehículos sin puntaje siempre quedan al final.
-  if(missingA!==missingB)return missingA?1:-1;
-  if(scoreA===scoreB){
-    return imageAvailabilityRank(a)-imageAvailabilityRank(b) ||
-      Number(b.anio||0)-Number(a.anio||0);
-  }
-
-  return direction==='asc'
-    ? scoreA-scoreB
-    : scoreB-scoreA;
+  return compareCatalogNumeric(
+    a,
+    b,
+    vehicle=>catalogScoreValue(vehicle,metric),
+    direction
+  );
 }
 
 function applyFilters(){
@@ -4730,29 +4812,27 @@ function applyFilters(){
   );
 
   if(priceOrder){
-    filtered.sort((a,b)=>{
-      const pa=cashPriceArs(a)||numericPrice(a.cotizacion)||numericPrice(a.precioPublicado);
-      const pb=cashPriceArs(b)||numericPrice(b.cotizacion)||numericPrice(b.precioPublicado);
-
-      if(pa===pb)return imageAvailabilityRank(a)-imageAvailabilityRank(b);
-      return priceOrder==='asc'?pa-pb:pb-pa;
-    });
+    filtered.sort((a,b)=>compareCatalogNumeric(
+      a,
+      b,
+      vehicle=>cashPriceArs(vehicle)||numericPrice(vehicle.cotizacion),
+      priceOrder
+    ));
   }else if(yearOrder){
-    filtered.sort((a,b)=>{
-      const ya=Number(a.anio)||0;
-      const yb=Number(b.anio)||0;
-
-      if(ya===yb)return imageAvailabilityRank(a)-imageAvailabilityRank(b);
-      return yearOrder==='asc'?ya-yb:yb-ya;
-    });
+    filtered.sort((a,b)=>compareCatalogNumeric(
+      a,
+      b,
+      vehicle=>Number(vehicle.anio)||0,
+      yearOrder
+    ));
   }else if(scoreOrder){
     const [metric,direction]=scoreOrder.split('-');
     filtered.sort((a,b)=>compareCatalogScores(a,b,metric,direction));
   }else{
     filtered.sort((a,b)=>
       (b.isNewEntry?1:0)-(a.isNewEntry?1:0) ||
-      imageAvailabilityRank(a)-imageAvailabilityRank(b) ||
-      Number(vehicleStats[b.id]?.score||0)-Number(vehicleStats[a.id]?.score||0)
+      Number(vehicleStats[b.id]?.score||0)-Number(vehicleStats[a.id]?.score||0) ||
+      catalogTieBreak(a,b)
     );
   }
 
@@ -6639,7 +6719,7 @@ setTimeout(()=>{
 </script>
 
   <div class="site-version-row">
-    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.24</div>
+    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.25</div>
     <span class="site-version" aria-hidden="true">·</span>
     <a class="site-version-link" href="?stock=interno">catálogo</a>
   </div>
