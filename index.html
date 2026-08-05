@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
-<meta name="lmp-build" content="lmp-autos-web-v1.25-drive-y-orden-filtros">
+<meta name="lmp-build" content="lmp-autos-web-v1.26-mobile-tres-columnas">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   
   <!-- Meta Pixel Code -->
@@ -2434,6 +2434,258 @@ fbq('track', 'PageView');
     .featured-popup-actions{margin-top:auto !important}
     @media(max-width:767px){
       #featuredPopup{display:none !important}
+    }
+
+
+    /* Catálogo mobile en tres columnas */
+    @media(max-width:620px){
+      #featuredGrid,
+      #catalogGrid{
+        grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+        gap:6px !important;
+        align-items:start
+      }
+
+      #featuredGrid .vehicle,
+      #catalogGrid .vehicle{
+        display:block !important;
+        min-width:0 !important;
+        min-height:0 !important;
+        border-radius:12px !important;
+        overflow:hidden !important
+      }
+
+      #featuredGrid .vehicle .photo,
+      #catalogGrid .vehicle .photo{
+        width:100% !important;
+        height:auto !important;
+        min-height:0 !important;
+        aspect-ratio:4/5 !important
+      }
+
+      #featuredGrid .vehicle .photo img,
+      #catalogGrid .vehicle .photo img{
+        object-fit:cover !important
+      }
+
+      #featuredGrid .vehicle .card-tools,
+      #catalogGrid .vehicle .card-tools{
+        top:5px !important;
+        right:5px !important;
+        gap:3px !important
+      }
+
+      #featuredGrid .vehicle .tool-btn,
+      #catalogGrid .vehicle .tool-btn{
+        width:23px !important;
+        height:23px !important;
+        padding:0 !important;
+        font-size:11px !important
+      }
+
+      #featuredGrid .vehicle .badge-stack,
+      #catalogGrid .vehicle .badge-stack{
+        top:5px !important;
+        left:5px !important;
+        right:31px !important;
+        gap:3px !important
+      }
+
+      #featuredGrid .vehicle .badge,
+      #catalogGrid .vehicle .badge{
+        max-width:100% !important;
+        padding:4px 5px !important;
+        border-radius:999px !important;
+        font-size:6px !important;
+        line-height:1 !important;
+        letter-spacing:.025em !important;
+        overflow:hidden !important;
+        text-overflow:ellipsis !important;
+        white-space:nowrap !important
+      }
+
+      #featuredGrid .vehicle .badge:nth-child(n+3),
+      #catalogGrid .vehicle .badge:nth-child(n+3){
+        display:none !important
+      }
+
+      #featuredGrid .vehicle .badge.descuento,
+      #catalogGrid .vehicle .badge.descuento{
+        padding:4px 5px !important;
+        border-width:1px !important;
+        font-size:6px !important;
+        transform:none !important;
+        animation:none !important
+      }
+
+      #featuredGrid .vehicle .body,
+      #catalogGrid .vehicle .body{
+        min-width:0 !important;
+        padding:7px 6px 6px !important
+      }
+
+      #featuredGrid .vehicle .make,
+      #catalogGrid .vehicle .make{
+        font-size:6.5px !important;
+        line-height:1.1 !important;
+        letter-spacing:.04em !important;
+        white-space:nowrap !important;
+        overflow:hidden !important;
+        text-overflow:ellipsis !important
+      }
+
+      #featuredGrid .vehicle h3,
+      #catalogGrid .vehicle h3{
+        display:-webkit-box !important;
+        min-height:24px !important;
+        margin:3px 0 5px !important;
+        overflow:hidden !important;
+        -webkit-box-orient:vertical !important;
+        -webkit-line-clamp:2 !important;
+        font-size:10px !important;
+        line-height:1.15 !important;
+        letter-spacing:-.02em !important
+      }
+
+      #featuredGrid .vehicle .meta,
+      #catalogGrid .vehicle .meta{
+        min-height:17px !important;
+        margin:0 0 4px !important;
+        gap:3px !important
+      }
+
+      #featuredGrid .vehicle .meta span,
+      #catalogGrid .vehicle .meta span{
+        display:none !important
+      }
+
+      #featuredGrid .vehicle .meta span:first-child,
+      #catalogGrid .vehicle .meta span:first-child{
+        display:inline-flex !important;
+        max-width:100% !important;
+        padding:3px 5px !important;
+        font-size:7px !important;
+        gap:3px !important
+      }
+
+      #featuredGrid .vehicle .meta svg,
+      #catalogGrid .vehicle .meta svg{
+        width:9px !important;
+        height:9px !important
+      }
+
+      #featuredGrid .vehicle .price-stack,
+      #catalogGrid .vehicle .price-stack{
+        gap:3px !important;
+        margin:0 !important
+      }
+
+      #featuredGrid .vehicle .price-box,
+      #catalogGrid .vehicle .price-box{
+        min-width:0 !important;
+        padding:5px !important;
+        border-radius:7px !important
+      }
+
+      #featuredGrid .vehicle .price-label,
+      #catalogGrid .vehicle .price-label{
+        font-size:5.5px !important;
+        line-height:1.1 !important;
+        letter-spacing:.025em !important;
+        white-space:nowrap !important;
+        overflow:hidden !important;
+        text-overflow:ellipsis !important
+      }
+
+      #featuredGrid .vehicle .price,
+      #catalogGrid .vehicle .price{
+        min-width:0 !important;
+        margin-top:2px !important;
+        gap:2px !important;
+        font-size:9px !important;
+        line-height:1.05 !important;
+        white-space:nowrap !important;
+        overflow:hidden !important;
+        text-overflow:ellipsis !important
+      }
+
+      #featuredGrid .vehicle .price svg,
+      #catalogGrid .vehicle .price svg{
+        display:none !important
+      }
+
+      #featuredGrid .vehicle .price-prefix,
+      #catalogGrid .vehicle .price-prefix{
+        font-size:6px !important;
+        margin-right:1px !important
+      }
+
+      #featuredGrid .vehicle .advance,
+      #catalogGrid .vehicle .advance{
+        display:-webkit-box !important;
+        margin-top:4px !important;
+        overflow:hidden !important;
+        -webkit-box-orient:vertical !important;
+        -webkit-line-clamp:2 !important;
+        font-size:7px !important;
+        line-height:1.2 !important
+      }
+
+      #featuredGrid .vehicle .card-installment,
+      #catalogGrid .vehicle .card-installment,
+      #featuredGrid .vehicle .card-benefits,
+      #catalogGrid .vehicle .card-benefits{
+        display:none !important
+      }
+
+      #featuredGrid .vehicle .card-actions,
+      #catalogGrid .vehicle .card-actions{
+        display:grid !important;
+        grid-template-columns:1fr !important;
+        gap:3px !important;
+        margin-top:5px !important
+      }
+
+      #featuredGrid .vehicle .detail-btn,
+      #catalogGrid .vehicle .detail-btn,
+      #featuredGrid .vehicle .card-wa,
+      #catalogGrid .vehicle .card-wa{
+        grid-column:auto !important;
+        width:100% !important;
+        min-height:25px !important;
+        padding:5px 3px !important;
+        border-radius:7px !important;
+        font-size:7px !important;
+        line-height:1 !important
+      }
+
+      #featuredGrid .vehicle .ig-btn,
+      #catalogGrid .vehicle .ig-btn{
+        display:none !important
+      }
+    }
+
+    @media(max-width:360px){
+      #featuredGrid,
+      #catalogGrid{
+        gap:4px !important
+      }
+
+      #featuredGrid .vehicle .body,
+      #catalogGrid .vehicle .body{
+        padding:6px 4px 5px !important
+      }
+
+      #featuredGrid .vehicle h3,
+      #catalogGrid .vehicle h3{
+        min-height:22px !important;
+        font-size:9px !important
+      }
+
+      #featuredGrid .vehicle .price,
+      #catalogGrid .vehicle .price{
+        font-size:8px !important
+      }
     }
 
 </style>
@@ -6719,7 +6971,7 @@ setTimeout(()=>{
 </script>
 
   <div class="site-version-row">
-    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.25</div>
+    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.26</div>
     <span class="site-version" aria-hidden="true">·</span>
     <a class="site-version-link" href="?stock=interno">catálogo</a>
   </div>

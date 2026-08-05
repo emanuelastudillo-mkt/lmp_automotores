@@ -1,79 +1,55 @@
-# LMP Autos Web v1.25 — Imágenes de Drive y orden de filtros
+# LMP Autos Web v1.26 — Catálogo mobile en tres columnas
 
-## Problemas detectados
+## Cambio
 
-### Imágenes de los últimos vehículos
+En pantallas de hasta 620 px, las grillas de:
 
-Las tarjetas de `Ver todos` intentaban cargar siempre una portada local, aunque esa portada no existiera.
+- vehículos destacados;
+- catálogo completo;
 
-Después utilizaban una única dirección transformada de Google Drive. Si ese formato no respondía, la tarjeta quedaba sin imagen.
+muestran tres vehículos por fila.
 
-Además, un enlace a una carpeta de Drive podía confundirse con el identificador de una imagen.
+## Adaptación de las tarjetas
 
-### Orden de los filtros
+Para mantener la lectura dentro de una pantalla de teléfono, las tarjetas móviles muestran:
 
-Cuando una imagen agotaba todos sus intentos de carga, la tarjeta se movía al final de la grilla mediante JavaScript.
-
-Ese movimiento ocurría después de ordenar el catálogo y alteraba visualmente los resultados por:
-
-- precio;
+- fotografía vertical;
+- marca;
+- modelo en un máximo de dos líneas;
 - año;
-- rendimiento;
-- confort;
-- economía;
-- espacio;
-- seguridad;
-- calificación general.
+- precio en dólares;
+- precio en pesos;
+- anticipo;
+- botón Ver vehículo;
+- botón Consultar.
 
-## Correcciones
+Dentro de la tarjeta mobile se ocultan:
 
-### Carga de imágenes
-
-- La portada local solo se intenta cuando fue validada previamente.
-- Los enlaces de archivos de Google Drive generan tres alternativas:
-  1. miniatura de Drive;
-  2. servidor `lh3.googleusercontent.com`;
-  3. enlace `uc?export=view`.
-- Si una alternativa falla, se prueba la siguiente.
-- Se reconocen variantes de encabezados como `Foto 1`, `Foto1`, `Imagen 1` e `Imagen1`.
-- Si `Link de fotos/videos` contiene un archivo individual de Drive, también puede utilizarse como imagen.
-- Los enlaces a carpetas continúan funcionando como acceso a la carpeta, pero no se intentan mostrar como fotografía.
-- Una carga correcta limpia el estado interno de error de la imagen.
-
-### Ordenamiento
-
-Las tarjetas ya no se mueven cuando falla una imagen.
-
-El orden seleccionado queda separado de la disponibilidad de fotografías:
-
-- precio;
-- año;
-- puntajes;
-- filtros por marca;
+- kilometraje;
 - transmisión;
 - combustible;
-- favoritos.
+- cuota resumida;
+- beneficios secundarios;
+- enlace individual de Instagram.
 
-Los vehículos sin precio o sin puntaje quedan al final del criterio correspondiente.
+Toda esa información continúa disponible al abrir la ficha del vehículo.
 
-Los empates se resuelven de forma estable por:
+## Pantallas pequeñas
 
-1. año;
-2. número de ID;
-3. marca y modelo.
+En dispositivos de hasta 360 px también se mantienen las tres columnas, reduciendo ligeramente espacios y tipografías.
+
+## Escritorio y tablet
+
+No se modificaron las distribuciones de escritorio y tablet.
 
 ## Validación
 
-- JavaScript completo validado con `node --check`.
-- Probados enlaces de archivo y carpeta de Google Drive.
-- Confirmadas tres alternativas por archivo de Drive.
-- Probado orden ascendente por precio.
-- Probado orden descendente por año.
-- Probado orden descendente por puntaje.
-- Confirmado que una imagen fallida no reubica su tarjeta.
+- JavaScript validado con `node --check`.
+- Confirmada la regla de tres columnas para destacados y catálogo.
+- Estilos limitados exclusivamente a pantallas de hasta 620 px.
 
 ## Versión
 
 ```text
-lmpautos V1.25
+lmpautos V1.26
 ```
