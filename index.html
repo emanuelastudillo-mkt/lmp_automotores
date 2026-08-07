@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>LMP Autos | Lomas del Mirador</title>
-<meta name="lmp-build" content="lmp-autos-web-v1.26-mobile-tres-columnas">
+<meta name="lmp-build" content="lmp-autos-web-v1.27-stock-json">
   <meta name="description" content="Vehículos usados, financiación y permutas en LMP Autos.">
   
   <!-- Meta Pixel Code -->
@@ -3057,6 +3057,7 @@ const CONFIG = {
   sheetId: "1DN8we3PaI2foFvz_pGcfu11aa9gmEIJaFiQjYjSN7RM",
   gid: "0",
   csvUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR97O_aQlCskpibTlj1UEomToyCeUl8seOUB3DoNihqoXAAfGbO-8DtUj_WG9XZJvYRWJ_PdGcEBKcH/pub?gid=0&single=true&output=csv",
+  staticStockUrl: "./data/stock.json",
   eventsApi: "https://script.google.com/macros/s/AKfycbyEQXz7_oQuy6EqJ-ybbnmanl0kKpGeKMfXSedTKVRUOdgYF7smvmcKHDl9WF89NBtQ/exec",
   whatsapp: "5491132627744",
   maxFeatured: 6,
@@ -3147,6 +3148,7 @@ let pendingReservationVehicle=null;
 let budgetDialogMode='print';
 let internalControlsBound=false;
 let lastStockUpdatedAt=null;
+let lastStockSource='';
 
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
@@ -6106,11 +6108,12 @@ function renderInternalComparison(list){
   $('#compareModal').classList.add('open');
   $('#compareModal').setAttribute('aria-hidden','false');
 }
-function saveStockCache(){
+function saveStockCache({source='Google Sheets en vivo'}={}){
   vehicles=vehicles.map(vehicle=>ensureVehicleScoreProfile(vehicle));
 
   const payload={
     timestamp:new Date().toISOString(),
+    source,
     vehicles,
     vehicleStats
   };
@@ -6118,6 +6121,7 @@ function saveStockCache(){
   try{
     localStorage.setItem(INTERNAL_CACHE_KEY,JSON.stringify(payload));
     lastStockUpdatedAt=new Date(payload.timestamp);
+    lastStockSource=source;
   }catch(_){}
 }
 function loadStockCache(){
@@ -6146,7 +6150,11 @@ function renderUpdatedAt({cached=false}={}){
     minute:'2-digit'
   }).format(lastStockUpdatedAt);
 
-  node.textContent=`${cached?'Datos guardados':'Actualizado'}: ${formatted}`;
+  const label=cached
+    ? 'Caché local'
+    : (lastStockSource || 'Actualizado');
+
+  node.textContent=`${label}: ${formatted}`;
 }
 function restoreCachedStock(error){
   const cached=loadStockCache();
@@ -6158,6 +6166,7 @@ function restoreCachedStock(error){
   sanitizePublicSelections();
   vehicleStats=cached.vehicleStats||{};
   lastStockUpdatedAt=new Date(cached.timestamp);
+  lastStockSource=cached.source || 'Caché local';
   markNewEntries(vehicles);
   populateFilters();
   applyFilters();
@@ -6683,6 +6692,32 @@ function switchView(view){
   window.scrollTo({top:0,behavior:'smooth'});
   if(!home)applyFilters();
 }
+async function loadStaticStockJson(){
+  const response=await fetch(CONFIG.staticStockUrl,{
+    method:'GET',
+    cache:'no-cache',
+    credentials:'same-origin'
+  });
+
+  if(!response.ok){
+    throw new Error(`Base web HTTP ${response.status}`);
+  }
+
+  const payload=await response.json();
+
+  if(!payload || !Array.isArray(payload.rows) || !payload.rows.length){
+    throw new Error('La base web todavía no tiene stock sincronizado');
+  }
+
+  return {
+    rows:payload.rows,
+    source:'Base web',
+    generatedAt:payload.generatedAt || '',
+    contentHash:payload.contentHash || '',
+    rowCount:Number(payload.rowCount)||payload.rows.length
+  };
+}
+
 function loadGoogleSheetJsonp(){
   return new Promise((resolve,reject)=>{
     const callbackName='lmpSheetCallback_'+Date.now();
@@ -6792,69 +6827,162 @@ async function loadSheetRows(){
   };
 }
 
+async function applyStockResult(result,{initial=false,saveCacheResult=false}={}){
+  vehicles=result.rows.map(mapVehicle).filter(validVehicle);
+  sanitizePublicSelections();
+  markNewEntries(vehicles);
+
+  if(!vehicles.length){
+    const states=[...new Set(
+      result.rows
+        .map(r=>clean(r['Estado actual del auto']))
+        .filter(Boolean)
+    )];
+
+    throw new Error(
+      `La fuente cargó ${result.rows.length} filas, pero ninguna pudo convertirse en vehículo. `+
+      `Estados detectados: ${states.join(', ') || 'ninguno'}`
+    );
+  }
+
+  vehicles.sort((a,b)=>
+    (a.estado==='DISPONIBLE'?0:1)-(b.estado==='DISPONIBLE'?0:1) ||
+    Number(b.anio)-Number(a.anio)
+  );
+
+  populateFilters();
+
+  await Promise.all([
+    loadVehicleStats(),
+    verifyLocalCovers(vehicles)
+  ]);
+
+  if(saveCacheResult){
+    saveStockCache({source:result.source || 'Google Sheets en vivo'});
+  }else{
+    const generatedAt=result.generatedAt ? new Date(result.generatedAt) : null;
+
+    if(generatedAt && !Number.isNaN(generatedAt.getTime())){
+      lastStockUpdatedAt=generatedAt;
+    }
+
+    lastStockSource=result.source || 'Base web';
+  }
+
+  renderUpdatedAt();
+
+  highlightedVehicles=selectHighlights(CONFIG.maxFeatured);
+
+  const hasRealStats=Object.values(vehicleStats).some(item=>Number(item.score)>0);
+  $('#featuredTitle').textContent=hasRealStats?'Los más consultados':'Vehículos recomendados';
+  $('#featuredSubtitle').textContent=hasRealStats
+    ? 'Los vehículos que más interés generan entre nuestros visitantes.'
+    : 'Una selección variada entre distintas marcas y rangos de precio.';
+
+  if(highlightedVehicles.length){
+    renderCards($('#featuredGrid'),highlightedVehicles,{localOnly:true});
+  }else{
+    $('#featuredGrid').innerHTML='<div class="empty">No hay vehículos con portada local disponible.</div>';
+  }
+
+  applyFilters();
+
+  if(isInternalStockMode()){
+    if(initial)activateInternalStockMode();
+    else renderStockCheck();
+    return;
+  }
+
+  if(!initial)return;
+
+  const requestedSlug=currentVehicleSlugFromUrl();
+
+  if(requestedSlug){
+    const requestedVehicle=vehicleFromSlug(requestedSlug);
+
+    if(requestedVehicle){
+      openVehicle(requestedVehicle.id,{updateUrl:false});
+      document.title=`${requestedVehicle.marca} ${requestedVehicle.modelo}${requestedVehicle.anio?` ${requestedVehicle.anio}`:''} | LMP Autos`;
+    }else{
+      clearVehicleUrl({replace:true});
+    }
+  }else{
+    maybeShowFeaturedPopup();
+  }
+}
+
 async function loadData({force=false}={}){
+  let initialRendered=false;
+
+  if(!force){
+    try{
+      const staticResult=await loadStaticStockJson();
+      await applyStockResult(staticResult,{
+        initial:true,
+        saveCacheResult:false
+      });
+      initialRendered=true;
+    }catch(staticError){
+      console.info('Base web no disponible todavía:',staticError.message);
+    }
+  }
+
   try{
-    const result=await loadSheetRows();
-    vehicles=result.rows.map(mapVehicle).filter(validVehicle);
-    sanitizePublicSelections();
-    markNewEntries(vehicles);
-    if(!vehicles.length){
-      const states=[...new Set(result.rows.map(r=>clean(r['Estado actual del auto'])).filter(Boolean))];
-      throw new Error(`La hoja cargó ${result.rows.length} filas, pero ninguna pudo convertirse en vehículo. Estados detectados: ${states.join(', ') || 'ninguno'}`);
-    }
-    vehicles.sort((a,b)=>(a.estado==='DISPONIBLE'?0:1)-(b.estado==='DISPONIBLE'?0:1) || Number(b.anio)-Number(a.anio));
-    populateFilters();
-    await Promise.all([
-      loadVehicleStats(),
-      verifyLocalCovers(vehicles)
-    ]);
-    saveStockCache();
-    renderUpdatedAt();
-    highlightedVehicles=selectHighlights(CONFIG.maxFeatured);
-    const hasRealStats=Object.values(vehicleStats).some(item=>Number(item.score)>0);
-    $('#featuredTitle').textContent=hasRealStats?'Los más consultados':'Vehículos recomendados';
-    $('#featuredSubtitle').textContent=hasRealStats?'Los vehículos que más interés generan entre nuestros visitantes.':'Una selección variada entre distintas marcas y rangos de precio.';
-    if(highlightedVehicles.length){
-      renderCards($('#featuredGrid'),highlightedVehicles,{localOnly:true});
-    }else{
-      $('#featuredGrid').innerHTML='<div class="empty">No hay vehículos con portada local disponible.</div>';
-    }
-    const now=new Date();
-    applyFilters();
+    const liveResult=await loadSheetRows();
 
-    if(activateInternalStockMode()){
-      return;
-    }
-
-    const requestedSlug=currentVehicleSlugFromUrl();
-    if(requestedSlug){
-      const requestedVehicle=vehicleFromSlug(requestedSlug);
-      if(requestedVehicle){
-        openVehicle(requestedVehicle.id,{updateUrl:false});
-        document.title=`${requestedVehicle.marca} ${requestedVehicle.modelo}${requestedVehicle.anio?` ${requestedVehicle.anio}`:''} | LMP Autos`;
-      }else{
-        clearVehicleUrl({replace:true});
-      }
-    }else{
-      maybeShowFeaturedPopup();
-    }
+    await applyStockResult(liveResult,{
+      initial:!initialRendered,
+      saveCacheResult:true
+    });
   }catch(err){
     console.error('Error de conexión con Google Sheets:',err);
+
+    if(initialRendered){
+      if(isInternalStockMode()){
+        const main=$('#stockCheckView main');
+
+        if(main && !main.querySelector('.cache-warning')){
+          main.insertAdjacentHTML(
+            'afterbegin',
+            `<div class="cache-warning">Mostrando la copia de stock guardada en la web. `+
+            `Google Sheets no pudo actualizarse en este momento.</div>`
+          );
+        }
+
+        renderUpdatedAt();
+      }
+
+      return;
+    }
 
     if(restoreCachedStock(err)){
       return;
     }
 
-    const message=escapeHtml(err.message||'Revisá la conexión, la publicación de la hoja o intentá nuevamente.');
-    const error=`<div class="empty"><strong>No se pudo cargar el catálogo.</strong><small>${message}</small><button class="retry-catalog" type="button">Reintentar</button></div>`;
+    const message=escapeHtml(
+      err.message ||
+      'Revisá la conexión, la publicación de la hoja o intentá nuevamente.'
+    );
+
+    const error=
+      `<div class="empty">`+
+      `<strong>No se pudo cargar el catálogo.</strong>`+
+      `<small>${message}</small>`+
+      `<button class="retry-catalog" type="button">Reintentar</button>`+
+      `</div>`;
+
     $('#featuredGrid').innerHTML=error;
     $('#catalogGrid').innerHTML=error;
     $('#resultCount').textContent='No se pudo cargar el catálogo';
+
     if($('#stockCheckBody')){
       $('#stockCheckBody').innerHTML=error;
       $('#stockCheckSummary').textContent='Error al cargar el stock';
     }
-    $$('.retry-catalog').forEach(button=>button.addEventListener('click',loadData));
+
+    $$('.retry-catalog').forEach(button=>
+      button.addEventListener('click',()=>loadData({force:true}))
+    );
   }
 }
 
@@ -6971,7 +7099,7 @@ setTimeout(()=>{
 </script>
 
   <div class="site-version-row">
-    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.26</div>
+    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.27</div>
     <span class="site-version" aria-hidden="true">·</span>
     <a class="site-version-link" href="?stock=interno">catálogo</a>
   </div>
