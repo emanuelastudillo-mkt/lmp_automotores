@@ -1,188 +1,317 @@
-# LMP Autos Web v1.28 — SEO + pre-render del catálogo
+# LMP Autos Web v1.29 — Sincronización automática de imágenes
 
-## Qué corrige de la auditoría
+Esta versión amplía el workflow de stock/SEO para copiar también las fotografías públicas de Google Drive al repositorio.
 
-### 1. Catálogo visible en el HTML inicial
+## Convención de nombres
 
-El workflow ya no genera solamente `data/stock.json`.
-
-Cada sincronización también inserta una copia estática y visible del stock dentro de:
-
-- Vehículos recomendados.
-- Catálogo completo.
-
-Esos vehículos existen en el HTML que recibe un buscador antes de ejecutar JavaScript.
-
-Cuando JavaScript carga, las tarjetas estáticas son reemplazadas por las tarjetas interactivas normales.
-
-### 2. Páginas estáticas por vehículo
-
-Por cada vehículo público se genera:
+Se mantiene una sola carpeta:
 
 ```text
-/vehiculos/marca-modelo-anio/index.html
+img/vehiculos/
 ```
 
 Ejemplo:
 
 ```text
-/vehiculos/ford-focus-2-0-se-plus-2016/
+A123.webp
+A123-1.webp
+A123-2.webp
+A123-3.webp
+A124.webp
+A124-1.webp
 ```
 
-Cada página incluye:
-
-- H1 propio.
-- title único.
-- meta description única.
-- canonical.
-- Open Graph.
-- Twitter Card.
-- fotografía cuando está disponible.
-- especificaciones.
-- precio.
-- anticipo.
-- Perfil del vehículo.
-- CTA a la ficha completa.
-- CTA de WhatsApp.
-- Schema `Vehicle`.
-
-Los vehículos vendidos o `de baja` no generan páginas públicas.
-
-### 3. Home optimizada
-
-Nuevo title:
+Regla:
 
 ```text
-Autos usados en Lomas del Mirador | LMP Autos
+A123.webp    = portada
+A123-1.webp  = foto 2
+A123-2.webp  = foto 3
+A123-3.webp  = foto 4
 ```
 
-Nueva meta description:
+## Qué ocurre con las portadas que ya existen
+
+Las portadas actuales como:
 
 ```text
-Encontrá autos usados en Lomas del Mirador, Zona Oeste. Financiación, cuotas fijas, permutas y atención personalizada en LMP Autos, Av. Mosconi 799.
+img/vehiculos/A123.webp
 ```
 
-También se agregó un H1 público:
+se consideran portadas manuales y NO se sobrescriben.
+
+Si en Google Sheets existen:
 
 ```text
-Autos usados en Lomas del Mirador
+Foto 1
+Foto 2
+Foto 3
+Foto 4
 ```
 
-El H1 de Stock interno se convirtió en H2 y todo ese sector tiene `data-nosnippet`.
-
-### 4. SEO local
-
-La home incluye JSON-LD `AutoDealer` con:
-
-- LMP Autos.
-- Av. Mosconi 799.
-- Lomas del Mirador.
-- Buenos Aires.
-- teléfono.
-- web.
-- Google Maps.
-- Instagram.
-- zona atendida.
-
-No se agregaron horarios porque no están definidos en la información actual del proyecto.
-
-### 5. Open Graph
-
-La home y las páginas de vehículos incluyen:
-
-- `og:title`.
-- `og:description`.
-- `og:url`.
-- `og:image`.
-- Twitter Card.
-
-Esto mejora la información disponible al compartir enlaces en WhatsApp y redes sociales.
-
-### 6. robots.txt
-
-Incluido:
+y `A123.webp` ya existe, la automatización interpreta:
 
 ```text
-User-agent: *
-Allow: /
-Disallow: /*?stock=interno
-Disallow: /metricas.html
-
-Sitemap: https://lmpautos.com/sitemap.xml
+Foto 1 → ya representada por A123.webp
+Foto 2 → A123-1.webp
+Foto 3 → A123-2.webp
+Foto 4 → A123-3.webp
 ```
 
-### 7. sitemap.xml
+Esto permite mantener las portadas actuales y automatizar el resto de la galería.
 
-El sitemap se vuelve a generar cada vez que cambia el stock.
+## Vehículos sin portada local
 
-Incluye:
+Si todavía no existe:
 
-- home;
-- financiación;
-- cada vehículo público.
+```text
+A123.webp
+```
 
-No incluye:
+la primera imagen disponible del Sheets se convierte automáticamente en la portada.
 
-- Stock interno;
-- métricas;
-- vendidos;
-- vehículos de baja.
+Las siguientes se nombran:
 
-## Funcionamiento del workflow
+```text
+A123-1.webp
+A123-2.webp
+...
+```
 
-Cada seis horas o al ejecutar manualmente:
+## Columnas reconocidas
+
+La automatización ya no está limitada a cuatro fotos.
+
+Reconoce automáticamente:
+
+```text
+Foto 1
+Foto1
+Foto 2
+Foto2
+Foto 3
+...
+Foto 10
+Imagen 1
+Imagen1
+Imagen 2
+...
+```
+
+Puede seguir creciendo sin modificar el código.
+
+## Google Drive
+
+Los enlaces de archivos individuales de Drive son descargados automáticamente.
+
+El workflow prueba varias direcciones de Google Drive antes de considerar que una imagen falló.
+
+Las imágenes deben ser accesibles públicamente mediante el enlace compartido.
+
+### Importante sobre carpetas
+
+Esta primera versión NO recorre automáticamente el contenido de una carpeta de Drive.
+
+Si una unidad solamente tiene:
+
+```text
+Link de fotos/videos = enlace a una carpeta
+```
+
+la carpeta continúa funcionando como enlace administrativo, pero sus archivos no se copian a GitHub.
+
+Para esta automatización deben existir enlaces individuales en:
+
+```text
+Foto 1
+Foto 2
+Foto 3
+...
+```
+
+No hace falta agregar columnas nuevas si esas columnas ya existen.
+
+## Optimización automática
+
+Cada foto descargada se procesa antes de guardarse:
+
+```text
+Formato: WebP
+Ancho máximo: 1400 px
+Calidad: 80
+Rotación EXIF: automática
+```
+
+No se agrandan imágenes pequeñas.
+
+Esto reduce considerablemente el peso frente a subir los originales directamente.
+
+## Manifest de imágenes
+
+El workflow genera automáticamente:
+
+```text
+img/vehiculos/manifest.json
+```
+
+Ejemplo:
+
+```json
+{
+  "_version": "c2c248fa01af",
+  "A123": [
+    "A123.webp",
+    "A123-1.webp",
+    "A123-2.webp",
+    "A123-3.webp"
+  ]
+}
+```
+
+La web utiliza este archivo para conocer exactamente qué fotos existen.
+
+No prueba archivos inexistentes uno por uno.
+
+## Galería en la web
+
+La ficha del vehículo utiliza primero las fotos locales:
+
+```text
+/img/vehiculos/A123.webp
+/img/vehiculos/A123-1.webp
+/img/vehiculos/A123-2.webp
+```
+
+Si una foto todavía no fue sincronizada, las imágenes de Drive continúan funcionando como respaldo.
+
+## SEO
+
+Las páginas estáticas de vehículos generadas por el workflow utilizan las imágenes locales cuando existen.
+
+El Schema `Vehicle` incluye también la lista de fotografías disponibles.
+
+Las páginas SEO muestran hasta cinco miniaturas adicionales debajo de la imagen principal.
+
+## Control de cambios
+
+Se genera:
+
+```text
+data/image-sync.json
+```
+
+Este archivo recuerda qué imagen de Drive corresponde a cada archivo local.
+
+Por eso, cada seis horas:
+
+- si el enlace no cambió y la foto ya existe, no vuelve a descargarla;
+- si una foto cambia, actualiza solamente esa foto;
+- si se agrega `Foto 5`, crea solamente la nueva imagen;
+- si se elimina una foto del Sheets, elimina solamente la copia generada correspondiente.
+
+Las portadas manuales nunca son eliminadas por este mecanismo.
+
+## Vehículos vendidos o de baja
+
+Para vehículos `VENDIDO` o `DE BAJA`:
+
+- dejan de generarse páginas públicas;
+- las imágenes creadas automáticamente pueden eliminarse del sitio;
+- una portada manual existente se conserva;
+- los originales permanecen en Google Drive.
+
+## Workflow
+
+El mismo workflow realiza ahora:
 
 ```text
 Google Sheets
       ↓
 data/stock.json
       ↓
-index.html pre-renderizado
+descarga fotos de Drive
       ↓
-/vehiculos/<slug>/
+convierte a WebP
+      ↓
+img/vehiculos/
+      ↓
+manifest.json
+      ↓
+index.html SEO
+      ↓
+páginas /vehiculos/
       ↓
 sitemap.xml
 ```
 
-## Importante después de instalar V1.28
+## Primera ejecución
 
-Ejecutar una vez:
+Después de subir esta versión:
 
 ```text
 GitHub
 → Actions
-→ Actualizar stock y SEO desde Google Sheets
+→ Actualizar stock, SEO e imágenes
 → Run workflow
 ```
 
-Ese primer run genera las páginas reales de todos los vehículos.
+La primera ejecución puede tardar más porque debe copiar las fotografías que todavía no están en GitHub.
 
-## GitHub Actions actualizado
+Las siguientes serán mucho más rápidas.
 
-Para eliminar el warning de Node 20:
+## Qué mirar en el resultado del workflow
+
+Al finalizar aparece algo similar a:
 
 ```text
-actions/checkout@v6
-actions/setup-node@v6
-Node.js 24
+Imágenes: 18 nuevas/actualizadas · 24 sin cambios · 0 eliminadas.
 ```
 
-## Validación
+Si una unidad solo posee una carpeta Drive:
 
-Se probó el script con un CSV simulado y se verificó:
+```text
+Aviso: 1 vehículo(s) tienen solamente una carpeta de Drive.
+```
 
-- generación de `stock.json`;
-- inserción del stock en el HTML inicial;
-- exclusión de vehículos de baja;
-- creación de páginas individuales;
-- generación de sitemap;
-- generación de robots.txt;
-- estabilidad cuando el stock no cambia;
-- JavaScript principal con `node --check`;
-- script de sincronización con `node --check`.
+Si una imagen individual no puede descargarse se muestra una advertencia indicando ID y archivo.
+
+El workflow no cancela todo el stock porque falle una única fotografía.
+
+## Archivos nuevos o modificados
+
+```text
+index.html
+scripts/actualizar-stock.mjs
+.github/workflows/actualizar-stock.yml
+data/image-sync.json
+```
+
+El workflow creará automáticamente:
+
+```text
+img/vehiculos/manifest.json
+img/vehiculos/A123-1.webp
+img/vehiculos/A123-2.webp
+...
+```
+
+## Instalación
+
+Subir al repositorio:
+
+```text
+index.html
+scripts/actualizar-stock.mjs
+.github/workflows/actualizar-stock.yml
+data/image-sync.json
+```
+
+No es necesario tocar las imágenes existentes en `img/vehiculos/`.
+
+Después ejecutar manualmente el workflow una vez.
 
 ## Versión
 
 ```text
-lmpautos V1.28
+lmpautos V1.29
 ```
