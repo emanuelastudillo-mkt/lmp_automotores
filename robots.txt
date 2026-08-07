@@ -1,6 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /*?stock=interno
 Disallow: /metricas.html
 
 Sitemap: https://lmpautos.com/sitemap.xml

@@ -863,7 +863,7 @@ function staticCard(row) {
   const title = `${marca} ${modelo}${anio ? ` ${anio}` : ''}`;
 
   const imageMarkup = image
-    ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(`${title} usado en LMP Autos`)}" loading="lazy" referrerpolicy="no-referrer">`
+    ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(`${title} usado en Lomas del Mirador - LMP Autos`)}" loading="lazy" referrerpolicy="no-referrer">`
     : `<div class="photo-empty">Fotos próximamente</div>`;
 
   return `<article class="vehicle seo-static-card">
@@ -972,10 +972,11 @@ function vehicleDescription(row) {
   const km = formatKm(rowValue(row, 'Kilometraje'));
 
   return [
-    `${marca} ${modelo}${anio ? ` ${anio}` : ''} usado`,
+    `${marca} ${modelo}${anio ? ` ${anio}` : ''} usado en Lomas del Mirador`,
     km ? `${km}` : '',
-    'Consultá precio, financiación y permuta en LMP Autos, Lomas del Mirador.'
-  ].filter(Boolean).join('. ');
+    'Consultá precio, financiación con cuotas fijas y permuta en LMP Autos',
+    'Av. Mosconi 799'
+  ].filter(Boolean).join('. ') + '.';
 }
 
 function vehicleJsonLd(row, url) {
@@ -992,6 +993,8 @@ function vehicleJsonLd(row, url) {
     '@id': `${url}#vehicle`,
     name: `${marca} ${modelo}${anio ? ` ${anio}` : ''}`,
     url,
+    mainEntityOfPage: url,
+    category: 'Autos usados',
     brand: {
       '@type': 'Brand',
       name: marca
@@ -1036,6 +1039,38 @@ function vehicleJsonLd(row, url) {
   ).replace(/</g, '\\u003c');
 }
 
+
+function breadcrumbJsonLd(row, url) {
+  const marca = rowValue(row, 'Marca');
+  const modelo = rowValue(row, 'Modelo');
+  const anio = rowValue(row, 'Año', 'Ano');
+
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Inicio',
+        item: `${SITE_URL}/`
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Autos usados',
+        item: `${SITE_URL}/`
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: `${marca} ${modelo}${anio ? ` ${anio}` : ''}`,
+        item: url
+      }
+    ]
+  }, null, 2).replace(/</g, '\\u003c');
+}
+
 function scoreListMarkup(row) {
   const scores = vehicleScores(row);
   const entries = [
@@ -1072,7 +1107,7 @@ function vehiclePageHtml(row, generatedAt) {
   const slug = vehicleSlug(row);
   const url = `${SITE_URL}/vehiculos/${slug}/`;
   const appUrl = `${SITE_URL}/?vehiculo=${encodeURIComponent(slug)}`;
-  const title = `${marca} ${modelo}${anio ? ` ${anio}` : ''} usado | LMP Autos`;
+  const title = `${marca} ${modelo}${anio ? ` ${anio}` : ''} usado en Lomas del Mirador | LMP Autos`;
   const description = vehicleDescription(row);
 
   const imageMarkup = image
@@ -1094,6 +1129,7 @@ function vehiclePageHtml(row, generatedAt) {
   <meta name="description" content="${escapeHtml(description)}">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <link rel="canonical" href="${escapeHtml(url)}">
+  <link rel="alternate" hreflang="es-AR" href="${escapeHtml(url)}">
 
   <meta property="og:type" content="product">
   <meta property="og:locale" content="es_AR">
@@ -1102,14 +1138,19 @@ function vehiclePageHtml(row, generatedAt) {
   <meta property="og:description" content="${escapeHtml(description)}">
   <meta property="og:url" content="${escapeHtml(url)}">
   <meta property="og:image" content="${escapeHtml(image || `${SITE_URL}/banner-1.webp`)}">
+  <meta property="og:image:alt" content="${escapeHtml(`${marca} ${modelo}${anio ? ` ${anio}` : ''} usado en Lomas del Mirador`)}">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${escapeHtml(title)}">
   <meta name="twitter:description" content="${escapeHtml(description)}">
   <meta name="twitter:image" content="${escapeHtml(image || `${SITE_URL}/banner-1.webp`)}">
+  <meta name="twitter:image:alt" content="${escapeHtml(`${marca} ${modelo}${anio ? ` ${anio}` : ''} usado en Lomas del Mirador`)}">
 
   <script type="application/ld+json">
 ${vehicleJsonLd(row, url)}
+  </script>
+  <script type="application/ld+json">
+${breadcrumbJsonLd(row, url)}
   </script>
 
   <style>
@@ -1121,6 +1162,9 @@ ${vehicleJsonLd(row, url)}
     header .shell{display:flex;align-items:center;justify-content:space-between;padding:16px 0}
     .brand{font-weight:950;text-decoration:none}
     .back{font-size:13px;color:#fff;text-decoration:none}
+    .breadcrumbs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 16px;color:#6c6c6c;font-size:12px}
+    .breadcrumbs a{text-decoration:none}
+    .breadcrumbs span{color:#aaa}
     main{padding:34px 0 50px}
     .vehicle-layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(320px,.9fr);gap:24px}
     .media{min-height:420px;border-radius:22px;overflow:hidden;background:#ddd}
@@ -1166,6 +1210,14 @@ ${vehicleJsonLd(row, url)}
 </header>
 
 <main class="shell">
+  <nav class="breadcrumbs" aria-label="Migas de pan">
+    <a href="${SITE_URL}/">Inicio</a>
+    <span>›</span>
+    <a href="${SITE_URL}/">Autos usados</a>
+    <span>›</span>
+    <strong>${escapeHtml(`${marca} ${modelo}${anio ? ` ${anio}` : ''}`)}</strong>
+  </nav>
+
   <div class="vehicle-layout">
     <div>
       <div class="media">${imageMarkup}</div>
@@ -1247,18 +1299,25 @@ function sitemapXml(rows, generatedAt) {
   const vehicleUrls = rows.map(row => ({
     loc: `${SITE_URL}/vehiculos/${vehicleSlug(row)}/`,
     changefreq: 'daily',
-    priority: '0.8'
+    priority: '0.8',
+    title: `${rowValue(row, 'Marca')} ${rowValue(row, 'Modelo')}${rowValue(row, 'Año', 'Ano') ? ` ${rowValue(row, 'Año', 'Ano')}` : ''}`,
+    images: localVehicleImages(row)
   }));
 
   const items = [...staticUrls, ...vehicleUrls];
 
   return `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 ${items.map(item => `  <url>
     <loc>${escapeXml(item.loc)}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>${item.changefreq}</changefreq>
-    <priority>${item.priority}</priority>
+    <priority>${item.priority}</priority>${Array.isArray(item.images) ? item.images.map(image => `
+    <image:image>
+      <image:loc>${escapeXml(image)}</image:loc>
+      <image:title>${escapeXml(item.title || 'LMP Autos')}</image:title>
+    </image:image>`).join('') : ''}
   </url>`).join('\n')}
 </urlset>
 `;

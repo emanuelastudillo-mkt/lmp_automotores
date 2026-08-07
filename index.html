@@ -8,52 +8,89 @@
   <link rel="shortcut icon" href="./favicon.ico">
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
-  <title>Autos usados en Lomas del Mirador | LMP Autos</title>
-<meta name="lmp-build" content="lmp-autos-web-v1.29-sincronizacion-imagenes">
-  <meta name="description" content="Encontrá autos usados en Lomas del Mirador, Zona Oeste. Financiación, cuotas fijas, permutas y atención personalizada en LMP Autos, Av. Mosconi 799.">
+  <title>Autos Usados en Lomas del Mirador | LMP Autos</title>
+<meta name="lmp-build" content="lmp-autos-web-v1.30-seo-auditoria">
+  <meta name="description" content="Autos usados en Lomas del Mirador con financiación, cuotas fijas y permutas. Más de 10 años de experiencia. Visitanos en Av. Mosconi 799, Zona Oeste.">
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <script>
+  if(new URLSearchParams(window.location.search).get('stock')==='interno'){
+    const robotsMeta=document.querySelector('meta[name="robots"]');
+    if(robotsMeta)robotsMeta.setAttribute('content','noindex,nofollow,noarchive');
+  }
+  </script>
   <link rel="canonical" href="https://lmpautos.com/">
+  <link rel="alternate" hreflang="es-AR" href="https://lmpautos.com/">
+  <link rel="alternate" hreflang="x-default" href="https://lmpautos.com/">
   <link rel="sitemap" type="application/xml" href="https://lmpautos.com/sitemap.xml">
 
   <meta property="og:type" content="website">
   <meta property="og:locale" content="es_AR">
   <meta property="og:site_name" content="LMP Autos">
-  <meta property="og:title" content="Autos usados en Lomas del Mirador | LMP Autos">
-  <meta property="og:description" content="Encontrá autos usados en Lomas del Mirador, Zona Oeste. Financiación, cuotas fijas, permutas y atención personalizada en LMP Autos.">
+  <meta property="og:title" content="Autos Usados en Lomas del Mirador | LMP Autos">
+  <meta property="og:description" content="Autos usados en Lomas del Mirador con financiación, cuotas fijas y permutas. Más de 10 años de experiencia. Visitanos en Av. Mosconi 799, Zona Oeste.">
   <meta property="og:url" content="https://lmpautos.com/">
   <meta property="og:image" content="https://lmpautos.com/banner-1.webp">
   <meta property="og:image:alt" content="LMP Autos - autos usados en Lomas del Mirador">
+  <meta property="og:image:type" content="image/webp">
+  <meta name="twitter:image:alt" content="LMP Autos - autos usados en Lomas del Mirador">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Autos usados en Lomas del Mirador | LMP Autos">
-  <meta name="twitter:description" content="Vehículos usados, financiación, cuotas fijas y permutas en Lomas del Mirador.">
+  <meta name="twitter:title" content="Autos Usados en Lomas del Mirador | LMP Autos">
+  <meta name="twitter:description" content="Autos usados en Lomas del Mirador con financiación, cuotas fijas y permutas. Más de 10 años de experiencia. Visitanos en Av. Mosconi 799, Zona Oeste.">
   <meta name="twitter:image" content="https://lmpautos.com/banner-1.webp">
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "AutoDealer",
-    "@id": "https://lmpautos.com/#autodealer",
-    "name": "LMP Autos",
-    "url": "https://lmpautos.com/",
-    "logo": "https://lmpautos.com/apple-touch-icon.png",
-    "image": "https://lmpautos.com/banner-1.webp",
-    "telephone": "+54 9 11 3262-7744",
-    "priceRange": "$$",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Av. Mosconi 799",
-      "addressLocality": "Lomas del Mirador",
-      "addressRegion": "Buenos Aires",
-      "addressCountry": "AR"
-    },
-    "areaServed": {
-      "@type": "AdministrativeArea",
-      "name": "Zona Oeste, Buenos Aires"
-    },
-    "hasMap": "https://share.google/fCKD7WCnOfEI4F2ut",
-    "sameAs": [
-      "https://www.instagram.com/lmpautos/"
+    "@graph": [
+      {
+        "@type": "AutoDealer",
+        "@id": "https://lmpautos.com/#autodealer",
+        "name": "LMP Autos",
+        "url": "https://lmpautos.com/",
+        "description": "Autos usados en Lomas del Mirador con financiación, cuotas fijas y permutas.",
+        "logo": "https://lmpautos.com/apple-touch-icon.png",
+        "image": "https://lmpautos.com/banner-1.webp",
+        "telephone": "+54 9 11 3262-7744",
+        "priceRange": "$$",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Av. Mosconi 799",
+          "addressLocality": "Lomas del Mirador",
+          "addressRegion": "Buenos Aires",
+          "addressCountry": "AR"
+        },
+        "areaServed": [
+          {
+            "@type": "City",
+            "name": "Lomas del Mirador"
+          },
+          {
+            "@type": "AdministrativeArea",
+            "name": "Zona Oeste, Buenos Aires"
+          }
+        ],
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+54 9 11 3262-7744",
+          "contactType": "sales",
+          "availableLanguage": "es"
+        },
+        "hasMap": "https://share.google/fCKD7WCnOfEI4F2ut",
+        "sameAs": [
+          "https://www.instagram.com/lmpautos/"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://lmpautos.com/#website",
+        "url": "https://lmpautos.com/",
+        "name": "LMP Autos",
+        "inLanguage": "es-AR",
+        "publisher": {
+          "@id": "https://lmpautos.com/#autodealer"
+        }
+      }
     ]
   }
   </script>
@@ -2774,6 +2811,48 @@ fbq('track', 'PageView');
       }
     }
 
+
+    .seo-local-content{
+      margin-top:6px;
+      margin-bottom:38px;
+      padding:24px 26px;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:#fff
+    }
+    .seo-local-content h2{
+      margin:0 0 9px;
+      font-size:clamp(20px,2.3vw,28px);
+      line-height:1.1;
+      letter-spacing:-.025em
+    }
+    .seo-local-content p{
+      margin:7px 0;
+      max-width:920px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.6
+    }
+    .seo-local-content a{
+      display:inline-block;
+      margin-top:8px;
+      color:var(--accent);
+      font-size:13px;
+      font-weight:850;
+      text-decoration:underline;
+      text-underline-offset:3px
+    }
+    @media(max-width:620px){
+      .seo-local-content{
+        margin-bottom:24px;
+        padding:18px
+      }
+      .seo-local-content p,
+      .seo-local-content a{
+        font-size:11px
+      }
+    }
+
 </style>
 </head>
 <body>
@@ -2834,7 +2913,7 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
 
 <section class="seo-intro shell">
   <h1>Autos usados en Lomas del Mirador</h1>
-  <p>Vehículos seleccionados con financiación, cuotas fijas y permutas. Atención en Av. Mosconi 799, Lomas del Mirador.</p>
+  <p>Encontrá vehículos usados seleccionados con financiación, cuotas fijas y permutas. Estamos en Av. Mosconi 799, Lomas del Mirador.</p>
 </section>
 
   <section class="banner-carousel" id="bannerCarousel" aria-label="Promociones de LMP Autos">
@@ -2849,132 +2928,7 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
     </div>
     <div class="grid" id="featuredGrid">
 <!-- SEO_FEATURED_START -->
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A098.webp?v=1e6e1b06101a" alt="Volkswagen Nivus 1.0 TSI 2021 usado en LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Volkswagen</div>
-      <h3>Nivus 1.0 TSI</h3>
-      <div class="meta">
-        <span>2021</span>
-        <span>50.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/volkswagen-nivus-1-0-tsi-2021/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A105.webp?v=1e6e1b06101a" alt="Peugeot Partner 1.6 HDI Furgon 2020 usado en LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Peugeot</div>
-      <h3>Partner 1.6 HDI Furgon</h3>
-      <div class="meta">
-        <span>2020</span>
-        <span>107.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/peugeot-partner-1-6-hdi-furgon-2020/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A075.webp?v=1e6e1b06101a" alt="Chevrolet Onix 1.4 Plus Joy 2020 usado en LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Chevrolet</div>
-      <h3>Onix 1.4 Plus Joy</h3>
-      <div class="meta">
-        <span>2020</span>
-        <span>90.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/chevrolet-onix-1-4-plus-joy-2020/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A129.webp?v=1e6e1b06101a" alt="Citroen Jumper 435 HDI 2019 usado en LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Citroen</div>
-      <h3>Jumper 435 HDI</h3>
-      <div class="meta">
-        <span>2019</span>
-        <span>35.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/citroen-jumper-435-hdi-2019/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A128.webp?v=1e6e1b06101a" alt="Fiat Abarth 595 1.4 Turbo Gran Turismo 2018 usado en LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Fiat</div>
-      <h3>Abarth 595 1.4 Turbo Gran Turismo</h3>
-      <div class="meta">
-        <span>2018</span>
-        <span>40.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/fiat-abarth-595-1-4-turbo-gran-turismo-2018/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A125.webp?v=1e6e1b06101a" alt="Renault Sandero 1.6 Authentique 2017 usado en LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Renault</div>
-      <h3>Sandero 1.6 Authentique</h3>
-      <div class="meta">
-        <span>2017</span>
-        <span>85.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/renault-sandero-1-6-authentique-2017/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
+<div class="loading"><div class="spinner"></div>Cargando stock…</div>
 <!-- SEO_FEATURED_END -->
 </div>
   </main>
@@ -2994,6 +2948,13 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
       </div>
     </div>
   </section>
+  <section class="seo-local-content shell" aria-labelledby="seoLocalTitle">
+    <h2 id="seoLocalTitle">Compra de autos usados en Zona Oeste</h2>
+    <p>En LMP Autos trabajamos con vehículos usados de distintas marcas, años y rangos de precio. Podés consultar opciones de financiación con cuotas fijas, entregar tu vehículo como parte de pago y evaluar alternativas solo con DNI según la unidad.</p>
+    <p>Contamos con más de 10 años de experiencia y atención presencial en <strong>Av. Mosconi 799, Lomas del Mirador</strong>. Revisá el stock disponible y las condiciones comerciales actualizadas de cada vehículo.</p>
+    <a href="./cuotas.html">Conocé cómo funciona la financiación de vehículos</a>
+  </section>
+
 </section>
 
 <section class="trust-strip"><div class="shell trust-grid">
@@ -3053,468 +3014,7 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
     <div class="catalog-quickbar"><button class="quick-btn" id="favoritesFilter" type="button">Favoritos <span id="favoritesCount">0</span></button><button class="quick-btn" id="clearCatalogMode" type="button">Ver todos</button></div>
     <div class="grid" id="catalogGrid">
 <!-- SEO_CATALOG_START -->
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A098.webp?v=1e6e1b06101a" alt="Volkswagen Nivus 1.0 TSI 2021 usado en LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Volkswagen</div>
-      <h3>Nivus 1.0 TSI</h3>
-      <div class="meta">
-        <span>2021</span>
-        <span>50.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/volkswagen-nivus-1-0-tsi-2021/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A105.webp?v=1e6e1b06101a" alt="Peugeot Partner 1.6 HDI Furgon 2020 usado en LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Peugeot</div>
-      <h3>Partner 1.6 HDI Furgon</h3>
-      <div class="meta">
-        <span>2020</span>
-        <span>107.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/peugeot-partner-1-6-hdi-furgon-2020/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A075.webp?v=1e6e1b06101a" alt="Chevrolet Onix 1.4 Plus Joy 2020 usado en LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Chevrolet</div>
-      <h3>Onix 1.4 Plus Joy</h3>
-      <div class="meta">
-        <span>2020</span>
-        <span>90.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/chevrolet-onix-1-4-plus-joy-2020/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A129.webp?v=1e6e1b06101a" alt="Citroen Jumper 435 HDI 2019 usado en LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Citroen</div>
-      <h3>Jumper 435 HDI</h3>
-      <div class="meta">
-        <span>2019</span>
-        <span>35.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/citroen-jumper-435-hdi-2019/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A128.webp?v=1e6e1b06101a" alt="Fiat Abarth 595 1.4 Turbo Gran Turismo 2018 usado en LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Fiat</div>
-      <h3>Abarth 595 1.4 Turbo Gran Turismo</h3>
-      <div class="meta">
-        <span>2018</span>
-        <span>40.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/fiat-abarth-595-1-4-turbo-gran-turismo-2018/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A125.webp?v=1e6e1b06101a" alt="Renault Sandero 1.6 Authentique 2017 usado en LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Renault</div>
-      <h3>Sandero 1.6 Authentique</h3>
-      <div class="meta">
-        <span>2017</span>
-        <span>85.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/renault-sandero-1-6-authentique-2017/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A122.webp?v=1e6e1b06101a" alt="Ford Ecosport 1.5 Freestyle 2017 usado en LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Ford</div>
-      <h3>Ecosport 1.5 Freestyle</h3>
-      <div class="meta">
-        <span>2017</span>
-        <span>70.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/ford-ecosport-1-5-freestyle-2017/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A097.webp?v=1e6e1b06101a" alt="Toyota Etios 1.5 XLS 2017 usado en LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Toyota</div>
-      <h3>Etios 1.5 XLS</h3>
-      <div class="meta">
-        <span>2017</span>
-        <span>119.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/toyota-etios-1-5-xls-2017/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A042.webp?v=1e6e1b06101a" alt="Chevrolet Cruze 1.4 LT 2017 usado en LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Chevrolet</div>
-      <h3>Cruze 1.4 LT</h3>
-      <div class="meta">
-        <span>2017</span>
-        <span>80.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/chevrolet-cruze-1-4-lt-2017/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A113.webp?v=1e6e1b06101a" alt="Renault Clio 1.2 Mio Dynamique 2016 usado en LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Renault</div>
-      <h3>Clio 1.2 Mio Dynamique</h3>
-      <div class="meta">
-        <span>2016</span>
-        <span>98.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/renault-clio-1-2-mio-dynamique-2016/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A090.webp?v=1e6e1b06101a" alt="Ford Focus 2.0 SE Plus 2016 usado en LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Ford</div>
-      <h3>Focus 2.0 SE Plus</h3>
-      <div class="meta">
-        <span>2016</span>
-        <span>91.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/ford-focus-2-0-se-plus-2016/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A091.webp?v=1e6e1b06101a" alt="Chevrolet Tracker 1.8 LTZ 2015 usado en LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Chevrolet</div>
-      <h3>Tracker 1.8 LTZ</h3>
-      <div class="meta">
-        <span>2015</span>
-        <span>134.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/chevrolet-tracker-1-8-ltz-2015/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A088.webp?v=1e6e1b06101a" alt="Peugeot 208 1.5 Active 2015 usado en LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Peugeot</div>
-      <h3>208 1.5 Active</h3>
-      <div class="meta">
-        <span>2015</span>
-        <span>92.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/peugeot-208-1-5-active-2015/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A083.webp?v=1e6e1b06101a" alt="Volkswagen Amarok 2.0 Trendline 4x4 TDI 2015 usado en LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Volkswagen</div>
-      <h3>Amarok 2.0 Trendline 4x4 TDI</h3>
-      <div class="meta">
-        <span>2015</span>
-        <span>200.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/volkswagen-amarok-2-0-trendline-4x4-tdi-2015/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A082.webp?v=1e6e1b06101a" alt="Ford Ecosport 1.6 Titanium 2013 usado en LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Ford</div>
-      <h3>Ecosport 1.6 Titanium</h3>
-      <div class="meta">
-        <span>2013</span>
-        <span>123.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/ford-ecosport-1-6-titanium-2013/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A107.webp?v=1e6e1b06101a" alt="Volkswagen Vento 2.0 TSI Dsg Sportline 2012 usado en LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Volkswagen</div>
-      <h3>Vento 2.0 TSI Dsg Sportline</h3>
-      <div class="meta">
-        <span>2012</span>
-        <span>140.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/volkswagen-vento-2-0-tsi-dsg-sportline-2012/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A124.webp?v=1e6e1b06101a" alt="Renault Clio 1.2 Pack Plus 2011 usado en LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Renault</div>
-      <h3>Clio 1.2 Pack Plus</h3>
-      <div class="meta">
-        <span>2011</span>
-        <span>149.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/renault-clio-1-2-pack-plus-2011/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A080.webp?v=1e6e1b06101a" alt="Renault Fluence 1.6 2011 usado en LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Renault</div>
-      <h3>Fluence 1.6</h3>
-      <div class="meta">
-        <span>2011</span>
-        <span>140.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/renault-fluence-1-6-2011/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A126.webp?v=1e6e1b06101a" alt="Kia Sorento 2.2 4x4 2010 usado en LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Kia</div>
-      <h3>Sorento 2.2 4x4</h3>
-      <div class="meta">
-        <span>2010</span>
-        <span>240.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/kia-sorento-2-2-4x4-2010/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://drive.google.com/thumbnail?id=1es4gKQwaXJH4yYIN-AJVGC2xMpddS3zd&amp;sz=w1200" alt="Renault Clio 1.2 3 Puertas Pack 2009 usado en LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Renault</div>
-      <h3>Clio 1.2 3 Puertas Pack</h3>
-      <div class="meta">
-        <span>2009</span>
-        <span>150.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/renault-clio-1-2-3-puertas-pack-2009/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A120.webp?v=1e6e1b06101a" alt="Peugeot 206 1.9 XTD 2006 usado en LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Peugeot</div>
-      <h3>206 1.9 XTD</h3>
-      <div class="meta">
-        <span>2006</span>
-        <span>190.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/peugeot-206-1-9-xtd-2006/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A127.webp?v=1e6e1b06101a" alt="Peugeot Partner 1.9 2010 usado en LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Reservado</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Peugeot</div>
-      <h3>Partner 1.9</h3>
-      <div class="meta">
-        <span>2010</span>
-        <span>290.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/peugeot-partner-1-9-2010/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
+<div class="loading"><div class="spinner"></div>Cargando stock…</div>
 <!-- SEO_CATALOG_END -->
 </div>
   </main>
@@ -4108,8 +3608,8 @@ function slugify(value){
 }
 
 const HOME_SEO={
-  title:'Autos usados en Lomas del Mirador | LMP Autos',
-  description:'Encontrá autos usados en Lomas del Mirador, Zona Oeste. Financiación, cuotas fijas, permutas y atención personalizada en LMP Autos, Av. Mosconi 799.',
+  title:'Autos Usados en Lomas del Mirador | LMP Autos',
+  description:'Autos usados en Lomas del Mirador con financiación, cuotas fijas y permutas. Más de 10 años de experiencia. Visitanos en Av. Mosconi 799, Zona Oeste.',
   url:'https://lmpautos.com/',
   image:'https://lmpautos.com/banner-1.webp'
 };
@@ -4123,9 +3623,10 @@ function setCanonicalUrl(url){
 }
 function vehicleSeoDescription(v){
   const parts=[
-    `${v.marca} ${v.modelo}${v.anio?` ${v.anio}`:''} usado`,
+    `${v.marca} ${v.modelo}${v.anio?` ${v.anio}`:''} usado en Lomas del Mirador`,
     v.kilometraje?`${km(v.kilometraje)} km`:'',
-    'consultá precio, financiación y permuta en LMP Autos, Lomas del Mirador'
+    'Consultá precio, financiación con cuotas fijas y permuta en LMP Autos',
+    'Av. Mosconi 799'
   ].filter(Boolean);
 
   return parts.join('. ')+'.';
@@ -4146,7 +3647,7 @@ function applyHomeSeo(){
   setMetaValue('meta[name="twitter:image"]',HOME_SEO.image);
 }
 function applyVehicleSeo(v){
-  const title=`${v.marca} ${v.modelo}${v.anio?` ${v.anio}`:''} usado | LMP Autos`;
+  const title=`${v.marca} ${v.modelo}${v.anio?` ${v.anio}`:''} usado en Lomas del Mirador | LMP Autos`;
   const description=vehicleSeoDescription(v);
   const url=vehicleCanonicalUrl(v);
   const image=v.fotos?.[0] || HOME_SEO.image;
@@ -4959,7 +4460,7 @@ function coverImageMarkup(v,index=0,{localOnly=false}={}){
 
   return `<img
     src="${escapeAttr(candidates[0])}"
-    alt="${escapeAttr(v.marca+' '+v.modelo)}"
+    alt="${escapeAttr(`${v.marca} ${v.modelo}${v.anio?` ${v.anio}`:'' } usado en Lomas del Mirador`)}"
     loading="${priority?'eager':'lazy'}"
     decoding="async"
     fetchpriority="${fetchPriority}"
@@ -5955,7 +5456,7 @@ function openVehicle(id,{updateUrl=true,replaceUrl=false}={}){
   const gallery=v.fotos.length?`
     <div class="gallery">
       <div class="main-image" id="mainImageWrap">
-        <img id="modalImage" src="${escapeAttr(v.fotos[0])}" alt="${escapeAttr(v.marca+' '+v.modelo)}" referrerpolicy="no-referrer" onerror="this.outerHTML='<div class=&quot;photo-empty&quot;>Imagen no disponible</div>'">
+        <img id="modalImage" src="${escapeAttr(v.fotos[0])}" alt="${escapeAttr(`${v.marca} ${v.modelo}${v.anio?` ${v.anio}`:'' } usado en Lomas del Mirador`)}" referrerpolicy="no-referrer" onerror="this.outerHTML='<div class=&quot;photo-empty&quot;>Imagen no disponible</div>'">
         <button class="fullscreen-photo-btn" id="fullscreenPhotoBtn" type="button">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"></path>
@@ -5963,7 +5464,7 @@ function openVehicle(id,{updateUrl=true,replaceUrl=false}={}){
           Pantalla completa
         </button>
       </div>
-      ${v.fotos.length>1?`<div class="gallery-thumbs" id="galleryThumbs">${v.fotos.map((photo,i)=>`<button class="gallery-thumb ${i===0?'active':''}" type="button" data-gallery-index="${i}" aria-label="Ver foto ${i+1}"><img src="${escapeAttr(photo)}" alt="" referrerpolicy="no-referrer" onerror="this.closest('button')?.remove()"></button>`).join('')}</div>`:''}
+      ${v.fotos.length>1?`<div class="gallery-thumbs" id="galleryThumbs">${v.fotos.map((photo,i)=>`<button class="gallery-thumb ${i===0?'active':''}" type="button" data-gallery-index="${i}" aria-label="Ver foto ${i+1}"><img src="${escapeAttr(photo)}" alt="${escapeAttr(`${v.marca} ${v.modelo} - foto ${i+1}`)}" referrerpolicy="no-referrer" onerror="this.closest('button')?.remove()"></button>`).join('')}</div>`:''}
       <div class="gallery-controls"><button id="prevPhoto" type="button">‹</button><span class="counter" id="photoCounter">1 / ${v.fotos.length}</span><button id="nextPhoto" type="button">›</button></div>
     </div>`:`<div class="gallery"><div class="main-image"><div class="photo-empty">Fotos próximamente</div></div></div>`;
   $('#modalContent').innerHTML=`
@@ -7935,9 +7436,9 @@ setTimeout(()=>{
 </script>
 
   <div class="site-version-row">
-    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.29</div>
+    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.30</div>
     <span class="site-version" aria-hidden="true">·</span>
-    <a class="site-version-link" href="?stock=interno">catálogo</a>
+    <a class="site-version-link" href="?stock=interno" rel="nofollow">catálogo</a>
   </div>
 </body>
 </html>
