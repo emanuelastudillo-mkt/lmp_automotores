@@ -225,26 +225,6 @@
         }
       ]
     },
-    "A109": {
-      "manualCover": true,
-      "items": [
-        {
-          "file": "A109-1.webp",
-          "source": "drive:1Mi_jmMbSJ88NNPvLOQ-Ysxb8_pbB081M",
-          "logicalOrder": 2
-        },
-        {
-          "file": "A109-2.webp",
-          "source": "drive:1HbE9j1hkU5TM_A5t-GT2rikDtrsZSPjn",
-          "logicalOrder": 3
-        },
-        {
-          "file": "A109-3.webp",
-          "source": "drive:1bXMCsE5kOn50PFIsN7ICu9S6_01h191q",
-          "logicalOrder": 4
-        }
-      ]
-    },
     "A113": {
       "manualCover": true,
       "items": [
