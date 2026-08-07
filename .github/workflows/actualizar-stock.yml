@@ -1,4 +1,4 @@
-name: Actualizar stock y SEO desde Google Sheets
+name: Actualizar stock, SEO e imágenes
 
 on:
   workflow_dispatch:
@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: actualizar-stock-seo
+  group: actualizar-stock-seo-imagenes
   cancel-in-progress: false
 
 jobs:
@@ -27,13 +27,23 @@ jobs:
         with:
           node-version: "24"
 
-      - name: Generar stock, HTML SEO y sitemap
+      - name: Instalar procesador de imágenes
+        run: npm install --no-save --no-package-lock sharp@0.34.3
+
+      - name: Sincronizar stock, imágenes y SEO
         run: node scripts/actualizar-stock.mjs
 
       - name: Guardar cambios
         shell: bash
         run: |
-          git add -A data/stock.json index.html robots.txt sitemap.xml vehiculos/
+          git add -A \
+            data/stock.json \
+            data/image-sync.json \
+            index.html \
+            robots.txt \
+            sitemap.xml \
+            vehiculos/ \
+            img/vehiculos/
 
           if git diff --cached --quiet; then
             echo "No hubo cambios para publicar."
@@ -43,5 +53,5 @@ jobs:
           git config user.name "lmp-stock-bot"
           git config user.email "actions@users.noreply.github.com"
 
-          git commit -m "chore: actualizar stock y SEO desde Google Sheets"
+          git commit -m "chore: actualizar stock, SEO e imágenes"
           git push
