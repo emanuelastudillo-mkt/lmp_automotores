@@ -1,4 +1,4 @@
-# LMP Autos Web v1.30 — Ajustes SEO según auditoría
+# LMP Autos Web v1.31 — Ajustes SEO según auditoría
 
 Esta versión toma como guía la auditoría SEO del 7 de agosto de 2026 y refuerza los puntos señalados.
 
@@ -159,3 +159,10 @@ Se conserva Node.js 24 y GitHub Actions v6.
 ```text
 lmpautos V1.30
 ```
+
+
+## Ajuste visual adicional
+
+- Se corrigió la proporción visual de las portadas del catálogo a **1080x1350 (4:5)**.
+- Las tarjetas de vehículos ahora usan `aspect-ratio: 4/5` en lugar de `3/4`.
+- La imagen principal de cada tarjeta usa `object-fit: cover` para ocupar exactamente el recuadro y evitar franjas vacías arriba o abajo.
