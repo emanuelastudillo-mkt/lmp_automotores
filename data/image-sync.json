@@ -2,8 +2,13 @@
   "schemaVersion": 1,
   "vehicles": {
     "A042": {
-      "manualCover": true,
+      "manualCover": false,
       "items": [
+        {
+          "file": "A042.webp",
+          "source": "drive:1C4IH_ILqwoaJAZfAeuX1teaUocxKn6t2",
+          "logicalOrder": 1
+        },
         {
           "file": "A042-1.webp",
           "source": "drive:1joY2saq-wT5ZspXMkdSPL2OQurTUg2X3",
@@ -22,8 +27,13 @@
       ]
     },
     "A075": {
-      "manualCover": true,
+      "manualCover": false,
       "items": [
+        {
+          "file": "A075.webp",
+          "source": "drive:19k47-kmSuLOWKO3n-5lPvQ0AlHM44lRz",
+          "logicalOrder": 1
+        },
         {
           "file": "A075-1.webp",
           "source": "drive:1MaMp4HIVj-HNJllevHiOaEdWl4AlDEVZ",
@@ -77,8 +87,13 @@
       ]
     },
     "A083": {
-      "manualCover": true,
+      "manualCover": false,
       "items": [
+        {
+          "file": "A083.webp",
+          "source": "drive:1eUwvvZzI_mt-wOiSukBzwEXigSNNsgW2",
+          "logicalOrder": 1
+        },
         {
           "file": "A083-1.webp",
           "source": "drive:1u_IkjzE2qyuXHVQ7WSqBzekQvGit7S00",
@@ -147,8 +162,13 @@
       ]
     },
     "A091": {
-      "manualCover": true,
+      "manualCover": false,
       "items": [
+        {
+          "file": "A091.webp",
+          "source": "drive:1xBYihhgia0GAPJ9k0XG5-rBBQ3-_NQbc",
+          "logicalOrder": 1
+        },
         {
           "file": "A091-1.webp",
           "source": "drive:15SP_vyTv6mpC-RZkkeHtS8hUfqcaQwil",
@@ -217,8 +237,13 @@
       ]
     },
     "A105": {
-      "manualCover": true,
+      "manualCover": false,
       "items": [
+        {
+          "file": "A105.webp",
+          "source": "drive:1Y2Sm6w-zSrvvuGUIhBNOCYt4EMxsqI5M",
+          "logicalOrder": 1
+        },
         {
           "file": "A105-1.webp",
           "source": "drive:18K5z9PWk4fBh93grd4PMU7sCeesgp2ho",
