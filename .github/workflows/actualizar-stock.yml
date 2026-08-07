@@ -1,4 +1,4 @@
-name: Actualizar stock desde Google Sheets
+name: Actualizar stock y SEO desde Google Sheets
 
 on:
   workflow_dispatch:
@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: actualizar-stock
+  group: actualizar-stock-seo
   cancel-in-progress: false
 
 jobs:
@@ -18,29 +18,30 @@ jobs:
 
     steps:
       - name: Descargar repositorio
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Preparar Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: "20"
+          node-version: "24"
 
-      - name: Generar data/stock.json
+      - name: Generar stock, HTML SEO y sitemap
         run: node scripts/actualizar-stock.mjs
 
       - name: Guardar cambios
         shell: bash
         run: |
-          if git diff --quiet -- data/stock.json; then
-            echo "No hubo cambios de stock."
+          git add -A data/stock.json index.html robots.txt sitemap.xml vehiculos/
+
+          if git diff --cached --quiet; then
+            echo "No hubo cambios para publicar."
             exit 0
           fi
 
           git config user.name "lmp-stock-bot"
           git config user.email "actions@users.noreply.github.com"
 
-          git add data/stock.json
-          git commit -m "chore: actualizar stock desde Google Sheets"
+          git commit -m "chore: actualizar stock y SEO desde Google Sheets"
           git push
