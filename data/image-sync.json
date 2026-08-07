@@ -42,12 +42,23 @@
       ]
     },
     "A080": {
-      "manualCover": true,
-      "items": []
+      "manualCover": false,
+      "items": [
+        {
+          "file": "A080.webp",
+          "source": "drive:17iaAyWfovGO44jSKlSDQjghq9tUM4h3I",
+          "logicalOrder": 1
+        }
+      ]
     },
     "A082": {
-      "manualCover": true,
+      "manualCover": false,
       "items": [
+        {
+          "file": "A082.webp",
+          "source": "drive:1h3OVE03xRb3ST8u8BILhvnDT1tSo_DB1",
+          "logicalOrder": 1
+        },
         {
           "file": "A082-1.webp",
           "source": "drive:1TRYvRGecb1ps1GzoyavNgihBLED86uRe",
@@ -86,8 +97,13 @@
       ]
     },
     "A088": {
-      "manualCover": true,
+      "manualCover": false,
       "items": [
+        {
+          "file": "A088.webp",
+          "source": "drive:12mXGtJtTrwkgxQiCYc3PT8o0JJp0xjPu",
+          "logicalOrder": 1
+        },
         {
           "file": "A088-1.webp",
           "source": "drive:1DW-ZzEGhyYShG-gsicd1KMs2dD89rWkc",
@@ -106,8 +122,13 @@
       ]
     },
     "A090": {
-      "manualCover": true,
+      "manualCover": false,
       "items": [
+        {
+          "file": "A090.webp",
+          "source": "drive:1IFWzRxOuU2z3mi11Ze668EUC-2uzeCdp",
+          "logicalOrder": 1
+        },
         {
           "file": "A090-1.webp",
           "source": "drive:1rX-FGV2LFHHp5GIs2pxqOs0OITpyqroU",
@@ -146,8 +167,13 @@
       ]
     },
     "A097": {
-      "manualCover": true,
+      "manualCover": false,
       "items": [
+        {
+          "file": "A097.webp",
+          "source": "drive:11r5HGxgzA_OwAYkZmbC193iz92LlBcKY",
+          "logicalOrder": 1
+        },
         {
           "file": "A097-1.webp",
           "source": "drive:1oAutY6atA4yxUM19Kal6hTZXcszVsHfA",
@@ -166,8 +192,13 @@
       ]
     },
     "A098": {
-      "manualCover": true,
+      "manualCover": false,
       "items": [
+        {
+          "file": "A098.webp",
+          "source": "drive:1LKEL0l0jm7Ln2TvGDRScytoOyd38AwFh",
+          "logicalOrder": 1
+        },
         {
           "file": "A098-1.webp",
           "source": "drive:1Sr8GP5EtVNHEK7N3jat6KPS2LmWUBImH",
@@ -206,8 +237,13 @@
       ]
     },
     "A107": {
-      "manualCover": true,
+      "manualCover": false,
       "items": [
+        {
+          "file": "A107.webp",
+          "source": "drive:1hoKvBavVbhaK8vY7Eid5I5374XH9FWAm",
+          "logicalOrder": 1
+        },
         {
           "file": "A107-1.webp",
           "source": "drive:19MMP1fEPuZhSnmiSMOAcIk8PRZCO3Y0D",
