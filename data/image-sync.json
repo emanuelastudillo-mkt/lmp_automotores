@@ -246,8 +246,14 @@
       ]
     },
     "A120": {
-      "manualCover": true,
-      "items": []
+      "manualCover": false,
+      "items": [
+        {
+          "file": "A120.webp",
+          "source": "drive:1K6L7-h93mhGLEWQmQkMyx8y_JS6cOIo-",
+          "logicalOrder": 1
+        }
+      ]
     },
     "A121": {
       "manualCover": false,

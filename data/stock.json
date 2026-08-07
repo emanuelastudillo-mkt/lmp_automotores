@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-07T21:41:33.112Z",
+  "generatedAt": "2026-08-07T22:12:20.063Z",
   "source": "Google Sheets CSV publicado",
   "rowCount": 130,
-  "contentHash": "dcc707c990ad6b3752341794388742ee0136f242f3c0ec80df6f316876f16d65",
+  "contentHash": "d241eff123345b8d476f9e1a8962a8de9fec410888af6120ba088c1a238b81c3",
   "rows": [
     {
       "ID": "A005",
@@ -3046,7 +3046,7 @@
       "Cotizacion al día": "$20.900.000",
       "Estado actual del auto": "DISPONIBLE",
       "% de anticipo": "48%",
-      "Ultima publicacion": "03/03/2026",
+      "Ultima publicacion": "07/08/2026",
       "Reel": "si",
       "Fotos": "si",
       "Combustible": "Nafta",
