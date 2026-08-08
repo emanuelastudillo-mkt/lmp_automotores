@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-07T22:12:20.063Z",
+  "generatedAt": "2026-08-08T02:23:59.057Z",
   "source": "Google Sheets CSV publicado",
   "rowCount": 130,
-  "contentHash": "d241eff123345b8d476f9e1a8962a8de9fec410888af6120ba088c1a238b81c3",
+  "contentHash": "3d4b21913f0dd3b11a1645f2623478c90fcc283cdfb89fe839d4115368000722",
   "rows": [
     {
       "ID": "A005",
@@ -4072,7 +4072,7 @@
       "Combustible": "Diesel",
       "Transmision": "Manual",
       "Fecha de salida o venta": "",
-      "Foto 1": "https://drive.google.com/file/d/1K6L7-h93mhGLEWQmQkMyx8y_JS6cOIo-/view?usp=sharing",
+      "Foto 1": "https://drive.google.com/file/d/1zXnJ9Mnts_WjR7wC0DIDqtBuRPfS3GJ4/view?usp=sharing",
       "Foto 2": "",
       "Foto 3": "",
       "Foto 4": "",
