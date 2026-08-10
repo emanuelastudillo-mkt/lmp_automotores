@@ -302,6 +302,10 @@
     "A129": {
       "manualCover": true,
       "items": []
+    },
+    "A130": {
+      "manualCover": false,
+      "items": []
     }
   }
 }
