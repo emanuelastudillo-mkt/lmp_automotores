@@ -3,19 +3,19 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://lmpautos.com/</loc>
-    <lastmod>2026-08-10</lastmod>
+    <lastmod>2026-08-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://lmpautos.com/cuotas.html</loc>
-    <lastmod>2026-08-10</lastmod>
+    <lastmod>2026-08-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://lmpautos.com/vehiculos/volkswagen-nivus-1-0-tsi-2021/</loc>
-    <lastmod>2026-08-10</lastmod>
+    <lastmod>2026-08-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -37,7 +37,7 @@
   </url>
   <url>
     <loc>https://lmpautos.com/vehiculos/peugeot-partner-1-6-hdi-furgon-2020/</loc>
-    <lastmod>2026-08-10</lastmod>
+    <lastmod>2026-08-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -59,7 +59,7 @@
   </url>
   <url>
     <loc>https://lmpautos.com/vehiculos/chevrolet-onix-1-4-plus-joy-2020/</loc>
-    <lastmod>2026-08-10</lastmod>
+    <lastmod>2026-08-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -81,7 +81,7 @@
   </url>
   <url>
     <loc>https://lmpautos.com/vehiculos/citroen-jumper-435-hdi-2019/</loc>
-    <lastmod>2026-08-10</lastmod>
+    <lastmod>2026-08-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -91,7 +91,7 @@
   </url>
   <url>
     <loc>https://lmpautos.com/vehiculos/fiat-abarth-595-1-4-turbo-gran-turismo-2018/</loc>
-    <lastmod>2026-08-10</lastmod>
+    <lastmod>2026-08-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -101,7 +101,7 @@
   </url>
   <url>
     <loc>https://lmpautos.com/vehiculos/renault-sandero-1-6-authentique-2017/</loc>
-    <lastmod>2026-08-10</lastmod>
+    <lastmod>2026-08-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -111,7 +111,7 @@
   </url>
   <url>
     <loc>https://lmpautos.com/vehiculos/ford-ecosport-1-5-freestyle-2017/</loc>
-    <lastmod>2026-08-10</lastmod>
+    <lastmod>2026-08-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -133,7 +133,7 @@
   </url>
   <url>
     <loc>https://lmpautos.com/vehiculos/toyota-etios-1-5-xls-2017/</loc>
-    <lastmod>2026-08-10</lastmod>
+    <lastmod>2026-08-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -155,7 +155,7 @@
   </url>
   <url>
     <loc>https://lmpautos.com/vehiculos/chevrolet-cruze-1-4-lt-2017/</loc>
-    <lastmod>2026-08-10</lastmod>
+    <lastmod>2026-08-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -177,7 +177,7 @@
   </url>
   <url>
     <loc>https://lmpautos.com/vehiculos/renault-clio-1-2-mio-dynamique-2016/</loc>
-    <lastmod>2026-08-10</lastmod>
+    <lastmod>2026-08-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -199,7 +199,7 @@
   </url>
   <url>
     <loc>https://lmpautos.com/vehiculos/ford-focus-2-0-se-plus-2016/</loc>
-    <lastmod>2026-08-10</lastmod>
+    <lastmod>2026-08-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -220,30 +220,30 @@
     </image:image>
   </url>
   <url>
-    <loc>https://lmpautos.com/vehiculos/chevrolet-tracker-1-8-ltz-2015/</loc>
-    <lastmod>2026-08-10</lastmod>
+    <loc>https://lmpautos.com/vehiculos/chevrolet-tracker-1-8-lt-2015/</loc>
+    <lastmod>2026-08-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://lmpautos.com/img/vehiculos/A091.webp?v=76b62d0738e9</image:loc>
-      <image:title>Chevrolet Tracker 1.8 LTZ 2015</image:title>
+      <image:title>Chevrolet Tracker 1.8 LT 2015</image:title>
     </image:image>
     <image:image>
       <image:loc>https://lmpautos.com/img/vehiculos/A091-1.webp?v=76b62d0738e9</image:loc>
-      <image:title>Chevrolet Tracker 1.8 LTZ 2015</image:title>
+      <image:title>Chevrolet Tracker 1.8 LT 2015</image:title>
     </image:image>
     <image:image>
       <image:loc>https://lmpautos.com/img/vehiculos/A091-2.webp?v=76b62d0738e9</image:loc>
-      <image:title>Chevrolet Tracker 1.8 LTZ 2015</image:title>
+      <image:title>Chevrolet Tracker 1.8 LT 2015</image:title>
     </image:image>
     <image:image>
       <image:loc>https://lmpautos.com/img/vehiculos/A091-3.webp?v=76b62d0738e9</image:loc>
-      <image:title>Chevrolet Tracker 1.8 LTZ 2015</image:title>
+      <image:title>Chevrolet Tracker 1.8 LT 2015</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://lmpautos.com/vehiculos/peugeot-208-1-5-active-2015/</loc>
-    <lastmod>2026-08-10</lastmod>
+    <lastmod>2026-08-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -265,7 +265,7 @@
   </url>
   <url>
     <loc>https://lmpautos.com/vehiculos/volkswagen-amarok-2-0-trendline-4x4-tdi-2015/</loc>
-    <lastmod>2026-08-10</lastmod>
+    <lastmod>2026-08-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -287,7 +287,7 @@
   </url>
   <url>
     <loc>https://lmpautos.com/vehiculos/ford-ecosport-1-6-titanium-2013/</loc>
-    <lastmod>2026-08-10</lastmod>
+    <lastmod>2026-08-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -309,7 +309,7 @@
   </url>
   <url>
     <loc>https://lmpautos.com/vehiculos/volkswagen-vento-2-0-tsi-dsg-sportline-2012/</loc>
-    <lastmod>2026-08-10</lastmod>
+    <lastmod>2026-08-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -331,7 +331,7 @@
   </url>
   <url>
     <loc>https://lmpautos.com/vehiculos/renault-clio-1-2-pack-plus-2011/</loc>
-    <lastmod>2026-08-10</lastmod>
+    <lastmod>2026-08-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -341,7 +341,7 @@
   </url>
   <url>
     <loc>https://lmpautos.com/vehiculos/renault-fluence-1-6-2011/</loc>
-    <lastmod>2026-08-10</lastmod>
+    <lastmod>2026-08-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -351,7 +351,7 @@
   </url>
   <url>
     <loc>https://lmpautos.com/vehiculos/kia-sorento-2-2-4x4-2010/</loc>
-    <lastmod>2026-08-10</lastmod>
+    <lastmod>2026-08-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -361,13 +361,13 @@
   </url>
   <url>
     <loc>https://lmpautos.com/vehiculos/renault-clio-1-2-3-puertas-pack-2009/</loc>
-    <lastmod>2026-08-10</lastmod>
+    <lastmod>2026-08-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://lmpautos.com/vehiculos/peugeot-206-1-9-xtd-2006/</loc>
-    <lastmod>2026-08-10</lastmod>
+    <lastmod>2026-08-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -377,18 +377,8 @@
   </url>
   <url>
     <loc>https://lmpautos.com/vehiculos/fiat-cronos-1-8-precision-2019/</loc>
-    <lastmod>2026-08-10</lastmod>
+    <lastmod>2026-08-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://lmpautos.com/vehiculos/peugeot-partner-1-9-2010/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://lmpautos.com/img/vehiculos/A127.webp?v=76b62d0738e9</image:loc>
-      <image:title>Peugeot Partner 1.9 2010</image:title>
-    </image:image>
   </url>
 </urlset>
