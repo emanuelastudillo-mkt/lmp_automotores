@@ -835,6 +835,93 @@ function vehicleImage(row) {
   return vehicleImages(row)[0] || '';
 }
 
+
+function opportunityValue(row) {
+  const raw = rowValue(
+    row,
+    'Oportunidad',
+    'Índice de oportunidad',
+    'Indice de oportunidad',
+    'Indice oportunidad',
+    'Índice oportunidad'
+  );
+
+  if (!raw) return null;
+
+  let text = clean(raw)
+    .replace(/\s/g, '')
+    .replace(/[^0-9,.-]/g, '');
+
+  if (!text) return null;
+
+  if (text.includes(',') && text.includes('.')) {
+    if (text.lastIndexOf(',') > text.lastIndexOf('.')) {
+      text = text.replace(/\./g, '').replace(',', '.');
+    } else {
+      text = text.replace(/,/g, '');
+    }
+  } else if (text.includes(',')) {
+    text = text.replace(',', '.');
+  }
+
+  const number = Number(text);
+  return Number.isFinite(number) ? number : null;
+}
+
+function rankingRows(rows, metric = 'general', limit = 3) {
+  const publicRows = rows.filter(isPublicVehicle);
+
+  const valueFor = row => {
+    if (metric === 'oportunidad') return opportunityValue(row);
+    const scores = vehicleScores(row);
+    return scores[metric] || 0;
+  };
+
+  return publicRows
+    .map(row => ({ row, value: valueFor(row) }))
+    .filter(item => metric === 'oportunidad'
+      ? Number.isFinite(item.value)
+      : Number(item.value) > 0
+    )
+    .sort((a, b) => {
+      if (a.value === b.value) return idNumber(b.row) - idNumber(a.row);
+      return metric === 'oportunidad'
+        ? a.value - b.value
+        : b.value - a.value;
+    })
+    .slice(0, limit);
+}
+
+function staticRankingCard(row, index, metric = 'general') {
+  const marca = rowValue(row, 'Marca');
+  const modelo = rowValue(row, 'Modelo');
+  const anio = rowValue(row, 'Año', 'Ano');
+  const image = vehicleImage(row);
+  const slug = vehicleSlug(row);
+  const price = formatArs(rowValue(row, 'Cotizacion al día', 'Cotizacion al dia'));
+  const scores = vehicleScores(row);
+  const value = metric === 'oportunidad' ? opportunityValue(row) : scores[metric];
+  const label = metric === 'general' ? 'General' : metric;
+  const formatted = metric === 'oportunidad'
+    ? new Intl.NumberFormat('es-AR', { maximumFractionDigits: 2 }).format(value)
+    : `${Math.round(value)}/100`;
+  const imageMarkup = image
+    ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(`${marca} ${modelo}${anio ? ` ${anio}` : ''} usado en Lomas del Mirador`)}" loading="lazy" referrerpolicy="no-referrer">`
+    : '<div class="photo-empty">Fotos próximamente</div>';
+
+  return `<article class="ranking-card">
+    <div class="ranking-position">#${index + 1}</div>
+    <div class="ranking-photo">${imageMarkup}</div>
+    <div class="ranking-body">
+      <div class="ranking-make">${escapeHtml(marca)}</div>
+      <div class="ranking-name">${escapeHtml(modelo)}${anio ? ` ${escapeHtml(anio)}` : ''}</div>
+      <div class="ranking-metric"><span>${escapeHtml(label)}</span><strong>${escapeHtml(formatted)}</strong></div>
+      ${price ? `<div class="ranking-price">${escapeHtml(price)}</div>` : ''}
+      <a class="ranking-open" href="./vehiculos/${escapeHtml(slug)}/">Ver vehículo</a>
+    </div>
+  </article>`;
+}
+
 function statusLabel(row) {
   const status = normalize(rowValue(row, 'Estado actual del auto'));
 
@@ -942,6 +1029,11 @@ async function updateIndexPrerender(rows) {
     ? featuredRows.map(staticCard).join('\n')
     : '<div class="empty">No hay vehículos publicados.</div>';
 
+  const ranking = rankingRows(rows, 'general', 3);
+  const rankingHtml = ranking.length
+    ? ranking.map((item, index) => staticRankingCard(item.row, index, 'general')).join('\n')
+    : '<div class="ranking-empty">Todavía no hay puntajes suficientes para construir el ranking.</div>';
+
   const catalogHtml = publicRows.length
     ? publicRows.map(staticCard).join('\n')
     : '<div class="empty">No hay vehículos publicados.</div>';
@@ -953,6 +1045,13 @@ async function updateIndexPrerender(rows) {
     '<!-- SEO_FEATURED_START -->',
     '<!-- SEO_FEATURED_END -->',
     featuredHtml
+  );
+
+  html = replaceMarkedContent(
+    html,
+    '<!-- SEO_RANKING_START -->',
+    '<!-- SEO_RANKING_END -->',
+    rankingHtml
   );
 
   html = replaceMarkedContent(

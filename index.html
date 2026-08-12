@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>Autos Usados en Lomas del Mirador | LMP Autos</title>
-<meta name="lmp-build" content="lmp-autos-web-v1.31-ajuste-visual-portadas">
+<meta name="lmp-build" content="lmp-autos-web-v1.32-descubre-lo-mejor">
   <meta name="description" content="Autos usados en Lomas del Mirador con financiación, cuotas fijas y permutas. Más de 10 años de experiencia. Visitanos en Av. Mosconi 799, Zona Oeste.">
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   <script>
@@ -2853,6 +2853,285 @@ fbq('track', 'PageView');
       }
     }
 
+
+    .discover-section{
+      margin-top:4px;
+      margin-bottom:38px;
+      padding-top:8px
+    }
+    .discover-head{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:18px;
+      margin-bottom:16px
+    }
+    .discover-eyebrow{
+      display:block;
+      margin-bottom:5px;
+      color:var(--accent);
+      font-size:11px;
+      font-weight:950;
+      letter-spacing:.1em;
+      text-transform:uppercase
+    }
+    .discover-head h2{
+      font-size:clamp(30px,4vw,44px)
+    }
+    .discover-head p{
+      max-width:720px;
+      margin:7px 0 0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.5
+    }
+    .ranking-tabs{
+      display:flex;
+      gap:7px;
+      overflow-x:auto;
+      padding:2px 1px 8px;
+      scrollbar-width:none;
+      -webkit-overflow-scrolling:touch
+    }
+    .ranking-tabs::-webkit-scrollbar{display:none}
+    .ranking-tab{
+      flex:0 0 auto;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:#fff;
+      color:#555;
+      padding:9px 13px;
+      font-size:11px;
+      font-weight:900;
+      cursor:pointer;
+      transition:.18s ease
+    }
+    .ranking-tab:hover{
+      border-color:#999;
+      color:#111
+    }
+    .ranking-tab.active{
+      border-color:#111;
+      background:#111;
+      color:#fff
+    }
+    .ranking-tab.opportunity.active{
+      border-color:#8c1016;
+      background:var(--accent);
+      color:#fff
+    }
+    .ranking-context{
+      display:flex;
+      align-items:baseline;
+      gap:9px;
+      min-height:26px;
+      margin:3px 0 12px;
+      color:var(--muted)
+    }
+    .ranking-context strong{
+      color:#171717;
+      font-size:13px
+    }
+    .ranking-context span{
+      font-size:11px
+    }
+    .ranking-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:12px
+    }
+    .ranking-card{
+      position:relative;
+      display:grid;
+      grid-template-columns:124px minmax(0,1fr);
+      min-width:0;
+      overflow:hidden;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:#fff;
+      box-shadow:0 8px 24px rgba(0,0,0,.035)
+    }
+    .ranking-position{
+      position:absolute;
+      z-index:3;
+      top:8px;
+      left:8px;
+      min-width:31px;
+      height:31px;
+      display:grid;
+      place-items:center;
+      border-radius:10px;
+      background:#111;
+      color:#fff;
+      font-size:12px;
+      font-weight:950;
+      box-shadow:0 5px 14px rgba(0,0,0,.18)
+    }
+    .ranking-card:first-child .ranking-position{
+      background:var(--accent)
+    }
+    .ranking-photo{
+      position:relative;
+      width:100%;
+      min-height:155px;
+      overflow:hidden;
+      background:#eee
+    }
+    .ranking-photo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block
+    }
+    .ranking-photo .photo-empty{
+      min-height:155px;
+      font-size:9px;
+      text-align:center;
+      padding:8px
+    }
+    .ranking-body{
+      min-width:0;
+      padding:14px 13px 12px
+    }
+    .ranking-make{
+      overflow:hidden;
+      color:var(--accent);
+      font-size:9px;
+      font-weight:950;
+      letter-spacing:.07em;
+      text-overflow:ellipsis;
+      text-transform:uppercase;
+      white-space:nowrap
+    }
+    .ranking-name{
+      display:-webkit-box;
+      min-height:38px;
+      margin:4px 0 7px;
+      overflow:hidden;
+      -webkit-box-orient:vertical;
+      -webkit-line-clamp:2;
+      color:#171717;
+      font-size:16px;
+      font-weight:900;
+      line-height:1.15;
+      letter-spacing:-.025em
+    }
+    .ranking-metric{
+      display:inline-flex;
+      align-items:center;
+      gap:5px;
+      max-width:100%;
+      padding:6px 8px;
+      border-radius:9px;
+      background:#f1f1ee;
+      color:#555;
+      font-size:9px;
+      font-weight:800
+    }
+    .ranking-metric strong{
+      color:#111;
+      font-size:13px
+    }
+    .ranking-card.opportunity-card .ranking-metric{
+      background:#f6e8e9;
+      color:#761318
+    }
+    .ranking-price{
+      margin-top:7px;
+      overflow:hidden;
+      color:#555;
+      font-size:10px;
+      text-overflow:ellipsis;
+      white-space:nowrap
+    }
+    .ranking-open{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      margin-top:9px;
+      border:0;
+      border-radius:9px;
+      background:#111;
+      color:#fff;
+      padding:8px 10px;
+      font-size:9px;
+      font-weight:900;
+      cursor:pointer;
+      text-decoration:none
+    }
+    .ranking-empty{
+      grid-column:1/-1;
+      padding:25px;
+      border:1px dashed var(--line);
+      border-radius:16px;
+      background:#fff;
+      color:var(--muted);
+      text-align:center;
+      font-size:12px
+    }
+    @media(max-width:900px){
+      .ranking-card{
+        grid-template-columns:105px minmax(0,1fr)
+      }
+      .ranking-photo{min-height:145px}
+      .ranking-name{font-size:14px}
+    }
+    @media(max-width:620px){
+      .discover-section{
+        width:calc(100% - 22px);
+        margin-bottom:26px
+      }
+      .discover-head{
+        margin-bottom:12px
+      }
+      .discover-head h2{
+        font-size:27px
+      }
+      .discover-head p{
+        font-size:11px
+      }
+      .ranking-tabs{
+        margin-right:-11px;
+        padding-right:11px
+      }
+      .ranking-tab{
+        padding:8px 11px;
+        font-size:10px
+      }
+      .ranking-context{
+        display:block;
+        min-height:42px;
+        margin-bottom:8px
+      }
+      .ranking-context strong,
+      .ranking-context span{
+        display:block
+      }
+      .ranking-context span{
+        margin-top:2px;
+        line-height:1.35
+      }
+      .ranking-grid{
+        grid-auto-flow:column;
+        grid-auto-columns:minmax(250px,78vw);
+        grid-template-columns:none;
+        overflow-x:auto;
+        gap:9px;
+        padding:0 1px 8px;
+        scroll-snap-type:x proximity;
+        scrollbar-width:none;
+        -webkit-overflow-scrolling:touch
+      }
+      .ranking-grid::-webkit-scrollbar{display:none}
+      .ranking-card{
+        grid-template-columns:104px minmax(0,1fr);
+        scroll-snap-align:start
+      }
+      .ranking-photo{
+        min-height:146px
+      }
+    }
+
 </style>
 </head>
 <body>
@@ -2928,135 +3207,42 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
     </div>
     <div class="grid" id="featuredGrid">
 <!-- SEO_FEATURED_START -->
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A098.webp?v=8cbc39c0b6b5" alt="Volkswagen Nivus 1.0 TSI 2021 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Volkswagen</div>
-      <h3>Nivus 1.0 TSI</h3>
-      <div class="meta">
-        <span>2021</span>
-        <span>50.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/volkswagen-nivus-1-0-tsi-2021/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A105.webp?v=8cbc39c0b6b5" alt="Peugeot Partner 1.6 HDI Furgon 2020 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Peugeot</div>
-      <h3>Partner 1.6 HDI Furgon</h3>
-      <div class="meta">
-        <span>2020</span>
-        <span>107.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/peugeot-partner-1-6-hdi-furgon-2020/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A075.webp?v=8cbc39c0b6b5" alt="Chevrolet Onix 1.4 Plus Joy 2020 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Chevrolet</div>
-      <h3>Onix 1.4 Plus Joy</h3>
-      <div class="meta">
-        <span>2020</span>
-        <span>90.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/chevrolet-onix-1-4-plus-joy-2020/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A129.webp?v=8cbc39c0b6b5" alt="Citroen Jumper 435 HDI 2019 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Citroen</div>
-      <h3>Jumper 435 HDI</h3>
-      <div class="meta">
-        <span>2019</span>
-        <span>35.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/citroen-jumper-435-hdi-2019/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A128.webp?v=8cbc39c0b6b5" alt="Fiat Abarth 595 1.4 Turbo Gran Turismo 2018 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Fiat</div>
-      <h3>Abarth 595 1.4 Turbo Gran Turismo</h3>
-      <div class="meta">
-        <span>2018</span>
-        <span>40.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/fiat-abarth-595-1-4-turbo-gran-turismo-2018/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A125.webp?v=8cbc39c0b6b5" alt="Renault Sandero 1.6 Authentique 2017 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Renault</div>
-      <h3>Sandero 1.6 Authentique</h3>
-      <div class="meta">
-        <span>2017</span>
-        <span>85.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/renault-sandero-1-6-authentique-2017/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
+<div class="loading"><div class="spinner"></div>Cargando stock…</div>
 <!-- SEO_FEATURED_END -->
 </div>
   </main>
+
+  <section class="discover-section shell" id="descubreLoMejor" aria-labelledby="discoverTitle">
+    <div class="discover-head">
+      <div>
+        <span class="discover-eyebrow">Rankings LMP</span>
+        <h2 id="discoverTitle">Descubre lo mejor</h2>
+        <p>Los vehículos que mejor se destacan dentro del stock actual según nuestras valoraciones.</p>
+      </div>
+    </div>
+
+    <div class="ranking-tabs" role="tablist" aria-label="Elegir ranking de vehículos">
+      <button class="ranking-tab active" type="button" role="tab" aria-selected="true" data-ranking="general">General</button>
+      <button class="ranking-tab" type="button" role="tab" aria-selected="false" data-ranking="rendimiento">Rendimiento</button>
+      <button class="ranking-tab" type="button" role="tab" aria-selected="false" data-ranking="confort">Confort</button>
+      <button class="ranking-tab" type="button" role="tab" aria-selected="false" data-ranking="economia">Economía</button>
+      <button class="ranking-tab" type="button" role="tab" aria-selected="false" data-ranking="espacio">Espacio</button>
+      <button class="ranking-tab" type="button" role="tab" aria-selected="false" data-ranking="seguridad">Seguridad</button>
+      <button class="ranking-tab opportunity" type="button" role="tab" aria-selected="false" data-ranking="oportunidad">Oportunidad</button>
+    </div>
+
+    <div class="ranking-context" id="rankingContext">
+      <strong>Mejor calificación general</strong>
+      <span>Promedio entre rendimiento, confort, economía, espacio y seguridad.</span>
+    </div>
+
+    <div class="ranking-grid" id="rankingGrid">
+<!-- SEO_RANKING_START -->
+<div class="loading"><div class="spinner"></div>Cargando ranking…</div>
+<!-- SEO_RANKING_END -->
+    </div>
+  </section>
+
   <section class="trust-section">
     <div class="shell">
       <div class="trust-card">
@@ -3139,489 +3325,7 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
     <div class="catalog-quickbar"><button class="quick-btn" id="favoritesFilter" type="button">Favoritos <span id="favoritesCount">0</span></button><button class="quick-btn" id="clearCatalogMode" type="button">Ver todos</button></div>
     <div class="grid" id="catalogGrid">
 <!-- SEO_CATALOG_START -->
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A098.webp?v=8cbc39c0b6b5" alt="Volkswagen Nivus 1.0 TSI 2021 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Volkswagen</div>
-      <h3>Nivus 1.0 TSI</h3>
-      <div class="meta">
-        <span>2021</span>
-        <span>50.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/volkswagen-nivus-1-0-tsi-2021/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A105.webp?v=8cbc39c0b6b5" alt="Peugeot Partner 1.6 HDI Furgon 2020 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Peugeot</div>
-      <h3>Partner 1.6 HDI Furgon</h3>
-      <div class="meta">
-        <span>2020</span>
-        <span>107.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/peugeot-partner-1-6-hdi-furgon-2020/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A075.webp?v=8cbc39c0b6b5" alt="Chevrolet Onix 1.4 Plus Joy 2020 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Chevrolet</div>
-      <h3>Onix 1.4 Plus Joy</h3>
-      <div class="meta">
-        <span>2020</span>
-        <span>90.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/chevrolet-onix-1-4-plus-joy-2020/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A129.webp?v=8cbc39c0b6b5" alt="Citroen Jumper 435 HDI 2019 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Citroen</div>
-      <h3>Jumper 435 HDI</h3>
-      <div class="meta">
-        <span>2019</span>
-        <span>35.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/citroen-jumper-435-hdi-2019/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A128.webp?v=8cbc39c0b6b5" alt="Fiat Abarth 595 1.4 Turbo Gran Turismo 2018 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Fiat</div>
-      <h3>Abarth 595 1.4 Turbo Gran Turismo</h3>
-      <div class="meta">
-        <span>2018</span>
-        <span>40.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/fiat-abarth-595-1-4-turbo-gran-turismo-2018/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A125.webp?v=8cbc39c0b6b5" alt="Renault Sandero 1.6 Authentique 2017 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Renault</div>
-      <h3>Sandero 1.6 Authentique</h3>
-      <div class="meta">
-        <span>2017</span>
-        <span>85.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/renault-sandero-1-6-authentique-2017/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A122.webp?v=8cbc39c0b6b5" alt="Ford Ecosport 1.5 Freestyle 2017 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Ford</div>
-      <h3>Ecosport 1.5 Freestyle</h3>
-      <div class="meta">
-        <span>2017</span>
-        <span>70.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/ford-ecosport-1-5-freestyle-2017/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A097.webp?v=8cbc39c0b6b5" alt="Toyota Etios 1.5 XLS 2017 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Toyota</div>
-      <h3>Etios 1.5 XLS</h3>
-      <div class="meta">
-        <span>2017</span>
-        <span>119.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/toyota-etios-1-5-xls-2017/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A042.webp?v=8cbc39c0b6b5" alt="Chevrolet Cruze 1.4 LT 2017 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Chevrolet</div>
-      <h3>Cruze 1.4 LT</h3>
-      <div class="meta">
-        <span>2017</span>
-        <span>80.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/chevrolet-cruze-1-4-lt-2017/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A113.webp?v=8cbc39c0b6b5" alt="Renault Clio 1.2 Mio Dynamique 2016 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Renault</div>
-      <h3>Clio 1.2 Mio Dynamique</h3>
-      <div class="meta">
-        <span>2016</span>
-        <span>98.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/renault-clio-1-2-mio-dynamique-2016/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A090.webp?v=8cbc39c0b6b5" alt="Ford Focus 2.0 SE Plus 2016 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Ford</div>
-      <h3>Focus 2.0 SE Plus</h3>
-      <div class="meta">
-        <span>2016</span>
-        <span>91.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/ford-focus-2-0-se-plus-2016/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A091.webp?v=8cbc39c0b6b5" alt="Chevrolet Tracker 1.8 LT 2015 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Chevrolet</div>
-      <h3>Tracker 1.8 LT</h3>
-      <div class="meta">
-        <span>2015</span>
-        <span>134.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/chevrolet-tracker-1-8-lt-2015/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A088.webp?v=8cbc39c0b6b5" alt="Peugeot 208 1.5 Active 2015 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Peugeot</div>
-      <h3>208 1.5 Active</h3>
-      <div class="meta">
-        <span>2015</span>
-        <span>92.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/peugeot-208-1-5-active-2015/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A083.webp?v=8cbc39c0b6b5" alt="Volkswagen Amarok 2.0 Trendline 4x4 TDI 2015 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Volkswagen</div>
-      <h3>Amarok 2.0 Trendline 4x4 TDI</h3>
-      <div class="meta">
-        <span>2015</span>
-        <span>200.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/volkswagen-amarok-2-0-trendline-4x4-tdi-2015/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A131.webp?v=8cbc39c0b6b5" alt="Renault Clio 1.2 Confort Plus 2014 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Renault</div>
-      <h3>Clio 1.2 Confort Plus</h3>
-      <div class="meta">
-        <span>2014</span>
-        <span>116.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/renault-clio-1-2-confort-plus-2014/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A082.webp?v=8cbc39c0b6b5" alt="Ford Ecosport 1.6 Titanium 2013 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Ford</div>
-      <h3>Ecosport 1.6 Titanium</h3>
-      <div class="meta">
-        <span>2013</span>
-        <span>123.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/ford-ecosport-1-6-titanium-2013/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A107.webp?v=8cbc39c0b6b5" alt="Volkswagen Vento 2.0 TSI Dsg Sportline 2012 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Volkswagen</div>
-      <h3>Vento 2.0 TSI Dsg Sportline</h3>
-      <div class="meta">
-        <span>2012</span>
-        <span>140.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/volkswagen-vento-2-0-tsi-dsg-sportline-2012/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A124.webp?v=8cbc39c0b6b5" alt="Renault Clio 1.2 Pack Plus 2011 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Renault</div>
-      <h3>Clio 1.2 Pack Plus</h3>
-      <div class="meta">
-        <span>2011</span>
-        <span>149.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/renault-clio-1-2-pack-plus-2011/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A080.webp?v=8cbc39c0b6b5" alt="Renault Fluence 1.6 2011 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Renault</div>
-      <h3>Fluence 1.6</h3>
-      <div class="meta">
-        <span>2011</span>
-        <span>140.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/renault-fluence-1-6-2011/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A126.webp?v=8cbc39c0b6b5" alt="Kia Sorento 2.2 4x4 2010 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Kia</div>
-      <h3>Sorento 2.2 4x4</h3>
-      <div class="meta">
-        <span>2010</span>
-        <span>240.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/kia-sorento-2-2-4x4-2010/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A121.webp?v=8cbc39c0b6b5" alt="Renault Clio 1.2 3 Puertas Pack 2009 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Renault</div>
-      <h3>Clio 1.2 3 Puertas Pack</h3>
-      <div class="meta">
-        <span>2009</span>
-        <span>150.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/renault-clio-1-2-3-puertas-pack-2009/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A120.webp?v=8cbc39c0b6b5" alt="Peugeot 206 1.9 XTD 2006 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Peugeot</div>
-      <h3>206 1.9 XTD</h3>
-      <div class="meta">
-        <span>2006</span>
-        <span>190.000 km</span>
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/peugeot-206-1-9-xtd-2006/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A130.webp?v=8cbc39c0b6b5" alt="Fiat Cronos 1.8 Precision 2019 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Preparando</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Fiat</div>
-      <h3>Cronos 1.8 Precision</h3>
-      <div class="meta">
-        <span>2019</span>
-        
-      </div>
-      <div class="price-stack">
-        
-      </div>
-      
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/fiat-cronos-1-8-precision-2019/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
+<div class="loading"><div class="spinner"></div>Cargando stock…</div>
 <!-- SEO_CATALOG_END -->
 </div>
   </main>
@@ -4739,6 +4443,44 @@ function rowNumberedPhotoLinks(row){
   return [...new Set(numbered.map(item=>item.url))];
 }
 
+
+function flexibleDecimalNumber(value){
+  let text=clean(value).replace(/\s/g,'').replace(/[^0-9,.-]/g,'');
+
+  if(!text)return null;
+
+  if(text.includes(',') && text.includes('.')){
+    if(text.lastIndexOf(',')>text.lastIndexOf('.')){
+      text=text.replace(/\./g,'').replace(',','.');
+    }else{
+      text=text.replace(/,/g,'');
+    }
+  }else if(text.includes(',')){
+    text=text.replace(',','.');
+  }
+
+  const parsed=Number(text);
+  return Number.isFinite(parsed)?parsed:null;
+}
+function rowOpportunityValue(row){
+  return flexibleDecimalNumber(rowValueByHeader(
+    row,
+    'Oportunidad',
+    'Índice de oportunidad',
+    'Indice de oportunidad',
+    'Indice oportunidad',
+    'Índice oportunidad'
+  ));
+}
+function formatOpportunity(value){
+  if(!Number.isFinite(value))return '—';
+
+  return new Intl.NumberFormat('es-AR',{
+    maximumFractionDigits:2,
+    minimumFractionDigits:Number.isInteger(value)?0:1
+  }).format(value);
+}
+
 function mapVehicle(r){
   const firstValue=Object.values(r)[0];
   const rawId=clean(r.ID || r[' '] || r[''] || r.A || firstValue);
@@ -4809,6 +4551,7 @@ function mapVehicle(r){
     economia,
     espacio,
     seguridad,
+    oportunidad:rowOpportunityValue(r),
     calificacionGeneral:explicitGeneral || scoreFallback?.general || calculatedGeneral,
     scoreFallbackApplied:Boolean(scoreFallback && !explicitGeneral),
     remoteFotoSets:fotoSets,
@@ -5923,6 +5666,142 @@ function renderCards(target,list,{localOnly=false}={}){
   updateFavoritesUi();
   updateCompareUi();
 }
+
+const DISCOVER_RANKINGS={
+  general:{
+    label:'General',
+    title:'Mejor calificación general',
+    description:'Promedio entre rendimiento, confort, economía, espacio y seguridad.',
+    direction:'desc',
+    value:vehicle=>generalScore(vehicle),
+    available:value=>Number(value)>0,
+    format:value=>`${Math.round(value)}/100`
+  },
+  rendimiento:{
+    label:'Rendimiento',
+    title:'Mayor rendimiento',
+    description:'Los vehículos mejor valorados por respuesta y desempeño.',
+    direction:'desc',
+    value:vehicle=>scoreValue(vehicle.rendimiento),
+    available:value=>Number(value)>0,
+    format:value=>`${Math.round(value)}/100`
+  },
+  confort:{
+    label:'Confort',
+    title:'Mayor confort',
+    description:'Las opciones mejor puntuadas para viajar con mayor comodidad.',
+    direction:'desc',
+    value:vehicle=>scoreValue(vehicle.confort),
+    available:value=>Number(value)>0,
+    format:value=>`${Math.round(value)}/100`
+  },
+  economia:{
+    label:'Economía',
+    title:'Mayor economía',
+    description:'Los vehículos que más se destacan por economía de uso.',
+    direction:'desc',
+    value:vehicle=>scoreValue(vehicle.economia),
+    available:value=>Number(value)>0,
+    format:value=>`${Math.round(value)}/100`
+  },
+  espacio:{
+    label:'Espacio',
+    title:'Mayor espacio',
+    description:'Las alternativas con mejor valoración de habitabilidad y capacidad.',
+    direction:'desc',
+    value:vehicle=>scoreValue(vehicle.espacio),
+    available:value=>Number(value)>0,
+    format:value=>`${Math.round(value)}/100`
+  },
+  seguridad:{
+    label:'Seguridad',
+    title:'Mayor seguridad',
+    description:'Los vehículos mejor puntuados en nuestro análisis de seguridad.',
+    direction:'desc',
+    value:vehicle=>scoreValue(vehicle.seguridad),
+    available:value=>Number(value)>0,
+    format:value=>`${Math.round(value)}/100`
+  },
+  oportunidad:{
+    label:'Oportunidad',
+    title:'Mejor relación precio / rendimiento',
+    description:'Usamos la columna Oportunidad: cuanto menor es el índice, mejor es la relación precio/rendimiento.',
+    direction:'asc',
+    value:vehicle=>vehicle.oportunidad,
+    available:value=>Number.isFinite(value),
+    format:value=>formatOpportunity(value)
+  }
+};
+let activeDiscoverRanking='general';
+function discoverRankingVehicles(metric=activeDiscoverRanking,limit=3){
+  const definition=DISCOVER_RANKINGS[metric] || DISCOVER_RANKINGS.general;
+
+  return vehicles
+    .filter(isPublicCatalogVehicle)
+    .map(vehicle=>({vehicle,value:definition.value(vehicle)}))
+    .filter(item=>definition.available(item.value))
+    .sort((a,b)=>{
+      if(a.value===b.value)return catalogTieBreak(a.vehicle,b.vehicle);
+      return definition.direction==='asc'
+        ? a.value-b.value
+        : b.value-a.value;
+    })
+    .slice(0,limit)
+    .map(item=>item.vehicle);
+}
+function rankingCard(vehicle,index,metric){
+  const definition=DISCOVER_RANKINGS[metric] || DISCOVER_RANKINGS.general;
+  const value=definition.value(vehicle);
+  const price=cashPriceArs(vehicle) || numericPrice(vehicle.cotizacion);
+  const opportunityClass=metric==='oportunidad'?' opportunity-card':'';
+
+  return `<article class="ranking-card${opportunityClass}" data-ranking-vehicle="${escapeAttr(vehicle.id)}">
+    <div class="ranking-position">#${index+1}</div>
+    <div class="ranking-photo">${coverImageMarkup(vehicle,index+20)}</div>
+    <div class="ranking-body">
+      <div class="ranking-make">${escapeHtml(vehicle.marca)}</div>
+      <div class="ranking-name">${escapeHtml(vehicle.modelo)}${vehicle.anio?` ${escapeHtml(vehicle.anio)}`:''}</div>
+      <div class="ranking-metric"><span>${escapeHtml(definition.label)}</span><strong>${escapeHtml(definition.format(value))}${metric==='oportunidad'?'':' '}</strong></div>
+      ${price?`<div class="ranking-price">${escapeHtml(formatArs(price))}</div>`:''}
+      <button class="ranking-open" type="button" data-ranking-open="${escapeAttr(vehicle.id)}">Ver vehículo</button>
+    </div>
+  </article>`;
+}
+function renderDiscoverRanking(metric=activeDiscoverRanking){
+  const definition=DISCOVER_RANKINGS[metric] || DISCOVER_RANKINGS.general;
+  const ranking=discoverRankingVehicles(metric,3);
+  const grid=$('#rankingGrid');
+  const context=$('#rankingContext');
+
+  activeDiscoverRanking=metric;
+
+  $$('.ranking-tab').forEach(button=>{
+    const active=button.dataset.ranking===metric;
+    button.classList.toggle('active',active);
+    button.setAttribute('aria-selected',active?'true':'false');
+  });
+
+  if(context){
+    context.innerHTML=`<strong>${escapeHtml(definition.title)}</strong><span>${escapeHtml(definition.description)}</span>`;
+  }
+
+  if(!grid)return;
+
+  grid.innerHTML=ranking.length
+    ? ranking.map((vehicle,index)=>rankingCard(vehicle,index,metric)).join('')
+    : `<div class="ranking-empty">Todavía no hay datos suficientes para construir este ranking.</div>`;
+
+  grid.querySelectorAll('[data-ranking-open]').forEach(button=>{
+    button.addEventListener('click',()=>{
+      emitAnalytics('open_ranking_vehicle',{
+        vehicle_id:button.dataset.rankingOpen,
+        ranking:metric
+      });
+      openVehicle(button.dataset.rankingOpen);
+    });
+  });
+}
+
 function populateFilters(){
   const publicVehicles=vehicles.filter(isPublicCatalogVehicle);
 
@@ -7634,7 +7513,15 @@ function switchView(view){
   $('#stockCheckView').classList.add('hidden');
   $('#homeView').classList.toggle('hidden',!home);
   $('#catalogView').classList.toggle('hidden',home);
-  $$('[data-view]').forEach(x=>x.classList.toggle('active',x.dataset.view===view));
+  $$('.ranking-tab').forEach(button=>{
+  button.addEventListener('click',()=>{
+    const ranking=button.dataset.ranking || 'general';
+    emitAnalytics('select_vehicle_ranking',{ranking});
+    renderDiscoverRanking(ranking);
+  });
+});
+
+$$('[data-view]').forEach(x=>x.classList.toggle('active',x.dataset.view===view));
   window.scrollTo({top:0,behavior:'smooth'});
   if(!home)applyFilters();
 }
@@ -7831,6 +7718,7 @@ async function applyStockResult(result,{initial=false,saveCacheResult=false}={})
     $('#featuredGrid').innerHTML='<div class="empty">No hay vehículos con portada local disponible.</div>';
   }
 
+  renderDiscoverRanking(activeDiscoverRanking);
   applyFilters();
 
   if(isInternalStockMode()){
@@ -8043,7 +7931,7 @@ setTimeout(()=>{
 </script>
 
   <div class="site-version-row">
-    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.31</div>
+    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.32</div>
     <span class="site-version" aria-hidden="true">·</span>
     <a class="site-version-link" href="?stock=interno" rel="nofollow">catálogo</a>
   </div>
