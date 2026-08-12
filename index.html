@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>Autos Usados en Lomas del Mirador | LMP Autos</title>
-<meta name="lmp-build" content="lmp-autos-web-v1.32-descubre-lo-mejor">
+<meta name="lmp-build" content="lmp-autos-web-v1.33-resenas-google">
   <meta name="description" content="Autos usados en Lomas del Mirador con financiación, cuotas fijas y permutas. Más de 10 años de experiencia. Visitanos en Av. Mosconi 799, Zona Oeste.">
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   <script>
@@ -3132,6 +3132,193 @@ fbq('track', 'PageView');
       }
     }
 
+
+    /* Reseñas de Google seleccionadas manualmente */
+    .reviews-section{
+      margin-bottom:38px
+    }
+    .reviews-head{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:20px;
+      margin-bottom:16px
+    }
+    .reviews-head-text{
+      max-width:720px
+    }
+    .reviews-eyebrow{
+      display:block;
+      margin-bottom:5px;
+      color:var(--accent);
+      font-size:10px;
+      font-weight:950;
+      letter-spacing:.11em;
+      text-transform:uppercase
+    }
+    .reviews-head h2{
+      margin:0;
+      font-size:clamp(27px,3.7vw,42px);
+      line-height:1;
+      letter-spacing:-.04em
+    }
+    .reviews-head p{
+      margin:8px 0 0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.5
+    }
+    .reviews-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:14px
+    }
+    .review-card{
+      display:flex;
+      min-width:0;
+      flex-direction:column;
+      min-height:235px;
+      padding:20px;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:#fff;
+      box-shadow:0 8px 24px rgba(0,0,0,.035)
+    }
+    .review-stars{
+      color:#f4b400;
+      font-size:17px;
+      line-height:1;
+      letter-spacing:1px
+    }
+    .review-card blockquote{
+      flex:1;
+      margin:15px 0 18px;
+      color:#292929;
+      font-size:13px;
+      font-weight:650;
+      line-height:1.55
+    }
+    .review-author{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding-top:14px;
+      border-top:1px solid #ededE8
+    }
+    .review-avatar{
+      display:grid;
+      width:34px;
+      height:34px;
+      flex:0 0 34px;
+      place-items:center;
+      border-radius:50%;
+      background:#111;
+      color:#fff;
+      font-size:11px;
+      font-weight:950
+    }
+    .review-author-text{
+      min-width:0
+    }
+    .review-author-text strong{
+      display:block;
+      overflow:hidden;
+      color:#171717;
+      font-size:12px;
+      text-overflow:ellipsis;
+      white-space:nowrap
+    }
+    .review-author-text span{
+      display:block;
+      margin-top:2px;
+      color:var(--muted);
+      font-size:9px;
+      font-weight:800;
+      letter-spacing:.04em;
+      text-transform:uppercase
+    }
+    .reviews-foot{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      margin-top:13px
+    }
+    .reviews-note{
+      margin:0;
+      color:var(--muted);
+      font-size:10px;
+      line-height:1.4
+    }
+    .reviews-google-link{
+      display:inline-flex;
+      flex:0 0 auto;
+      align-items:center;
+      justify-content:center;
+      min-height:38px;
+      padding:9px 13px;
+      border:1px solid var(--line);
+      border-radius:11px;
+      background:#fff;
+      color:#171717;
+      font-size:10px;
+      font-weight:900;
+      text-decoration:none
+    }
+    .reviews-google-link:hover{
+      border-color:#aaa;
+      background:#f6f6f3
+    }
+    @media(max-width:780px){
+      .reviews-grid{
+        grid-template-columns:1fr
+      }
+      .review-card{
+        min-height:0
+      }
+    }
+    @media(max-width:620px){
+      .reviews-section{
+        width:calc(100% - 22px);
+        margin-bottom:26px
+      }
+      .reviews-head{
+        display:block;
+        margin-bottom:12px
+      }
+      .reviews-head h2{
+        font-size:27px
+      }
+      .reviews-head p{
+        font-size:11px
+      }
+      .reviews-grid{
+        grid-auto-flow:column;
+        grid-auto-columns:minmax(270px,84vw);
+        grid-template-columns:none;
+        overflow-x:auto;
+        gap:9px;
+        padding:0 1px 8px;
+        scroll-snap-type:x proximity;
+        scrollbar-width:none;
+        -webkit-overflow-scrolling:touch
+      }
+      .reviews-grid::-webkit-scrollbar{display:none}
+      .review-card{
+        min-height:228px;
+        scroll-snap-align:start;
+        padding:17px
+      }
+      .review-card blockquote{
+        font-size:12px
+      }
+      .reviews-foot{
+        align-items:flex-start;
+        flex-direction:column;
+        gap:9px
+      }
+    }
+
 </style>
 </head>
 <body>
@@ -3240,6 +3427,60 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
 <!-- SEO_RANKING_START -->
 <div class="loading"><div class="spinner"></div>Cargando ranking…</div>
 <!-- SEO_RANKING_END -->
+    </div>
+  </section>
+
+
+  <section class="reviews-section shell" id="resenasClientes" aria-labelledby="reviewsTitle">
+    <div class="reviews-head">
+      <div class="reviews-head-text">
+        <span class="reviews-eyebrow">Experiencias reales</span>
+        <h2 id="reviewsTitle">Lo que dicen nuestros clientes</h2>
+        <p>Tres experiencias de clientes que dejaron su opinión sobre LMP Autos en Google.</p>
+      </div>
+    </div>
+
+    <div class="reviews-grid">
+      <article class="review-card">
+        <div class="review-stars" aria-label="5 de 5 estrellas">★★★★★</div>
+        <blockquote>“LMP AUTOS , LO RECOMIENDO MUY CONFIABLES Y SEGURA”</blockquote>
+        <div class="review-author">
+          <div class="review-avatar" aria-hidden="true">AB</div>
+          <div class="review-author-text">
+            <strong>Ariel Alberto Bordallo</strong>
+            <span>Reseña de Google · 5 estrellas</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="review-card">
+        <div class="review-stars" aria-label="5 de 5 estrellas">★★★★★</div>
+        <blockquote>“Muy buena la atención.. lo recomiendo 100% ,la camioneta esta okm.. un crack el flaco y familia...”</blockquote>
+        <div class="review-author">
+          <div class="review-avatar" aria-hidden="true">GM</div>
+          <div class="review-author-text">
+            <strong>German Marsiglia</strong>
+            <span>Reseña de Google · 5 estrellas</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="review-card">
+        <div class="review-stars" aria-label="5 de 5 estrellas">★★★★★</div>
+        <blockquote>“Excelente atención autos muy lindos , lean un genio me vendió un focus 2011 me dijo que estaba impecable y así fue lo compramos transferimos y lo disfrutamos ni una sola cosa por hacerle al auto !!! Unos genios los recomiendo muchísimo !!”</blockquote>
+        <div class="review-author">
+          <div class="review-avatar" aria-hidden="true">AN</div>
+          <div class="review-author-text">
+            <strong>Alan Nahuel</strong>
+            <span>Reseña de Google · 5 estrellas</span>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="reviews-foot">
+      <p class="reviews-note">Selección manual de reseñas de 5 estrellas con comentario publicadas en Google.</p>
+      <a class="reviews-google-link" href="https://share.google/zvOk2RfZnblYsIyNN" target="_blank" rel="noopener noreferrer">Ver reseñas en Google →</a>
     </div>
   </section>
 
@@ -7931,7 +8172,7 @@ setTimeout(()=>{
 </script>
 
   <div class="site-version-row">
-    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.32</div>
+    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.33</div>
     <span class="site-version" aria-hidden="true">·</span>
     <a class="site-version-link" href="?stock=interno" rel="nofollow">catálogo</a>
   </div>
