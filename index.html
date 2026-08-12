@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>Autos Usados en Lomas del Mirador | LMP Autos</title>
-<meta name="lmp-build" content="lmp-autos-web-v1.33-resenas-google">
+<meta name="lmp-build" content="lmp-autos-web-v1.34-resenas-aleatorias">
   <meta name="description" content="Autos usados en Lomas del Mirador con financiación, cuotas fijas y permutas. Más de 10 años de experiencia. Visitanos en Av. Mosconi 799, Zona Oeste.">
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   <script>
@@ -3217,6 +3217,16 @@ fbq('track', 'PageView');
       font-size:11px;
       font-weight:950
     }
+    .review-avatar.has-photo{
+      overflow:hidden;
+      background:#e9e9e5
+    }
+    .review-avatar.has-photo img{
+      width:100%;
+      height:100%;
+      display:block;
+      object-fit:cover
+    }
     .review-author-text{
       min-width:0
     }
@@ -3440,7 +3450,7 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
       </div>
     </div>
 
-    <div class="reviews-grid">
+    <div class="reviews-grid" id="reviewsGrid" aria-live="polite">
       <article class="review-card">
         <div class="review-stars" aria-label="5 de 5 estrellas">★★★★★</div>
         <blockquote>“LMP AUTOS , LO RECOMIENDO MUY CONFIABLES Y SEGURA”</blockquote>
@@ -3479,7 +3489,7 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
     </div>
 
     <div class="reviews-foot">
-      <p class="reviews-note">Selección manual de reseñas de 5 estrellas con comentario publicadas en Google.</p>
+      <p class="reviews-note">Se muestran 3 reseñas verificadas de 5 estrellas con comentario. La selección cambia entre sesiones.</p>
       <a class="reviews-google-link" href="https://share.google/zvOk2RfZnblYsIyNN" target="_blank" rel="noopener noreferrer">Ver reseñas en Google →</a>
     </div>
   </section>
@@ -8148,7 +8158,112 @@ document.addEventListener('keydown',e=>{
     if(e.key==='ArrowRight') moveGallery(1);
   }
 });
+
+const REVIEWS_DATA_URL='./data/resenas.json';
+const REVIEWS_SESSION_KEY='lmp_reviews_selection_v134';
+const REVIEWS_VISIBLE_COUNT=3;
+
+function reviewInitials(name){
+  return clean(name)
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0,2)
+    .map(part=>part[0]||'')
+    .join('')
+    .toUpperCase() || '★';
+}
+
+function reviewCardMarkup(review){
+  const author=clean(review?.author);
+  const text=clean(review?.text);
+  const image=clean(review?.profileImage);
+  const rating=Math.max(1,Math.min(5,Number(review?.rating)||5));
+  const stars='★★★★★'.slice(0,rating);
+  const avatar=image
+    ? `<div class="review-avatar has-photo"><img src="${escapeAttr(image)}" alt="Foto de perfil de ${escapeAttr(author)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentElement.classList.remove('has-photo');this.parentElement.innerHTML='${escapeAttr(reviewInitials(author))}'"></div>`
+    : `<div class="review-avatar" aria-hidden="true">${escapeHtml(reviewInitials(author))}</div>`;
+
+  return `<article class="review-card">
+    <div class="review-stars" aria-label="${rating} de 5 estrellas">${stars}</div>
+    <blockquote>“${escapeHtml(text)}”</blockquote>
+    <div class="review-author">
+      ${avatar}
+      <div class="review-author-text">
+        <strong>${escapeHtml(author)}</strong>
+        <span>Reseña de Google · ${rating} estrellas</span>
+      </div>
+    </div>
+  </article>`;
+}
+
+function shuffledReviewIds(reviews){
+  const ids=reviews.map(review=>clean(review.id)).filter(Boolean);
+
+  for(let i=ids.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [ids[i],ids[j]]=[ids[j],ids[i]];
+  }
+
+  return ids;
+}
+
+function getSessionReviewIds(reviews){
+  const availableIds=new Set(reviews.map(review=>clean(review.id)).filter(Boolean));
+
+  try{
+    const stored=JSON.parse(sessionStorage.getItem(REVIEWS_SESSION_KEY)||'[]');
+    if(
+      Array.isArray(stored) &&
+      stored.length===Math.min(REVIEWS_VISIBLE_COUNT,reviews.length) &&
+      stored.every(id=>availableIds.has(id))
+    ){
+      return stored;
+    }
+  }catch(_){}
+
+  const selected=shuffledReviewIds(reviews)
+    .slice(0,Math.min(REVIEWS_VISIBLE_COUNT,reviews.length));
+
+  try{
+    sessionStorage.setItem(REVIEWS_SESSION_KEY,JSON.stringify(selected));
+  }catch(_){}
+
+  return selected;
+}
+
+async function loadRandomReviews(){
+  const grid=$('#reviewsGrid');
+  if(!grid)return;
+
+  try{
+    const response=await fetch(`${REVIEWS_DATA_URL}?v=134`,{cache:'no-store'});
+    if(!response.ok)throw new Error(`HTTP ${response.status}`);
+
+    const reviews=(await response.json())
+      .filter(review=>
+        Number(review?.rating)===5 &&
+        clean(review?.text) &&
+        clean(review?.author)
+      );
+
+    if(!reviews.length)return;
+
+    const selectedIds=getSessionReviewIds(reviews);
+    const byId=new Map(reviews.map(review=>[clean(review.id),review]));
+    const selected=selectedIds.map(id=>byId.get(id)).filter(Boolean);
+
+    if(selected.length){
+      grid.innerHTML=selected.map(reviewCardMarkup).join('');
+    }
+  }catch(error){
+    console.warn('No se pudieron cargar las reseñas aleatorias:',error);
+    // Conserva las 3 reseñas pre-renderizadas del HTML como fallback.
+  }
+}
+
+
 loadData();
+loadRandomReviews();
 
 setTimeout(()=>{
   try{
@@ -8172,7 +8287,7 @@ setTimeout(()=>{
 </script>
 
   <div class="site-version-row">
-    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.33</div>
+    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.34</div>
     <span class="site-version" aria-hidden="true">·</span>
     <a class="site-version-link" href="?stock=interno" rel="nofollow">catálogo</a>
   </div>
