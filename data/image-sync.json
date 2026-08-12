@@ -257,7 +257,13 @@
     },
     "A121": {
       "manualCover": false,
-      "items": []
+      "items": [
+        {
+          "file": "A121.webp",
+          "source": "drive:1es4gKQwaXJH4yYIN-AJVGC2xMpddS3zd",
+          "logicalOrder": 1
+        }
+      ]
     },
     "A122": {
       "manualCover": true,
@@ -285,7 +291,23 @@
     },
     "A125": {
       "manualCover": true,
-      "items": []
+      "items": [
+        {
+          "file": "A125-1.webp",
+          "source": "drive:13bpqGQg3nk-fZ9Wk_MchJ8vLNvKc6iFh",
+          "logicalOrder": 2
+        },
+        {
+          "file": "A125-2.webp",
+          "source": "drive:1iJWph-MHzaeg7ox34Z81Osgt29RwFyQf",
+          "logicalOrder": 3
+        },
+        {
+          "file": "A125-3.webp",
+          "source": "drive:1oFFmTa0jjMjEU9AI0FzoTzz_c8IX0UUH",
+          "logicalOrder": 4
+        }
+      ]
     },
     "A126": {
       "manualCover": true,
@@ -297,11 +319,58 @@
     },
     "A129": {
       "manualCover": true,
-      "items": []
+      "items": [
+        {
+          "file": "A129-1.webp",
+          "source": "drive:1tZGAOmRHLYq-blK0UdEenFq_Act6VHrg",
+          "logicalOrder": 2
+        },
+        {
+          "file": "A129-2.webp",
+          "source": "drive:1sw8c1-BggkPKD4bFhzgSWr_MsBHlH3GC",
+          "logicalOrder": 3
+        },
+        {
+          "file": "A129-3.webp",
+          "source": "drive:1vnvn-TW6o2AgCGR5bLoWPw3hgS-Be-2p",
+          "logicalOrder": 4
+        }
+      ]
     },
     "A130": {
       "manualCover": false,
-      "items": []
+      "items": [
+        {
+          "file": "A130.webp",
+          "source": "drive:11VnxuVjgclNDtAI4kAzFs_XtD41rkiAO",
+          "logicalOrder": 1
+        }
+      ]
+    },
+    "A131": {
+      "manualCover": false,
+      "items": [
+        {
+          "file": "A131.webp",
+          "source": "drive:15xcEw7LDdDHu60xn3IFk2Y1Vt_QRlqvd",
+          "logicalOrder": 1
+        },
+        {
+          "file": "A131-1.webp",
+          "source": "drive:1E0OqvT1YWsaHNYwLBIdspHQkI2L9uvSe",
+          "logicalOrder": 2
+        },
+        {
+          "file": "A131-2.webp",
+          "source": "drive:1d_l_NaK76KtHmf3uxYM3qjPiZajiHz_1",
+          "logicalOrder": 3
+        },
+        {
+          "file": "A131-3.webp",
+          "source": "drive:1x3zq4J5IIeztC0YuHQYCAAkDOs4DPPpx",
+          "logicalOrder": 4
+        }
+      ]
     }
   }
 }
