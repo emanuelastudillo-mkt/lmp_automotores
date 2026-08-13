@@ -170,7 +170,7 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.12</div>
+    <div class="version">prototipo privado · v0.13</div>
   </div>
 </header>
 
@@ -503,7 +503,9 @@ function beginCareer(name,year){
     fans:0,
     fanStatusLevel:0,
     flags:{},
-    divorceCount:0
+    divorceCount:0,
+    crashCount:0,
+    illegalRaceCount:0
   };
   persist();
   renderStarter();
@@ -859,6 +861,7 @@ function resolveHardshipNeglect(event){
   completeEvent(event,'No pudiste pagar el trabajo. Lo postergaste y el auto siguió deteriorándose.');
 }
 function resolveIllegalRace(event){
+  state.illegalRaceCount=(state.illegalRaceCount||0)+1;
   const before=vehicleValue();
   const win=Math.random()<.46;
 
@@ -1283,6 +1286,7 @@ function resolveDynamicRepair(event,cost,effects,risk=0){
   completeEvent(event,text);
 }
 function completeEvent(event,text,icon='🎲'){
+  if(event?.special==='crash')state.crashCount=(state.crashCount||0)+1;
   state.events.unshift({year:state.year,eventId:event.id,text});
   state.decisions++;
   state.pendingEvent=null;
@@ -1456,6 +1460,42 @@ function closeMarket(){
   $('#marketModal').classList.remove('open');
   $('#closeMarket').style.display='inline-block';
 }
+function careerStory(){
+  const years=Math.max(0,END_YEAR-state.startYear);
+  const cars=state.history.length;
+  const divorces=state.divorceCount||0;
+  const crashes=state.crashCount||0;
+  const races=state.illegalRaceCount||0;
+  const fans=state.fans||0;
+  const bestStars=Math.max(1,...state.history.map(item=>item.maxStars||1));
+  const bestFlames=Math.max(0,...state.history.map(item=>item.maxFlames||0));
+
+  let parts=[];
+  if(cars<=2)parts.push(`Durante ${years} años fuiste de los que se encariñan: apenas ${cars} ${cars===1?'auto pasó':'autos pasaron'} por tu garage.`);
+  else if(cars>=7)parts.push(`Durante ${years} años viviste cambiando de volante: ${cars} autos formaron parte de tu historia.`);
+  else parts.push(`Durante ${years} años construiste una vida sobre ruedas con ${cars} autos distintos.`);
+
+  if(bestStars>=5)parts.push(`Al menos uno terminó convertido en una verdadera joya de ${starIcons(5)}.`);
+  else if(bestStars>=4)parts.push(`Llegaste a tener un auto que era la envidia del barrio.`);
+  else if(bestStars>=3)parts.push(`Supiste encontrar potencial y llevar algún auto a ${starIcons(bestStars)}.`);
+
+  if(bestFlames>=3 || fans>=70)parts.push(`También dejaste huella entre los fanáticos: algunos de tus autos llegaron a ser realmente conocidos.`);
+  else if(bestFlames>=1)parts.push(`Tus autos llegaron a juntar un pequeño grupo de seguidores.`);
+
+  if(races>=3)parts.push(`Las picadas fueron una constante: corriste ${races} veces y más de una vez pusiste la mecánica al límite.`);
+  else if(races>0)parts.push(`No pudiste resistirte a ${races} ${races===1?'picada ilegal':'picadas ilegales'}.`);
+
+  if(crashes>=3)parts.push(`La chapa tampoco tuvo una vida tranquila: acumulaste ${crashes} choques.`);
+  else if(crashes>0)parts.push(`En el camino también hubo ${crashes} ${crashes===1?'choque':'choques'} que dejaron su marca.`);
+
+  if(divorces===3)parts.push(`Y en lo personal alcanzaste el límite de la estadística: tres divorcios durante la trayectoria.`);
+  else if(divorces>0)parts.push(`La vida fuera del garage tampoco fue completamente estable: atravesaste ${divorces} ${divorces===1?'divorcio':'divorcios'}.`);
+  else parts.push(`Curiosamente, ningún divorcio consiguió meterse entre vos y tus autos.`);
+
+  if(state.money>25000)parts.push(`Terminaste además con una posición económica fuerte, demostrando que también supiste hacer buenos negocios.`);
+  return parts.join(' ');
+}
+
 function finish(){
   updateCurrentCarLegacy();
   screen('resultScreen');
@@ -1480,6 +1520,12 @@ function finish(){
       <div class="stat"><span>Ingresos acumulados</span><strong>${money(state.totalIncome)}</strong></div>
       <div class="stat"><span>Gastos de uso</span><strong>${money(state.totalRunningCosts)}</strong></div>
       <div class="stat"><span>Popularidad máxima</span><strong>${flameIcons(fanFlamesFromCount(state.fans||0))||'—'}</strong></div>
+      <div class="stat"><span>Divorcios</span><strong>${state.divorceCount||0}</strong></div>
+      <div class="stat"><span>Choques</span><strong>${state.crashCount||0}</strong></div>
+      <div class="stat"><span>Picadas ilegales</span><strong>${state.illegalRaceCount||0}</strong></div>
+    </div>
+    <div class="canonical" style="margin-top:18px">
+      <strong>Tu historia</strong><br>${careerStory()}
     </div>
     <h3 style="margin:18px 0 7px">Tu garaje histórico</h3>
     <div class="history">${state.history.map(item=>`
@@ -1521,6 +1567,8 @@ $('#marketModal').addEventListener('click',event=>{
     if(state && state.fans===undefined)state.fans=0;
     if(state && state.flags===undefined)state.flags={};
     if(state && state.divorceCount===undefined)state.divorceCount=0;
+    if(state && state.crashCount===undefined)state.crashCount=0;
+    if(state && state.illegalRaceCount===undefined)state.illegalRaceCount=0;
     if(state?.car && state.car.fans===undefined)state.car.fans=0;
     if(state?.car && state.car.fanStatusLevel===undefined)state.car.fanStatusLevel=0;
     if(state?.history)state.history.forEach(item=>{

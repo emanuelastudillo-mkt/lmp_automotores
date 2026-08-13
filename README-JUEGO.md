@@ -1,3 +1,19 @@
+# Tu vida sobre ruedas — v0.13
+
+Base: v0.12.
+
+## Cambios v0.13
+
+- El cierre de trayectoria ahora muestra:
+  - cantidad de divorcios;
+  - cantidad de choques;
+  - cantidad de picadas ilegales.
+- Se incorpora **“Tu historia”**, una breve narración generada según lo ocurrido realmente durante la partida.
+- La descripción considera cantidad de autos, mejor estatus ⭐, popularidad 🔥, picadas, choques, divorcios y situación económica final.
+- Se mantienen las estrellas y fueguitos máximos de cada vehículo en el garaje histórico.
+
+---
+
 # Tu vida sobre ruedas — v0.12
 
 Base: v0.11.
