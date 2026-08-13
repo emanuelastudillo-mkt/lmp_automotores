@@ -685,13 +685,41 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
   }
 }
 
+
+.fan-income-line strong{color:#1f7a43}
+.exhibition-income-line strong{color:#9b6a08}
+@media(max-width:580px){
+  #gameScreen .fan-income-line,
+  #gameScreen .exhibition-income-line{
+    display:flex;
+    margin-top:3px;
+    padding:3px 0;
+    font-size:6.5px;
+    line-height:1.1;
+  }
+  #gameScreen .fan-income-line span,
+  #gameScreen .exhibition-income-line span{
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  #gameScreen .fan-income-line strong,
+  #gameScreen .exhibition-income-line strong{
+    white-space:nowrap;
+    font-size:6.5px;
+  }
+  #gameScreen .garage{
+    max-height:158px;
+  }
+}
+
 </style>
 </head>
 <body>
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.27</div>
+    <div class="version">prototipo privado · v0.28</div>
   </div>
 </header>
 
@@ -1011,6 +1039,54 @@ function monthlyExpense(){
 
   return Math.max(5,Math.round(base*conditionPenalty*originalityPenalty*performancePenalty*temporary));
 }
+function fanMonthlyIncome(){
+  if(!state.car)return 0;
+  const flames=fanFlamesFromCount(state.car.fans||0);
+  if(flames<=0)return 0;
+
+  const stars=carStatus().stars||1;
+  if(flames===1)return Math.round(8+stars*4);
+  if(flames===2)return Math.round(22+stars*8);
+
+  // Con 3 fueguitos ya hay una comunidad fuerte alrededor del auto.
+  // Antes de 5 estrellas genera ingresos menores por fotos y encuentros.
+  if(stars<5)return Math.round(55+stars*15);
+
+  // 5 estrellas + 3 fueguitos mantiene un ingreso recurrente mayor,
+  // además de habilitar premios especiales de exhibición.
+  return 150;
+}
+function exhibitionReward(){
+  if(!state.car)return 0;
+  const stars=carStatus().stars||0;
+  const flames=fanFlamesFromCount(state.car.fans||0);
+  if(stars<5 || flames<3)return 0;
+
+  const roll=Math.random();
+  if(roll<.56)return 2000;
+  if(roll<.88)return 3000;
+  return 10000;
+}
+function maybeAwardExhibition(year){
+  if(!state.car)return 0;
+  const stars=carStatus().stars||0;
+  const flames=fanFlamesFromCount(state.car.fans||0);
+  if(stars<5 || flames<3)return 0;
+
+  // No ocurre todos los años: se trata de invitaciones y premios especiales.
+  if(Math.random()>=.48)return 0;
+
+  const reward=exhibitionReward();
+  state.money+=reward;
+  state.totalIncome+=reward;
+  state.exhibitionIncome=(state.exhibitionIncome||0)+reward;
+  state.exhibitionWins=(state.exhibitionWins||0)+1;
+  state.events.unshift({
+    year,
+    text:`Tu auto fue invitado a una exhibición por su fama. Ganaste un premio de ${money(reward)}.`
+  });
+  return reward;
+}
 function vehicleValue(){
   if(!state.car)return 0;
   const market=marketPrice(currentCar(),state.year,state.car.modelYear);
@@ -1199,6 +1275,8 @@ function beginCareer(name,year,pace='fast'){
     crashCount:0,
     illegalRaceCount:0,
     collection:[],
+    exhibitionIncome:0,
+    exhibitionWins:0,
     marketStockYear:null,
     usedMarketStock:[]
   };
@@ -1332,31 +1410,43 @@ function advanceYears(years){
   let income=0;
   let running=0;
 
+  let fanIncome=0;
+  let exhibitionIncome=0;
+
   for(let i=0;i<years;i++){
     const annualIncome=rand(300,700);
     income+=annualIncome;
 
     const yearlyCost=monthlyExpense()*12;
+    const yearlyFanIncome=fanMonthlyIncome()*12;
     const collectionCost=ageCollectionOneYear(state.year+i+1);
     running+=yearlyCost+collectionCost;
+    fanIncome+=yearlyFanIncome;
 
-    state.money+=annualIncome-yearlyCost-collectionCost;
+    state.money+=annualIncome+yearlyFanIncome-yearlyCost-collectionCost;
 
     if(state.car){
       state.car.condition=clamp(state.car.condition-rand(1,3),0,100);
       if(Math.random()<.22)state.car.performance=clamp(state.car.performance-1,0,100);
+      exhibitionIncome+=maybeAwardExhibition(state.year+i+1);
     }
   }
 
   state.money=Math.round(state.money);
-  state.totalIncome+=income;
+  state.totalIncome+=income+fanIncome;
   state.totalRunningCosts+=running;
   state.year+=years;
   queueYearAnimation(fromYear,state.year);
 
+  const popularityText=fanIncome>0
+    ? ` Tus fans generaron ${money(fanIncome)} entre fotos, encuentros y apariciones.`
+    : '';
+  const exhibitionText=exhibitionIncome>0
+    ? ` Además, las exhibiciones dejaron ${money(exhibitionIncome)} en premios.`
+    : '';
   state.events.unshift({
     year:state.year,
-    text:`Pasaron ${years} años. Ingresaste ${money(income)} y tus vehículos consumieron ${money(running)} entre uso, guarda y mantenimiento.`
+    text:`Pasaron ${years} años. Ingresaste ${money(income)} y tus vehículos consumieron ${money(running)} entre uso, guarda y mantenimiento.${popularityText}${exhibitionText}`
   });
 
   if(state.car?.expenseModifier){
@@ -1421,6 +1511,10 @@ function renderGarage(){
         </div>
 
         <div class="cost-line garage-secondary"><span>Gasto mensual actual</span><strong>${money(monthlyExpense())}</strong></div>
+        <div class="cost-line fan-income-line"><span>${fanMonthlyIncome()>0?'Fans piden fotos y encuentros':'Ingresos por fans'}</span><strong>${fanMonthlyIncome()>0?`+${money(fanMonthlyIncome())}/mes`:'—'}</strong></div>
+        ${carStatus().stars>=5 && fanFlamesFromCount(state.car.fans||0)>=3
+          ? `<div class="cost-line exhibition-income-line"><span>Exhibiciones</span><strong>Premios USD 2.000 · 3.000 · 10.000</strong></div>`
+          : ''}
         <div class="cost-line garage-secondary"><span>Reparaciones hechas</span><strong>${state.car.repairs}</strong></div>
 
         <div class="canonical garage-secondary"><strong>Historia del modelo:</strong><br>${car.eventoCanonico}</div>
@@ -2764,6 +2858,10 @@ function careerStory(){
   if(bestFlames>=3 || fans>=70)parts.push(`También dejaste huella entre los fanáticos: algunos de tus autos llegaron a ser realmente conocidos.`);
   else if(bestFlames>=1)parts.push(`Tus autos llegaron a juntar un pequeño grupo de seguidores.`);
 
+  if((state.exhibitionWins||0)>0){
+    parts.push(`La fama también rindió: participaste de exhibiciones premiadas y acumulaste ${money(state.exhibitionIncome||0)} en premios.`);
+  }
+
   if(races>=3)parts.push(`Las picadas fueron una constante: corriste ${races} veces y más de una vez pusiste la mecánica al límite.`);
   else if(races>0)parts.push(`No pudiste resistirte a ${races} ${races===1?'picada ilegal':'picadas ilegales'}.`);
 
@@ -2806,6 +2904,7 @@ function finish(){
       <div class="stat"><span>Divorcios</span><strong>${state.divorceCount||0}</strong></div>
       <div class="stat"><span>Choques</span><strong>${state.crashCount||0}</strong></div>
       <div class="stat"><span>Picadas ilegales</span><strong>${state.illegalRaceCount||0}</strong></div>
+      <div class="stat"><span>Premios de exhibición</span><strong>${state.exhibitionWins||0} · ${money(state.exhibitionIncome||0)}</strong></div>
       <div class="stat highlight"><span>Vehículos en colección</span><strong>${(state.collection||[]).length}</strong></div>
       <div class="stat"><span>Valor de colección</span><strong>${money(collectionValueTotal)}</strong></div>
     </div>
@@ -2884,6 +2983,8 @@ $('#marketModal').addEventListener('click',event=>{
     if(state && state.crashCount===undefined)state.crashCount=0;
     if(state && state.illegalRaceCount===undefined)state.illegalRaceCount=0;
     if(state && state.collection===undefined)state.collection=[];
+    if(state && state.exhibitionIncome===undefined)state.exhibitionIncome=0;
+    if(state && state.exhibitionWins===undefined)state.exhibitionWins=0;
     if(state && state.marketStockYear===undefined)state.marketStockYear=null;
     if(state && !Array.isArray(state.usedMarketStock))state.usedMarketStock=[];
     ensureCollectionIds();

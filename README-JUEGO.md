@@ -1,3 +1,37 @@
+# Tu vida sobre ruedas — v0.28
+
+Base: v0.27.
+
+## Popularidad que genera ingresos
+
+- Los fans ahora pueden generar ingresos reales mientras el auto gana notoriedad.
+- Desde el primer fueguito aparecen ingresos pequeños por:
+  - fotos;
+  - encuentros;
+  - apariciones;
+  - fanáticos que pagan por acercarse al auto.
+- El ingreso aumenta con la cantidad de fueguitos y el nivel de estrellas.
+- En la ficha del vehículo aparece una línea similar a `Gasto mensual`:
+  - **Fans piden fotos y encuentros · +USD XXX/mes**
+- Los ingresos recurrentes se cobran durante cada año que pasa y se suman a los ingresos totales.
+
+### 5 estrellas + 3 fueguitos
+
+- Al alcanzar simultáneamente **5⭐ + 3🔥**, el auto entra en un nivel especial de popularidad.
+- Mantiene un ingreso recurrente superior por fans.
+- Además puede recibir invitaciones a exhibiciones.
+- Cada año existe una posibilidad de obtener un premio de:
+  - USD 2.000;
+  - USD 3.000;
+  - USD 10.000.
+- Los premios se registran en el historial.
+- La pantalla final muestra:
+  - cantidad de premios de exhibición;
+  - dinero total ganado en exhibiciones.
+- La historia final también menciona los premios obtenidos.
+
+---
+
 # Tu vida sobre ruedas — v0.27
 
 Base: v0.26.
