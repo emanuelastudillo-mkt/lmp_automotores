@@ -1,3 +1,40 @@
+# Tu vida sobre ruedas — v0.30
+
+Base: v0.29.
+
+## 10 vehículos y submodelos nuevos
+
+Se amplía la base de 120 a 130 vehículos.
+
+Numeración de imágenes:
+
+121. Audi A4 B5
+122. Audi TT Mk1
+123. Chery QQ
+124. Chery Tiggo
+125. BAIC X25
+126. Rolls-Royce Phantom VII
+127. Alfa Romeo 145 Quadrifoglio
+128. Subaru Impreza WRX STI
+129. Mitsubishi Lancer Evolution IX
+130. Chrysler PT Cruiser
+
+Cada entrada incorpora:
+- año inicial y final;
+- precio base de gameplay;
+- segmento;
+- confiabilidad;
+- economía;
+- potencial clásico;
+- gasto mensual;
+- tags;
+- evento canónico;
+- `imageBase` compatible con la nueva numeración.
+
+Las variantes específicas se mantienen como vehículos independientes de sus modelos base.
+
+---
+
 # Tu vida sobre ruedas — v0.29
 
 Base: v0.28.
