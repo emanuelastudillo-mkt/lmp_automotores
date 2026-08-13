@@ -1343,7 +1343,7 @@ button:disabled .ui-icon{
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.40</div>
+    <div class="version">prototipo privado · v0.41</div>
   </div>
 </header>
 
@@ -2463,10 +2463,37 @@ function renderGarage(){
   if(!$('#openMarket').disabled)$('#openMarket').onclick=()=>openMarket(false);
   bindCollectionButtons();
 }
+function historicalEventSeen(event){
+  return !!state.careerFlags?.[`historical_${event.id}`];
+}
+function pendingHistoricalEvents(){
+  return EVENTS
+    .filter(event=>
+      event.historicalArgentina &&
+      Number.isFinite(event.historicalYear) &&
+      event.historicalYear>=state.startYear &&
+      event.historicalYear<=careerEndYear() &&
+      !historicalEventSeen(event)
+    )
+    .sort((a,b)=>a.historicalYear-b.historicalYear);
+}
+function nextHistoricalYearBetween(fromYear,toYear){
+  const next=pendingHistoricalEvents().find(event=>
+    event.historicalYear>fromYear &&
+    event.historicalYear<=toYear
+  );
+  return next?.historicalYear??null;
+}
+function historicalEventForCurrentYear(){
+  return pendingHistoricalEvents().find(event=>event.historicalYear===state.year)||null;
+}
 function eligibleEvents(){
   const car=currentCar();
 
   return EVENTS.filter(event=>{
+    if(event.historicalArgentina){
+      return state.year===event.historicalYear && !historicalEventSeen(event);
+    }
     if(event.collectionOnly)return (state.collection||[]).length>0;
 
     if(event.vehicleId && event.vehicleId!==car?.id)return false;
@@ -2567,6 +2594,13 @@ function chooseEvent(){
     return;
   }
 
+  const historical=eligible.find(event=>event.historicalArgentina);
+  if(historical){
+    state.pendingEvent={id:historical.id,forcedApplied:false};
+    persist();
+    return;
+  }
+
   const crashEvent=eligible.find(event=>event.special==='crash');
   if(crashEvent && state.car){
     const crashRisk=mechanicalCrashRisk();
@@ -2616,8 +2650,8 @@ function chooseEvent(){
   }
 
   const recent=new Set(state.events.slice(0,4).map(item=>item.eventId).filter(Boolean));
-  let pool=eligible.filter(event=>!event.collectionOnly && !event.exclusiveVehicleEvent && !['engine','crash'].includes(event.special) && !recent.has(event.id));
-  if(!pool.length)pool=eligible.filter(event=>!event.collectionOnly && !event.exclusiveVehicleEvent && !['engine','crash'].includes(event.special));
+  let pool=eligible.filter(event=>!event.historicalArgentina && !event.collectionOnly && !event.exclusiveVehicleEvent && !['engine','crash'].includes(event.special) && !recent.has(event.id));
+  if(!pool.length)pool=eligible.filter(event=>!event.historicalArgentina && !event.collectionOnly && !event.exclusiveVehicleEvent && !['engine','crash'].includes(event.special));
   if(!pool.length)pool=eligible.filter(event=>!event.collectionOnly && !['engine','crash'].includes(event.special));
   if(!pool.length)pool=eligible;
 
@@ -2853,7 +2887,7 @@ function renderPendingEvent(){
 
   $('#eventCard').innerHTML=`
     <div class="event-icon">${event.icon||'🚗'}</div>
-    <span class="eyebrow">${car.marca} ${car.modelo}</span>
+    <span class="eyebrow">${event.historicalArgentina?`${event.historicalYear} · evento histórico argentino`:`${car.marca} ${car.modelo}`}</span>
     <h2>${event.title}</h2>
     ${forcedText?`<div class="forced-banner"><strong>Ya ocurrió:</strong><span>${forcedText}</span></div>`:''}
     <p>${event.text}</p>
@@ -3690,6 +3724,10 @@ function resolveDynamicRepair(event,cost,effects,risk=0){
   completeEvent(event,text);
 }
 function completeEvent(event,text,icon='🎲'){
+  if(event?.historicalArgentina){
+    state.careerFlags=state.careerFlags||{};
+    state.careerFlags[`historical_${event.id}`]=true;
+  }
   if(event?.exclusiveVehicleEvent){
     state.careerFlags=state.careerFlags||{};
     state.careerFlags[`seen_${event.id}`]=true;
@@ -3887,6 +3925,10 @@ function renderGame(){
 
   if(!state.pendingEvent && state.nextEventYear>state.year){
     let targetYear=Math.min(state.nextEventYear,careerEndYear());
+    const historicalStop=nextHistoricalYearBetween(state.year,targetYear);
+    if(historicalStop!==null){
+      targetYear=historicalStop;
+    }
     if(
       state.year<2001 &&
       targetYear>2001 &&
@@ -4215,6 +4257,10 @@ function careerStory(){
   if(exclusiveSeen>=8)parts.push(`Conociste a fondo varios modelos: atravesaste ${exclusiveSeen} situaciones exclusivas ligadas a los autos que elegiste.`);
   else if(exclusiveSeen>0)parts.push(`Algunos modelos también te mostraron sus propias rarezas: viviste ${exclusiveSeen} situaciones exclusivas de vehículo.`);
 
+  const historicalSeen=Object.keys(state.careerFlags||{}).filter(key=>key.startsWith('historical_')).length + (state.careerFlags?.corralito_ocurrido?1:0);
+  if(historicalSeen>=5)parts.push(`Tu garage también atravesó de lleno la historia argentina: conviviste con ${historicalSeen} grandes eventos económicos y sociales que cambiaron la forma de tener un auto.`);
+  else if(historicalSeen>0)parts.push(`La historia argentina también se metió en tu garage en ${historicalSeen} momentos importantes.`);
+
   if(crashes>=3)parts.push(`La chapa tampoco tuvo una vida tranquila: acumulaste ${crashes} choques.`);
   else if(crashes>0)parts.push(`En el camino también hubo ${crashes} ${crashes===1?'choque':'choques'} que dejaron su marca.`);
 
@@ -4277,6 +4323,7 @@ function finish(){
       <div class="stat"><span>Granizadas</span><strong>${state.hailCount||0}</strong></div>
       <div class="stat"><span>Herencias</span><strong>${state.inheritanceCount||0}</strong></div>
       <div class="stat"><span>Eventos exclusivos</span><strong>${Object.keys(state.careerFlags||{}).filter(key=>key.startsWith('seen_ex_')).length}</strong></div>
+      <div class="stat"><span>Historia argentina</span><strong>${Object.keys(state.careerFlags||{}).filter(key=>key.startsWith('historical_')).length + (state.careerFlags?.corralito_ocurrido?1:0)}</strong></div>
       <div class="stat"><span>Premios de exhibición</span><strong>${state.exhibitionWins||0} · ${money(state.exhibitionIncome||0)}</strong></div>
       <div class="stat highlight"><span>Vehículos en colección</span><strong>${(state.collection||[]).length}</strong></div>
       <div class="stat"><span>Valor de colección</span><strong>${money(collectionValueTotal)}</strong></div>

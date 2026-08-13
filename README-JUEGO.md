@@ -1,3 +1,54 @@
+# Tu vida sobre ruedas — v0.41
+
+Base: v0.40.
+
+## Línea histórica argentina
+
+Se agregan **7 nuevos eventos cronológicos argentinos**, además del Corralito de 2001 ya existente.
+
+### Eventos
+
+- 1975 — Rodrigazo.
+- 1989 — Hiperinflación.
+- 1991 — Convertibilidad.
+- 2001 — Corralito (existente).
+- 2002 — Fin de la Convertibilidad y devaluación.
+- 2011 — Cepo cambiario y restricciones que afectaron la importación de autopartes.
+- 2020 — Pandemia y fuerte reducción de movilidad.
+- 2023 — Faltantes de nafta y gasoil.
+
+### Funcionamiento
+
+Los eventos históricos no compiten como eventos aleatorios normales.
+
+Cada uno tiene:
+- `historicalArgentina: true`
+- `historicalYear: YYYY`
+
+El motor:
+1. detecta si el avance rápido va a saltar por encima de un año histórico;
+2. detiene la trayectoria exactamente en ese año;
+3. muestra el evento antes de seguir avanzando;
+4. lo registra en `careerFlags`;
+5. impide que vuelva a ocurrir en esa trayectoria.
+
+Si una carrera empieza después de un hecho histórico, ese evento no aparece retroactivamente.
+
+### Consecuencias
+
+Los eventos están adaptados a la lógica automotriz del juego:
+- combustible;
+- precio y disponibilidad de repuestos;
+- originalidad;
+- mantenimiento;
+- alternativas nacionales/importadas;
+- inactividad del vehículo;
+- gasto y conservación.
+
+El resumen final ahora cuenta cuántos hitos de la historia argentina atravesó el jugador.
+
+---
+
 # Tu vida sobre ruedas — v0.40
 
 Base: v0.39.

@@ -10409,5 +10409,215 @@
         "note": "Lo preservaste sin exposición ni manoseo."
       }
     ]
+  },
+  {
+    "id": "arg_rodrigazo_1975",
+    "icon": "⛽",
+    "title": "1975: el Rodrigazo cambia todos los precios",
+    "tags": [
+      "*"
+    ],
+    "historicalYear": 1975,
+    "historicalArgentina": true,
+    "text": "Una fuerte devaluación y aumentos bruscos de tarifas y combustibles cambian de golpe el costo de mantener un auto. Conviene decidir rápido qué gastos priorizar.",
+    "choices": [
+      {
+        "icon": "🧰",
+        "label": "Comprar repuestos y hacer mantenimiento ahora",
+        "costPctVehicle": 0.035,
+        "condition": 5,
+        "originality": 2,
+        "valueShare": 0.55,
+        "note": "Te adelantaste a nuevas subas y dejaste el auto bastante mejor preparado."
+      },
+      {
+        "icon": "⛽",
+        "label": "Reducir uso y cuidar el presupuesto",
+        "condition": -1,
+        "performance": -1,
+        "expenseModifier": -0.04,
+        "note": "Usaste menos el auto y atravesaste el shock gastando menos, aunque quedó algo más parado."
+      }
+    ]
+  },
+  {
+    "id": "arg_hiperinflacion_1989",
+    "icon": "📈",
+    "title": "1989: los precios cambian antes de que llegues al mostrador",
+    "tags": [
+      "*"
+    ],
+    "historicalYear": 1989,
+    "historicalArgentina": true,
+    "text": "La hiperinflación vuelve impredecibles los precios y conseguir piezas se transforma en una carrera contra el tiempo.",
+    "choices": [
+      {
+        "icon": "📦",
+        "label": "Comprar las piezas importantes ya",
+        "costPctVehicle": 0.05,
+        "condition": 5,
+        "originality": 5,
+        "valueShare": 0.65,
+        "note": "Gastaste fuerte, pero aseguraste piezas útiles antes de que cambiaran otra vez los precios."
+      },
+      {
+        "icon": "🩹",
+        "label": "Resolver sólo lo imprescindible",
+        "costPctVehicle": 0.018,
+        "condition": 2,
+        "originality": -3,
+        "expenseModifier": 0.04,
+        "valueShare": 0.22,
+        "note": "Lograste seguir andando con una solución mínima, pero dejaste varios trabajos pendientes."
+      }
+    ]
+  },
+  {
+    "id": "arg_convertibilidad_1991",
+    "icon": "💵",
+    "title": "1991: cambia el mapa de precios y aparecen nuevas posibilidades",
+    "tags": [
+      "*"
+    ],
+    "historicalYear": 1991,
+    "historicalArgentina": true,
+    "text": "La Convertibilidad fija una nueva referencia monetaria y durante los primeros años mejora el acceso a bienes importados. En el mundo del auto empiezan a verse piezas y modelos que antes eran mucho más difíciles de conseguir.",
+    "choices": [
+      {
+        "icon": "📦",
+        "label": "Aprovechar para buscar repuestos originales",
+        "costPctVehicle": 0.03,
+        "condition": 4,
+        "originality": 7,
+        "valueShare": 0.7,
+        "note": "Aprovechaste una ventana favorable para conseguir piezas correctas y mejorar la autenticidad del auto."
+      },
+      {
+        "icon": "💰",
+        "label": "No gastar y juntar para el próximo auto",
+        "money": 250,
+        "note": "Preferiste guardar recursos y aprovechar el nuevo escenario más adelante."
+      }
+    ]
+  },
+  {
+    "id": "arg_devaluacion_2002",
+    "icon": "📉",
+    "title": "2002: se termina el uno a uno",
+    "tags": [
+      "*"
+    ],
+    "historicalYear": 2002,
+    "historicalArgentina": true,
+    "text": "Tras el final de la Convertibilidad, la devaluación encarece especialmente lo importado. Mantener un auto con piezas extranjeras vuelve a ser más difícil.",
+    "choices": [
+      {
+        "icon": "🔧",
+        "label": "Conseguir piezas correctas aunque cuesten más",
+        "costPctVehicle": 0.055,
+        "condition": 5,
+        "originality": 5,
+        "valueShare": 0.7,
+        "note": "Pagaste caro, pero preservaste mejor el auto y evitaste soluciones improvisadas."
+      },
+      {
+        "icon": "🧩",
+        "label": "Adaptar con alternativas disponibles",
+        "costPctVehicle": 0.022,
+        "condition": 3,
+        "originality": -6,
+        "valueShare": 0.25,
+        "risk": 0.12,
+        "note": "El auto siguió funcionando con una solución más accesible, aunque perdió originalidad."
+      }
+    ]
+  },
+  {
+    "id": "arg_cepo_importaciones_2011",
+    "icon": "🔐",
+    "title": "2011: conseguir dólares y repuestos importados se complica",
+    "tags": [
+      "*"
+    ],
+    "historicalYear": 2011,
+    "historicalArgentina": true,
+    "text": "Se endurecen los controles cambiarios y la industria automotriz empieza a negociar cupos para importar autopartes. Algunas piezas tardan o directamente desaparecen del mercado.",
+    "choices": [
+      {
+        "icon": "🔍",
+        "label": "Buscar hasta conseguir la pieza original",
+        "costPctVehicle": 0.045,
+        "originality": 6,
+        "condition": 3,
+        "valueShare": 0.62,
+        "note": "Te costó más tiempo y dinero, pero conseguiste una solución original."
+      },
+      {
+        "icon": "🔧",
+        "label": "Usar una alternativa nacional",
+        "costPctVehicle": 0.018,
+        "condition": 3,
+        "originality": -4,
+        "valueShare": 0.25,
+        "note": "Resolviste el problema con una pieza disponible localmente, sacrificando algo de originalidad."
+      }
+    ]
+  },
+  {
+    "id": "arg_pandemia_2020",
+    "icon": "🔒",
+    "title": "2020: el auto pasa semanas casi sin moverse",
+    "tags": [
+      "*"
+    ],
+    "historicalYear": 2020,
+    "historicalArgentina": true,
+    "text": "Las restricciones de movilidad cambian por completo el uso cotidiano. El auto queda mucho más tiempo guardado y aparecen problemas típicos de inactividad.",
+    "choices": [
+      {
+        "icon": "🧰",
+        "label": "Mantenerlo bien mientras está parado",
+        "costType": "repair",
+        "repairBase": 180,
+        "condition": 4,
+        "originality": 1,
+        "performance": 1,
+        "valueShare": 0.45,
+        "note": "Cuidaste batería, fluidos, neumáticos y almacenamiento. El auto atravesó la inactividad en buenas condiciones."
+      },
+      {
+        "icon": "🏠",
+        "label": "Dejarlo guardado sin hacer mucho",
+        "condition": -3,
+        "performance": -2,
+        "note": "El auto casi no se usó, pero la falta de atención dejó batería, cubiertas y algunos componentes resentidos."
+      }
+    ]
+  },
+  {
+    "id": "arg_combustible_2023",
+    "icon": "⛽",
+    "title": "2023: conseguir combustible se vuelve parte del viaje",
+    "tags": [
+      "*"
+    ],
+    "historicalYear": 2023,
+    "historicalArgentina": true,
+    "text": "Durante varios días aparecen faltantes de nafta y gasoil y largas filas en estaciones. Tener combustible disponible deja de ser algo garantizado.",
+    "choices": [
+      {
+        "icon": "⛽",
+        "label": "Hacer fila y llenar el tanque",
+        "money": -90,
+        "condition": -1,
+        "note": "Perdiste tiempo y algo de dinero, pero aseguraste combustible para seguir usando el auto."
+      },
+      {
+        "icon": "🏠",
+        "label": "Dejar el auto guardado unos días",
+        "condition": 1,
+        "note": "Preferiste no perseguir estaciones y el auto quedó preservado hasta que la situación empezó a normalizarse."
+      }
+    ]
   }
 ]
