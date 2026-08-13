@@ -1,3 +1,21 @@
+# Tu vida sobre ruedas — v0.18
+
+Base: v0.17.
+
+## Cambios v0.18
+
+- Se elimina de la interfaz información interna de balance/progresión:
+  - ya no aparece `Divorcio 1/3`;
+  - ya no aparece `Estatus 2/5`;
+  - los resultados de divorcio tampoco muestran el contador máximo.
+- El estatus sigue representándose visualmente mediante ⭐ y la popularidad mediante 🔥.
+- Se corrigió la selección inicial de vehículos:
+  - se eliminó la antigua silueta decorativa que aparecía detrás de la imagen real;
+  - ahora se muestra únicamente la imagen cuadrada del vehículo;
+  - si la imagen no existe, recién entonces aparece el ícono de respaldo.
+
+---
+
 # Tu vida sobre ruedas — v0.17
 
 Base: v0.16.
