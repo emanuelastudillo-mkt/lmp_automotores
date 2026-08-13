@@ -1,3 +1,36 @@
+# Tu vida sobre ruedas — v0.34
+
+Base: v0.33.
+
+## Corrección crítica de compra/venta
+
+Se corrigió una regresión introducida en v0.33:
+
+- `vehicleActionsLocked()` estaba bloqueando las acciones cuando existía **cualquier evento pendiente**.
+- Como cada turno normal genera un `pendingEvent`, el garage quedaba casi permanentemente con:
+  - `Acción disponible después de continuar`;
+  - compra/mercado bloqueados;
+  - venta bloqueada;
+  - intercambio con colección bloqueado.
+
+### Nuevo comportamiento
+
+Las acciones del garage sólo quedan bloqueadas cuando realmente corresponde:
+
+- durante un **divorcio sin resolver**;
+- mientras existe una **pantalla de resultado pendiente** que todavía requiere pulsar Continuar.
+
+Durante eventos normales y exclusivos ahora se puede volver a:
+
+- vender el vehículo actual;
+- abrir el mercado;
+- comprar otro vehículo;
+- guardar el actual en colección;
+- usar/intercambiar un auto de la colección;
+- vender autos de la colección.
+
+---
+
 # Tu vida sobre ruedas — v0.33
 
 Base: v0.32.

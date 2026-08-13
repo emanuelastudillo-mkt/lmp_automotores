@@ -742,7 +742,7 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.33</div>
+    <div class="version">prototipo privado · v0.34</div>
   </div>
 </header>
 
@@ -1407,7 +1407,7 @@ function divorcePending(){
   return pending?.special==='divorce';
 }
 function vehicleActionsLocked(){
-  return !!state?.pendingEvent || !!state?.pendingResult;
+  return divorcePending() || !!state?.pendingResult;
 }
 function currentSaleOffer(){
   if(!state.car)return null;
