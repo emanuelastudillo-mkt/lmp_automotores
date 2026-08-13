@@ -1,3 +1,23 @@
+# Tu vida sobre ruedas — v0.19
+
+Base: v0.18.
+
+## Cambios v0.19
+
+- La colección ahora participa activamente en la trayectoria.
+- Los autos coleccionados pueden sumar seguidores con el paso de los años.
+- Nuevos eventos exclusivos de colección:
+  - encuentros/exhibiciones que pueden sumar fans;
+  - provocaciones para sacar un auto guardado a una picada ilegal;
+  - ofertas espontáneas de compradores por un vehículo específico.
+- Las picadas con autos de colección cuentan dentro de las estadísticas de picadas ilegales y pueden provocar pérdida de valor/estado.
+- Cada auto dentro de la colección puede venderse manualmente.
+- Las ofertas externas pueden aceptarse o rechazarse.
+- Cada unidad coleccionada recibe un identificador propio para soportar varias unidades del mismo modelo.
+- La colección sigue apreciándose y generando gastos mínimos como en v0.18.
+
+---
+
 # Tu vida sobre ruedas — v0.18
 
 Base: v0.17.

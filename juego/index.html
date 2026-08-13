@@ -192,7 +192,7 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.18</div>
+    <div class="version">prototipo privado · v0.19</div>
   </div>
 </header>
 
@@ -360,6 +360,67 @@ function collectionValue(item){
 function collectionTotalValue(){
   return (state.collection||[]).reduce((sum,item)=>sum+collectionValue(item),0);
 }
+function collectionItem(uid){
+  return (state.collection||[]).find(item=>item.uid===uid);
+}
+function ensureCollectionIds(){
+  for(const item of state.collection||[]){
+    if(!item.uid)item.uid=`${item.id}-${item.collectedYear||state.year}-${Math.random().toString(36).slice(2,8)}`;
+  }
+}
+function collectionSaleValue(item){
+  const factor=.82+Math.random()*.14;
+  return Math.max(150,Math.round(collectionValue(item)*factor));
+}
+function sellCollectionCar(uid,amount=null,reason='venta desde colección',silent=false){
+  ensureCollectionIds();
+  const item=collectionItem(uid);
+  if(!item)return;
+  const price=amount??collectionSaleValue(item);
+  state.money+=price;
+  const idx=state.collection.findIndex(entry=>entry.uid===uid);
+  state.collection.splice(idx,1);
+  const history=[...state.history].reverse().find(h=>h.id===item.id && h.collected && !h.collectionSoldYear);
+  if(history){
+    history.collectionSoldYear=state.year;
+    history.collectionSoldFor=price;
+  }
+  state.events.unshift({year:state.year,text:`Vendiste ${item.brand} ${item.model} de tu colección por ${money(price)}.`});
+  persist();
+  if(!silent)renderGame();
+}
+function collectionPanelMarkup(){
+  ensureCollectionIds();
+  if(!(state.collection||[]).length)return `<div class="canonical" style="margin-top:12px"><strong>Mi colección</strong><br>Todavía no guardaste vehículos.</div>`;
+  return `<div class="canonical" style="margin-top:14px">
+    <strong>Mi colección · ${(state.collection||[]).length} vehículos · ${money(collectionTotalValue())}</strong>
+    <div style="display:grid;gap:10px;margin-top:10px">
+      ${(state.collection||[]).map(item=>{
+        const car=carById(item.id);
+        return `<div style="display:grid;grid-template-columns:64px 1fr;gap:10px;align-items:center;padding:8px;border:1px solid rgba(255,255,255,.08);border-radius:12px">
+          <div>${carImageMarkup(car)}</div>
+          <div>
+            <strong>${item.brand} ${item.model}</strong><br>
+            <small>Valor estimado ${money(collectionValue(item))} · ${starIcons(item.stars||1)} ${flameIcons(item.flames||0)||''}</small>
+            <button class="ghost" data-sell-collection="${item.uid}" style="width:100%;margin-top:7px">Vender de la colección</button>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+  </div>`;
+}
+function bindCollectionButtons(){
+  document.querySelectorAll('[data-sell-collection]').forEach(button=>{
+    button.onclick=()=>{
+      const item=collectionItem(button.dataset.sellCollection);
+      if(!item)return;
+      const price=collectionSaleValue(item);
+      if(confirm(`¿Vender ${item.brand} ${item.model} por ${money(price)}?`)){
+        sellCollectionCar(item.uid,price);
+      }
+    };
+  });
+}
 function collectionAnnualGrowth(item,year){
   const car=carById(item.id);
   if(!car)return .02;
@@ -375,6 +436,13 @@ function ageCollectionOneYear(year){
     item.collectionValue=Math.round(collectionValue(item)*(1+collectionAnnualGrowth(item,year)));
     item.yearsStored=(item.yearsStored||0)+1;
     if(Math.random()<.08)item.condition=Math.max(0,(item.condition??90)-1);
+    const fameChance=.03+Math.min(.10,(item.stars||1)*.015);
+    if(Math.random()<fameChance){
+      const gained=rand(2,8);
+      item.fans=(item.fans||0)+gained;
+      item.flames=fanFlamesFromCount(item.fans);
+      state.fans=(state.fans||0)+gained;
+    }
   }
   return cost;
 }
@@ -751,7 +819,8 @@ function meter(label,value){
 function renderGarage(){
   const car=currentCar();
   if(!car||!state.car){
-    $('#garagePanel').innerHTML='<div style="padding:24px">No tenés auto actualmente.</div>';
+    $('#garagePanel').innerHTML=`<div style="padding:24px">No tenés auto de uso actualmente.${collectionPanelMarkup()}</div>`;
+    bindCollectionButtons();
     return;
   }
 
@@ -793,18 +862,21 @@ function renderGarage(){
         <button class="ghost" id="collectCarNow" style="width:100%;margin-top:12px" ${divorcePending()?'disabled':''}>${divorcePending()?'Colección bloqueada durante el divorcio':'Guardar en mi colección'}</button>
         <button class="car-select" id="sellCarNow" style="width:100%;margin-top:8px" ${divorcePending()?'disabled':''}>${divorcePending()?'Venta bloqueada durante el divorcio':`Vender ahora · ${currentSaleOffer().mood} · ${money(currentSaleOffer().amount)}`}</button>
         <button class="ghost" id="openMarket" style="width:100%;margin-top:8px" ${divorcePending()?'disabled':''}>${divorcePending()?'Mercado bloqueado durante el divorcio':'Ver mercado / cambiar auto'}</button>
+        ${collectionPanelMarkup()}
       </div>
     </div>`;
 
   if(!$('#collectCarNow').disabled)$('#collectCarNow').onclick=()=>collectCurrentCar();
   if(!$('#sellCarNow').disabled)$('#sellCarNow').onclick=()=>sellCurrentCarOffer();
   if(!$('#openMarket').disabled)$('#openMarket').onclick=()=>openMarket(false);
+  bindCollectionButtons();
 }
 function eligibleEvents(){
   const car=currentCar();
-  if(!car)return [];
 
   return EVENTS.filter(event=>{
+    if(event.collectionOnly)return (state.collection||[]).length>0;
+    if(!car||!state.car)return false;
     if(event.special==='collector'){
       return vehicleAge()>=40 && state.car.condition>=82 && state.car.originality>=78;
     }
@@ -833,8 +905,17 @@ function chooseEvent(){
     return;
   }
 
+  const collectionEvents=eligible.filter(event=>event.collectionOnly);
+  if(collectionEvents.length && Math.random()<Math.min(.34,.12+(state.collection||[]).length*.045)){
+    const selected=collectionEvents[rand(0,collectionEvents.length-1)];
+    state.pendingEvent={id:selected.id,forcedApplied:false};
+    persist();
+    return;
+  }
+
   const recent=new Set(state.events.slice(0,4).map(item=>item.eventId).filter(Boolean));
-  let pool=eligible.filter(event=>!recent.has(event.id));
+  let pool=eligible.filter(event=>!event.collectionOnly && !recent.has(event.id));
+  if(!pool.length)pool=eligible.filter(event=>!event.collectionOnly);
   if(!pool.length)pool=eligible;
 
   // Eventos fuertes aparecen menos seguido.
@@ -1000,7 +1081,7 @@ function resolveIllegalRace(event){
 function renderPendingEvent(){
   const event=eventById(state.pendingEvent.id);
   const car=currentCar();
-  const forcedText=applyForced(event);
+  const forcedText=event.collectionOnly?'':applyForced(event);
 
   $('#eventCard').className=`event-card enter ${event.forced?'forced':''}`;
 
@@ -1024,6 +1105,104 @@ function renderPendingEvent(){
   bindHardshipChoices(event);
 }
 function renderSpecialEvent(event,car,forcedText){
+  if(['collection_fame','collection_race','collection_offer'].includes(event.special)){
+    ensureCollectionIds();
+    if(!state.pendingEvent.collectionUid){
+      const pool=state.collection||[];
+      const picked=pool[rand(0,pool.length-1)];
+      state.pendingEvent.collectionUid=picked?.uid;
+      if(event.special==='collection_offer'){
+        const base=collectionValue(picked);
+        state.pendingEvent.collectionOffer=Math.max(150,Math.round(base*(.88+Math.random()*.42)));
+      }
+      persist();
+    }
+    const item=collectionItem(state.pendingEvent.collectionUid);
+    if(!item){ finishSpecial(event,'La oportunidad desapareció antes de concretarse.'); return; }
+    const c=carById(item.id);
+
+    if(event.special==='collection_fame'){
+      $('#eventCard').innerHTML=`
+        <div class="event-icon">${event.icon}</div>
+        <span class="eyebrow">Tu colección · ${item.brand} ${item.model}</span>
+        <h2>${event.title}</h2>
+        <p>${event.text}</p>
+        <div class="choices">
+          ${specialButton('🏆','Llevarlo al encuentro','Puede sumar seguidores con muy poco desgaste.','collection-show')}
+          ${specialButton('🔒','Dejarlo guardado','No arriesgás el auto.','collection-skip')}
+        </div>`;
+      $('#collection-show').onclick=()=>{
+        const gained=rand(8,24);
+        item.fans=(item.fans||0)+gained;
+        item.flames=fanFlamesFromCount(item.fans);
+        state.fans=(state.fans||0)+gained;
+        if(Math.random()<.18)item.condition=Math.max(0,(item.condition??90)-1);
+        completeEvent(event,`${item.brand} ${item.model} llamó la atención y sumó ${gained} nuevos seguidores.`,'🔥');
+      };
+      $('#collection-skip').onclick=()=>completeEvent(event,`Preferiste conservar ${item.brand} ${item.model} guardado y sin exposición.`,'🔒');
+      return;
+    }
+
+    if(event.special==='collection_race'){
+      $('#eventCard').innerHTML=`
+        <div class="event-icon">${event.icon}</div>
+        <span class="eyebrow">Tu colección · ${item.brand} ${item.model}</span>
+        <h2>${event.title}</h2>
+        <p>${event.text}</p>
+        <div class="choices">
+          ${specialButton('🏁','Aceptar la picada','Podés ganar fama, pero arriesgás una pieza de colección.','collection-race-go')}
+          ${specialButton('🚫','No arriesgarlo','El auto vuelve al garage.','collection-race-no')}
+        </div>`;
+      $('#collection-race-go').onclick=()=>{
+        state.illegalRaceCount=(state.illegalRaceCount||0)+1;
+        const win=Math.random()<.48;
+        if(win){
+          const gained=rand(12,32);
+          const prize=Math.max(120,Math.round(collectionValue(item)*(.025+Math.random()*.04)));
+          item.fans=(item.fans||0)+gained;
+          item.flames=fanFlamesFromCount(item.fans);
+          state.fans=(state.fans||0)+gained;
+          state.money+=prize;
+          item.condition=Math.max(0,(item.condition??90)-rand(0,2));
+          completeEvent(event,`Ganaste la picada con ${item.brand} ${item.model}. Cobraste ${money(prize)} y sumaste ${gained} seguidores.`,'🏁');
+        }else{
+          const damage=rand(3,10);
+          const valueLoss=Math.round(collectionValue(item)*(damage/100));
+          item.condition=Math.max(0,(item.condition??90)-damage);
+          item.collectionValue=Math.max(300,collectionValue(item)-valueLoss);
+          completeEvent(event,`Perdiste la picada. ${item.brand} ${item.model} sufrió daños y perdió aproximadamente ${money(valueLoss)} de valor.`,'💥');
+        }
+      };
+      $('#collection-race-no').onclick=()=>completeEvent(event,`No arriesgaste ${item.brand} ${item.model}. La provocación quedó ahí.`,'🔒');
+      return;
+    }
+
+    if(event.special==='collection_offer'){
+      const offer=state.pendingEvent.collectionOffer;
+      $('#eventCard').innerHTML=`
+        <div class="event-icon">${event.icon}</div>
+        <span class="eyebrow">Oferta por ${item.brand} ${item.model}</span>
+        <h2>${event.title}</h2>
+        <p>${event.text} Te ofrecen <strong>${money(offer)}</strong>.</p>
+        <div class="choices">
+          ${specialButton('🤝','Aceptar oferta',`Vendés el auto de la colección por ${money(offer)}.`,'collection-offer-yes')}
+          ${specialButton('🔑','Rechazar','Lo conservás en tu colección.','collection-offer-no')}
+        </div>`;
+      $('#collection-offer-yes').onclick=()=>{
+        const soldName=`${item.brand} ${item.model}`;
+        sellCollectionCar(item.uid,offer,'oferta por colección',true);
+        state.pendingEvent=null;
+        state.pendingResult={year:state.year,title:'Resultado',text:`Aceptaste la oferta y vendiste ${soldName} por ${money(offer)}.`,icon:'🤝'};
+        state.nextEventYear=Math.min(END_YEAR,state.year+nextGap());
+        persist();
+        closeMarket();
+        renderGame();
+      };
+      $('#collection-offer-no').onclick=()=>completeEvent(event,`Rechazaste ${money(offer)} y conservaste ${item.brand} ${item.model} en la colección.`,'🔑');
+      return;
+    }
+  }
+
   if(event.special==='sale'){
     const minimum=Math.round(vehicleValue()*.50);
     if(!state.pendingEvent.saleEventOffer){
@@ -1371,6 +1550,7 @@ function collectCurrentCar(){
 
   state.collection=state.collection||[];
   state.collection.push({
+    uid:`${car.id}-${state.year}-${Math.random().toString(36).slice(2,8)}`,
     id:car.id,
     brand:car.marca,
     model:car.modelo,
@@ -1749,6 +1929,7 @@ $('#marketModal').addEventListener('click',event=>{
     if(state && state.crashCount===undefined)state.crashCount=0;
     if(state && state.illegalRaceCount===undefined)state.illegalRaceCount=0;
     if(state && state.collection===undefined)state.collection=[];
+    ensureCollectionIds();
     if(state?.car && state.car.fans===undefined)state.car.fans=0;
     if(state?.car && state.car.fanStatusLevel===undefined)state.car.fanStatusLevel=0;
     if(state?.history)state.history.forEach(item=>{

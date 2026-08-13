@@ -1896,5 +1896,38 @@
         "note": "Decidiste no convertirlo en un proyecto extremo."
       }
     ]
+  },
+  {
+    "id": "coleccion_encuentro",
+    "icon": "🏆",
+    "title": "Tu colección empieza a llamar la atención",
+    "tags": [
+      "*"
+    ],
+    "special": "collection_fame",
+    "collectionOnly": true,
+    "text": "Te invitan a llevar uno de tus autos guardados a una reunión de fanáticos."
+  },
+  {
+    "id": "coleccion_picada",
+    "icon": "🏁",
+    "title": "Quieren ver si esa joya todavía corre",
+    "tags": [
+      "*"
+    ],
+    "special": "collection_race",
+    "collectionOnly": true,
+    "text": "En una juntada alguien te provoca: quieren que saques uno de los autos de la colección para una picada ilegal."
+  },
+  {
+    "id": "coleccion_oferta",
+    "icon": "💰",
+    "title": "Oferta por una pieza de tu colección",
+    "tags": [
+      "*"
+    ],
+    "special": "collection_offer",
+    "collectionOnly": true,
+    "text": "Un interesado conoce tu colección y hace una oferta concreta por uno de tus vehículos."
   }
 ]
