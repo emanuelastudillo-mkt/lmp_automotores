@@ -870,13 +870,305 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
   .market-metrics span{font-size:4.2px}
 }
 
+
+/* v0.39 — SVG UI system */
+.lmp-svg-sprite{pointer-events:none}
+.ui-icon{
+  width:1em;
+  height:1em;
+  display:inline-block;
+  flex:0 0 auto;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  vertical-align:-.14em;
+}
+.rating-icons{
+  display:inline-flex;
+  align-items:center;
+  gap:2px;
+  vertical-align:middle;
+}
+.rating-icons .ui-icon{width:1em;height:1em}
+.rating-icons.stars .ui-icon{fill:currentColor;stroke-width:1.35}
+.rating-icons.flames .ui-icon{fill:currentColor;stroke-width:1.4}
+
+.stat>span{
+  display:flex!important;
+  align-items:center;
+  gap:5px;
+}
+.stat>span>.ui-icon{font-size:12px;opacity:.72}
+.garage-actions button,
+.collection-actions button,
+.market-item>button{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+}
+.garage-actions .action-icon{font-size:15px}
+.collection-actions .ui-icon{font-size:13px}
+.market-item>button .ui-icon{font-size:12px}
+
+.event-icon .ui-icon{
+  width:30px;
+  height:30px;
+  color:#f3f3f4;
+}
+.choice-icon .ui-icon{
+  width:25px;
+  height:25px;
+  color:#f0f0f2;
+}
+
+/* Value-change motion */
+.animated-value{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  max-width:100%;
+}
+.animated-value-main{display:inline-flex;align-items:center;gap:2px;min-width:0}
+.animated-value.changed-up .animated-value-main{
+  animation:valueUpFlash .72s cubic-bezier(.2,.8,.2,1) both;
+}
+.animated-value.changed-down .animated-value-main{
+  animation:valueDownFlash .72s cubic-bezier(.2,.8,.2,1) both;
+}
+.value-delta{
+  position:absolute;
+  right:0;
+  top:-15px;
+  z-index:12;
+  display:inline-flex;
+  align-items:center;
+  gap:2px;
+  padding:2px 4px;
+  border-radius:999px;
+  font-size:7px;
+  line-height:1;
+  font-weight:950;
+  white-space:nowrap;
+  pointer-events:none;
+  animation:deltaFloat 1.25s ease-out forwards;
+}
+.value-delta .ui-icon{width:8px;height:8px}
+.delta-up{color:#2ba96a}
+.delta-down{color:#e25b61}
+.value-delta.delta-up{background:rgba(43,169,106,.13)}
+.value-delta.delta-down{background:rgba(226,91,97,.13)}
+@keyframes valueUpFlash{
+  0%{transform:translateY(5px) scale(.94);filter:brightness(1)}
+  38%{transform:translateY(-1px) scale(1.06);filter:brightness(1.35);color:#2ba96a}
+  100%{transform:none;filter:none}
+}
+@keyframes valueDownFlash{
+  0%{transform:translateY(-4px) scale(1.03);filter:brightness(1)}
+  38%{transform:translateY(2px) scale(.96);filter:brightness(1.25);color:#e25b61}
+  100%{transform:none;filter:none}
+}
+@keyframes deltaFloat{
+  0%{opacity:0;transform:translateY(5px) scale(.88)}
+  18%{opacity:1;transform:translateY(0) scale(1)}
+  72%{opacity:1}
+  100%{opacity:0;transform:translateY(-12px) scale(.96)}
+}
+.meter b.meter-animate{
+  animation:meterValueChange .62s cubic-bezier(.2,.8,.2,1) both;
+}
+@keyframes meterValueChange{
+  from{width:var(--from)}
+  to{width:var(--to)}
+}
+.meter-row.delta-up strong{animation:valueUpFlash .72s ease both}
+.meter-row.delta-down strong{animation:valueDownFlash .72s ease both}
+
+/* Mobile garage/event separation */
+@media(max-width:580px){
+  #gameScreen .event-wrap{
+    gap:6px;
+  }
+  #gameScreen .garage{
+    position:relative;
+    flex:0 0 auto;
+    max-height:none;
+    overflow:visible;
+    padding:5px;
+    z-index:3;
+  }
+  #gameScreen .garage-card{
+    grid-template-columns:74px minmax(0,1fr);
+    min-height:108px;
+    overflow:hidden;
+  }
+  #gameScreen .garage-art{
+    width:74px;
+    height:74px!important;
+  }
+  #gameScreen .garage-info{
+    padding:5px 6px 6px;
+  }
+  #gameScreen .garage-status{
+    margin-bottom:3px!important;
+  }
+  #gameScreen .meters{
+    margin-bottom:4px;
+  }
+  #gameScreen .garage-actions{
+    position:relative;
+    z-index:4;
+    margin-top:2px;
+  }
+  #gameScreen .garage-actions button{
+    min-height:30px;
+    height:30px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:1px;
+    overflow:hidden;
+  }
+  #gameScreen .garage-actions button .action-icon{
+    width:13px;
+    height:13px;
+    font-size:13px;
+  }
+  #gameScreen .garage-actions button>span{
+    display:none;
+  }
+  #gameScreen .garage-actions button:after{
+    line-height:1;
+  }
+
+  /* These lines are useful on desktop, but duplicate information or
+     consume critical vertical space on mobile. */
+  #gameScreen .fan-income-line,
+  #gameScreen .career-progress-line,
+  #gameScreen .exhibition-income-line{
+    display:none!important;
+  }
+
+  #gameScreen .timeline{
+    position:relative;
+    z-index:1;
+    flex:1 1 0;
+    min-height:0;
+    margin:0;
+  }
+
+  /* Closed collection shortcut stays inside the garage instead of
+     floating over the event panel. */
+  #gameScreen .collection-drawer:not([open]){
+    top:5px;
+    right:5px;
+    max-width:130px;
+    z-index:5;
+    box-shadow:none;
+    border:1px solid #ddd;
+  }
+  #gameScreen .collection-drawer:not([open]) summary{
+    max-width:130px;
+    padding:4px 6px;
+    font-size:6px;
+  }
+
+  .stat>span{
+    justify-content:center;
+    gap:2px;
+  }
+  .stat>span>.ui-icon{
+    width:7px;
+    height:7px;
+    font-size:7px;
+  }
+  .value-delta{
+    top:-10px;
+    right:-2px;
+    font-size:5px;
+    padding:1px 2px;
+  }
+  .value-delta .ui-icon{width:6px;height:6px}
+  #gameScreen .event-icon .ui-icon{width:20px;height:20px}
+  #gameScreen .choice-icon .ui-icon{width:18px;height:18px}
+  #gameScreen .choice-icon{font-size:0!important}
+
+  .market-item>button{
+    gap:2px;
+  }
+  .market-item>button .ui-icon{
+    width:9px;
+    height:9px;
+  }
+}
+
+@media(max-width:390px){
+  #gameScreen .garage{
+    max-height:none;
+  }
+  #gameScreen .garage-card{
+    grid-template-columns:68px minmax(0,1fr);
+    min-height:104px;
+  }
+  #gameScreen .garage-art{
+    width:68px;
+    height:68px!important;
+  }
+}
+
 </style>
 </head>
 <body>
+
+<svg class="lmp-svg-sprite" aria-hidden="true" width="0" height="0" style="position:absolute;width:0;height:0;overflow:hidden">
+  <defs>
+    <symbol id="i-car" viewBox="0 0 24 24"><path d="M4 14.5 5.8 9a2 2 0 0 1 1.9-1.4h8.6A2 2 0 0 1 18.2 9l1.8 5.5"/><path d="M3.5 14.5h17v4h-17z"/><path d="M6 18.5v1.5M18 18.5v1.5"/><circle cx="7" cy="15.5" r="1"/><circle cx="17" cy="15.5" r="1"/></symbol>
+    <symbol id="i-collection" viewBox="0 0 24 24"><path d="M4 7.5h16v10H4z"/><path d="M7 7.5V5h10v2.5M7 17.5V20h10v-2.5"/><path d="M7.5 14.5 8.7 11a1.5 1.5 0 0 1 1.4-1h3.8a1.5 1.5 0 0 1 1.4 1l1.2 3.5"/><path d="M7 14.5h10"/></symbol>
+    <symbol id="i-sell" viewBox="0 0 24 24"><path d="M4 5h8.5L20 12.5 12.5 20 5 12.5z"/><circle cx="8.5" cy="8.5" r="1.2"/><path d="M12 9.5v6M14 11h-3a1.5 1.5 0 0 0 0 3h2a1.5 1.5 0 0 1 0 3h-3"/></symbol>
+    <symbol id="i-market" viewBox="0 0 24 24"><path d="M4 9h16l-1.5-4h-13z"/><path d="M5 9v10h14V9M8 19v-5h4v5"/><path d="M4 9c0 1.4 1 2.5 2.3 2.5S8.5 10.4 8.5 9c0 1.4 1 2.5 2.3 2.5S13 10.4 13 9c0 1.4 1 2.5 2.3 2.5S17.5 10.4 17.5 9c0 1.4 1 2.5 2.5 2.5"/></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5H18v14H6.5A2.5 2.5 0 0 1 4 16.5z"/><path d="M14 10h6v5h-6a2.5 2.5 0 0 1 0-5z"/><circle cx="15.5" cy="12.5" r=".7"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="4" y="5.5" width="16" height="14" rx="2"/><path d="M8 3.5v4M16 3.5v4M4 9.5h16"/><path d="M8 13h3M13 13h3M8 16h3"/></symbol>
+    <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12.5 3.5c.5 3-2.5 4.3-2 7.1 1.1-.9 1.8-2 2.1-3.2 3.3 2.2 5.4 5 4.7 8.4-.5 2.8-2.7 4.7-5.6 4.7-3.2 0-5.5-2.1-5.5-5.2 0-2.4 1.4-4.2 3.2-5.8-.2 2 .4 3.2 1.5 4.1.1-3.7 3.6-5.1 1.6-10.1z"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.7 5.5 6 .9-4.4 4.2 1.1 6-5.4-2.8-5.4 2.8 1.1-6-4.4-4.2 6-.9z"/></symbol>
+    <symbol id="i-gauge" viewBox="0 0 24 24"><path d="M4 17a8 8 0 1 1 16 0"/><path d="m12 16 4-5"/><path d="M7 15h.01M17 15h.01M12 9h.01"/></symbol>
+    <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.5 6.5a4.5 4.5 0 0 0-6 5.8L4 16.8 7.2 20l4.5-4.5a4.5 4.5 0 0 0 5.8-6L15 12l-3-3z"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 3 1.4 5.6L19 10l-5.6 1.4L12 17l-1.4-5.6L5 10l5.6-1.4z"/><path d="m18.5 15 .7 2.3 2.3.7-2.3.7-.7 2.3-.7-2.3-2.3-.7 2.3-.7z"/></symbol>
+    <symbol id="i-race" viewBox="0 0 24 24"><path d="M5 21V4"/><path d="M6 5c4-2 7 2 12 0v8c-5 2-8-2-12 0z"/><path d="M9 5v8M13 6v8M6 9h12"/></symbol>
+    <symbol id="i-warning" viewBox="0 0 24 24"><path d="M12 4 21 20H3z"/><path d="M12 9v5M12 17.2h.01"/></symbol>
+    <symbol id="i-hammer" viewBox="0 0 24 24"><path d="m13 5 3-2 4 4-2 3z"/><path d="m14 8-9 9 2 2 9-9"/><path d="M10 4h5"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v2"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20S4 15.2 4 9.3A4.3 4.3 0 0 1 11.7 6 4.3 4.3 0 0 1 20 9.3C20 15.2 12 20 12 20z"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5v2a4 4 0 0 0 4 4M16 6h3v2a4 4 0 0 1-4 4M12 13v4M8 20h8M10 17h4"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8h4l1.5-2h5L16 8h4v11H4z"/><circle cx="12" cy="13.5" r="3.5"/></symbol>
+    <symbol id="i-road" viewBox="0 0 24 24"><path d="M8 21 10 3M16 21 14 3M12 4v3M12 10v4M12 17v3"/></symbol>
+    <symbol id="i-battery" viewBox="0 0 24 24"><rect x="4" y="7" width="15" height="10" rx="2"/><path d="M19 10h2v4h-2M11 9.5 8.5 13H12l-1 3"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="m13 3-7 11h5l-1 7 8-12h-5z"/></symbol>
+    <symbol id="i-fuel" viewBox="0 0 24 24"><path d="M5 20V5h9v15M4 20h11M7 8h5"/><path d="M14 8h2l3 3v6a2 2 0 0 1-4 0v-4"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></symbol>
+    <symbol id="i-package" viewBox="0 0 24 24"><path d="m4 8 8-4 8 4-8 4z"/><path d="M4 8v9l8 4 8-4V8M12 12v9"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="m4 11 8-7 8 7"/><path d="M6 10v10h12V10M10 20v-6h4v6"/></symbol>
+    <symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="16.5" cy="9" r="2.5"/><path d="M3.5 20c.3-4 2.2-6 5.5-6s5.2 2 5.5 6M14 15c3.5-.7 5.7 1.2 6.5 4.5"/></symbol>
+    <symbol id="i-hail" viewBox="0 0 24 24"><path d="M6 14h11a3.5 3.5 0 0 0 .5-7A5.5 5.5 0 0 0 7 7.5 3.3 3.3 0 0 0 6 14z"/><circle cx="8" cy="18" r="1"/><circle cx="13" cy="17" r="1"/><circle cx="17" cy="19" r="1"/></symbol>
+    <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="12" r="4"/><path d="M12 12h9M17 12v3M20 12v2"/></symbol>
+    <symbol id="i-document" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5M9 12h6M9 16h6"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6"/><path d="m15 15 5 5"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V5M4 20h16"/><path d="m7 16 4-5 3 2 5-7"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-time" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 7l5 5-5 5"/></symbol>
+    <symbol id="i-trend-up" viewBox="0 0 24 24"><path d="m4 16 5-5 4 4 7-8"/><path d="M15 7h5v5"/></symbol>
+    <symbol id="i-trend-down" viewBox="0 0 24 24"><path d="m4 8 5 5 4-4 7 8"/><path d="M15 17h5v-5"/></symbol>
+  </defs>
+</svg>
+
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.38</div>
+    <div class="version">prototipo privado · v0.39</div>
   </div>
 </header>
 
@@ -992,6 +1284,89 @@ const moneyDisplay=n=>{
     ? `<span class="debt-money">-USD ${Math.abs(value).toLocaleString('es-AR')}</span>`
     : `USD ${value.toLocaleString('es-AR')}`;
 };
+
+function uiIcon(name,extraClass=''){
+  return `<svg class="ui-icon ${extraClass}" aria-hidden="true"><use href="#i-${name}"></use></svg>`;
+}
+const ICON_TOKEN_MAP={
+  '🔧':'wrench','🛠️':'wrench','🧰':'wrench','🧑‍🔧':'wrench','🪛':'wrench',
+  '🔨':'hammer','🔩':'settings','⚙️':'settings','🧩':'settings','🧠':'settings',
+  '✨':'spark','🎨':'spark','🧬':'spark','🧿':'spark','🙂':'spark','😌':'spark','😎':'spark','🎲':'spark',
+  '🏁':'race','🏎️':'race','🚦':'race','🚀':'gauge','🐢':'gauge',
+  '🏆':'trophy','🎖️':'trophy','🏛️':'trophy','🥂':'trophy',
+  '📦':'package','🧳':'package','🏠':'home',
+  '⛽':'fuel','🛢️':'fuel','🔋':'battery','⚡':'bolt','🔌':'bolt',
+  '🌨️':'hail','💧':'hail','🌡️':'gauge','🌤️':'road','🛣️':'road','🗺️':'road','🏔️':'road',
+  '🔥':'flame','⭐':'star','💎':'star',
+  '💔':'heart','❤️':'heart','💍':'heart','🫀':'heart',
+  '🤝':'people','👥':'people','🧑‍🦱':'people','🚶':'people',
+  '💼':'wallet','💰':'wallet','💵':'wallet','💸':'wallet','💳':'wallet','🏦':'wallet','🧾':'wallet',
+  '💥':'warning','⚠️':'warning','🚨':'warning','🛑':'warning','🧱':'warning',
+  '🔐':'lock','🔒':'lock','🚫':'lock','🙅':'lock','🙈':'lock','🚔':'lock',
+  '📸':'camera','📷':'camera','🎬':'camera',
+  '🕵️':'search','👀':'search','🧐':'search','🔍':'search',
+  '📈':'chart','📉':'chart',
+  '🗝️':'key','📜':'document','📰':'document',
+  '🚗':'car','🚙':'car','🚌':'car',
+  '✅':'check','⏳':'time','🔄':'arrow',
+  '🧼':'spark','🧽':'spark','🩹':'wrench','🧪':'search','🔬':'search',
+  '🧵':'wrench','🛋️':'spark','🪑':'spark','🏷️':'sell','👂':'spark','📣':'spark'
+};
+function iconNameFromToken(token){
+  return ICON_TOKEN_MAP[(token||'').trim()]||'spark';
+}
+function hydrateSvgIcons(root=document){
+  if(!root)return;
+  root.querySelectorAll?.('.event-icon,.choice-icon').forEach(el=>{
+    if(el.querySelector('svg'))return;
+    const token=(el.textContent||'').trim();
+    el.innerHTML=uiIcon(iconNameFromToken(token));
+  });
+}
+
+const uiValueMemory={};
+function trackUiValue(key,value){
+  const numeric=Number(value);
+  const previous=uiValueMemory[key];
+  uiValueMemory[key]=numeric;
+  if(!Number.isFinite(numeric) || !Number.isFinite(previous) || numeric===previous){
+    return {previous:numeric,delta:0,direction:'steady'};
+  }
+  return {
+    previous,
+    delta:numeric-previous,
+    direction:numeric>previous?'up':'down'
+  };
+}
+function deltaNumber(delta){
+  const rounded=Math.round(Math.abs(delta));
+  return rounded.toLocaleString('es-AR');
+}
+function animatedValue(key,value,display,{invert=false,showDelta=true}={}){
+  const info=trackUiValue(key,value);
+  if(info.direction==='steady')return `<span class="animated-value">${display}</span>`;
+  const visualDirection=invert
+    ? (info.direction==='up'?'down':'up')
+    : info.direction;
+  const icon=visualDirection==='up'?'trend-up':'trend-down';
+  const sign=info.delta>0?'+':'−';
+  return `<span class="animated-value changed-${visualDirection}">
+    <span class="animated-value-main">${display}</span>
+    ${showDelta?`<span class="value-delta delta-${visualDirection}">${uiIcon(icon)}${sign}${deltaNumber(info.delta)}</span>`:''}
+  </span>`;
+}
+function animatedMeter(label,value,key){
+  const current=clamp(Number(value)||0,0,100);
+  const info=trackUiValue(`meter-${key}`,current);
+  const changed=info.direction!=='steady';
+  const from=changed?clamp(info.previous,0,100):current;
+  const direction=changed?` delta-${info.direction}`:'';
+  return `<div class="meter-row${direction}">
+    <span>${label}</span>
+    <div class="meter"><b class="${changed?'meter-animate':''}" style="--from:${from}%;--to:${current}%;width:${current}%"></b></div>
+    <strong>${animatedValue(`meter-number-${key}`,current,Math.round(current),{showDelta:true})}</strong>
+  </div>`;
+}
 
 function screen(id){
   document.querySelectorAll('.screen').forEach(el=>el.classList.remove('active'));
@@ -1270,8 +1645,8 @@ function collectionPanelMarkup(){
             <strong>${item.brand} ${item.model}</strong><br>
             <small>Valor estimado ${money(collectionValue(item))} · Estado ${Math.round(item.condition??0)} · ${starIcons(item.stars||1)} ${flameIcons(item.flames||0)||''}</small>
             <div class="collection-actions">
-              <button class="car-select" data-use-collection="${item.uid}" ${vehicleActionsLocked()?'disabled':''}>${state.car?'Usar / intercambiar':'Usar este auto'}</button>
-              <button class="ghost" data-sell-collection="${item.uid}" ${vehicleActionsLocked()?'disabled':''}>Vender</button>
+              <button class="car-select" data-use-collection="${item.uid}" ${vehicleActionsLocked()?'disabled':''}>${uiIcon('car')}<span>${state.car?'Usar / intercambiar':'Usar este auto'}</span></button>
+              <button class="ghost" data-sell-collection="${item.uid}" ${vehicleActionsLocked()?'disabled':''}>${uiIcon('sell')}<span>Vender</span></button>
             </div>
           </div>
         </div>`;
@@ -1490,7 +1865,7 @@ function carStatus(){
   return {stars:1,name:score>=58?'Con potencial':'Uno más del montón',score,high:false};
 }
 function starIcons(stars){
-  return '⭐'.repeat(clamp(Math.round(stars||0),0,5));
+  return `<span class="rating-icons stars">${Array.from({length:clamp(Math.round(stars||0),0,5)},()=>uiIcon('star')).join('')}</span>`;
 }
 function fanFlamesFromCount(count){
   if(count>=70)return 3;
@@ -1499,7 +1874,7 @@ function fanFlamesFromCount(count){
   return 0;
 }
 function flameIcons(flames){
-  return '🔥'.repeat(clamp(Math.round(flames||0),0,3));
+  return `<span class="rating-icons flames">${Array.from({length:clamp(Math.round(flames||0),0,3)},()=>uiIcon('flame')).join('')}</span>`;
 }
 function updateCurrentCarLegacy(){
   if(!state.car || !state.history.length)return;
@@ -1593,13 +1968,15 @@ function starterOptions(year,cash){
 }
 function renderStats(target){
   const currentValue=state.car?vehicleValue():0;
+  const prefix=target?.id||'stats';
+  const fanDisplay=flameIcons(fanFlamesFromCount(state.fans||0))||'—';
   target.innerHTML=`
-    <div class="stat"><span>Año</span><strong>${state.year}</strong></div>
-    <div class="stat"><span>Dinero</span><strong>${moneyDisplay(state.money)}</strong></div>
-    <div class="stat"><span>Fans</span><strong>${flameIcons(fanFlamesFromCount(state.fans||0))||'—'}</strong></div>
-    <div class="stat"><span>Autos</span><strong>${state.history.length}</strong></div>
-    <div class="stat highlight"><span>Valor de tu auto</span><strong>${state.car?money(currentValue):'—'}</strong></div>
-    <div class="stat"><span>Gasto mensual</span><strong>${state.car?money(monthlyExpense()):'—'}</strong></div>`;
+    <div class="stat"><span>${uiIcon('calendar')}Año</span><strong>${animatedValue(`${prefix}-year`,state.year,state.year,{showDelta:false})}</strong></div>
+    <div class="stat"><span>${uiIcon('wallet')}Dinero</span><strong>${animatedValue(`${prefix}-money`,state.money,moneyDisplay(state.money))}</strong></div>
+    <div class="stat"><span>${uiIcon('flame')}Fans</span><strong>${animatedValue(`${prefix}-fans`,state.fans||0,fanDisplay)}</strong></div>
+    <div class="stat"><span>${uiIcon('car')}Autos</span><strong>${animatedValue(`${prefix}-cars`,state.history.length,state.history.length)}</strong></div>
+    <div class="stat highlight"><span>${uiIcon('gauge')}Valor de tu auto</span><strong>${state.car?animatedValue(`${prefix}-carvalue`,currentValue,money(currentValue)):'—'}</strong></div>
+    <div class="stat"><span>${uiIcon('wrench')}Gasto mensual</span><strong>${state.car?animatedValue(`${prefix}-expense`,monthlyExpense(),money(monthlyExpense()),{invert:true}):'—'}</strong></div>`;
 }
 function carCard(car,first=false){
   const price=car.market??marketPrice(car,state.year);
@@ -1831,8 +2208,8 @@ function advanceYears(years){
     if(Math.abs(state.car.expenseModifier)<.025)state.car.expenseModifier=0;
   }
 }
-function meter(label,value){
-  return `<div class="meter-row"><span>${label}</span><div class="meter"><b style="width:${clamp(value,0,100)}%"></b></div><strong>${Math.round(value)}</strong></div>`;
+function meter(label,value,key=label.toLowerCase()){
+  return animatedMeter(label,value,key);
 }
 function noVehicleMarkup(){
   return `<div class="garage-card">
@@ -1882,9 +2259,9 @@ function renderGarage(){
         <p class="value-note garage-secondary">El valor actual refleja estado, originalidad e inversiones. No significa que el mercado vaya a pagarlo. Un coleccionista excepcional sí puede hacerlo.</p>
 
         <div class="meters">
-          ${meter('Estado',state.car.condition)}
-          ${meter('Originalidad',state.car.originality)}
-          ${meter('Performance',state.car.performance)}
+          ${meter('Estado',state.car.condition,'condition')}
+          ${meter('Originalidad',state.car.originality,'originality')}
+          ${meter('Performance',state.car.performance,'performance')}
         </div>
 
         <div class="cost-line garage-secondary"><span>Gasto mensual actual</span><strong>${money(monthlyExpense())}</strong></div>
@@ -1898,9 +2275,9 @@ function renderGarage(){
 
         <div class="canonical garage-secondary"><strong>Historia del modelo:</strong><br>${car.eventoCanonico}</div>
         <div class="garage-actions">
-          <button class="ghost" id="collectCarNow" data-mobile-label="Colección" ${vehicleActionsLocked()?'disabled':''}>${vehicleActionsLocked()?'Acción disponible después de continuar':'Guardar / quedar sin auto'}</button>
-          <button class="car-select" id="sellCarNow" data-mobile-label="Vender" ${vehicleActionsLocked()?'disabled':''}>${vehicleActionsLocked()?'Acción disponible después de continuar':`Vender ahora · ${currentSaleOffer().mood} · ${money(currentSaleOffer().amount)}`}</button>
-          <button class="ghost" id="openMarket" data-mobile-label="Mercado" ${vehicleActionsLocked()?'disabled':''}>${vehicleActionsLocked()?'Acción disponible después de continuar':'Ver mercado / cambiar auto'}</button>
+          <button class="ghost" id="collectCarNow" data-mobile-label="Colección" ${vehicleActionsLocked()?'disabled':''}>${uiIcon('collection','action-icon')}<span>${vehicleActionsLocked()?'Acción disponible después de continuar':'Guardar / quedar sin auto'}</span></button>
+          <button class="car-select" id="sellCarNow" data-mobile-label="Vender" ${vehicleActionsLocked()?'disabled':''}>${uiIcon('sell','action-icon')}<span>${vehicleActionsLocked()?'Acción disponible después de continuar':`Vender ahora · ${currentSaleOffer().mood} · ${money(currentSaleOffer().amount)}`}</span></button>
+          <button class="ghost" id="openMarket" data-mobile-label="Mercado" ${vehicleActionsLocked()?'disabled':''}>${uiIcon('market','action-icon')}<span>${vehicleActionsLocked()?'Acción disponible después de continuar':'Ver mercado / cambiar auto'}</span></button>
         </div>
         ${collectionPanelMarkup()}
       </div>
@@ -2149,7 +2526,7 @@ function canAffordChoice(choice){
 function genericChoiceMarkup(choice,index){
   const affordable=canAffordChoice(choice);
   return `<button class="choice" data-choice="${index}" ${affordable?'':'disabled'}>
-    <span class="choice-icon">${choice.icon||'➜'}</span>
+    <span class="choice-icon">${uiIcon(iconNameFromToken(choice.icon||'➜'))}</span>
     <strong>${choice.label}</strong>
     <small>${affordable?choicePreview(choice):`${choicePreview(choice)} · No te alcanza`}</small>
   </button>`;
@@ -2165,7 +2542,7 @@ function friendRepairMarkup(event){
   }
   const cost=state.pendingEvent.friendRepairCost;
   return `<button class="choice risk" id="friend-repair" ${state.money>=cost?'':'disabled'}>
-    <span class="choice-icon">🤝</span>
+    <span class="choice-icon">${uiIcon('people')}</span>
     <strong>Tengo un amigo que lo hace más barato</strong>
     <small>${money(cost)} · mucho más barato, pero el resultado puede salir mal.${state.money>=cost?'':' · No te alcanza'}</small>
   </button>`;
@@ -2179,12 +2556,12 @@ function hardshipChoicesMarkup(event){
   if(!unaffordable)return '';
   return `
     <button class="choice negative" id="hardship-neglect">
-      <span class="choice-icon">🧱</span>
+      <span class="choice-icon">${uiIcon('warning')}</span>
       <strong>Postergar y seguir como está</strong>
       <small>Sin costo · empeora estado, performance y gastos futuros.</small>
     </button>
     <button class="choice risk" id="hardship-race">
-      <span class="choice-icon">🏁</span>
+      <span class="choice-icon">${uiIcon('race')}</span>
       <strong>Picada ilegal por dinero</strong>
       <small>Podés ganar efectivo, pero también romper mucho el auto.</small>
     </button>`;
@@ -2946,7 +3323,7 @@ function bindSpecialHardship(event){
 }
 function specialButton(icon,label,detail,id){
   return `<button class="choice" id="${id}">
-    <span class="choice-icon">${icon}</span>
+    <span class="choice-icon">${uiIcon(iconNameFromToken(icon))}</span>
     <strong>${label}</strong>
     <small>${detail}</small>
   </button>`;
@@ -3176,11 +3553,12 @@ function renderEventResult(){
     <div class="forced-banner"><strong>¿Qué pasó?</strong><span>${result.text}</span></div>
     <div class="choices">
       <button class="choice" id="continueAfterResult">
-        <span class="choice-icon">⏩</span>
+        <span class="choice-icon">${uiIcon('arrow')}</span>
         <strong>Continuar</strong>
         <small>Recién ahora avanzará el tiempo hacia el próximo evento.</small>
       </button>
     </div>`;
+  hydrateSvgIcons($('#eventCard'));
   $('#continueAfterResult').onclick=()=>{
     state.pendingResult=null;
     persist();
@@ -3359,6 +3737,7 @@ function renderGame(){
   $('#yearPill').textContent=state.year;
 
   renderPendingEvent();
+  hydrateSvgIcons($('#eventCard'));
   renderLog();
   persist();
   setTimeout(playYearAnimation,80);
@@ -3528,7 +3907,7 @@ function marketUnitMarkup(unit){
     <h4>${car.modelo}</h4>
     <p>${subtitle}<span class="market-metrics">${metrics}</span></p>
     <strong>${money(unit.price)}</strong>
-    <button data-market-stock="${unit.stockId}" data-market-type="${unit.type}" ${buyingPower()>=unit.price?'':'disabled'}>Comprar</button>
+    <button data-market-stock="${unit.stockId}" data-market-type="${unit.type}" ${buyingPower()>=unit.price?'':'disabled'}>${uiIcon('market')}<span>Comprar</span></button>
   </article>`;
 }
 function marketUnits(){

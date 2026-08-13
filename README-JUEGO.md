@@ -1,3 +1,90 @@
+# Tu vida sobre ruedas — v0.39
+
+Base: v0.38.
+
+## Corrección mobile: garage vs. eventos
+
+Se elimina el solapamiento entre:
+
+- Colección;
+- Vender;
+- Mercado;
+
+y el bloque de eventos.
+
+La causa era un `max-height` fijo en el garage mobile mientras el contenido real podía superar esa altura.
+
+Cambios:
+- el garage calcula su altura real;
+- el timeline empieza siempre debajo del garage;
+- los tres botones tienen una fila propia y estable;
+- se eliminan del layout mobile líneas secundarias que duplicaban información y ocupaban altura;
+- el acceso colapsado a la colección queda contenido dentro del área del garage;
+- el drawer abierto de colección sigue funcionando como overlay de pantalla completa.
+
+## Animaciones de variación
+
+Se agrega un sistema de animaciones para cambios de valores.
+
+Se animan:
+- dinero;
+- año;
+- fans;
+- cantidad de autos;
+- valor del vehículo;
+- gasto mensual;
+- Estado;
+- Originalidad;
+- Performance.
+
+Comportamiento:
+- aumentos: pulso ascendente y delta temporal;
+- caídas: pulso descendente y delta temporal;
+- el delta desaparece automáticamente;
+- las barras de Estado / Originalidad / Performance animan desde el valor anterior al nuevo;
+- funciona tanto en desktop como en mobile.
+
+## Sistema de iconos SVG propio
+
+Se elimina la dependencia visual de emojis para la interfaz principal y se incorpora un sprite SVG vectorial diseñado para el juego.
+
+Criterio:
+- trazo monolineal consistente;
+- esquinas y terminales redondeados;
+- `currentColor`, compatible con estados, botones y temas;
+- iconos escalables sin pérdida de definición;
+- misma familia gráfica en desktop y mobile.
+
+Incluye iconos propios para:
+- vehículo;
+- colección;
+- venta;
+- mercado;
+- dinero;
+- calendario;
+- fans;
+- estrellas;
+- performance;
+- mecánica;
+- reparación;
+- picadas;
+- advertencias;
+- premios;
+- cámara;
+- ruta;
+- batería;
+- electricidad;
+- combustible;
+- piezas;
+- herencias;
+- granizo;
+- tendencias positivas y negativas;
+- y otras acciones de eventos.
+
+Los eventos antiguos pueden seguir almacenando emojis internamente en `eventos.json`, pero la interfaz los traduce automáticamente a los nuevos SVG al renderizar. Esto mantiene compatibilidad con toda la base existente sin tener que duplicar la lógica de eventos.
+
+---
+
 # Tu vida sobre ruedas — v0.38
 
 Base: v0.37.
