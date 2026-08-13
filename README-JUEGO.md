@@ -1,19 +1,21 @@
-# Tu vida sobre ruedas — v0.4
+# Tu vida sobre ruedas — v0.5
 
-Incremental del prototipo privado de LMP Autos en `/juego/`, construido sobre v0.3.
+Versión incremental/completa del prototipo privado de LMP Autos, construida sobre v0.4.
 
-## Corrección principal
+## Cambios v0.5
 
-- Se corrige el bloqueo del evento **Divorcio** cuando el jugador elige entregar el auto.
-- Si después de perder el vehículo no alcanza el dinero para comprar otro, el mercado forzado ofrece **“Pasar 1 año y ahorrar”**.
-- Cada año sin auto genera el ingreso anual normal del juego (USD 100–500).
-- Mientras no hay vehículo no se cobran gastos mensuales de uso.
-- El jugador puede repetir la espera año por año, revisando el mercado actualizado en cada período, hasta comprar otro auto o llegar a 2026.
-- Al comprar nuevamente, la trayectoria retoma el flujo normal de eventos.
+- Las reparaciones y mejoras pagas ya no pueden ejecutarse si el jugador no tiene dinero suficiente.
+- Se evita el efecto anterior en el que una decisión cara podía aplicarse y simplemente dejar el saldo en USD 0.
+- Cuando una decisión necesaria no puede pagarse aparecen alternativas negativas:
+  - **Postergar / no reparar:** empeora estado, performance, valor y gastos futuros.
+  - **Picada ilegal por dinero:** sólo aparece cuando el auto puede circular. Tiene 46% de probabilidad de ganar dinero y 54% de perder; una derrota puede causar daños severos, pérdida de valor y mayores gastos futuros.
+- En eventos de choque grave o motor fundido no se ofrece la picada ilegal porque el vehículo no está en condiciones de competir.
+- Se conserva la salida de chatarra cuando corresponde.
+- Se mantiene el arreglo v0.4 del divorcio: si se pierde el auto y no alcanza para otro, se puede pasar un año sin vehículo y ahorrar.
+- Se agrega una animación visual lenta del paso de los años. Cada año aparece en pantalla antes de continuar con el siguiente evento.
+- La cabecera del juego marca ahora **v0.5**.
 
-## Base incluida
-
-Este ZIP incluye los tres archivos de datos/código necesarios para ejecutarse de forma independiente:
+## Archivos incluidos
 
 ```text
 juego/index.html
@@ -21,5 +23,3 @@ juego/data/autos.json
 juego/data/eventos.json
 README-JUEGO.md
 ```
-
-`autos.json` corresponde a la base vigente de v0.2, ya que v0.3 era incremental y no lo incluía.

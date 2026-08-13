@@ -152,15 +152,35 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
   .event-card h2{font-size:27px}
   .timeline,.garage{padding:14px}
 }
+
+.choice:disabled{opacity:.38;cursor:not-allowed;transform:none!important;border-color:var(--line)!important;background:#18181b!important}
+.choice.risk{border-color:rgba(233,185,73,.5);background:#211d13}
+.choice.negative{border-color:rgba(204,36,43,.35);background:#211416}
+.year-transition{position:fixed;inset:0;z-index:90;display:none;place-items:center;background:rgba(7,7,9,.86);backdrop-filter:blur(7px)}
+.year-transition.open{display:grid;animation:fadeIn .25s ease both}
+.year-transition-box{text-align:center;min-width:260px}
+.year-transition-label{font-size:10px;text-transform:uppercase;letter-spacing:.18em;color:var(--muted);font-weight:900}
+.year-transition-year{font-size:clamp(72px,16vw,160px);font-weight:950;letter-spacing:-.08em;line-height:.9;margin:10px 0;color:#fff;animation:yearPulse .7s ease both}
+.year-transition-line{height:3px;border-radius:999px;background:#27272b;overflow:hidden;margin-top:18px}
+.year-transition-line b{display:block;height:100%;width:0;background:var(--red);transition:width .7s ease}
+@keyframes yearPulse{0%{opacity:0;transform:scale(.9) translateY(12px)}100%{opacity:1;transform:none}}
 </style>
 </head>
 <body>
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.2</div>
+    <div class="version">prototipo privado · v0.5</div>
   </div>
 </header>
+
+<div class="year-transition" id="yearTransition" aria-hidden="true">
+  <div class="year-transition-box">
+    <div class="year-transition-label">El tiempo pasa</div>
+    <div class="year-transition-year" id="yearTransitionValue">1960</div>
+    <div class="year-transition-line"><b id="yearTransitionProgress"></b></div>
+  </div>
+</div>
 
 <main class="shell">
   <section class="screen active" id="startScreen">
@@ -464,7 +484,43 @@ function nextGap(){
   if(roll<.88)return Math.min(remaining,rand(5,7));
   return Math.min(remaining,rand(8,12));
 }
+
+let pendingYearAnimation=null;
+function queueYearAnimation(from,to){
+  if(to>from)pendingYearAnimation={from,to};
+}
+function playYearAnimation(){
+  if(!pendingYearAnimation)return;
+  const {from,to}=pendingYearAnimation;
+  pendingYearAnimation=null;
+  const overlay=$('#yearTransition');
+  const value=$('#yearTransitionValue');
+  const progress=$('#yearTransitionProgress');
+  const years=[];
+  for(let y=from+1;y<=to;y++)years.push(y);
+  if(!years.length)return;
+  overlay.classList.add('open');
+  overlay.setAttribute('aria-hidden','false');
+  let i=0;
+  value.textContent=years[0];
+  progress.style.width=`${100/years.length}%`;
+  const tick=()=>{
+    i++;
+    if(i>=years.length){
+      setTimeout(()=>{overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');progress.style.width='0'},650);
+      return;
+    }
+    value.style.animation='none';
+    void value.offsetWidth;
+    value.style.animation='yearPulse .7s ease both';
+    value.textContent=years[i];
+    progress.style.width=`${((i+1)/years.length)*100}%`;
+    setTimeout(tick,760);
+  };
+  setTimeout(tick,760);
+}
 function advanceYears(years){
+  const fromYear=state.year;
   let income=0;
   let running=0;
 
@@ -487,6 +543,7 @@ function advanceYears(years){
   state.totalIncome+=income;
   state.totalRunningCosts+=running;
   state.year+=years;
+  queueYearAnimation(fromYear,state.year);
 
   state.events.unshift({
     year:state.year,
@@ -617,12 +674,66 @@ function choicePreview(choice){
 
   return parts.join(' · ')||'Sin impacto económico inmediato';
 }
+function canAffordChoice(choice){
+  return choiceCost(choice)<=state.money;
+}
 function genericChoiceMarkup(choice,index){
-  return `<button class="choice" data-choice="${index}">
+  const affordable=canAffordChoice(choice);
+  return `<button class="choice" data-choice="${index}" ${affordable?'':'disabled'}>
     <span class="choice-icon">${choice.icon||'➜'}</span>
     <strong>${choice.label}</strong>
-    <small>${choicePreview(choice)}</small>
+    <small>${affordable?choicePreview(choice):`${choicePreview(choice)} · No te alcanza`}</small>
   </button>`;
+}
+function hardshipChoicesMarkup(event){
+  const unaffordable=event.choices.some(choice=>!canAffordChoice(choice));
+  if(!unaffordable)return '';
+  return `
+    <button class="choice negative" id="hardship-neglect">
+      <span class="choice-icon">🧱</span>
+      <strong>Postergar y seguir como está</strong>
+      <small>Sin costo · empeora estado, performance y gastos futuros.</small>
+    </button>
+    <button class="choice risk" id="hardship-race">
+      <span class="choice-icon">🏁</span>
+      <strong>Picada ilegal por dinero</strong>
+      <small>Podés ganar efectivo, pero también romper mucho el auto.</small>
+    </button>`;
+}
+function bindHardshipChoices(event){
+  const neglect=$('#hardship-neglect');
+  if(neglect)neglect.onclick=()=>resolveHardshipNeglect(event);
+  const race=$('#hardship-race');
+  if(race)race.onclick=()=>resolveIllegalRace(event);
+}
+function resolveHardshipNeglect(event){
+  state.car.condition=clamp(state.car.condition-rand(4,9),0,100);
+  state.car.originality=clamp(state.car.originality-rand(0,3),0,100);
+  state.car.performance=clamp(state.car.performance-rand(2,6),0,100);
+  state.car.expenseModifier=clamp((state.car.expenseModifier||0)+.08,-.35,.65);
+  state.car.valueDamage+=Math.round(vehicleValue()*.035);
+  completeEvent(event,'No pudiste pagar el trabajo. Lo postergaste y el auto siguió deteriorándose.');
+}
+function resolveIllegalRace(event){
+  const before=vehicleValue();
+  const win=Math.random()<.46;
+  if(win){
+    const prize=Math.max(180,Math.round(before*(.06+Math.random()*.08)));
+    state.money+=prize;
+    state.car.condition=clamp(state.car.condition-rand(1,5),0,100);
+    state.car.performance=clamp(state.car.performance+rand(0,2),0,100);
+    completeEvent(event,`Corriste una picada ilegal y ganaste ${money(prize)}. El auto sufrió desgaste extra.`);
+    return;
+  }
+  const severe=Math.random()<.42;
+  const damage=severe?rand(20,38):rand(8,18);
+  const valueHit=Math.round(before*(severe?(.16+Math.random()*.14):(.06+Math.random()*.08)));
+  state.car.condition=clamp(state.car.condition-damage,0,100);
+  state.car.performance=clamp(state.car.performance-rand(severe?6:2,severe?15:7),0,100);
+  state.car.originality=clamp(state.car.originality-rand(severe?2:0,severe?8:3),0,100);
+  state.car.valueDamage+=valueHit;
+  state.car.expenseModifier=clamp((state.car.expenseModifier||0)+(severe?.14:.06),-.35,.65);
+  completeEvent(event,severe?'La picada salió muy mal: no ganaste dinero y el auto quedó seriamente dañado.':'Perdiste la picada y el auto terminó con daños y desgaste adicional.');
 }
 function renderPendingEvent(){
   const event=eventById(state.pendingEvent.id);
@@ -642,11 +753,12 @@ function renderPendingEvent(){
     <h2>${event.title}</h2>
     ${forcedText?`<div class="forced-banner"><strong>Ya ocurrió:</strong><span>${forcedText}</span></div>`:''}
     <p>${event.text}</p>
-    <div class="choices">${event.choices.map(genericChoiceMarkup).join('')}</div>`;
+    <div class="choices">${event.choices.map(genericChoiceMarkup).join('')}${hardshipChoicesMarkup(event)}</div>`;
 
   document.querySelectorAll('[data-choice]').forEach(button=>{
-    button.onclick=()=>resolveChoice(event,event.choices[Number(button.dataset.choice)]);
+    if(!button.disabled)button.onclick=()=>resolveChoice(event,event.choices[Number(button.dataset.choice)]);
   });
+  bindHardshipChoices(event);
 }
 function renderSpecialEvent(event,car,forcedText){
   if(event.special==='sale'){
@@ -699,10 +811,13 @@ function renderSpecialEvent(event,car,forcedText){
       <div class="forced-banner"><strong>Ya ocurrió:</strong><span>El seguro no cubre los daños. Se perdieron piezas originales y el estado cayó fuerte.</span></div>
       <p>${event.text}</p>
       <div class="choices">
-        ${specialButton('🛠️','Reconstruirlo',`Reparación ${money(repair)} · cada reparación previa aumenta este costo.`,'crash-repair')}
+        ${state.money>=repair?specialButton('🛠️','Reconstruirlo',`Reparación ${money(repair)} · cada reparación previa aumenta este costo.`,'crash-repair'):specialButton('🛠️','Reconstruirlo',`Reparación ${money(repair)} · No te alcanza.`,'crash-repair-disabled')}
         ${specialButton('♻️','Venderlo como chatarra',`Recibís aproximadamente ${money(scrap)} y perdés el auto.`,'crash-scrap')}
+        ${state.money<repair?specialHardshipButtons(event,false):''}
       </div>`;
-    $('#crash-repair').onclick=()=>resolveDynamicRepair(event,repair,{condition:25,originality:-4,performance:6,valueShare:.72,note:'Reconstruiste el auto después del choque, aunque nunca volvió a ser completamente original.'});
+    if($('#crash-repair'))$('#crash-repair').onclick=()=>resolveDynamicRepair(event,repair,{condition:25,originality:-4,performance:6,valueShare:.72,note:'Reconstruiste el auto después del choque, aunque nunca volvió a ser completamente original.'});
+    if($('#crash-repair-disabled'))$('#crash-repair-disabled').disabled=true;
+    if(state.money<repair)bindSpecialHardship(event);
     $('#crash-scrap').onclick=()=>scrapAndForceMarket(scrap,event,'El choque hizo que reparar no fuera rentable.');
     return;
   }
@@ -724,10 +839,13 @@ function renderSpecialEvent(event,car,forcedText){
       <div class="forced-banner"><strong>Ya ocurrió:</strong><span>El motor quedó fuera de servicio. El auto perdió estado y valor antes de tu decisión.</span></div>
       <p>${event.text}</p>
       <div class="choices">
-        ${specialButton('🔩','Reconstruir el motor',`Reparación ${money(rebuild)} · recupera gran parte del valor.`,'engine-rebuild')}
+        ${state.money>=rebuild?specialButton('🔩','Reconstruir el motor',`Reparación ${money(rebuild)} · recupera gran parte del valor.`,'engine-rebuild'):specialButton('🔩','Reconstruir el motor',`Reparación ${money(rebuild)} · No te alcanza.`,'engine-rebuild-disabled')}
         ${specialButton('♻️','Vender como chatarra',`Recibís ${money(scrap)} y buscás otro auto.`,'engine-scrap')}
+        ${state.money<rebuild?specialHardshipButtons(event,false):''}
       </div>`;
-    $('#engine-rebuild').onclick=()=>resolveDynamicRepair(event,rebuild,{condition:22,originality:-2,performance:20,valueShare:.76,note:'Reconstruiste el motor y el auto volvió a circular.'});
+    if($('#engine-rebuild'))$('#engine-rebuild').onclick=()=>resolveDynamicRepair(event,rebuild,{condition:22,originality:-2,performance:20,valueShare:.76,note:'Reconstruiste el motor y el auto volvió a circular.'});
+    if($('#engine-rebuild-disabled'))$('#engine-rebuild-disabled').disabled=true;
+    if(state.money<rebuild)bindSpecialHardship(event);
     $('#engine-scrap').onclick=()=>scrapAndForceMarket(scrap,event,'El motor fundido terminó la historia de este auto.');
     return;
   }
@@ -772,12 +890,27 @@ function renderSpecialEvent(event,car,forcedText){
       <h2>${event.title}</h2>
       <p><strong>${car.eventoCanonico}</strong></p>
       <div class="choices">
-        ${specialButton('🧬','Resolverlo respetando el modelo',`Reparación ${money(correct)} · conserva mejor originalidad y valor.`,'canonical-right')}
-        ${specialButton('🔧','Buscar una solución económica',`Reparación ${money(cheap)} · más barata, pero menos fiel al auto.`,'canonical-cheap')}
+        ${state.money>=correct?specialButton('🧬','Resolverlo respetando el modelo',`Reparación ${money(correct)} · conserva mejor originalidad y valor.`,'canonical-right'):specialButton('🧬','Resolverlo respetando el modelo',`Reparación ${money(correct)} · No te alcanza.`,'canonical-right-disabled')}
+        ${state.money>=cheap?specialButton('🔧','Buscar una solución económica',`Reparación ${money(cheap)} · más barata, pero menos fiel al auto.`,'canonical-cheap'):specialButton('🔧','Buscar una solución económica',`Reparación ${money(cheap)} · No te alcanza.`,'canonical-cheap-disabled')}
+        ${state.money<correct?specialHardshipButtons(event,true):''}
       </div>`;
-    $('#canonical-right').onclick=()=>resolveDynamicRepair(event,correct,{condition:8,originality:5,performance:2,valueShare:.68,note:'Resolviste el problema de forma correcta para el modelo.'});
-    $('#canonical-cheap').onclick=()=>resolveDynamicRepair(event,cheap,{condition:3,originality:-5,performance:0,valueShare:.24,note:'El auto siguió funcionando, aunque la solución redujo originalidad.'},.18);
+    if($('#canonical-right'))$('#canonical-right').onclick=()=>resolveDynamicRepair(event,correct,{condition:8,originality:5,performance:2,valueShare:.68,note:'Resolviste el problema de forma correcta para el modelo.'});
+    if($('#canonical-cheap'))$('#canonical-cheap').onclick=()=>resolveDynamicRepair(event,cheap,{condition:3,originality:-5,performance:0,valueShare:.24,note:'El auto siguió funcionando, aunque la solución redujo originalidad.'},.18);
+    if($('#canonical-right-disabled'))$('#canonical-right-disabled').disabled=true;
+    if($('#canonical-cheap-disabled'))$('#canonical-cheap-disabled').disabled=true;
+    if(state.money<correct)bindSpecialHardship(event);
   }
+}
+
+function specialHardshipButtons(event,allowRace=true){
+  return `${specialButton('🧱','No repararlo ahora','Sin costo · el auto empeora y aumenta su gasto futuro.','special-neglect')}
+    ${allowRace?specialButton('🏁','Picada ilegal por dinero','Intentás conseguir efectivo, con riesgo de daño severo.','special-race'):''}`;
+}
+function bindSpecialHardship(event){
+  const n=$('#special-neglect');
+  if(n)n.onclick=()=>resolveHardshipNeglect(event);
+  const r=$('#special-race');
+  if(r)r.onclick=()=>resolveIllegalRace(event);
 }
 function specialButton(icon,label,detail,id){
   return `<button class="choice" id="${id}">
@@ -806,6 +939,7 @@ function applyMoneyAndEffects(choice,actualCost=0){
   }
 }
 function resolveChoice(event,choice){
+  if(!canAffordChoice(choice))return;
   const actualCost=choice.costType==='repair'?choiceCost(choice):0;
   applyMoneyAndEffects(choice,actualCost);
 
@@ -822,7 +956,8 @@ function resolveChoice(event,choice){
   completeEvent(event,text);
 }
 function resolveDynamicRepair(event,cost,effects,risk=0){
-  state.money=Math.max(0,state.money-cost);
+  if(state.money<cost)return;
+  state.money-=cost;
   state.car.repairs++;
   state.car.investedValue+=Math.round(cost*(effects.valueShare??.6));
   state.car.condition=clamp(state.car.condition+(effects.condition||0),0,100);
@@ -918,6 +1053,7 @@ function renderGame(){
   renderPendingEvent();
   renderLog();
   persist();
+  setTimeout(playYearAnimation,80);
 }
 function marketCandidates(){
   return availableCars(state.year)
@@ -929,11 +1065,13 @@ function marketCandidates(){
 }
 function waitWithoutCar(){
   if(state.car||state.year>=END_YEAR)return;
+  const fromYear=state.year;
 
   const income=rand(100,500);
   state.money+=income;
   state.totalIncome+=income;
   state.year=Math.min(END_YEAR,state.year+1);
+  queueYearAnimation(fromYear,state.year);
   state.events.unshift({
     year:state.year,
     text:`Pasó 1 año sin auto. Ahorraste ${money(income)} y ahora tenés ${money(state.money)}.`
