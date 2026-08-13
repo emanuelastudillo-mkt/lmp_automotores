@@ -170,7 +170,7 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.5</div>
+    <div class="version">prototipo privado · v0.6</div>
   </div>
 </header>
 
@@ -349,6 +349,28 @@ function normalSaleValue(){
   const originalityFactor=.88+state.car.originality/650;
   return Math.max(150,Math.round(market*conditionFactor*originalityFactor));
 }
+function currentSaleOffer(){
+  if(!state.car)return null;
+  if(!state.saleOffer || state.saleOffer.year!==state.year || state.saleOffer.carId!==state.car.id){
+    const base=normalSaleValue();
+    const roll=Math.random();
+    let factor;
+    let mood;
+    if(roll<.28){
+      factor=.58+Math.random()*.14;
+      mood='Oferta baja';
+    }else if(roll<.78){
+      factor=.76+Math.random()*.18;
+      mood='Oferta razonable';
+    }else{
+      factor=.97+Math.random()*.20;
+      mood='Buen momento para vender';
+    }
+    state.saleOffer={year:state.year,carId:state.car.id,amount:Math.max(150,Math.round(base*factor)),mood};
+    persist();
+  }
+  return state.saleOffer;
+}
 function scrapValue(){
   if(!state.car)return 0;
   return Math.max(120,Math.round(marketPrice(currentCar(),state.year)*(0.08+Math.random()*.07)));
@@ -415,7 +437,8 @@ function beginCareer(name,year){
     pendingEvent:null,
     decisions:0,
     totalIncome:0,
-    totalRunningCosts:0
+    totalRunningCosts:0,
+    saleOffer:null
   };
   persist();
   renderStarter();
@@ -462,6 +485,7 @@ function buyCar(id,first=false){
     purchasePrice:price,
     purchaseYear:state.year
   };
+  state.saleOffer=null;
   state.history.push({
     id,
     brand:next.marca,
@@ -595,10 +619,12 @@ function renderGarage(){
         <div class="cost-line"><span>Próxima reparación</span><strong>x${repairMultiplier().toFixed(2)}</strong></div>
 
         <div class="canonical"><strong>Historia del modelo:</strong><br>${car.eventoCanonico}</div>
-        <button class="car-select" id="openMarket" style="width:100%;margin-top:12px">Ver mercado / cambiar auto</button>
+        <button class="car-select" id="sellCarNow" style="width:100%;margin-top:12px">Vender ahora · ${currentSaleOffer().mood} · ${money(currentSaleOffer().amount)}</button>
+        <button class="ghost" id="openMarket" style="width:100%;margin-top:8px">Ver mercado / cambiar auto</button>
       </div>
     </div>`;
 
+  $('#sellCarNow').onclick=()=>sellCurrentCarOffer();
   $('#openMarket').onclick=()=>openMarket(false);
 }
 function eligibleEvents(){
@@ -685,6 +711,26 @@ function genericChoiceMarkup(choice,index){
     <small>${affordable?choicePreview(choice):`${choicePreview(choice)} · No te alcanza`}</small>
   </button>`;
 }
+function friendRepairMarkup(event){
+  const repairChoices=event.choices.filter(choice=>choice.costType==='repair');
+  if(!repairChoices.length)return '';
+  const cheapest=Math.min(...repairChoices.map(choice=>choiceCost(choice)));
+  const friendCost=Math.max(40,Math.round(cheapest*(.45+Math.random()*.20)));
+  if(!state.pendingEvent.friendRepairCost){
+    state.pendingEvent.friendRepairCost=friendCost;
+    persist();
+  }
+  const cost=state.pendingEvent.friendRepairCost;
+  return `<button class="choice risk" id="friend-repair" ${state.money>=cost?'':'disabled'}>
+    <span class="choice-icon">🤝</span>
+    <strong>Tengo un amigo que lo hace más barato</strong>
+    <small>${money(cost)} · mucho más barato, pero el resultado puede salir mal.${state.money>=cost?'':' · No te alcanza'}</small>
+  </button>`;
+}
+function bindFriendRepair(event){
+  const button=$('#friend-repair');
+  if(button)button.onclick=()=>resolveFriendRepair(event,state.pendingEvent.friendRepairCost);
+}
 function hardshipChoicesMarkup(event){
   const unaffordable=event.choices.some(choice=>!canAffordChoice(choice));
   if(!unaffordable)return '';
@@ -753,21 +799,27 @@ function renderPendingEvent(){
     <h2>${event.title}</h2>
     ${forcedText?`<div class="forced-banner"><strong>Ya ocurrió:</strong><span>${forcedText}</span></div>`:''}
     <p>${event.text}</p>
-    <div class="choices">${event.choices.map(genericChoiceMarkup).join('')}${hardshipChoicesMarkup(event)}</div>`;
+    <div class="choices">${event.choices.map(genericChoiceMarkup).join('')}${friendRepairMarkup(event)}${hardshipChoicesMarkup(event)}</div>`;
 
   document.querySelectorAll('[data-choice]').forEach(button=>{
     if(!button.disabled)button.onclick=()=>resolveChoice(event,event.choices[Number(button.dataset.choice)]);
   });
+  bindFriendRepair(event);
   bindHardshipChoices(event);
 }
 function renderSpecialEvent(event,car,forcedText){
   if(event.special==='sale'){
-    const offer=Math.round(normalSaleValue()*(.92+Math.random()*.22));
+    const minimum=Math.round(vehicleValue()*.50);
+    if(!state.pendingEvent.saleEventOffer){
+      state.pendingEvent.saleEventOffer=Math.max(minimum,Math.round(normalSaleValue()*(.72+Math.random()*.48)));
+      persist();
+    }
+    const offer=Math.max(minimum,state.pendingEvent.saleEventOffer);
     $('#eventCard').innerHTML=`
       <div class="event-icon">${event.icon}</div>
       <span class="eyebrow">${car.marca} ${car.modelo}</span>
       <h2>${event.title}</h2>
-      <p>${event.text} Te ofrecen <strong>${money(offer)}</strong>. Tu valor interno actual es ${money(vehicleValue())}.</p>
+      <p>${event.text} Te ofrecen <strong>${money(offer)}</strong>. La oferta nunca puede ser inferior al 50% del valor actual del auto (${money(minimum)}).</p>
       <div class="choices">
         ${specialButton('🤝','Aceptar la oferta',`Recibís ${money(offer)} y volvés al mercado.`,'accept-sale')}
         ${specialButton('🔑','Quedártelo','Rechazás la oferta y seguís con el mismo auto.','keep-sale')}
@@ -813,10 +865,12 @@ function renderSpecialEvent(event,car,forcedText){
       <div class="choices">
         ${state.money>=repair?specialButton('🛠️','Reconstruirlo',`Reparación ${money(repair)} · cada reparación previa aumenta este costo.`,'crash-repair'):specialButton('🛠️','Reconstruirlo',`Reparación ${money(repair)} · No te alcanza.`,'crash-repair-disabled')}
         ${specialButton('♻️','Venderlo como chatarra',`Recibís aproximadamente ${money(scrap)} y perdés el auto.`,'crash-scrap')}
+        ${specialFriendRepairButton(event,repair)}
         ${state.money<repair?specialHardshipButtons(event,false):''}
       </div>`;
     if($('#crash-repair'))$('#crash-repair').onclick=()=>resolveDynamicRepair(event,repair,{condition:25,originality:-4,performance:6,valueShare:.72,note:'Reconstruiste el auto después del choque, aunque nunca volvió a ser completamente original.'});
     if($('#crash-repair-disabled'))$('#crash-repair-disabled').disabled=true;
+    bindSpecialFriendRepair(event,repair,{condition:18,originality:-8,performance:3,valueShare:.35,note:'Tu amigo reconstruyó el auto por bastante menos, aunque el trabajo quedó lejos de ser perfecto.'});
     if(state.money<repair)bindSpecialHardship(event);
     $('#crash-scrap').onclick=()=>scrapAndForceMarket(scrap,event,'El choque hizo que reparar no fuera rentable.');
     return;
@@ -841,10 +895,12 @@ function renderSpecialEvent(event,car,forcedText){
       <div class="choices">
         ${state.money>=rebuild?specialButton('🔩','Reconstruir el motor',`Reparación ${money(rebuild)} · recupera gran parte del valor.`,'engine-rebuild'):specialButton('🔩','Reconstruir el motor',`Reparación ${money(rebuild)} · No te alcanza.`,'engine-rebuild-disabled')}
         ${specialButton('♻️','Vender como chatarra',`Recibís ${money(scrap)} y buscás otro auto.`,'engine-scrap')}
+        ${specialFriendRepairButton(event,rebuild)}
         ${state.money<rebuild?specialHardshipButtons(event,false):''}
       </div>`;
     if($('#engine-rebuild'))$('#engine-rebuild').onclick=()=>resolveDynamicRepair(event,rebuild,{condition:22,originality:-2,performance:20,valueShare:.76,note:'Reconstruiste el motor y el auto volvió a circular.'});
     if($('#engine-rebuild-disabled'))$('#engine-rebuild-disabled').disabled=true;
+    bindSpecialFriendRepair(event,rebuild,{condition:15,originality:-6,performance:14,valueShare:.32,note:'Un amigo reconstruyó el motor barato. Volvió a funcionar, pero con una solución menos prolija y confiable.'});
     if(state.money<rebuild)bindSpecialHardship(event);
     $('#engine-scrap').onclick=()=>scrapAndForceMarket(scrap,event,'El motor fundido terminó la historia de este auto.');
     return;
@@ -873,6 +929,7 @@ function renderSpecialEvent(event,car,forcedText){
       history.saleReason='divorcio';
       state.events.unshift({year:state.year,eventId:event.id,text:`El divorcio te obligó a entregar ${car.marca} ${car.modelo} sin recibir dinero.`});
       state.car=null;
+      state.saleOffer=null;
       state.pendingEvent=null;
       state.decisions++;
       persist();
@@ -892,16 +949,38 @@ function renderSpecialEvent(event,car,forcedText){
       <div class="choices">
         ${state.money>=correct?specialButton('🧬','Resolverlo respetando el modelo',`Reparación ${money(correct)} · conserva mejor originalidad y valor.`,'canonical-right'):specialButton('🧬','Resolverlo respetando el modelo',`Reparación ${money(correct)} · No te alcanza.`,'canonical-right-disabled')}
         ${state.money>=cheap?specialButton('🔧','Buscar una solución económica',`Reparación ${money(cheap)} · más barata, pero menos fiel al auto.`,'canonical-cheap'):specialButton('🔧','Buscar una solución económica',`Reparación ${money(cheap)} · No te alcanza.`,'canonical-cheap-disabled')}
+        ${specialFriendRepairButton(event,cheap)}
         ${state.money<correct?specialHardshipButtons(event,true):''}
       </div>`;
     if($('#canonical-right'))$('#canonical-right').onclick=()=>resolveDynamicRepair(event,correct,{condition:8,originality:5,performance:2,valueShare:.68,note:'Resolviste el problema de forma correcta para el modelo.'});
     if($('#canonical-cheap'))$('#canonical-cheap').onclick=()=>resolveDynamicRepair(event,cheap,{condition:3,originality:-5,performance:0,valueShare:.24,note:'El auto siguió funcionando, aunque la solución redujo originalidad.'},.18);
     if($('#canonical-right-disabled'))$('#canonical-right-disabled').disabled=true;
     if($('#canonical-cheap-disabled'))$('#canonical-cheap-disabled').disabled=true;
+    bindSpecialFriendRepair(event,cheap,{condition:2,originality:-9,performance:-1,valueShare:.15,note:'Tu amigo lo resolvió por poca plata, pero improvisó piezas y el auto perdió originalidad.'});
     if(state.money<correct)bindSpecialHardship(event);
   }
 }
 
+function specialFriendRepairButton(event,referenceCost){
+  if(!state.pendingEvent.friendRepairCost){
+    state.pendingEvent.friendRepairCost=Math.max(40,Math.round(referenceCost*(.45+Math.random()*.20)));
+    persist();
+  }
+  const cost=state.pendingEvent.friendRepairCost;
+  return specialButton('🤝','Tengo un amigo que lo hace más barato',`${money(cost)} · barato, pero con riesgo de una reparación deficiente.`,'special-friend-repair');
+}
+function bindSpecialFriendRepair(event,referenceCost,effects){
+  const b=$('#special-friend-repair');
+  if(!b)return;
+  const cost=state.pendingEvent.friendRepairCost||Math.max(40,Math.round(referenceCost*.55));
+  if(state.money<cost){
+    b.disabled=true;
+    const small=b.querySelector('small');
+    if(small)small.textContent+=` · No te alcanza`;
+    return;
+  }
+  b.onclick=()=>resolveFriendRepair(event,cost,effects);
+}
 function specialHardshipButtons(event,allowRace=true){
   return `${specialButton('🧱','No repararlo ahora','Sin costo · el auto empeora y aumenta su gasto futuro.','special-neglect')}
     ${allowRace?specialButton('🏁','Picada ilegal por dinero','Intentás conseguir efectivo, con riesgo de daño severo.','special-race'):''}`;
@@ -955,6 +1034,52 @@ function resolveChoice(event,choice){
 
   completeEvent(event,text);
 }
+function resolveFriendRepair(event,cost,effects=null){
+  if(state.money<cost)return;
+  const before=vehicleValue();
+  state.money-=cost;
+  state.car.repairs++;
+  state.car.investedValue+=Math.round(cost*(effects?.valueShare??.22));
+
+  const bad=Math.random()<.34;
+  if(effects){
+    state.car.condition=clamp(state.car.condition+(effects.condition||0),0,100);
+    state.car.originality=clamp(state.car.originality+(effects.originality||0),0,100);
+    state.car.performance=clamp(state.car.performance+(effects.performance||0),0,100);
+  }else{
+    state.car.condition=clamp(state.car.condition+(bad?rand(-3,2):rand(3,8)),0,100);
+    state.car.originality=clamp(state.car.originality-rand(2,7),0,100);
+    state.car.performance=clamp(state.car.performance+(bad?rand(-4,0):rand(0,2)),0,100);
+  }
+
+  let text=effects?.note||`Un amigo hizo la reparación por ${money(cost)}.`;
+  if(bad){
+    const hit=Math.round(before*(.03+Math.random()*.06));
+    state.car.condition=clamp(state.car.condition-rand(3,9),0,100);
+    state.car.performance=clamp(state.car.performance-rand(1,5),0,100);
+    state.car.valueDamage+=hit;
+    state.car.expenseModifier=clamp((state.car.expenseModifier||0)+.05,-.35,.65);
+    text+=` El arreglo quedó mal: aparecieron fallas nuevas y el auto perdió aproximadamente ${money(hit)} de valor.`;
+  }else{
+    text+=` Esta vez el arreglo barato salió razonablemente bien.`;
+  }
+  completeEvent(event,text);
+}
+function sellCurrentCarOffer(){
+  if(!state.car)return;
+  const offer=currentSaleOffer();
+  const car=currentCar();
+  const history=state.history.at(-1);
+  state.money+=offer.amount;
+  history.soldYear=state.year;
+  history.soldFor=offer.amount;
+  history.saleReason='venta voluntaria';
+  state.events.unshift({year:state.year,text:`Vendiste ${car.marca} ${car.modelo} por ${money(offer.amount)}. ${offer.mood}.`});
+  state.car=null;
+  state.saleOffer=null;
+  persist();
+  openMarket(true);
+}
 function resolveDynamicRepair(event,cost,effects,risk=0){
   if(state.money<cost)return;
   state.money-=cost;
@@ -995,6 +1120,7 @@ function sellAndForceMarket(amount,reason,event){
   history.saleReason=reason;
   state.events.unshift({year:state.year,eventId:event.id,text:`Vendiste ${car.marca} ${car.modelo} por ${money(amount)} (${reason}).`});
   state.car=null;
+  state.saleOffer=null;
   state.pendingEvent=null;
   state.decisions++;
   persist();
@@ -1009,6 +1135,7 @@ function scrapAndForceMarket(amount,event,reason){
   history.saleReason='chatarra';
   state.events.unshift({year:state.year,eventId:event.id,text:`${reason} Lo vendiste como chatarra por ${money(amount)}.`});
   state.car=null;
+  state.saleOffer=null;
   state.pendingEvent=null;
   state.decisions++;
   persist();

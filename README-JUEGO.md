@@ -1,25 +1,22 @@
-# Tu vida sobre ruedas — v0.5
+# Tu vida sobre ruedas — v0.6
 
-Versión incremental/completa del prototipo privado de LMP Autos, construida sobre v0.4.
+Base: v0.5.
 
-## Cambios v0.5
+## Cambios v0.6
 
-- Las reparaciones y mejoras pagas ya no pueden ejecutarse si el jugador no tiene dinero suficiente.
-- Se evita el efecto anterior en el que una decisión cara podía aplicarse y simplemente dejar el saldo en USD 0.
-- Cuando una decisión necesaria no puede pagarse aparecen alternativas negativas:
-  - **Postergar / no reparar:** empeora estado, performance, valor y gastos futuros.
-  - **Picada ilegal por dinero:** sólo aparece cuando el auto puede circular. Tiene 46% de probabilidad de ganar dinero y 54% de perder; una derrota puede causar daños severos, pérdida de valor y mayores gastos futuros.
-- En eventos de choque grave o motor fundido no se ofrece la picada ilegal porque el vehículo no está en condiciones de competir.
-- Se conserva la salida de chatarra cuando corresponde.
-- Se mantiene el arreglo v0.4 del divorcio: si se pierde el auto y no alcanza para otro, se puede pasar un año sin vehículo y ahorrar.
-- Se agrega una animación visual lenta del paso de los años. Cada año aparece en pantalla antes de continuar con el siguiente evento.
-- La cabecera del juego marca ahora **v0.5**.
-
-## Archivos incluidos
-
-```text
-juego/index.html
-juego/data/autos.json
-juego/data/eventos.json
-README-JUEGO.md
-```
+- Se agregó la alternativa de reparación **“Tengo un amigo que lo hace más barato”**.
+  - Puede aparecer en eventos con reparaciones y también en fallas especiales compatibles.
+  - El costo suele ser aproximadamente 45%–65% de la alternativa económica de referencia.
+  - Tiene riesgo real: un arreglo barato puede salir razonablemente bien o generar nuevas fallas, pérdida de estado, performance, valor y aumento de gastos futuros.
+  - Si ni siquiera alcanza el dinero para el arreglo del amigo, la opción queda bloqueada y permanecen las alternativas negativas correspondientes.
+- Se agregó un botón permanente en el garaje para **vender el auto en cualquier momento**.
+  - La oferta de venta fluctúa entre años.
+  - Puede ser una oferta baja, razonable o un buen momento para vender.
+  - La oferta queda fija durante ese año para evitar repetir clics hasta obtener artificialmente un precio mejor.
+  - Al cambiar de año se genera una nueva situación de mercado.
+  - Al vender, el jugador conserva el dinero recibido y vuelve al mercado a buscar otro vehículo.
+- El evento especial **“te quieren comprar el auto”** ahora tiene un piso obligatorio del **50% del valor actual del vehículo**.
+  - La oferta queda fijada al generarse el evento y no cambia por recargar o volver a renderizar la pantalla.
+- Se mantiene la lógica de v0.5: alternativas negativas cuando no alcanza el dinero, picadas ilegales y animación del paso de los años.
+- Se mantiene la solución de v0.4 para continuar ahorrando sin auto después del divorcio.
+- La cabecera del juego marca ahora **v0.6**.
