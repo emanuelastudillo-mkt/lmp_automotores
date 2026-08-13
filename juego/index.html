@@ -192,7 +192,7 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.20</div>
+    <div class="version">prototipo privado · v0.21</div>
   </div>
 </header>
 
@@ -1278,8 +1278,8 @@ function renderSpecialEvent(event,car,forcedText){
       <div class="event-icon">${event.icon}</div>
       <span class="eyebrow">Evento irreversible</span>
       <h2>${event.title}</h2>
-      <div class="forced-banner"><strong>Ya ocurrió:</strong><span>El seguro no cubre los daños. Se perdieron piezas originales y el estado cayó fuerte.</span></div>
-      <p>${event.text}</p>
+      <div class="forced-banner"><strong>Ya ocurrió:</strong><span>${mechanicalReason?`El choque se produjo por ${mechanicalReason}. `:''}El seguro no cubre los daños. Se perdieron piezas originales y el estado cayó fuerte.</span></div>
+      <p>${mechanicalReason?`El auto venía mostrando señales de desgaste y terminó fallando cuando más necesitabas que respondiera.`:event.text}</p>
       <div class="choices">
         ${state.money>=repair?specialButton('🛠️','Reconstruirlo',`Reparación ${money(repair)} · cada reparación previa aumenta este costo.`,'crash-repair'):specialButton('🛠️','Reconstruirlo',`Reparación ${money(repair)} · No te alcanza.`,'crash-repair-disabled')}
         ${specialButton('♻️','Venderlo como chatarra',`Recibís aproximadamente ${money(scrap)} y perdés el auto.`,'crash-scrap')}
@@ -1644,7 +1644,12 @@ function resolveDynamicRepair(event,cost,effects,risk=0){
   completeEvent(event,text);
 }
 function completeEvent(event,text,icon='🎲'){
-  if(event?.special==='crash')state.crashCount=(state.crashCount||0)+1;
+  if(event?.special==='crash'){
+    state.crashCount=(state.crashCount||0)+1;
+    if(state.pendingEvent?.mechanicalCrash && state.pendingEvent?.crashReason && !text.includes(state.pendingEvent.crashReason)){
+      text=`El choque ocurrió por ${state.pendingEvent.crashReason}. ${text}`;
+    }
+  }
   state.events.unshift({year:state.year,eventId:event.id,text});
   state.decisions++;
   state.pendingEvent=null;

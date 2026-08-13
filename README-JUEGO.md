@@ -1,3 +1,19 @@
+# Tu vida sobre ruedas — v0.21
+
+Base: v0.20.
+
+## Cambios v0.21
+
+- Los choques graves ahora pueden originarse por el deterioro mecánico del vehículo.
+- **Estado bajo** aumenta el riesgo por falta de mantenimiento, desgaste de componentes, frenos, suspensión, cubiertas y fallas generales.
+- **Performance baja** aumenta el riesgo cuando una mecánica castigada es exigida por encima de lo que puede soportar.
+- El riesgo crece especialmente con Estado menor a 30 y/o Performance muy baja.
+- Los vehículos antiguos suman un pequeño riesgo adicional solamente cuando ya presentan deterioro.
+- El evento de choque deja de aparecer como un evento dramático completamente aleatorio: su aparición está ligada a estas condiciones mecánicas.
+- Cuando el choque es provocado por deterioro, el juego explica la causa concreta en el evento y en el historial.
+
+---
+
 # Tu vida sobre ruedas — v0.20
 
 Base: v0.19.
