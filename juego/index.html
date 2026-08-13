@@ -1,39 +1,1010 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow,noarchive"><title>Tu vida sobre ruedas — LMP Autos</title><style>
-:root{--bg:#0d0d0f;--panel:#171719;--panel2:#202024;--line:#303035;--text:#f4f4f1;--muted:#9b9ba2;--red:#cc242b;--green:#3fbf6f;--amber:#e9b949}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 75% 0%,rgba(204,36,43,.15),transparent 28rem),var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif}.shell{width:min(1080px,calc(100% - 28px));margin:auto}.topbar{min-height:68px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}.brand{font-weight:950}.version,.eyebrow{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}.eyebrow{color:#ff7f84;font-weight:900}.screen{display:none}.screen.active{display:block}main{padding:32px 0 70px}.hero{min-height:calc(100vh - 145px);display:grid;grid-template-columns:1.08fr .92fr;gap:34px;align-items:center}h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:14px 0 18px}.hero p{color:#c5c5c9;font-size:16px;line-height:1.65}.panel,.start-panel{background:rgba(23,23,25,.94);border:1px solid var(--line);border-radius:24px}.start-panel{padding:22px}.field{display:grid;gap:7px;margin-bottom:13px}.field label{font-size:10px;color:var(--muted);font-weight:900;text-transform:uppercase}.field input,.field select{width:100%;border:1px solid var(--line);border-radius:13px;background:#101012;color:#fff;padding:13px 14px}.primary,.ghost,.car-select,.choice{cursor:pointer}.primary{border:0;border-radius:13px;padding:14px 17px;background:var(--red);color:#fff;font-weight:950;width:100%}.private{margin-top:18px;padding:11px;border-left:3px solid var(--amber);background:#17140c;color:#c9b276;font-size:10px;line-height:1.5}.head{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:18px}.head h2{font-size:clamp(28px,4vw,45px);margin:0;letter-spacing:-.05em}.ghost{border:1px solid var(--line);background:transparent;color:#ddd;border-radius:11px;padding:10px 12px;font-weight:850}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:18px}.stat{padding:13px;border:1px solid var(--line);border-radius:14px;background:#151517}.stat span{display:block;color:var(--muted);font-size:9px;text-transform:uppercase}.stat strong{display:block;margin-top:4px;font-size:17px}.car-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.car{display:flex;flex-direction:column;background:#fff;color:#171717;border-radius:20px;overflow:hidden}.art{height:145px;background:linear-gradient(135deg,#242428,#090909);position:relative;display:grid;place-items:center}.art:before{content:"";width:68%;height:42px;border-radius:45px 58px 18px 18px;background:linear-gradient(#ddd,#777);transform:skewX(-7deg)}.body{padding:16px;display:flex;flex-direction:column;flex:1}.make{font-size:9px;color:var(--red);font-weight:950;text-transform:uppercase}.body h3{font-size:21px;margin:5px 0 10px}.chips{display:flex;flex-wrap:wrap;gap:6px}.chips span{font-size:9px;padding:6px 7px;border-radius:999px;background:#f1f1ee;color:#555}.price{font-size:21px;font-weight:950;margin-top:14px}.price small{display:block;font-size:8px;color:#777;text-transform:uppercase}.car-select{margin-top:12px;border:0;border-radius:11px;background:#111;color:#fff;padding:11px;font-weight:900}.car-select:disabled{opacity:.35}.event-wrap{display:grid;grid-template-columns:340px 1fr;gap:18px}.garage,.timeline{padding:18px}.garage-card{background:#fff;color:#171717;border-radius:18px;overflow:hidden}.garage-art{height:160px;background:linear-gradient(135deg,#222,#080808);display:grid;place-items:center;font-size:58px}.garage-info{padding:16px}.garage-info h3{font-size:23px;margin:4px 0 12px}.meter-row{display:grid;grid-template-columns:95px 1fr 36px;gap:8px;align-items:center;font-size:9px;margin:8px 0}.meter{height:7px;background:#e5e5e2;border-radius:99px;overflow:hidden}.meter b{display:block;height:100%;background:#222}.canonical{margin-top:12px;background:#f3f3ef;color:#555;padding:11px;border-radius:11px;font-size:10px;line-height:1.45}.timeline-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.year{background:var(--red);padding:7px 10px;border-radius:999px;font-weight:950}.event-card{padding:22px;border:1px solid var(--line);background:#101012;border-radius:19px}.event-card h2{font-size:32px;margin:4px 0 10px}.event-card p{color:#c4c4c8;line-height:1.6}.choices{display:grid;gap:9px}.choice{text-align:left;border:1px solid var(--line);background:#1c1c20;color:#fff;border-radius:13px;padding:13px 14px}.choice small{display:block;color:var(--muted);margin-top:4px}.log{margin-top:16px}.log-item{display:grid;grid-template-columns:55px 1fr;gap:9px;padding:9px 0;border-bottom:1px solid var(--line);color:#b8b8bd;font-size:10px}.market{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:30;padding:24px;overflow:auto}.market.open{display:block}.market-box{width:min(980px,100%);margin:30px auto;background:#111114;border:1px solid var(--line);border-radius:22px;padding:18px}.market-list{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.market-item{border:1px solid var(--line);border-radius:14px;background:#1c1c20;padding:13px}.market-item button{width:100%;border:0;border-radius:9px;padding:9px;font-weight:900}.result{max-width:780px;margin:35px auto;text-align:center}.history-item{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-size:11px}@media(max-width:820px){.hero,.event-wrap{grid-template-columns:1fr}.car-grid,.market-list{grid-template-columns:repeat(2,1fr)}}@media(max-width:560px){.stats{grid-template-columns:repeat(2,1fr)}.car-grid,.market-list{grid-template-columns:1fr}h1{font-size:54px}}
-</style></head><body><header><div class="shell topbar"><div class="brand">LMP · Tu vida sobre ruedas</div><div class="version">prototipo privado · v0.1</div></div></header><main class="shell">
-<section class="screen active" id="start"><div class="hero"><div><span class="eyebrow">Una vida. Muchos autos.</span><h1>Tu historia empieza con una llave.</h1><p>Elegí un nombre y el año en el que querés empezar. Vas a comprar, mantener, modificar, vender y romper autos mientras pasan los años.</p><div class="private">Acceso solo por URL directa. Esta página está marcada como <strong>noindex</strong>. Los valores son aproximaciones de gameplay.</div></div><form class="start-panel" id="startForm"><h2>Crear trayectoria</h2><div class="field"><label>Nombre</label><input id="name" maxlength="28" required placeholder="Ej: Emanuel"></div><div class="field"><label>Año de inicio</label><select id="startYear"></select></div><button class="primary">Empezar mi historia</button><p class="version" style="margin-top:12px">El juego termina en 2026. Los eventos avanzan entre 2 y 12 años.</p></form></div></section>
-<section class="screen" id="starter"><div class="head"><div><span class="eyebrow">Primera decisión</span><h2 id="starterTitle"></h2><p id="starterCopy"></p></div><button class="ghost" id="back">Volver</button></div><div class="stats" id="starterStats"></div><div class="car-grid" id="starterCars"></div></section>
-<section class="screen" id="game"><div class="stats" id="gameStats"></div><div class="event-wrap"><aside class="panel garage" id="garage"></aside><section class="panel timeline"><div class="timeline-top"><div><span class="eyebrow">Trayectoria</span><div id="playerLine"></div></div><span class="year" id="year"></span></div><div class="event-card" id="event"></div><div class="log" id="log"></div></section></div></section>
-<section class="screen" id="result"><div class="result"><span class="eyebrow">2026 · fin de trayectoria</span><h1 id="resultTitle" style="font-size:60px"></h1><p id="resultCopy"></p><div class="panel" id="resultCard" style="padding:22px;text-align:left"></div><button class="primary" id="again" style="margin-top:16px">Jugar otra vez</button></div></section>
-</main><div class="market" id="market"><div class="market-box"><div class="head"><div><span class="eyebrow">Mercado del año</span><h2 id="marketTitle"></h2></div><button class="ghost" id="closeMarket">Cerrar</button></div><div class="market-list" id="marketList"></div></div></div>
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>Tu vida sobre ruedas — LMP Autos</title>
+<meta name="description" content="Prototipo privado del juego automotor de LMP Autos.">
+<style>
+:root{
+  --bg:#0d0d0f;--panel:#171719;--panel2:#202024;--line:#303035;
+  --text:#f4f4f1;--muted:#9b9ba2;--red:#cc242b;--green:#3fbf6f;--amber:#e9b949;
+  --blue:#73a8ff;--shadow:0 18px 55px rgba(0,0,0,.25)
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:radial-gradient(circle at 78% 0%,rgba(204,36,43,.14),transparent 30rem),var(--bg);
+  color:var(--text);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif
+}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.shell{width:min(1100px,calc(100% - 28px));margin:auto}
+.topbar{min-height:68px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+.brand{font-weight:950;letter-spacing:-.03em}
+.version{font-size:10px;color:var(--muted);letter-spacing:.09em;text-transform:uppercase}
+main{padding:32px 0 70px}
+.screen{display:none}
+.screen.active{display:block;animation:screenIn .35s ease both}
+@keyframes screenIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hero{min-height:calc(100vh - 145px);display:grid;grid-template-columns:1.08fr .92fr;gap:34px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:7px;color:#ff7f84;font-weight:900;text-transform:uppercase;letter-spacing:.11em;font-size:10px}
+h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:14px 0 18px}
+.hero-copy{color:#c5c5c9;max-width:650px;font-size:16px;line-height:1.65}
+.hero-copy strong{color:#fff}
+.panel,.start-panel{background:rgba(23,23,25,.94);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow)}
+.start-panel{padding:22px}
+.start-panel h2{margin:0 0 18px;font-size:21px;letter-spacing:-.03em}
+.field{display:grid;gap:7px;margin-bottom:13px}
+.field label{font-size:10px;color:var(--muted);font-weight:900;text-transform:uppercase;letter-spacing:.08em}
+.field input,.field select{width:100%;border:1px solid var(--line);border-radius:13px;background:#101012;color:#fff;padding:13px 14px;outline:none}
+.field input:focus,.field select:focus{border-color:#777}
+.primary{border:0;border-radius:13px;padding:14px 17px;background:var(--red);color:#fff;font-weight:950;box-shadow:0 8px 25px rgba(204,36,43,.22)}
+.primary:hover{filter:brightness(1.07)}
+.private-note{margin-top:18px;padding:11px;border-left:3px solid var(--amber);background:#17140c;color:#c9b276;font-size:10px;line-height:1.5}
+.head-row{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;margin-bottom:18px}
+.head-row h2{font-size:clamp(28px,4vw,45px);letter-spacing:-.05em;margin:0}
+.head-row p{margin:7px 0 0;color:var(--muted)}
+.ghost{border:1px solid var(--line);background:transparent;color:#ddd;border-radius:11px;padding:10px 12px;font-weight:850}
+.ghost:hover{background:#232326}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:18px}
+.stat{padding:13px;border:1px solid var(--line);border-radius:14px;background:#151517}
+.stat span{display:block;color:var(--muted);font-size:9px;text-transform:uppercase;letter-spacing:.07em;font-weight:850}
+.stat strong{display:block;margin-top:4px;font-size:16px}
+.stat.highlight{border-color:rgba(115,168,255,.42);background:rgba(33,50,74,.34)}
+.car-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.car-card{display:flex;flex-direction:column;min-height:315px;background:#fff;color:#171717;border-radius:20px;overflow:hidden;border:1px solid #ddd}
+.car-art{height:145px;background:linear-gradient(135deg,#242428,#090909);position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.car-art:before{content:"";width:68%;height:42px;border-radius:45px 58px 18px 18px;background:linear-gradient(180deg,#d9d9d9,#727272);transform:skewX(-7deg);box-shadow:0 16px 0 -8px #333}
+.car-year{position:absolute;top:11px;left:11px;background:#fff;color:#111;border-radius:999px;padding:6px 8px;font-size:9px;font-weight:950}
+.car-body{padding:16px;display:flex;flex-direction:column;flex:1}
+.make{font-size:9px;color:var(--red);font-weight:950;text-transform:uppercase;letter-spacing:.1em}
+.car-body h3{font-size:21px;line-height:1;margin:5px 0 10px;letter-spacing:-.04em}
+.car-meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:13px}
+.car-meta span{font-size:9px;padding:6px 7px;border-radius:999px;background:#f1f1ee;color:#555}
+.car-price{font-size:21px;font-weight:950;margin-top:auto}
+.car-price small{display:block;font-size:8px;color:#777;text-transform:uppercase;letter-spacing:.08em}
+.car-select{margin-top:12px;border:0;border-radius:11px;background:#111;color:#fff;padding:11px;font-weight:900}
+.car-select:disabled{opacity:.35;cursor:not-allowed}
+.event-wrap{display:grid;grid-template-columns:350px minmax(0,1fr);gap:18px}
+.garage{padding:17px}
+.garage-card{border-radius:18px;overflow:hidden;background:#fff;color:#171717}
+.garage-art{height:165px;background:linear-gradient(135deg,#242428,#070707);display:grid;place-items:center}
+.garage-art .icon{font-size:62px;filter:grayscale(.2);animation:carFloat 3s ease-in-out infinite}
+@keyframes carFloat{50%{transform:translateY(-6px)}}
+.garage-info{padding:16px}
+.garage-info h3{margin:3px 0 12px;font-size:23px;letter-spacing:-.04em}
+.value-box{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:12px}
+.value-cell{padding:10px;border-radius:11px;background:#f3f3ef}
+.value-cell span{display:block;font-size:8px;color:#777;text-transform:uppercase;letter-spacing:.07em;font-weight:850}
+.value-cell strong{display:block;margin-top:3px;font-size:15px}
+.value-cell.current{background:#e9f0ff;color:#163461}
+.value-note{margin:6px 0 12px;color:#777;font-size:8px;line-height:1.4}
+.meters{display:grid;gap:9px}
+.meter-row{display:grid;grid-template-columns:95px 1fr 36px;gap:8px;align-items:center;font-size:9px}
+.meter{height:7px;border-radius:999px;background:#e5e5e2;overflow:hidden}
+.meter b{display:block;height:100%;background:#222;transition:width .45s ease}
+.canonical{margin-top:13px;padding:11px;border-radius:11px;background:#f3f3ef;color:#555;font-size:10px;line-height:1.45}
+.cost-line{display:flex;justify-content:space-between;gap:10px;margin-top:11px;padding:9px 0;border-top:1px solid #e7e7e2;font-size:10px}
+.cost-line strong{color:#7b181c}
+.timeline{padding:22px}
+.timeline-top{display:flex;justify-content:space-between;gap:14px;align-items:center;margin-bottom:20px}
+.year-pill{font-size:12px;font-weight:950;background:var(--red);padding:7px 10px;border-radius:999px}
+.event-card{position:relative;overflow:hidden;padding:22px;border:1px solid var(--line);background:#101012;border-radius:19px}
+.event-card.enter{animation:eventIn .44s cubic-bezier(.2,.8,.2,1) both}
+.event-card.forced{border-color:rgba(229,185,63,.55);box-shadow:0 0 0 1px rgba(229,185,63,.12),0 15px 45px rgba(0,0,0,.18)}
+@keyframes eventIn{from{opacity:0;transform:translateY(14px) scale(.985)}to{opacity:1;transform:none}}
+.event-icon{width:58px;height:58px;display:grid;place-items:center;border-radius:17px;background:#202024;font-size:31px;margin-bottom:14px;animation:iconPop .55s ease both}
+@keyframes iconPop{0%{transform:scale(.65) rotate(-8deg);opacity:0}70%{transform:scale(1.08) rotate(2deg)}100%{transform:scale(1);opacity:1}}
+.event-card h2{font-size:32px;letter-spacing:-.05em;margin:4px 0 10px}
+.event-card p{color:#c4c4c8;line-height:1.6;margin:0 0 16px}
+.forced-banner{display:flex;gap:9px;align-items:flex-start;margin:0 0 15px;padding:10px;border-radius:11px;background:#2b2412;color:#e8cc79;font-size:10px;line-height:1.45}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.choice{text-align:left;border:1px solid var(--line);background:#1c1c20;color:#fff;border-radius:15px;padding:13px 14px;min-height:120px;transition:.18s transform,.18s border-color,.18s background}
+.choice:hover{border-color:#777;background:#242429;transform:translateY(-3px)}
+.choice-icon{display:block;font-size:25px;margin-bottom:10px;transition:.18s transform}
+.choice:hover .choice-icon{transform:scale(1.14) rotate(-3deg)}
+.choice strong{display:block;font-size:12px}
+.choice small{display:block;color:var(--muted);margin-top:5px;line-height:1.4}
+.log{margin-top:16px;display:grid;gap:7px}
+.log-item{display:grid;grid-template-columns:55px 1fr;gap:9px;padding:9px 0;border-bottom:1px solid var(--line);color:#b8b8bd;font-size:10px;animation:logIn .3s ease both}
+@keyframes logIn{from{opacity:0;transform:translateX(-7px)}to{opacity:1;transform:none}}
+.log-item b{color:#fff}
+.market-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:30;padding:24px;overflow:auto}
+.market-modal.open{display:block;animation:fadeIn .2s ease both}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.market-box{width:min(980px,100%);margin:30px auto;background:#111114;border:1px solid var(--line);border-radius:22px;padding:18px}
+.market-top{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-bottom:15px}
+.market-list{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.market-item{border:1px solid var(--line);border-radius:14px;background:#1c1c20;padding:13px}
+.market-item h4{margin:4px 0;font-size:15px}
+.market-item p{margin:0;color:var(--muted);font-size:9px}
+.market-item strong{display:block;margin:10px 0;font-size:16px}
+.market-item button{width:100%;border:0;border-radius:9px;padding:9px;background:#fff;color:#111;font-weight:900}
+.market-item button:disabled{opacity:.35}
+.result{max-width:780px;margin:35px auto;text-align:center}
+.result h2{font-size:clamp(42px,8vw,80px);line-height:.9;letter-spacing:-.06em;margin:12px 0}
+.result-card{margin-top:25px;text-align:left;padding:22px;border:1px solid var(--line);border-radius:21px;background:#171719}
+.history{display:grid;gap:7px;margin-top:14px}
+.history-item{display:flex;justify-content:space-between;gap:15px;padding:9px 0;border-bottom:1px solid var(--line);font-size:11px}
+@media(max-width:860px){
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .event-wrap{grid-template-columns:1fr}
+  .car-grid,.market-list{grid-template-columns:repeat(2,1fr)}
+  .stats{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:580px){
+  .shell{width:min(100% - 20px,1100px)}
+  main{padding-top:18px}
+  h1{font-size:54px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .car-grid,.market-list{grid-template-columns:1fr}
+  .choices{grid-template-columns:1fr}
+  .choice{min-height:94px}
+  .event-card h2{font-size:27px}
+  .timeline,.garage{padding:14px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="shell topbar">
+    <div class="brand">LMP · Tu vida sobre ruedas</div>
+    <div class="version">prototipo privado · v0.2</div>
+  </div>
+</header>
+
+<main class="shell">
+  <section class="screen active" id="startScreen">
+    <div class="hero">
+      <div>
+        <span class="eyebrow">Una vida. Muchos autos.</span>
+        <h1>Tu historia empieza con una llave.</h1>
+        <p class="hero-copy">Elegí un nombre y un año. Vas a <strong>comprar, reparar, modificar, vender y perder autos</strong> mientras cambian tu economía y el mercado.</p>
+        <div class="private-note">Acceso solo por URL directa. Esta página sigue marcada como <strong>noindex</strong>. Los valores son aproximaciones diseñadas para gameplay.</div>
+      </div>
+      <form class="start-panel" id="startForm">
+        <h2>Crear trayectoria</h2>
+        <div class="field"><label for="playerName">Nombre</label><input id="playerName" maxlength="28" placeholder="Ej: Emanuel" required></div>
+        <div class="field"><label for="startYear">Año de inicio</label><select id="startYear"></select></div>
+        <button class="primary" type="submit">Empezar mi historia</button>
+        <p class="version" style="margin-top:12px">El juego termina en 2026. Los eventos avanzan entre 2 y 12 años.</p>
+      </form>
+    </div>
+  </section>
+
+  <section class="screen" id="starterScreen">
+    <div class="head-row">
+      <div><span class="eyebrow">Primera decisión</span><h2 id="starterTitle"></h2><p id="starterSubtitle"></p></div>
+      <button class="ghost" id="restartFromStarter">Volver</button>
+    </div>
+    <div class="stats" id="starterStats"></div>
+    <div class="car-grid" id="starterCars"></div>
+  </section>
+
+  <section class="screen" id="gameScreen">
+    <div class="stats" id="gameStats"></div>
+    <div class="event-wrap">
+      <aside class="panel garage" id="garagePanel"></aside>
+      <section class="panel timeline">
+        <div class="timeline-top">
+          <div><span class="eyebrow">Trayectoria</span><div id="playerLabel"></div></div>
+          <span class="year-pill" id="yearPill"></span>
+        </div>
+        <div class="event-card" id="eventCard"></div>
+        <div class="log" id="eventLog"></div>
+      </section>
+    </div>
+  </section>
+
+  <section class="screen" id="resultScreen">
+    <div class="result">
+      <span class="eyebrow">2026 · fin de trayectoria</span>
+      <h2 id="resultTitle"></h2>
+      <p id="resultCopy"></p>
+      <div class="result-card" id="resultCard"></div>
+      <button class="primary" id="playAgain" style="margin-top:16px">Jugar otra vez</button>
+    </div>
+  </section>
+</main>
+
+<div class="market-modal" id="marketModal">
+  <div class="market-box">
+    <div class="market-top">
+      <div><span class="eyebrow">Mercado del año</span><h2 style="margin:4px 0 0" id="marketTitle"></h2></div>
+      <button class="ghost" id="closeMarket">Cerrar</button>
+    </div>
+    <div class="market-list" id="marketList"></div>
+  </div>
+</div>
+
 <script>
-const END=2026,SAVE='lmp_car_life_v01';let CARS=[],EVENTS=[],S=null;const $=s=>document.querySelector(s),clamp=(n,a,b)=>Math.max(a,Math.min(b,n)),rnd=(a,b)=>Math.floor(Math.random()*(b-a+1))+a,money=n=>`USD ${Math.round(n).toLocaleString('es-AR')}`;
-function show(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));$('#'+id).classList.add('active');scrollTo(0,0)}
-function years(){for(let y=1960;y<=2018;y++){let o=document.createElement('option');o.value=y;o.textContent=y;$('#startYear').append(o)}}
-async function data(){let[a,e]=await Promise.all([fetch('./data/autos.json',{cache:'no-store'}),fetch('./data/eventos.json',{cache:'no-store'})]);CARS=await a.json();EVENTS=await e.json()}
-function cash(y){return Math.round(3200+((y-1960)/58)*10500)} function saveYear(y){return Math.round(550+((y-1960)/66)*1450)}
-function price(c,y){let age=Math.max(0,y-c.desde),dep=Math.pow(.91,Math.min(age,12)),boost=(c.potencialClasico/100)*Math.max(0,y-c.desde-22)*.018;return Math.max(900,Math.round(c.precioBaseUSD*dep*(1+boost)))}
-function car(){return CARS.find(c=>c.id===S?.car?.id)} function avail(y){return CARS.filter(c=>c.desde<=y&&y-c.desde<=18)}
-function sale(){let c=car();if(!c)return 0;return Math.round(price(c,S.year)*(.55+S.car.condition/200)*(.90+S.car.originality/500))}
-function stats(el){el.innerHTML=`<div class=stat><span>Año</span><strong>${S.year}</strong></div><div class=stat><span>Dinero</span><strong>${money(S.money)}</strong></div><div class=stat><span>Autos</span><strong>${S.history.length}</strong></div><div class=stat><span>Patrimonio</span><strong>${money(S.money+(S.car?sale():0))}</strong></div>`}
-function starterCars(){let p=avail(S.year).map(c=>({...c,p:price(c,S.year)})).filter(c=>c.p<=S.money*1.08).sort((a,b)=>a.p-b.p);if(p.length<3)p=avail(S.year).map(c=>({...c,p:price(c,S.year)})).sort((a,b)=>a.p-b.p).slice(0,8);return p.sort(()=>Math.random()-.5).slice(0,3).sort((a,b)=>a.p-b.p)}
-function card(c){let p=c.p??price(c,S.year),ok=S.money>=p;return `<article class=car><div class=art></div><div class=body><span class=make>${c.marca}</span><h3>${c.modelo}</h3><div class=chips><span>${c.segmento}</span><span>desde ${c.desde}</span></div><div class=price><small>Valor aproximado</small>${money(p)}</div><button class=car-select data-buy="${c.id}" ${ok?'':'disabled'}>Elegir este auto</button></div></article>`}
-function begin(name,y){S={player:name||'Conductor',startYear:y,year:y,money:cash(y),car:null,history:[],events:[],next:y,decisions:0};persist();renderStarter()}
-function renderStarter(){show('starter');$('#starterTitle').textContent=`${S.player}, elegí tu primer auto`;$('#starterCopy').textContent=`Estamos en ${S.year}. Tenés ${money(S.money)}.`;stats($('#starterStats'));$('#starterCars').innerHTML=starterCars().map(card).join('');document.querySelectorAll('[data-buy]').forEach(b=>b.onclick=()=>buy(b.dataset.buy,true))}
-function buy(id,first=false){let c=CARS.find(c=>c.id===id),p=price(c,S.year);if(S.money<p)return;if(S.car&&!first){let v=sale();S.money+=v;let h=S.history.at(-1);h.soldYear=S.year;h.soldFor=v}S.money-=p;S.car={id,condition:88,originality:92,performance:50,purchasePrice:p,purchaseYear:S.year};S.history.push({id,brand:c.marca,model:c.modelo,boughtYear:S.year,boughtFor:p});S.events.unshift({year:S.year,text:`Compraste ${c.marca} ${c.modelo} por ${money(p)}.`});S.next=Math.min(END,S.year+gap());persist();closeM();renderGame()}
-function gap(){let r=Math.random();return r<.55?rnd(2,4):r<.88?rnd(5,7):rnd(8,12)}
-function garage(){let c=car();$('#garage').innerHTML=`<div class=garage-card><div class=garage-art>🚗</div><div class=garage-info><span class=make>${c.marca}</span><h3>${c.modelo}</h3>${meter('Estado',S.car.condition)}${meter('Originalidad',S.car.originality)}${meter('Performance',S.car.performance)}<div class=canonical><strong>Evento del modelo:</strong><br>${c.eventoCanonico}</div><button class=car-select id=openMarket style="width:100%">Ver mercado / cambiar auto</button></div></div>`;$('#openMarket').onclick=()=>openM(false)}
-function meter(l,v){return `<div class=meter-row><span>${l}</span><div class=meter><b style="width:${clamp(v,0,100)}%"></b></div><strong>${Math.round(v)}</strong></div>`}
-function pick(){let c=car(),a=EVENTS.filter(e=>e.tags.includes('*')||e.tags.some(t=>c.tags.includes(t)));return a[Math.floor(Math.random()*a.length)]}
-function renderGame(){show('game');stats($('#gameStats'));garage();$('#playerLine').textContent=`${S.player} · ${S.startYear} → ${END}`;$('#year').textContent=S.year;if(S.year>=END)return finish();if(S.next>S.year){let yrs=S.next-S.year,s=0;for(let i=0;i<yrs;i++)s+=saveYear(S.year+i);S.money+=s;S.year=S.next;S.car.condition=clamp(S.car.condition-rnd(2,7)-Math.floor(yrs/3),0,100);S.events.unshift({year:S.year,text:`Pasaron ${yrs} años. Ahorraste ${money(s)}.`});persist();stats($('#gameStats'));garage();$('#year').textContent=S.year;if(S.year>=END)return finish()}event(pick());log()}
-function event(e){let c=car();if(e.special==='sale'){let offer=Math.round(sale()*(1+Math.random()*.18));$('#event').innerHTML=`<span class=eyebrow>${c.marca} ${c.modelo}</span><h2>${e.title}</h2><p>${e.text} Te ofrecen <strong>${money(offer)}</strong>.</p><div class=choices><button class=choice id=accept><strong>Aceptar y buscar otro auto</strong></button><button class=choice id=keep><strong>Rechazar la oferta</strong></button></div>`;$('#accept').onclick=()=>{S.money+=offer;let h=S.history.at(-1);h.soldYear=S.year;h.soldFor=offer;S.events.unshift({year:S.year,text:`Vendiste ${c.marca} ${c.modelo} por ${money(offer)}.`});S.car=null;persist();openM(true)};$('#keep').onclick=()=>resolve(e,{money:0,condition:0,originality:2,performance:0,risk:0,note:'Rechazaste la oferta y decidiste seguir.'});return}$('#event').innerHTML=`<span class=eyebrow>${c.marca} ${c.modelo}</span><h2>${e.title}</h2><p>${e.text}</p><div class=choices>${e.choices.map((x,i)=>`<button class=choice data-choice=${i}><strong>${x.label}</strong><small>${preview(x)}</small></button>`).join('')}</div>`;document.querySelectorAll('[data-choice]').forEach(b=>b.onclick=()=>resolve(e,e.choices[+b.dataset.choice]))}
-function preview(x){let a=[];if(x.money)a.push(`${x.money<0?'Costo':'Ingreso'} ${money(Math.abs(x.money))}`);if(x.condition)a.push(`Estado ${x.condition>0?'+':''}${x.condition}`);if(x.originality)a.push(`Originalidad ${x.originality>0?'+':''}${x.originality}`);if(x.performance)a.push(`Performance ${x.performance>0?'+':''}${x.performance}`);if(x.risk>.2)a.push('Riesgo alto');return a.join(' · ')||'Sin costo inmediato'}
-function resolve(e,x){S.money+=x.money||0;S.car.condition=clamp(S.car.condition+(x.condition||0),0,100);S.car.originality=clamp(S.car.originality+(x.originality||0),0,100);S.car.performance=clamp(S.car.performance+(x.performance||0),0,100);let t=x.note;if(Math.random()<(x.risk||0)){let loss=rnd(900,3200);S.money=Math.max(0,S.money-loss);S.car.condition=clamp(S.car.condition-rnd(10,26),0,100);t+=` La apuesta salió mal: una avería te costó ${money(loss)}.`}S.events.unshift({year:S.year,eventId:e.id,text:t});S.decisions++;S.next=Math.min(END,S.year+gap());persist();renderGame()}
-function log(){$('#log').innerHTML=S.events.slice(0,7).map(x=>`<div class=log-item><b>${x.year}</b><span>${x.text}</span></div>`).join('')}
-function openM(force){$('#market').classList.add('open');$('#marketTitle').textContent=`Mercado ${S.year}`;let list=avail(S.year).filter(c=>!S.car||c.id!==S.car.id).map(c=>({...c,p:price(c,S.year)})).sort((a,b)=>a.p-b.p).slice(0,18);$('#marketList').innerHTML=list.map(c=>`<article class=market-item><span class=make>${c.marca}</span><h4>${c.modelo}</h4><p>${c.segmento} · desde ${c.desde}</p><strong>${money(c.p)}</strong><button data-mbuy="${c.id}" ${S.money>=c.p?'':'disabled'}>Comprar</button></article>`).join('');document.querySelectorAll('[data-mbuy]').forEach(b=>b.onclick=()=>buy(b.dataset.mbuy,false));$('#closeMarket').style.display=force?'none':'inline-block'}
-function closeM(){$('#market').classList.remove('open');$('#closeMarket').style.display='inline-block'}
-function finish(){show('result');let patrimonio=S.money+(S.car?sale():0),v=S.history.length>=7?'Cambiador serial':S.history.length<=2?'Fiel hasta el final':S.money>25000?'Cazador de oportunidades':'Coleccionista accidental';$('#resultTitle').textContent=v;$('#resultCopy').textContent=`${S.player}, llegaste a 2026 después de ${S.decisions} decisiones y ${S.history.length} autos.`;$('#resultCard').innerHTML=`<div class=stats><div class=stat><span>Patrimonio</span><strong>${money(patrimonio)}</strong></div><div class=stat><span>Dinero</span><strong>${money(S.money)}</strong></div><div class=stat><span>Autos</span><strong>${S.history.length}</strong></div><div class=stat><span>Decisiones</span><strong>${S.decisions}</strong></div></div><h3>Tu garaje histórico</h3>${S.history.map(h=>`<div class=history-item><span>${h.brand} ${h.model}</span><strong>${h.boughtYear}${h.soldYear?' → '+h.soldYear:' → 2026'}</strong></div>`).join('')}`;localStorage.removeItem(SAVE)}
-function persist(){localStorage.setItem(SAVE,JSON.stringify(S))} function reset(){localStorage.removeItem(SAVE);S=null;show('start')}
-$('#startForm').onsubmit=e=>{e.preventDefault();begin($('#name').value.trim(),+$('#startYear').value)};$('#back').onclick=reset;$('#again').onclick=reset;$('#closeMarket').onclick=closeM;$('#market').onclick=e=>{if(e.target===$('#market'))closeM()};
-(async()=>{years();await data();let x=localStorage.getItem(SAVE);if(x){S=JSON.parse(x);if(S.car)renderGame();else if(S.player)renderStarter()}})().catch(e=>document.body.innerHTML=`<main class=shell style="padding:50px"><h1>No se pudo iniciar</h1><p>${e.message}</p></main>`)
-</script></body></html>
+const END_YEAR=2026;
+const SAVE_KEY='lmp_car_life_v02';
+let CARS=[];
+let EVENTS=[];
+let state=null;
+
+const $=s=>document.querySelector(s);
+const clean=v=>(v??'').toString().trim();
+const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
+const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const money=n=>`USD ${Math.round(n).toLocaleString('es-AR')}`;
+
+function screen(id){
+  document.querySelectorAll('.screen').forEach(el=>el.classList.remove('active'));
+  $('#'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function populateYears(){
+  const select=$('#startYear');
+  for(let year=1960;year<=2018;year++){
+    const option=document.createElement('option');
+    option.value=year;
+    option.textContent=year;
+    select.append(option);
+  }
+}
+async function loadData(){
+  const [carsRes,eventsRes]=await Promise.all([
+    fetch('./data/autos.json',{cache:'no-store'}),
+    fetch('./data/eventos.json',{cache:'no-store'})
+  ]);
+  if(!carsRes.ok||!eventsRes.ok)throw new Error('No se pudo cargar la base del juego.');
+  CARS=await carsRes.json();
+  EVENTS=await eventsRes.json();
+}
+function initialCash(year){
+  return Math.round(3200+((year-1960)/58)*10500);
+}
+function currentCar(){
+  return CARS.find(car=>car.id===state?.car?.id);
+}
+function availableCars(year){
+  return CARS.filter(car=>car.desde<=year && year-car.desde<=18);
+}
+function marketPrice(car,year){
+  const age=Math.max(0,year-car.desde);
+  const depreciation=Math.pow(.91,Math.min(age,12));
+  const classicYears=Math.max(0,age-22);
+  const collectibleBoost=(car.potencialClasico/100)*classicYears*.018;
+  return Math.max(900,Math.round(car.precioBaseUSD*depreciation*(1+collectibleBoost)));
+}
+function vehicleAge(){
+  const car=currentCar();
+  return car?Math.max(0,state.year-car.desde):0;
+}
+function repairMultiplier(){
+  return 1+(state.car?.repairs||0)*.28;
+}
+function repairCost(base){
+  return Math.round(base*repairMultiplier());
+}
+function monthlyExpense(){
+  const car=currentCar();
+  if(!car||!state.car)return 0;
+
+  const base=Number(car.gastoMensualBaseUSD)||14;
+  const conditionPenalty=1+((100-state.car.condition)/100)*.9;
+  const originalityPenalty=state.car.originality>80
+    ? 1+((state.car.originality-80)/20)*.35
+    : 1;
+  const performancePenalty=state.car.performance<50
+    ? 1+((50-state.car.performance)/50)*.32
+    : 1;
+  const temporary=1+(state.car.expenseModifier||0);
+
+  return Math.max(5,Math.round(base*conditionPenalty*originalityPenalty*performancePenalty*temporary));
+}
+function vehicleValue(){
+  if(!state.car)return 0;
+  const market=marketPrice(currentCar(),state.year);
+  const conditionFactor=.62+state.car.condition/235;
+  const originalityFactor=.84+state.car.originality/520;
+  const invested=Math.max(0,state.car.investedValue||0);
+  const damage=Math.max(0,state.car.valueDamage||0);
+
+  return Math.max(
+    300,
+    Math.round(market*conditionFactor*originalityFactor + invested - damage)
+  );
+}
+function normalSaleValue(){
+  if(!state.car)return 0;
+  const car=currentCar();
+  const market=marketPrice(car,state.year);
+  const conditionFactor=.50+state.car.condition/230;
+  const originalityFactor=.88+state.car.originality/650;
+  return Math.max(150,Math.round(market*conditionFactor*originalityFactor));
+}
+function scrapValue(){
+  if(!state.car)return 0;
+  return Math.max(120,Math.round(marketPrice(currentCar(),state.year)*(0.08+Math.random()*.07)));
+}
+function buyingPower(){
+  return state.money+(state.car?normalSaleValue():0);
+}
+function randomSubset(list,count){
+  return [...list].sort(()=>Math.random()-.5).slice(0,count);
+}
+function starterOptions(year,cash){
+  let candidates=availableCars(year)
+    .map(car=>({...car,market:marketPrice(car,year)}))
+    .filter(car=>car.market<=cash*1.08)
+    .sort((a,b)=>a.market-b.market);
+
+  if(candidates.length<3){
+    candidates=availableCars(year)
+      .map(car=>({...car,market:marketPrice(car,year)}))
+      .sort((a,b)=>a.market-b.market)
+      .slice(0,10);
+  }
+
+  return randomSubset(candidates,Math.min(3,candidates.length))
+    .sort((a,b)=>a.market-b.market);
+}
+function renderStats(target){
+  const currentValue=state.car?vehicleValue():0;
+  target.innerHTML=`
+    <div class="stat"><span>Año</span><strong>${state.year}</strong></div>
+    <div class="stat"><span>Dinero</span><strong>${money(state.money)}</strong></div>
+    <div class="stat"><span>Autos</span><strong>${state.history.length}</strong></div>
+    <div class="stat highlight"><span>Valor de tu auto</span><strong>${state.car?money(currentValue):'—'}</strong></div>
+    <div class="stat"><span>Gasto mensual</span><strong>${state.car?money(monthlyExpense()):'—'}</strong></div>`;
+}
+function carCard(car,first=false){
+  const price=car.market??marketPrice(car,state.year);
+  const can=state.money>=price;
+  return `<article class="car-card">
+    <div class="car-art"><span class="car-year">${car.desde}</span></div>
+    <div class="car-body">
+      <span class="make">${car.marca}</span>
+      <h3>${car.modelo}</h3>
+      <div class="car-meta">
+        <span>${car.segmento}</span>
+        <span>Conf. ${car.confiabilidad}</span>
+        <span>${money(car.gastoMensualBaseUSD)}/mes base</span>
+      </div>
+      <div class="car-price"><small>Valor aproximado de juego</small>${money(price)}</div>
+      <button class="car-select" data-buy="${car.id}" ${can?'':'disabled'}>${first?'Elegir este auto':'Comprar'}</button>
+    </div>
+  </article>`;
+}
+function beginCareer(name,year){
+  state={
+    player:clean(name)||'Conductor',
+    startYear:year,
+    year,
+    money:initialCash(year),
+    car:null,
+    history:[],
+    events:[],
+    nextEventYear:year,
+    pendingEvent:null,
+    decisions:0,
+    totalIncome:0,
+    totalRunningCosts:0
+  };
+  persist();
+  renderStarter();
+}
+function renderStarter(){
+  screen('starterScreen');
+  $('#starterTitle').textContent=`${state.player}, elegí tu primer auto`;
+  $('#starterSubtitle').textContent=`Estamos en ${state.year}. Tenés ${money(state.money)} para empezar.`;
+  renderStats($('#starterStats'));
+  $('#starterCars').innerHTML=starterOptions(state.year,state.money).map(car=>carCard(car,true)).join('');
+  document.querySelectorAll('[data-buy]').forEach(button=>{
+    button.onclick=()=>buyCar(button.dataset.buy,true);
+  });
+}
+function buyCar(id,first=false){
+  const next=CARS.find(car=>car.id===id);
+  if(!next)return;
+  const price=marketPrice(next,state.year);
+
+  const power=state.money+(state.car&&!first?normalSaleValue():0);
+  if(power<price)return;
+
+  if(state.car&&!first){
+    const current=currentCar();
+    const sold=normalSaleValue();
+    state.money+=sold;
+    const history=state.history.at(-1);
+    history.soldYear=state.year;
+    history.soldFor=sold;
+    history.saleReason='mercado';
+    state.events.unshift({year:state.year,text:`Vendiste ${current.marca} ${current.modelo} por ${money(sold)} para cambiar de auto.`});
+  }
+
+  state.money-=price;
+  state.car={
+    id,
+    condition:88,
+    originality:92,
+    performance:50,
+    repairs:0,
+    investedValue:0,
+    valueDamage:0,
+    expenseModifier:0,
+    purchasePrice:price,
+    purchaseYear:state.year
+  };
+  state.history.push({
+    id,
+    brand:next.marca,
+    model:next.modelo,
+    boughtYear:state.year,
+    boughtFor:price
+  });
+  state.events.unshift({year:state.year,text:`Compraste ${next.marca} ${next.modelo} por ${money(price)}.`});
+  state.pendingEvent=null;
+  state.nextEventYear=Math.min(END_YEAR,state.year+nextGap());
+  persist();
+  closeMarket();
+  renderGame();
+}
+function nextGap(){
+  const remaining=END_YEAR-state.year;
+  if(remaining<=2)return Math.max(1,remaining);
+  const roll=Math.random();
+  if(roll<.55)return Math.min(remaining,rand(2,4));
+  if(roll<.88)return Math.min(remaining,rand(5,7));
+  return Math.min(remaining,rand(8,12));
+}
+function advanceYears(years){
+  let income=0;
+  let running=0;
+
+  for(let i=0;i<years;i++){
+    const annualIncome=rand(100,500);
+    income+=annualIncome;
+
+    const yearlyCost=monthlyExpense()*12;
+    running+=yearlyCost;
+
+    state.money+=annualIncome-yearlyCost;
+
+    if(state.car){
+      state.car.condition=clamp(state.car.condition-rand(1,3),0,100);
+      if(Math.random()<.22)state.car.performance=clamp(state.car.performance-1,0,100);
+    }
+  }
+
+  state.money=Math.max(0,Math.round(state.money));
+  state.totalIncome+=income;
+  state.totalRunningCosts+=running;
+  state.year+=years;
+
+  state.events.unshift({
+    year:state.year,
+    text:`Pasaron ${years} años. Ingresaste ${money(income)} y el auto consumió ${money(running)} en gastos de uso.`
+  });
+
+  if(state.car?.expenseModifier){
+    state.car.expenseModifier*=.72;
+    if(Math.abs(state.car.expenseModifier)<.025)state.car.expenseModifier=0;
+  }
+}
+function meter(label,value){
+  return `<div class="meter-row"><span>${label}</span><div class="meter"><b style="width:${clamp(value,0,100)}%"></b></div><strong>${Math.round(value)}</strong></div>`;
+}
+function renderGarage(){
+  const car=currentCar();
+  if(!car||!state.car){
+    $('#garagePanel').innerHTML='<div style="padding:24px">No tenés auto actualmente.</div>';
+    return;
+  }
+
+  $('#garagePanel').innerHTML=`
+    <div class="garage-card">
+      <div class="garage-art"><div class="icon">🚗</div></div>
+      <div class="garage-info">
+        <span class="make">${car.marca}</span>
+        <h3>${car.modelo}</h3>
+
+        <div class="value-box">
+          <div class="value-cell current">
+            <span>Valor actual de tu auto</span>
+            <strong>${money(vehicleValue())}</strong>
+          </div>
+          <div class="value-cell">
+            <span>Venta estimada normal</span>
+            <strong>${money(normalSaleValue())}</strong>
+          </div>
+        </div>
+        <p class="value-note">El valor actual refleja estado, originalidad e inversiones. No significa que el mercado vaya a pagarlo. Un coleccionista excepcional sí puede hacerlo.</p>
+
+        <div class="meters">
+          ${meter('Estado',state.car.condition)}
+          ${meter('Originalidad',state.car.originality)}
+          ${meter('Performance',state.car.performance)}
+        </div>
+
+        <div class="cost-line"><span>Gasto mensual actual</span><strong>${money(monthlyExpense())}</strong></div>
+        <div class="cost-line"><span>Reparaciones hechas</span><strong>${state.car.repairs}</strong></div>
+        <div class="cost-line"><span>Próxima reparación</span><strong>x${repairMultiplier().toFixed(2)}</strong></div>
+
+        <div class="canonical"><strong>Historia del modelo:</strong><br>${car.eventoCanonico}</div>
+        <button class="car-select" id="openMarket" style="width:100%;margin-top:12px">Ver mercado / cambiar auto</button>
+      </div>
+    </div>`;
+
+  $('#openMarket').onclick=()=>openMarket(false);
+}
+function eligibleEvents(){
+  const car=currentCar();
+  if(!car)return [];
+
+  return EVENTS.filter(event=>{
+    if(event.special==='collector'){
+      return vehicleAge()>=40 && state.car.condition>=82 && state.car.originality>=78;
+    }
+    if(event.special==='divorce'){
+      return state.year-state.startYear>=8;
+    }
+    return event.tags.includes('*') || event.tags.some(tag=>car.tags.includes(tag));
+  });
+}
+function chooseEvent(){
+  const eligible=eligibleEvents();
+  const recent=new Set(state.events.slice(0,4).map(item=>item.eventId).filter(Boolean));
+  let pool=eligible.filter(event=>!recent.has(event.id));
+  if(!pool.length)pool=eligible;
+
+  // Eventos fuertes aparecen menos seguido.
+  const normal=pool.filter(e=>!['crash','engine','divorce','collector'].includes(e.special));
+  const dramatic=pool.filter(e=>['crash','engine','divorce','collector'].includes(e.special));
+
+  let selected;
+  if(dramatic.length && Math.random()<.20){
+    selected=dramatic[rand(0,dramatic.length-1)];
+  }else{
+    selected=(normal.length?normal:pool)[rand(0,(normal.length?normal:pool).length-1)];
+  }
+
+  state.pendingEvent={id:selected.id,forcedApplied:false};
+  persist();
+}
+function eventById(id){
+  return EVENTS.find(event=>event.id===id);
+}
+function applyForced(event){
+  if(!event.forced||state.pendingEvent.forcedApplied)return '';
+
+  const forced=event.forced;
+  state.car.condition=clamp(state.car.condition+(forced.condition||0),0,100);
+  state.car.originality=clamp(state.car.originality+(forced.originality||0),0,100);
+  state.car.performance=clamp(state.car.performance+(forced.performance||0),0,100);
+
+  if(forced.valuePct){
+    state.car.valueDamage+=Math.max(0,Math.round(vehicleValue()*Math.abs(forced.valuePct)));
+  }
+
+  state.pendingEvent.forcedApplied=true;
+  persist();
+  return forced.note||'El hecho ya ocurrió antes de que pudieras decidir.';
+}
+function choiceCost(choice){
+  if(choice.costType==='repair')return repairCost(choice.repairBase||0);
+  return Math.abs(Math.min(0,choice.money||0));
+}
+function choicePreview(choice){
+  const parts=[];
+  if(choice.costType==='repair'){
+    parts.push(`Reparación ${money(choiceCost(choice))}`);
+    parts.push(`costo x${repairMultiplier().toFixed(2)}`);
+  }else if(choice.money){
+    parts.push(`${choice.money<0?'Costo':'Ingreso'} ${money(Math.abs(choice.money))}`);
+  }
+
+  if(choice.condition)parts.push(`Estado ${choice.condition>0?'+':''}${choice.condition}`);
+  if(choice.originality)parts.push(`Originalidad ${choice.originality>0?'+':''}${choice.originality}`);
+  if(choice.performance)parts.push(`Performance ${choice.performance>0?'+':''}${choice.performance}`);
+  if(choice.risk>=.20)parts.push('Riesgo alto');
+
+  return parts.join(' · ')||'Sin impacto económico inmediato';
+}
+function genericChoiceMarkup(choice,index){
+  return `<button class="choice" data-choice="${index}">
+    <span class="choice-icon">${choice.icon||'➜'}</span>
+    <strong>${choice.label}</strong>
+    <small>${choicePreview(choice)}</small>
+  </button>`;
+}
+function renderPendingEvent(){
+  const event=eventById(state.pendingEvent.id);
+  const car=currentCar();
+  const forcedText=applyForced(event);
+
+  $('#eventCard').className=`event-card enter ${event.forced?'forced':''}`;
+
+  if(event.special){
+    renderSpecialEvent(event,car,forcedText);
+    return;
+  }
+
+  $('#eventCard').innerHTML=`
+    <div class="event-icon">${event.icon||'🚗'}</div>
+    <span class="eyebrow">${car.marca} ${car.modelo}</span>
+    <h2>${event.title}</h2>
+    ${forcedText?`<div class="forced-banner"><strong>Ya ocurrió:</strong><span>${forcedText}</span></div>`:''}
+    <p>${event.text}</p>
+    <div class="choices">${event.choices.map(genericChoiceMarkup).join('')}</div>`;
+
+  document.querySelectorAll('[data-choice]').forEach(button=>{
+    button.onclick=()=>resolveChoice(event,event.choices[Number(button.dataset.choice)]);
+  });
+}
+function renderSpecialEvent(event,car,forcedText){
+  if(event.special==='sale'){
+    const offer=Math.round(normalSaleValue()*(.92+Math.random()*.22));
+    $('#eventCard').innerHTML=`
+      <div class="event-icon">${event.icon}</div>
+      <span class="eyebrow">${car.marca} ${car.modelo}</span>
+      <h2>${event.title}</h2>
+      <p>${event.text} Te ofrecen <strong>${money(offer)}</strong>. Tu valor interno actual es ${money(vehicleValue())}.</p>
+      <div class="choices">
+        ${specialButton('🤝','Aceptar la oferta',`Recibís ${money(offer)} y volvés al mercado.`,'accept-sale')}
+        ${specialButton('🔑','Quedártelo','Rechazás la oferta y seguís con el mismo auto.','keep-sale')}
+      </div>`;
+    $('#accept-sale').onclick=()=>sellAndForceMarket(offer,'oferta particular',event);
+    $('#keep-sale').onclick=()=>finishSpecial(event,'Rechazaste la oferta y decidiste conservar el auto.');
+    return;
+  }
+
+  if(event.special==='collector'){
+    const offer=vehicleValue();
+    $('#eventCard').innerHTML=`
+      <div class="event-icon">${event.icon}</div>
+      <span class="eyebrow">Más de 40 años · muy buen estado</span>
+      <h2>${event.title}</h2>
+      <p>${event.text} Esta vez la oferta sí reconoce el <strong>valor completo de tu auto: ${money(offer)}</strong>.</p>
+      <div class="choices">
+        ${specialButton('🏆','Vendérselo al coleccionista',`Es una excepción: paga ${money(offer)}.`,'collector-sell')}
+        ${specialButton('❤️','No está en venta','Preferís conservar una unidad difícil de reemplazar.','collector-keep')}
+      </div>`;
+    $('#collector-sell').onclick=()=>sellAndForceMarket(offer,'coleccionista',event);
+    $('#collector-keep').onclick=()=>finishSpecial(event,'Rechazaste una oferta de coleccionista y preservaste el auto.');
+    return;
+  }
+
+  if(event.special==='crash'){
+    if(!state.pendingEvent.forcedApplied){
+      state.car.condition=clamp(state.car.condition-28,0,100);
+      state.car.originality=clamp(state.car.originality-18,0,100);
+      state.car.performance=clamp(state.car.performance-8,0,100);
+      state.car.valueDamage+=Math.round(vehicleValue()*.14);
+      state.pendingEvent.forcedApplied=true;
+      persist();
+    }
+    const repair=repairCost(2300);
+    const scrap=scrapValue();
+    $('#eventCard').innerHTML=`
+      <div class="event-icon">${event.icon}</div>
+      <span class="eyebrow">Evento irreversible</span>
+      <h2>${event.title}</h2>
+      <div class="forced-banner"><strong>Ya ocurrió:</strong><span>El seguro no cubre los daños. Se perdieron piezas originales y el estado cayó fuerte.</span></div>
+      <p>${event.text}</p>
+      <div class="choices">
+        ${specialButton('🛠️','Reconstruirlo',`Reparación ${money(repair)} · cada reparación previa aumenta este costo.`,'crash-repair')}
+        ${specialButton('♻️','Venderlo como chatarra',`Recibís aproximadamente ${money(scrap)} y perdés el auto.`,'crash-scrap')}
+      </div>`;
+    $('#crash-repair').onclick=()=>resolveDynamicRepair(event,repair,{condition:25,originality:-4,performance:6,valueShare:.72,note:'Reconstruiste el auto después del choque, aunque nunca volvió a ser completamente original.'});
+    $('#crash-scrap').onclick=()=>scrapAndForceMarket(scrap,event,'El choque hizo que reparar no fuera rentable.');
+    return;
+  }
+
+  if(event.special==='engine'){
+    if(!state.pendingEvent.forcedApplied){
+      state.car.condition=clamp(state.car.condition-24,0,100);
+      state.car.performance=clamp(state.car.performance-22,0,100);
+      state.car.valueDamage+=Math.round(vehicleValue()*.10);
+      state.pendingEvent.forcedApplied=true;
+      persist();
+    }
+    const rebuild=repairCost(1850);
+    const scrap=scrapValue();
+    $('#eventCard').innerHTML=`
+      <div class="event-icon">${event.icon}</div>
+      <span class="eyebrow">Falla mayor</span>
+      <h2>${event.title}</h2>
+      <div class="forced-banner"><strong>Ya ocurrió:</strong><span>El motor quedó fuera de servicio. El auto perdió estado y valor antes de tu decisión.</span></div>
+      <p>${event.text}</p>
+      <div class="choices">
+        ${specialButton('🔩','Reconstruir el motor',`Reparación ${money(rebuild)} · recupera gran parte del valor.`,'engine-rebuild')}
+        ${specialButton('♻️','Vender como chatarra',`Recibís ${money(scrap)} y buscás otro auto.`,'engine-scrap')}
+      </div>`;
+    $('#engine-rebuild').onclick=()=>resolveDynamicRepair(event,rebuild,{condition:22,originality:-2,performance:20,valueShare:.76,note:'Reconstruiste el motor y el auto volvió a circular.'});
+    $('#engine-scrap').onclick=()=>scrapAndForceMarket(scrap,event,'El motor fundido terminó la historia de este auto.');
+    return;
+  }
+
+  if(event.special==='divorce'){
+    const half=Math.round(state.money*.5);
+    const carValue=normalSaleValue();
+    $('#eventCard').innerHTML=`
+      <div class="event-icon">${event.icon}</div>
+      <span class="eyebrow">Evento personal</span>
+      <h2>${event.title}</h2>
+      <p>${event.text}</p>
+      <div class="choices">
+        ${specialButton('💵','Entregar el 50% del dinero',`Perdés ${money(half)} y conservás el auto.`,'divorce-money')}
+        ${specialButton('🚗','Entregar el auto',`Conservás tu dinero, pero perdés el vehículo sin cobrar ${money(carValue)}.`,'divorce-car')}
+      </div>`;
+    $('#divorce-money').onclick=()=>{
+      state.money=Math.max(0,state.money-half);
+      finishSpecial(event,`El divorcio te costó ${money(half)}, pero conservaste el auto.`);
+    };
+    $('#divorce-car').onclick=()=>{
+      const history=state.history.at(-1);
+      history.soldYear=state.year;
+      history.soldFor=0;
+      history.saleReason='divorcio';
+      state.events.unshift({year:state.year,eventId:event.id,text:`El divorcio te obligó a entregar ${car.marca} ${car.modelo} sin recibir dinero.`});
+      state.car=null;
+      state.pendingEvent=null;
+      state.decisions++;
+      persist();
+      openMarket(true);
+    };
+    return;
+  }
+
+  if(event.special==='canonical'){
+    const correct=repairCost(760);
+    const cheap=repairCost(260);
+    $('#eventCard').innerHTML=`
+      <div class="event-icon">${event.icon}</div>
+      <span class="eyebrow">${car.marca} ${car.modelo}</span>
+      <h2>${event.title}</h2>
+      <p><strong>${car.eventoCanonico}</strong></p>
+      <div class="choices">
+        ${specialButton('🧬','Resolverlo respetando el modelo',`Reparación ${money(correct)} · conserva mejor originalidad y valor.`,'canonical-right')}
+        ${specialButton('🔧','Buscar una solución económica',`Reparación ${money(cheap)} · más barata, pero menos fiel al auto.`,'canonical-cheap')}
+      </div>`;
+    $('#canonical-right').onclick=()=>resolveDynamicRepair(event,correct,{condition:8,originality:5,performance:2,valueShare:.68,note:'Resolviste el problema de forma correcta para el modelo.'});
+    $('#canonical-cheap').onclick=()=>resolveDynamicRepair(event,cheap,{condition:3,originality:-5,performance:0,valueShare:.24,note:'El auto siguió funcionando, aunque la solución redujo originalidad.'},.18);
+  }
+}
+function specialButton(icon,label,detail,id){
+  return `<button class="choice" id="${id}">
+    <span class="choice-icon">${icon}</span>
+    <strong>${label}</strong>
+    <small>${detail}</small>
+  </button>`;
+}
+function applyMoneyAndEffects(choice,actualCost=0){
+  if(choice.costType==='repair'){
+    state.money=Math.max(0,state.money-actualCost);
+    state.car.repairs++;
+    state.car.investedValue+=Math.round(actualCost*(choice.valueShare??.55));
+  }else{
+    state.money=Math.max(0,state.money+(choice.money||0));
+    state.car.investedValue+=Math.max(0,choice.valueAdd||0);
+    if((choice.valueAdd||0)<0)state.car.valueDamage+=Math.abs(choice.valueAdd);
+  }
+
+  state.car.condition=clamp(state.car.condition+(choice.condition||0),0,100);
+  state.car.originality=clamp(state.car.originality+(choice.originality||0),0,100);
+  state.car.performance=clamp(state.car.performance+(choice.performance||0),0,100);
+
+  if(choice.expenseModifier){
+    state.car.expenseModifier=clamp((state.car.expenseModifier||0)+choice.expenseModifier,-.35,.65);
+  }
+}
+function resolveChoice(event,choice){
+  const actualCost=choice.costType==='repair'?choiceCost(choice):0;
+  applyMoneyAndEffects(choice,actualCost);
+
+  let text=choice.note||'Tomaste una decisión.';
+  if(Math.random()<(choice.risk||0)){
+    const extra=repairCost(rand(380,1150));
+    state.money=Math.max(0,state.money-extra);
+    state.car.repairs++;
+    state.car.investedValue+=Math.round(extra*.35);
+    state.car.condition=clamp(state.car.condition-rand(5,14),0,100);
+    text+=` La decisión trajo una reparación adicional de ${money(extra)}.`;
+  }
+
+  completeEvent(event,text);
+}
+function resolveDynamicRepair(event,cost,effects,risk=0){
+  state.money=Math.max(0,state.money-cost);
+  state.car.repairs++;
+  state.car.investedValue+=Math.round(cost*(effects.valueShare??.6));
+  state.car.condition=clamp(state.car.condition+(effects.condition||0),0,100);
+  state.car.originality=clamp(state.car.originality+(effects.originality||0),0,100);
+  state.car.performance=clamp(state.car.performance+(effects.performance||0),0,100);
+
+  let text=effects.note;
+  if(Math.random()<risk){
+    const extra=repairCost(rand(350,900));
+    state.money=Math.max(0,state.money-extra);
+    state.car.repairs++;
+    state.car.investedValue+=Math.round(extra*.25);
+    text+=` Durante el trabajo apareció otro problema y sumaste ${money(extra)}.`;
+  }
+
+  completeEvent(event,text);
+}
+function completeEvent(event,text){
+  state.events.unshift({year:state.year,eventId:event.id,text});
+  state.decisions++;
+  state.pendingEvent=null;
+  state.nextEventYear=Math.min(END_YEAR,state.year+nextGap());
+  persist();
+  renderGame();
+}
+function finishSpecial(event,text){
+  completeEvent(event,text);
+}
+function sellAndForceMarket(amount,reason,event){
+  const car=currentCar();
+  state.money+=amount;
+  const history=state.history.at(-1);
+  history.soldYear=state.year;
+  history.soldFor=amount;
+  history.saleReason=reason;
+  state.events.unshift({year:state.year,eventId:event.id,text:`Vendiste ${car.marca} ${car.modelo} por ${money(amount)} (${reason}).`});
+  state.car=null;
+  state.pendingEvent=null;
+  state.decisions++;
+  persist();
+  openMarket(true);
+}
+function scrapAndForceMarket(amount,event,reason){
+  const car=currentCar();
+  state.money+=amount;
+  const history=state.history.at(-1);
+  history.soldYear=state.year;
+  history.soldFor=amount;
+  history.saleReason='chatarra';
+  state.events.unshift({year:state.year,eventId:event.id,text:`${reason} Lo vendiste como chatarra por ${money(amount)}.`});
+  state.car=null;
+  state.pendingEvent=null;
+  state.decisions++;
+  persist();
+  openMarket(true);
+}
+function renderLog(){
+  $('#eventLog').innerHTML=state.events.slice(0,8)
+    .map(item=>`<div class="log-item"><b>${item.year}</b><span>${item.text}</span></div>`)
+    .join('');
+}
+function renderGame(){
+  screen('gameScreen');
+  $('#playerLabel').textContent=`${state.player} · ${state.startYear} → ${END_YEAR}`;
+  $('#yearPill').textContent=state.year;
+
+  if(state.year>=END_YEAR){
+    finish();
+    return;
+  }
+
+  if(!state.car){
+    openMarket(true);
+    return;
+  }
+
+  if(!state.pendingEvent && state.nextEventYear>state.year){
+    const years=Math.min(state.nextEventYear,END_YEAR)-state.year;
+    if(years>0)advanceYears(years);
+  }
+
+  if(state.year>=END_YEAR){
+    persist();
+    finish();
+    return;
+  }
+
+  renderStats($('#gameStats'));
+  renderGarage();
+  $('#yearPill').textContent=state.year;
+
+  if(!state.pendingEvent)chooseEvent();
+  renderPendingEvent();
+  renderLog();
+  persist();
+}
+function marketCandidates(){
+  return availableCars(state.year)
+    .filter(car=>!state.car||car.id!==state.car.id)
+    .map(car=>({...car,market:marketPrice(car,state.year)}))
+    .sort((a,b)=>a.market-b.market)
+    .filter((car,index)=>car.market<=buyingPower()*1.25||index<12)
+    .slice(0,18);
+}
+function openMarket(force=false){
+  $('#marketModal').classList.add('open');
+  $('#marketTitle').textContent=`Mercado ${state.year} · poder de compra ${money(buyingPower())}`;
+
+  $('#marketList').innerHTML=marketCandidates().map(car=>`
+    <article class="market-item">
+      <span class="make">${car.marca}</span>
+      <h4>${car.modelo}</h4>
+      <p>${car.segmento} · desde ${car.desde} · ${money(car.gastoMensualBaseUSD)}/mes base</p>
+      <strong>${money(car.market)}</strong>
+      <button data-market-buy="${car.id}" ${buyingPower()>=car.market?'':'disabled'}>Comprar</button>
+    </article>`).join('');
+
+  document.querySelectorAll('[data-market-buy]').forEach(button=>{
+    button.onclick=()=>buyCar(button.dataset.marketBuy,false);
+  });
+
+  $('#closeMarket').style.display=force?'none':'inline-block';
+}
+function closeMarket(){
+  $('#marketModal').classList.remove('open');
+  $('#closeMarket').style.display='inline-block';
+}
+function finish(){
+  screen('resultScreen');
+  const car=currentCar();
+  const liquid=state.money;
+  const theoretical=state.money+(car?vehicleValue():0);
+
+  let title='Coleccionista accidental';
+  if(state.history.length>=7)title='Cambiador serial';
+  if(state.history.length<=2)title='Fiel hasta el final';
+  if(state.money>25000)title='Cazador de oportunidades';
+  if(car && state.car.originality>90 && vehicleAge()>35)title='Purista';
+
+  $('#resultTitle').textContent=title;
+  $('#resultCopy').textContent=`${state.player}, llegaste a 2026 después de ${state.decisions} decisiones y ${state.history.length} autos.`;
+
+  $('#resultCard').innerHTML=`
+    <div class="stats">
+      <div class="stat"><span>Dinero final</span><strong>${money(liquid)}</strong></div>
+      <div class="stat highlight"><span>Valor actual del auto</span><strong>${car?money(vehicleValue()):'—'}</strong></div>
+      <div class="stat"><span>Valor teórico total</span><strong>${money(theoretical)}</strong></div>
+      <div class="stat"><span>Ingresos acumulados</span><strong>${money(state.totalIncome)}</strong></div>
+      <div class="stat"><span>Gastos de uso</span><strong>${money(state.totalRunningCosts)}</strong></div>
+    </div>
+    <h3 style="margin:18px 0 7px">Tu garaje histórico</h3>
+    <div class="history">${state.history.map(item=>`
+      <div class="history-item">
+        <span>${item.brand} ${item.model}</span>
+        <strong>${item.boughtYear}${item.soldYear?` → ${item.soldYear}`:' → 2026'}</strong>
+      </div>`).join('')}</div>`;
+
+  localStorage.removeItem(SAVE_KEY);
+}
+function persist(){
+  localStorage.setItem(SAVE_KEY,JSON.stringify(state));
+}
+function reset(){
+  localStorage.removeItem(SAVE_KEY);
+  state=null;
+  screen('startScreen');
+}
+
+$('#startForm').addEventListener('submit',event=>{
+  event.preventDefault();
+  beginCareer($('#playerName').value,Number($('#startYear').value));
+});
+$('#restartFromStarter').onclick=reset;
+$('#playAgain').onclick=reset;
+$('#closeMarket').onclick=closeMarket;
+$('#marketModal').addEventListener('click',event=>{
+  if(event.target===$('#marketModal'))closeMarket();
+});
+
+(async function init(){
+  populateYears();
+  await loadData();
+
+  const saved=localStorage.getItem(SAVE_KEY);
+  if(saved){
+    state=JSON.parse(saved);
+    if(state?.car||state?.player)renderGame();
+  }
+})().catch(error=>{
+  document.body.innerHTML=`<main class="shell" style="padding:50px"><h1 style="font-size:48px">No se pudo iniciar el juego.</h1><p>${error.message}</p></main>`;
+});
+</script>
+</body>
+</html>

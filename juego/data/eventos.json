@@ -1,83 +1,81 @@
 [
   {
     "id": "mantenimiento",
-    "title": "Es hora de hacerle mantenimiento",
+    "icon": "🧰",
+    "title": "El mantenimiento ya no puede esperar",
     "tags": [
       "*"
     ],
-    "text": "El auto viene cumpliendo, pero aparecen señales de desgaste normal. ¿Invertís ahora o estirás un poco más?",
+    "text": "Ruidos, fluidos y desgaste empiezan a acumularse. La próxima reparación será más cara si seguís postergando.",
     "choices": [
       {
-        "label": "Mantenimiento completo",
-        "money": -550,
-        "condition": 10,
-        "originality": 1,
-        "performance": 0,
+        "icon": "🔧",
+        "label": "Hacerlo como corresponde",
+        "costType": "repair",
+        "repairBase": 420,
+        "condition": 9,
+        "originality": 2,
+        "performance": 2,
+        "valueShare": 0.7,
         "risk": 0.02,
-        "note": "Gastaste ahora para evitar problemas después."
+        "note": "Hiciste mantenimiento completo y el auto quedó más sano."
       },
       {
-        "label": "Hacer lo mínimo",
-        "money": -180,
+        "icon": "🩹",
+        "label": "Resolver solo lo urgente",
+        "costType": "repair",
+        "repairBase": 160,
         "condition": 3,
-        "originality": 0,
+        "originality": -1,
         "performance": 0,
-        "risk": 0.18,
-        "note": "Ahorraste, pero quedó mantenimiento pendiente."
-      },
-      {
-        "label": "Seguir así",
-        "money": 0,
-        "condition": -5,
-        "originality": 0,
-        "performance": 0,
-        "risk": 0.34,
-        "note": "No gastaste nada, aunque el auto quedó más expuesto."
+        "valueShare": 0.35,
+        "risk": 0.2,
+        "note": "Gastaste poco, aunque varios trabajos quedaron pendientes."
       }
     ]
   },
   {
     "id": "recalentamiento",
-    "title": "La aguja de temperatura sube",
+    "icon": "🌡️",
+    "title": "La temperatura se fue arriba",
     "tags": [
       "carburador",
       "motor-trasero",
+      "youngtimer",
       "*"
     ],
-    "text": "La temperatura empieza a subir más de la cuenta. Podés parar y revisar o seguir hasta llegar.",
+    "text": "La aguja subió más de lo normal. Llegaste a parar antes de que fuera tarde, pero ahora hay que decidir qué hacer.",
     "choices": [
       {
-        "label": "Parar y reparar bien",
-        "money": -850,
-        "condition": 7,
-        "originality": 0,
-        "performance": 0,
-        "risk": 0.02,
-        "note": "Cortaste el problema antes de que escalara."
+        "icon": "🛠️",
+        "label": "Reparar refrigeración completa",
+        "costType": "repair",
+        "repairBase": 760,
+        "condition": 8,
+        "originality": 2,
+        "performance": 1,
+        "valueShare": 0.68,
+        "risk": 0.03,
+        "note": "Resolviste la causa y recuperaste confiabilidad."
       },
       {
-        "label": "Dejar enfriar y seguir",
-        "money": -120,
-        "condition": -3,
-        "originality": 0,
-        "performance": 0,
-        "risk": 0.22,
-        "note": "Llegaste, pero la causa sigue ahí."
-      },
-      {
-        "label": "Seguir manejando",
-        "money": 0,
-        "condition": -18,
-        "originality": 0,
-        "performance": 0,
-        "risk": 0.55,
-        "note": "Fue una apuesta fuerte con la mecánica."
+        "icon": "💧",
+        "label": "Parchear y seguir usando",
+        "costType": "repair",
+        "repairBase": 210,
+        "condition": -2,
+        "originality": -2,
+        "performance": -1,
+        "valueShare": 0.2,
+        "risk": 0.33,
+        "note": "El auto volvió a andar, pero el problema puede regresar."
       }
     ]
   },
   {
     "id": "tuning",
-    "title": "Te picó el bichito de modificarlo",
+    "icon": "🏁",
+    "title": "Te ofrecen preparar el auto",
     "tags": [
       "tuning",
       "deportivo",
@@ -86,161 +84,582 @@
       "turbo-opcional",
       "*"
     ],
-    "text": "Aparece la oportunidad de gastar plata en mejoras. Puede hacerlo más divertido, aunque no necesariamente más valioso.",
+    "text": "Aparece una oportunidad para modificarlo. La mejora puede ser divertida, aunque la originalidad también tiene valor.",
     "choices": [
       {
-        "label": "Preparación seria",
-        "money": -1600,
-        "condition": -1,
-        "originality": -18,
-        "performance": 14,
-        "risk": 0.12,
-        "note": "Ganaste rendimiento y perdiste originalidad."
-      },
-      {
-        "label": "Mejoras reversibles",
-        "money": -650,
+        "icon": "⚡",
+        "label": "Prepararlo",
+        "costType": "fixed",
+        "money": -980,
         "condition": 1,
-        "originality": -6,
-        "performance": 6,
-        "risk": 0.06,
-        "note": "Un toque de personalidad sin ir demasiado lejos."
+        "originality": -13,
+        "performance": 12,
+        "valueAdd": 420,
+        "risk": 0.1,
+        "note": "Ganaste performance, pero sacrificaste originalidad."
       },
       {
+        "icon": "🏛️",
         "label": "Mantenerlo original",
-        "money": 0,
-        "condition": 1,
-        "originality": 5,
+        "costType": "fixed",
+        "money": -90,
+        "condition": 2,
+        "originality": 6,
         "performance": 0,
+        "valueAdd": 120,
         "risk": 0,
-        "note": "Resististe la tentación y preservaste la unidad."
+        "note": "Preservaste la configuración original."
       }
     ]
   },
   {
     "id": "carroceria",
-    "title": "La carrocería empieza a pedir cariño",
+    "icon": "🎨",
+    "title": "La carrocería empieza a mostrar los años",
     "tags": [
       "clasico",
       "youngtimer",
       "*"
     ],
-    "text": "El paso del tiempo aparece en pintura, burletes y algunos puntos de chapa.",
+    "text": "Pintura, burletes y algunos puntos de chapa necesitan atención. Dejarlo pasar puede multiplicar el trabajo futuro.",
     "choices": [
       {
-        "label": "Restaurar como corresponde",
-        "money": -2100,
-        "condition": 16,
-        "originality": 9,
+        "icon": "✨",
+        "label": "Restaurar bien",
+        "costType": "repair",
+        "repairBase": 1450,
+        "condition": 14,
+        "originality": 8,
         "performance": 0,
-        "risk": 0.03,
-        "note": "Una inversión importante que deja el auto mucho mejor."
+        "valueShare": 0.78,
+        "risk": 0.02,
+        "note": "La restauración levantó mucho el estado y el valor del auto."
       },
       {
-        "label": "Arreglo cosmético",
-        "money": -550,
+        "icon": "🪛",
+        "label": "Hacer un arreglo económico",
+        "costType": "repair",
+        "repairBase": 430,
         "condition": 5,
-        "originality": -2,
+        "originality": -4,
         "performance": 0,
-        "risk": 0.1,
-        "note": "Mejoró a simple vista, aunque no quedó perfecto."
-      },
-      {
-        "label": "Dejarlo para más adelante",
-        "money": 0,
-        "condition": -8,
-        "originality": -1,
-        "performance": 0,
-        "risk": 0.18,
-        "note": "La deuda estética sigue creciendo."
+        "valueShare": 0.35,
+        "risk": 0.13,
+        "note": "Mejoró visualmente, aunque perdió algo de originalidad."
       }
     ]
   },
   {
-    "id": "oferta",
-    "title": "Te hacen una oferta por el auto",
-    "tags": [
-      "*"
-    ],
-    "text": "Alguien vio tu auto y quiere comprarlo. La oferta es tentadora, pero vender significa volver al mercado.",
-    "special": "sale"
-  },
-  {
     "id": "electronica",
+    "icon": "⚡",
     "title": "Una falla eléctrica intermitente",
     "tags": [
       "electronica",
       "moderno",
       "premium-generalista"
     ],
-    "text": "Aparece una falla difícil de reproducir. Puede ser algo menor o el comienzo de una cadena de gastos.",
+    "text": "Una falla aparece y desaparece. Puede ser algo menor o el comienzo de una cadena de problemas.",
     "choices": [
       {
+        "icon": "🔬",
         "label": "Diagnóstico completo",
-        "money": -700,
+        "costType": "repair",
+        "repairBase": 620,
         "condition": 7,
-        "originality": 0,
-        "performance": 0,
+        "originality": 1,
+        "performance": 1,
+        "valueShare": 0.58,
         "risk": 0.03,
-        "note": "Pagaste diagnóstico y solucionaste la causa."
+        "note": "Encontraste la causa y evitaste seguir cambiando piezas al azar."
       },
       {
+        "icon": "🎲",
         "label": "Cambiar lo más probable",
-        "money": -280,
+        "costType": "repair",
+        "repairBase": 240,
         "condition": 2,
         "originality": 0,
         "performance": 0,
-        "risk": 0.16,
-        "note": "Podría estar solucionado… o no."
+        "valueShare": 0.22,
+        "risk": 0.24,
+        "note": "Puede haber quedado resuelto, aunque no tenés certeza."
+      }
+    ]
+  },
+  {
+    "id": "suspension",
+    "icon": "🛞",
+    "title": "El tren delantero pide trabajo",
+    "tags": [
+      "suv",
+      "familiar",
+      "hatch",
+      "sedan",
+      "*"
+    ],
+    "text": "Golpes, bujes y amortiguadores empiezan a hacerse notar. El auto sigue andando, pero cada kilómetro castiga más piezas.",
+    "choices": [
+      {
+        "icon": "🔩",
+        "label": "Renovar el conjunto",
+        "costType": "repair",
+        "repairBase": 690,
+        "condition": 9,
+        "originality": 1,
+        "performance": 5,
+        "valueShare": 0.64,
+        "risk": 0.02,
+        "note": "Recuperaste estabilidad y mejoraste el estado general."
       },
       {
-        "label": "Ignorarlo mientras funcione",
+        "icon": "🧱",
+        "label": "Cambiar solo lo roto",
+        "costType": "repair",
+        "repairBase": 260,
+        "condition": 3,
+        "originality": 0,
+        "performance": 1,
+        "valueShare": 0.27,
+        "risk": 0.19,
+        "note": "Quedó utilizable, pero el desgaste sigue desparejo."
+      }
+    ]
+  },
+  {
+    "id": "embrague",
+    "icon": "⚙️",
+    "title": "El embrague empieza a patinar",
+    "tags": [
+      "*"
+    ],
+    "text": "En subidas y aceleraciones empieza a sentirse. Todavía se puede usar, aunque la reparación parece inevitable.",
+    "choices": [
+      {
+        "icon": "🔧",
+        "label": "Cambiar kit completo",
+        "costType": "repair",
+        "repairBase": 610,
+        "condition": 8,
+        "originality": 1,
+        "performance": 3,
+        "valueShare": 0.6,
+        "risk": 0.02,
+        "note": "Quedó resuelto para varios años."
+      },
+      {
+        "icon": "⏳",
+        "label": "Estirarlo un poco más",
+        "costType": "fixed",
         "money": 0,
-        "condition": -6,
+        "condition": -5,
+        "originality": 0,
+        "performance": -6,
+        "valueAdd": -110,
+        "risk": 0.31,
+        "note": "Ganaste tiempo, pero el embrague quedó al límite."
+      }
+    ]
+  },
+  {
+    "id": "neumaticos",
+    "icon": "🛞",
+    "title": "Necesitás cubiertas",
+    "tags": [
+      "*"
+    ],
+    "text": "Las cuatro cubiertas están cerca del final. Es un gasto poco emocionante, pero afecta seguridad y rendimiento.",
+    "choices": [
+      {
+        "icon": "✅",
+        "label": "Poner cuatro buenas",
+        "costType": "repair",
+        "repairBase": 520,
+        "condition": 5,
+        "originality": 0,
+        "performance": 4,
+        "valueShare": 0.48,
+        "risk": 0,
+        "note": "Mejoraste seguridad y comportamiento."
+      },
+      {
+        "icon": "💸",
+        "label": "Comprar dos económicas",
+        "costType": "repair",
+        "repairBase": 210,
+        "condition": 1,
         "originality": 0,
         "performance": 0,
-        "risk": 0.25,
-        "note": "Decidiste convivir con la falla."
+        "valueShare": 0.18,
+        "risk": 0.16,
+        "note": "Gastaste menos, aunque el conjunto quedó desparejo."
       }
     ]
   },
   {
     "id": "viaje",
+    "icon": "🗺️",
     "title": "Se viene un viaje largo",
     "tags": [
       "familiar",
       "suv",
       "monovolumen",
+      "sedan",
       "*"
     ],
-    "text": "Tenés la oportunidad de hacer un viaje importante. Preparar el auto cuesta, pero también construye historia.",
+    "text": "Tenés un viaje importante por delante. Preparar el auto cuesta, pero llegar sin sorpresas también tiene valor.",
     "choices": [
       {
-        "label": "Service y viaje",
-        "money": -620,
+        "icon": "🧳",
+        "label": "Service y salir",
+        "costType": "repair",
+        "repairBase": 380,
         "condition": 5,
         "originality": 0,
-        "performance": 0,
+        "performance": 1,
+        "valueShare": 0.35,
         "risk": 0.02,
-        "note": "El auto sumó kilómetros y una buena historia."
+        "note": "El viaje salió bien y el mantenimiento quedó hecho."
       },
       {
-        "label": "Viajar sin hacer nada",
-        "money": -220,
-        "condition": -5,
+        "icon": "🛣️",
+        "label": "Salir como está",
+        "costType": "fixed",
+        "money": -120,
+        "condition": -4,
         "originality": 0,
-        "performance": 0,
-        "risk": 0.15,
-        "note": "Salió barato, aunque exigiste más al auto."
-      },
+        "performance": -1,
+        "valueAdd": -80,
+        "risk": 0.17,
+        "note": "Ahorraste en preparación y exigiste más al auto."
+      }
+    ]
+  },
+  {
+    "id": "repuestos-originales",
+    "icon": "📦",
+    "title": "Aparece un lote de repuestos originales",
+    "tags": [
+      "clasico",
+      "youngtimer",
+      "raro"
+    ],
+    "text": "Un conocido vende piezas originales difíciles de conseguir. No las necesitás todas hoy, pero podrían ser importantes más adelante.",
+    "choices": [
       {
-        "label": "No viajar y ahorrar",
-        "money": 0,
-        "condition": 1,
-        "originality": 0,
+        "icon": "🏷️",
+        "label": "Comprar el lote",
+        "costType": "fixed",
+        "money": -540,
+        "condition": 2,
+        "originality": 7,
         "performance": 0,
+        "valueAdd": 620,
         "risk": 0,
-        "note": "Priorizaste el bolsillo."
+        "note": "Guardaste repuestos correctos y aumentó el valor percibido del auto."
+      },
+      {
+        "icon": "🚶",
+        "label": "Dejar pasar la oportunidad",
+        "costType": "fixed",
+        "money": 0,
+        "condition": 0,
+        "originality": 0,
+        "performance": 0,
+        "valueAdd": 0,
+        "risk": 0,
+        "note": "Conservaste el dinero, pero las piezas siguieron su camino."
+      }
+    ]
+  },
+  {
+    "id": "trabajo",
+    "icon": "💼",
+    "title": "Mejora tu situación laboral",
+    "tags": [
+      "*"
+    ],
+    "text": "Tu ingreso mejora y aparece un pequeño excedente inesperado.",
+    "choices": [
+      {
+        "icon": "💰",
+        "label": "Guardar el dinero",
+        "costType": "fixed",
+        "money": 620,
+        "condition": 0,
+        "originality": 0,
+        "performance": 0,
+        "valueAdd": 0,
+        "risk": 0,
+        "note": "Sumaste el excedente directamente a tus ahorros."
+      },
+      {
+        "icon": "🧽",
+        "label": "Invertir una parte en el auto",
+        "costType": "fixed",
+        "money": 260,
+        "condition": 4,
+        "originality": 2,
+        "performance": 1,
+        "valueAdd": 260,
+        "risk": 0,
+        "note": "Guardaste una parte y mejoraste algunos detalles del auto."
+      }
+    ]
+  },
+  {
+    "id": "combustible",
+    "icon": "⛽",
+    "title": "Sube fuerte el costo de usar el auto",
+    "tags": [
+      "*"
+    ],
+    "text": "Durante algunos años combustible y servicios se encarecen. Tu presupuesto empieza a sentirlo.",
+    "choices": [
+      {
+        "icon": "🐢",
+        "label": "Usarlo menos",
+        "costType": "fixed",
+        "money": 0,
+        "condition": 2,
+        "originality": 1,
+        "performance": -1,
+        "valueAdd": 30,
+        "expenseModifier": -0.12,
+        "risk": 0,
+        "note": "Reducís uso y gasto mensual durante los próximos años."
+      },
+      {
+        "icon": "🚗",
+        "label": "Seguir usándolo igual",
+        "costType": "fixed",
+        "money": -180,
+        "condition": -2,
+        "originality": 0,
+        "performance": 0,
+        "valueAdd": -40,
+        "expenseModifier": 0.1,
+        "risk": 0,
+        "note": "Mantenés tu rutina, aunque el costo mensual sube."
+      }
+    ]
+  },
+  {
+    "id": "granizo",
+    "icon": "🌨️",
+    "title": "Una tormenta de granizo te sorprende",
+    "tags": [
+      "*"
+    ],
+    "text": "El auto queda marcado en techo y capot. El seguro cubre solo una parte del trabajo.",
+    "forced": {
+      "condition": -8,
+      "originality": -4,
+      "valuePct": -0.06,
+      "note": "El granizo dañó paneles originales."
+    },
+    "choices": [
+      {
+        "icon": "🔨",
+        "label": "Repararlo correctamente",
+        "costType": "repair",
+        "repairBase": 880,
+        "condition": 9,
+        "originality": 2,
+        "performance": 0,
+        "valueShare": 0.62,
+        "risk": 0.03,
+        "note": "Recuperaste buena parte del estado sin reemplazar demasiadas piezas."
+      },
+      {
+        "icon": "👀",
+        "label": "Convivir con las marcas",
+        "costType": "fixed",
+        "money": 0,
+        "condition": 0,
+        "originality": 0,
+        "performance": 0,
+        "valueAdd": -120,
+        "risk": 0,
+        "note": "Mecánicamente no cambió, pero las marcas quedaron."
+      }
+    ]
+  },
+  {
+    "id": "choque-sin-cobertura",
+    "icon": "💥",
+    "title": "Un choque cambia los planes",
+    "tags": [
+      "*"
+    ],
+    "special": "crash",
+    "text": "Otro vehículo te golpea fuerte. El seguro no cubre tus daños y se rompen piezas difíciles de reemplazar."
+  },
+  {
+    "id": "motor-fundido",
+    "icon": "🔥",
+    "title": "El motor se fundió",
+    "tags": [
+      "carburador",
+      "motor-trasero",
+      "turbo",
+      "turbo-opcional",
+      "*"
+    ],
+    "special": "engine",
+    "text": "Una falla grave deja el motor fuera de servicio. Ya no existe la opción barata: reconstruir o desprenderte del auto."
+  },
+  {
+    "id": "divorcio",
+    "icon": "💔",
+    "title": "Un divorcio altera tu patrimonio",
+    "tags": [
+      "*"
+    ],
+    "special": "divorce",
+    "text": "La separación obliga a repartir bienes. Tenés que elegir qué parte de tu patrimonio conservar."
+  },
+  {
+    "id": "oferta",
+    "icon": "🤝",
+    "title": "Te hacen una oferta por el auto",
+    "tags": [
+      "*"
+    ],
+    "special": "sale",
+    "text": "Alguien vio tu auto y quiere comprarlo. La oferta es real, pero no necesariamente coincide con el valor que vos le asignás."
+  },
+  {
+    "id": "coleccionista",
+    "icon": "🏆",
+    "title": "Un coleccionista pregunta por tu auto",
+    "tags": [
+      "clasico",
+      "youngtimer",
+      "*"
+    ],
+    "special": "collector",
+    "text": "Después de décadas de cuidado, aparece alguien que valora la historia, el estado y la originalidad de tu unidad."
+  },
+  {
+    "id": "evento-modelo",
+    "icon": "🧬",
+    "title": "Un problema típico de tu modelo aparece",
+    "tags": [
+      "*"
+    ],
+    "special": "canonical",
+    "text": "Tu auto muestra una situación muy ligada a su edad, configuración o reputación mecánica."
+  },
+  {
+    "id": "robo-recuperado",
+    "icon": "🚔",
+    "title": "Te roban el auto y aparece días después",
+    "tags": [
+      "*"
+    ],
+    "text": "Lo recuperan, pero faltan piezas y hay daños en el interior. Algunas partes originales desaparecieron.",
+    "forced": {
+      "condition": -10,
+      "originality": -8,
+      "valuePct": -0.08,
+      "note": "El robo dejó faltantes y daños."
+    },
+    "choices": [
+      {
+        "icon": "🧰",
+        "label": "Reponer piezas correctas",
+        "costType": "repair",
+        "repairBase": 760,
+        "condition": 9,
+        "originality": 6,
+        "performance": 0,
+        "valueShare": 0.6,
+        "risk": 0.04,
+        "note": "Recuperaste buena parte del auto con piezas adecuadas."
+      },
+      {
+        "icon": "🔩",
+        "label": "Armarlo con lo que se consiga",
+        "costType": "repair",
+        "repairBase": 270,
+        "condition": 4,
+        "originality": -5,
+        "performance": 0,
+        "valueShare": 0.22,
+        "risk": 0.12,
+        "note": "Volvió a funcionar, aunque perdió bastante originalidad."
+      }
+    ]
+  },
+  {
+    "id": "interior",
+    "icon": "🪑",
+    "title": "El interior envejeció mucho",
+    "tags": [
+      "clasico",
+      "youngtimer",
+      "*"
+    ],
+    "text": "Tapizados, plásticos y comandos muestran el paso del tiempo. Restaurar bien cuesta cada vez más.",
+    "choices": [
+      {
+        "icon": "🧵",
+        "label": "Restaurar respetando lo original",
+        "costType": "repair",
+        "repairBase": 720,
+        "condition": 6,
+        "originality": 8,
+        "performance": 0,
+        "valueShare": 0.72,
+        "risk": 0.02,
+        "note": "El interior volvió a estar a la altura del auto."
+      },
+      {
+        "icon": "🛋️",
+        "label": "Retapizar con materiales modernos",
+        "costType": "repair",
+        "repairBase": 330,
+        "condition": 5,
+        "originality": -7,
+        "performance": 0,
+        "valueShare": 0.3,
+        "risk": 0.03,
+        "note": "Quedó prolijo, pero ya no es fiel a su configuración."
+      }
+    ]
+  },
+  {
+    "id": "frenos",
+    "icon": "🛑",
+    "title": "Los frenos necesitan atención",
+    "tags": [
+      "*"
+    ],
+    "text": "Discos, cintas, pastillas o hidráulicos empiezan a pedir intervención.",
+    "choices": [
+      {
+        "icon": "✅",
+        "label": "Renovar el sistema",
+        "costType": "repair",
+        "repairBase": 590,
+        "condition": 8,
+        "originality": 1,
+        "performance": 4,
+        "valueShare": 0.58,
+        "risk": 0.01,
+        "note": "El auto volvió a frenar como corresponde."
+      },
+      {
+        "icon": "⚠️",
+        "label": "Cambiar solo lo indispensable",
+        "costType": "repair",
+        "repairBase": 220,
+        "condition": 2,
+        "originality": 0,
+        "performance": 0,
+        "valueShare": 0.2,
+        "risk": 0.25,
+        "note": "Solucionaste lo urgente, pero el sistema quedó desparejo."
       }
     ]
   }

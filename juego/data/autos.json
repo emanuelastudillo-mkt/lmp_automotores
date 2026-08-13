@@ -15,7 +15,8 @@
       "motor-trasero",
       "carburador"
     ],
-    "eventoCanonico": "Refrigeración, carburación y originalidad: podés cuidarlo, mejorarlo o arriesgar un recalentamiento."
+    "eventoCanonico": "Refrigeración, carburación y originalidad: podés cuidarlo, mejorarlo o arriesgar un recalentamiento.",
+    "gastoMensualBaseUSD": 14
   },
   {
     "id": "ford-falcon",
@@ -33,7 +34,8 @@
       "sedan-grande",
       "carburador"
     ],
-    "eventoCanonico": "Mecánica simple y enorme cultura de preparación: conservarlo original o modificarlo cambia su valor futuro."
+    "eventoCanonico": "Mecánica simple y enorme cultura de preparación: conservarlo original o modificarlo cambia su valor futuro.",
+    "gastoMensualBaseUSD": 15
   },
   {
     "id": "chevrolet-400",
@@ -51,7 +53,8 @@
       "sedan-grande",
       "carburador"
     ],
-    "eventoCanonico": "La chapa y la originalidad ganan peso con los años; una restauración temprana puede cambiar su futuro."
+    "eventoCanonico": "La chapa y la originalidad ganan peso con los años; una restauración temprana puede cambiar su futuro.",
+    "gastoMensualBaseUSD": 15
   },
   {
     "id": "renault-gordini",
@@ -69,7 +72,8 @@
       "motor-trasero",
       "carburador"
     ],
-    "eventoCanonico": "Liviano y simple: podés mantenerlo de época o prepararlo, sacrificando originalidad."
+    "eventoCanonico": "Liviano y simple: podés mantenerlo de época o prepararlo, sacrificando originalidad.",
+    "gastoMensualBaseUSD": 14
   },
   {
     "id": "siam-di-tella-1500",
@@ -87,7 +91,8 @@
       "raro",
       "carburador"
     ],
-    "eventoCanonico": "Los repuestos específicos se vuelven difíciles: conservar piezas correctas puede ser más importante que reparar rápido."
+    "eventoCanonico": "Los repuestos específicos se vuelven difíciles: conservar piezas correctas puede ser más importante que reparar rápido.",
+    "gastoMensualBaseUSD": 16
   },
   {
     "id": "peugeot-404",
@@ -105,7 +110,8 @@
       "robusto",
       "carburador"
     ],
-    "eventoCanonico": "Su fortaleza es durar: mantenerlo bien permite usarlo décadas, pero la carrocería empieza a mandar."
+    "eventoCanonico": "Su fortaleza es durar: mantenerlo bien permite usarlo décadas, pero la carrocería empieza a mandar.",
+    "gastoMensualBaseUSD": 15
   },
   {
     "id": "citroen-2cv",
@@ -123,7 +129,8 @@
       "economico",
       "carburador"
     ],
-    "eventoCanonico": "Mecánica sencilla y bajo peso: es barato de reparar, pero una unidad original empieza a ser especial."
+    "eventoCanonico": "Mecánica sencilla y bajo peso: es barato de reparar, pero una unidad original empieza a ser especial.",
+    "gastoMensualBaseUSD": 12
   },
   {
     "id": "ika-bergantin",
@@ -141,7 +148,8 @@
       "raro",
       "carburador"
     ],
-    "eventoCanonico": "La rareza puede aumentar el valor, aunque conseguir piezas correctas es cada vez más costoso."
+    "eventoCanonico": "La rareza puede aumentar el valor, aunque conseguir piezas correctas es cada vez más costoso.",
+    "gastoMensualBaseUSD": 18
   },
   {
     "id": "rambler-classic",
@@ -159,7 +167,8 @@
       "americano",
       "carburador"
     ],
-    "eventoCanonico": "Mucho confort y consumo: sostenerlo cuesta, pero conservarlo completo puede volverlo muy singular."
+    "eventoCanonico": "Mucho confort y consumo: sostenerlo cuesta, pero conservarlo completo puede volverlo muy singular.",
+    "gastoMensualBaseUSD": 20
   },
   {
     "id": "renault-4",
@@ -177,7 +186,8 @@
       "familiar",
       "economico"
     ],
-    "eventoCanonico": "Práctico y austero: el uso intensivo castiga chapa y suspensión, aunque sigue siendo barato de mantener."
+    "eventoCanonico": "Práctico y austero: el uso intensivo castiga chapa y suspensión, aunque sigue siendo barato de mantener.",
+    "gastoMensualBaseUSD": 17
   },
   {
     "id": "fiat-1500",
@@ -194,7 +204,8 @@
       "clasico",
       "carburador"
     ],
-    "eventoCanonico": "Podés conservarlo como sedán de época o darle una preparación ligera; la originalidad empieza a pesar."
+    "eventoCanonico": "Podés conservarlo como sedán de época o darle una preparación ligera; la originalidad empieza a pesar.",
+    "gastoMensualBaseUSD": 17
   },
   {
     "id": "ika-torino",
@@ -212,7 +223,8 @@
       "deportivo",
       "seis-cilindros"
     ],
-    "eventoCanonico": "Potencia, identidad y valor histórico chocan con la tentación de modificarlo."
+    "eventoCanonico": "Potencia, identidad y valor histórico chocan con la tentación de modificarlo.",
+    "gastoMensualBaseUSD": 30
   },
   {
     "id": "ford-fairlane",
@@ -230,7 +242,8 @@
       "americano",
       "v8"
     ],
-    "eventoCanonico": "El confort viene con consumo alto; mantener motor e interiores originales puede rendir a largo plazo."
+    "eventoCanonico": "El confort viene con consumo alto; mantener motor e interiores originales puede rendir a largo plazo.",
+    "gastoMensualBaseUSD": 26
   },
   {
     "id": "chevrolet-chevy",
@@ -248,7 +261,8 @@
       "deportivo",
       "traccion-trasera"
     ],
-    "eventoCanonico": "Es candidato natural a preparación: ganás rendimiento ahora o preservás valor histórico."
+    "eventoCanonico": "Es candidato natural a preparación: ganás rendimiento ahora o preservás valor histórico.",
+    "gastoMensualBaseUSD": 20
   },
   {
     "id": "fiat-128",
@@ -266,7 +280,8 @@
       "compacto",
       "carburador"
     ],
-    "eventoCanonico": "Ágil y popular: preparar el motor es tentador, pero las unidades originales empiezan a escasear."
+    "eventoCanonico": "Ágil y popular: preparar el motor es tentador, pero las unidades originales empiezan a escasear.",
+    "gastoMensualBaseUSD": 15
   },
   {
     "id": "dodge-1500",
@@ -284,7 +299,8 @@
       "carburador",
       "traccion-trasera"
     ],
-    "eventoCanonico": "Noble y reparable: llega un punto en el que invertir en carrocería compite con venderlo."
+    "eventoCanonico": "Noble y reparable: llega un punto en el que invertir en carrocería compite con venderlo.",
+    "gastoMensualBaseUSD": 17
   },
   {
     "id": "peugeot-504",
@@ -302,7 +318,8 @@
       "robusto",
       "familiar"
     ],
-    "eventoCanonico": "Puede durar décadas; una unidad bien cuidada vale más que una reparación improvisada."
+    "eventoCanonico": "Puede durar décadas; una unidad bien cuidada vale más que una reparación improvisada.",
+    "gastoMensualBaseUSD": 17
   },
   {
     "id": "fiat-125",
@@ -320,7 +337,8 @@
       "carburador",
       "traccion-trasera"
     ],
-    "eventoCanonico": "Buen equilibrio entre uso y carácter: modificarlo suma diversión, conservarlo suma valor."
+    "eventoCanonico": "Buen equilibrio entre uso y carácter: modificarlo suma diversión, conservarlo suma valor.",
+    "gastoMensualBaseUSD": 18
   },
   {
     "id": "ford-taunus",
@@ -338,7 +356,8 @@
       "coupe",
       "carburador"
     ],
-    "eventoCanonico": "Las unidades sanas empiezan a diferenciarse: restaurar o seguir usándolo cambia el desenlace."
+    "eventoCanonico": "Las unidades sanas empiezan a diferenciarse: restaurar o seguir usándolo cambia el desenlace.",
+    "gastoMensualBaseUSD": 21
   },
   {
     "id": "torino-zx",
@@ -356,7 +375,8 @@
       "deportivo",
       "raro"
     ],
-    "eventoCanonico": "Ya nace como versión especial: tocar demasiado su configuración puede destruir valor histórico."
+    "eventoCanonico": "Ya nace como versión especial: tocar demasiado su configuración puede destruir valor histórico.",
+    "gastoMensualBaseUSD": 25
   },
   {
     "id": "renault-18",
@@ -374,7 +394,8 @@
       "familiar",
       "carburador"
     ],
-    "eventoCanonico": "El uso familiar lo vuelve confiable pero castigado; el mantenimiento preventivo evita gastos grandes."
+    "eventoCanonico": "El uso familiar lo vuelve confiable pero castigado; el mantenimiento preventivo evita gastos grandes.",
+    "gastoMensualBaseUSD": 14
   },
   {
     "id": "renault-fuego",
@@ -392,7 +413,8 @@
       "deportivo",
       "coupe"
     ],
-    "eventoCanonico": "Muchas unidades terminan modificadas: conservar una configuración correcta puede ser clave."
+    "eventoCanonico": "Muchas unidades terminan modificadas: conservar una configuración correcta puede ser clave.",
+    "gastoMensualBaseUSD": 18
   },
   {
     "id": "fiat-147",
@@ -410,7 +432,8 @@
       "economico",
       "compacto"
     ],
-    "eventoCanonico": "Barato, simple y fácil de modificar: herramienta diaria o proyecto interminable."
+    "eventoCanonico": "Barato, simple y fácil de modificar: herramienta diaria o proyecto interminable.",
+    "gastoMensualBaseUSD": 11
   },
   {
     "id": "peugeot-505",
@@ -428,7 +451,8 @@
       "robusto",
       "traccion-trasera"
     ],
-    "eventoCanonico": "Viaja bien y envejece con dignidad; restaurar interiores puede costar más que la mecánica."
+    "eventoCanonico": "Viaja bien y envejece con dignidad; restaurar interiores puede costar más que la mecánica.",
+    "gastoMensualBaseUSD": 14
   },
   {
     "id": "ford-sierra",
@@ -446,7 +470,8 @@
       "traccion-trasera",
       "deportivo-potencial"
     ],
-    "eventoCanonico": "Su plataforma permite jugar con prestaciones; una unidad sana puede transformarse en clásico."
+    "eventoCanonico": "Su plataforma permite jugar con prestaciones; una unidad sana puede transformarse en clásico.",
+    "gastoMensualBaseUSD": 15
   },
   {
     "id": "vw-gacel",
@@ -464,7 +489,8 @@
       "carburador",
       "traccion-delantera"
     ],
-    "eventoCanonico": "Simple y durable: decidir cuándo pasar de mantenimiento cotidiano a restauración es clave."
+    "eventoCanonico": "Simple y durable: decidir cuándo pasar de mantenimiento cotidiano a restauración es clave.",
+    "gastoMensualBaseUSD": 14
   },
   {
     "id": "renault-9",
@@ -482,7 +508,8 @@
       "economico",
       "carburador"
     ],
-    "eventoCanonico": "Buen auto de uso diario: ahorrar hoy en mantenimiento puede salir caro más adelante."
+    "eventoCanonico": "Buen auto de uso diario: ahorrar hoy en mantenimiento puede salir caro más adelante.",
+    "gastoMensualBaseUSD": 16
   },
   {
     "id": "fiat-duna",
@@ -500,7 +527,8 @@
       "economico",
       "diesel-opcional"
     ],
-    "eventoCanonico": "Su bajo costo ayuda a ahorrar; la decisión difícil es cuándo vender antes de que el desgaste supere el valor."
+    "eventoCanonico": "Su bajo costo ayuda a ahorrar; la decisión difícil es cuándo vender antes de que el desgaste supere el valor.",
+    "gastoMensualBaseUSD": 13
   },
   {
     "id": "peugeot-205",
@@ -518,7 +546,8 @@
       "hatch",
       "deportivo-potencial"
     ],
-    "eventoCanonico": "Liviano y divertido: una preparación cuidada puede hacerlo especial, pero una unidad original también gana interés."
+    "eventoCanonico": "Liviano y divertido: una preparación cuidada puede hacerlo especial, pero una unidad original también gana interés.",
+    "gastoMensualBaseUSD": 15
   },
   {
     "id": "ford-escort",
@@ -536,7 +565,8 @@
       "familiar",
       "inyeccion"
     ],
-    "eventoCanonico": "Se presta al uso intensivo: la confiabilidad depende del mantenimiento acumulado."
+    "eventoCanonico": "Se presta al uso intensivo: la confiabilidad depende del mantenimiento acumulado.",
+    "gastoMensualBaseUSD": 13
   },
   {
     "id": "fiat-uno",
@@ -554,7 +584,8 @@
       "economico",
       "hatch"
     ],
-    "eventoCanonico": "Puede durar muchísimo: mantenerlo simple suele ser rentable, pero el tuning barato tienta."
+    "eventoCanonico": "Puede durar muchísimo: mantenerlo simple suele ser rentable, pero el tuning barato tienta.",
+    "gastoMensualBaseUSD": 14
   },
   {
     "id": "vw-gol-g1",
@@ -572,7 +603,8 @@
       "economico",
       "tuning"
     ],
-    "eventoCanonico": "Candidato típico a modificaciones: cada cambio suma personalidad y puede quitar originalidad."
+    "eventoCanonico": "Candidato típico a modificaciones: cada cambio suma personalidad y puede quitar originalidad.",
+    "gastoMensualBaseUSD": 13
   },
   {
     "id": "renault-clio-i",
@@ -590,7 +622,8 @@
       "economico",
       "inyeccion"
     ],
-    "eventoCanonico": "Compacto y ágil: los años premian las unidades cuidadas y castigan reparaciones improvisadas."
+    "eventoCanonico": "Compacto y ágil: los años premian las unidades cuidadas y castigan reparaciones improvisadas.",
+    "gastoMensualBaseUSD": 13
   },
   {
     "id": "renault-19",
@@ -608,7 +641,8 @@
       "familiar",
       "inyeccion"
     ],
-    "eventoCanonico": "Equilibrado y cómodo: sostener suspensión, refrigeración e interiores preserva su valor de uso."
+    "eventoCanonico": "Equilibrado y cómodo: sostener suspensión, refrigeración e interiores preserva su valor de uso.",
+    "gastoMensualBaseUSD": 13
   },
   {
     "id": "peugeot-405",
@@ -626,7 +660,8 @@
       "familiar",
       "inyeccion"
     ],
-    "eventoCanonico": "Su comportamiento rutero hace que quieras conservarlo; la suspensión define su vejez."
+    "eventoCanonico": "Su comportamiento rutero hace que quieras conservarlo; la suspensión define su vejez.",
+    "gastoMensualBaseUSD": 16
   },
   {
     "id": "chevrolet-corsa",
@@ -644,7 +679,8 @@
       "economico",
       "inyeccion"
     ],
-    "eventoCanonico": "Simple y rendidor: posponer mantenimiento puede transformar pequeños problemas en una reparación grande."
+    "eventoCanonico": "Simple y rendidor: posponer mantenimiento puede transformar pequeños problemas en una reparación grande.",
+    "gastoMensualBaseUSD": 11
   },
   {
     "id": "vw-gol-g2",
@@ -662,7 +698,8 @@
       "economico",
       "tuning"
     ],
-    "eventoCanonico": "La cultura de modificaciones aparece fuerte: cada cambio puede afectar la reventa."
+    "eventoCanonico": "La cultura de modificaciones aparece fuerte: cada cambio puede afectar la reventa.",
+    "gastoMensualBaseUSD": 10
   },
   {
     "id": "ford-fiesta",
@@ -680,7 +717,8 @@
       "compacto",
       "inyeccion"
     ],
-    "eventoCanonico": "La ciudad lo favorece; embrague, refrigeración y tren delantero marcan el paso del tiempo."
+    "eventoCanonico": "La ciudad lo favorece; embrague, refrigeración y tren delantero marcan el paso del tiempo.",
+    "gastoMensualBaseUSD": 11
   },
   {
     "id": "fiat-palio",
@@ -698,7 +736,8 @@
       "economico",
       "inyeccion"
     ],
-    "eventoCanonico": "Versátil y fácil de mantener: el uso intensivo castiga interior y suspensión."
+    "eventoCanonico": "Versátil y fácil de mantener: el uso intensivo castiga interior y suspensión.",
+    "gastoMensualBaseUSD": 12
   },
   {
     "id": "fiat-siena",
@@ -716,7 +755,8 @@
       "economico",
       "inyeccion"
     ],
-    "eventoCanonico": "Baúl y bajo costo lo vuelven práctico; mantenerlo sano permite usarlo muchos años."
+    "eventoCanonico": "Baúl y bajo costo lo vuelven práctico; mantenerlo sano permite usarlo muchos años.",
+    "gastoMensualBaseUSD": 14
   },
   {
     "id": "peugeot-306",
@@ -734,7 +774,8 @@
       "deportivo-potencial",
       "inyeccion"
     ],
-    "eventoCanonico": "Su chasis invita a disfrutarlo; tren trasero y suspensión definen si sigue siendo una joya."
+    "eventoCanonico": "Su chasis invita a disfrutarlo; tren trasero y suspensión definen si sigue siendo una joya.",
+    "gastoMensualBaseUSD": 13
   },
   {
     "id": "vw-polo-classic",
@@ -751,7 +792,8 @@
       "familiar",
       "inyeccion"
     ],
-    "eventoCanonico": "Austero y robusto: el mantenimiento preventivo gana más dinero del que parece."
+    "eventoCanonico": "Austero y robusto: el mantenimiento preventivo gana más dinero del que parece.",
+    "gastoMensualBaseUSD": 16
   },
   {
     "id": "honda-civic-vi",
@@ -769,7 +811,8 @@
       "deportivo-potencial",
       "inyeccion"
     ],
-    "eventoCanonico": "La confiabilidad invita a mantenerlo y el mercado valora unidades originales."
+    "eventoCanonico": "La confiabilidad invita a mantenerlo y el mercado valora unidades originales.",
+    "gastoMensualBaseUSD": 15
   },
   {
     "id": "toyota-corolla-e110",
@@ -787,7 +830,8 @@
       "confiable",
       "inyeccion"
     ],
-    "eventoCanonico": "Su fortaleza es durar; un historial ordenado puede sostener valor mejor que autos más llamativos."
+    "eventoCanonico": "Su fortaleza es durar; un historial ordenado puede sostener valor mejor que autos más llamativos.",
+    "gastoMensualBaseUSD": 14
   },
   {
     "id": "peugeot-406",
@@ -805,7 +849,8 @@
       "inyeccion",
       "premium-generalista"
     ],
-    "eventoCanonico": "Más complejo y confortable: posponer mantenimiento puede ser caro."
+    "eventoCanonico": "Más complejo y confortable: posponer mantenimiento puede ser caro.",
+    "gastoMensualBaseUSD": 16
   },
   {
     "id": "renault-megane-i",
@@ -823,7 +868,8 @@
       "inyeccion",
       "electronica"
     ],
-    "eventoCanonico": "Más equipamiento significa más cosas para mantener: resolver detalles temprano evita una cadena de fallas."
+    "eventoCanonico": "Más equipamiento significa más cosas para mantener: resolver detalles temprano evita una cadena de fallas.",
+    "gastoMensualBaseUSD": 15
   },
   {
     "id": "vw-golf-iv",
@@ -841,7 +887,8 @@
       "tuning",
       "inyeccion"
     ],
-    "eventoCanonico": "La tentación del tuning es fuerte; una unidad original puede terminar siendo más valiosa."
+    "eventoCanonico": "La tentación del tuning es fuerte; una unidad original puede terminar siendo más valiosa.",
+    "gastoMensualBaseUSD": 14
   },
   {
     "id": "ford-mondeo-i",
@@ -859,7 +906,8 @@
       "complejo",
       "inyeccion"
     ],
-    "eventoCanonico": "Mucho auto por poco dinero usado: el desafío es sostener equipamiento y mecánica."
+    "eventoCanonico": "Mucho auto por poco dinero usado: el desafío es sostener equipamiento y mecánica.",
+    "gastoMensualBaseUSD": 17
   },
   {
     "id": "citroen-zx",
@@ -877,7 +925,8 @@
       "inyeccion",
       "raro"
     ],
-    "eventoCanonico": "Cómodo y distinto: algunas piezas específicas pueden requerir paciencia."
+    "eventoCanonico": "Cómodo y distinto: algunas piezas específicas pueden requerir paciencia.",
+    "gastoMensualBaseUSD": 12
   },
   {
     "id": "chevrolet-vectra-b",
@@ -895,7 +944,8 @@
       "inyeccion",
       "electronica"
     ],
-    "eventoCanonico": "Equipado y rutero: electrónica, refrigeración y suspensión definen si es gran usado o gasto constante."
+    "eventoCanonico": "Equipado y rutero: electrónica, refrigeración y suspensión definen si es gran usado o gasto constante.",
+    "gastoMensualBaseUSD": 14
   },
   {
     "id": "ford-focus-i",
@@ -913,7 +963,8 @@
       "inyeccion",
       "familiar"
     ],
-    "eventoCanonico": "Su gran comportamiento dinámico invita a conservarlo; suspensión y electrónica merecen cuidado."
+    "eventoCanonico": "Su gran comportamiento dinámico invita a conservarlo; suspensión y electrónica merecen cuidado.",
+    "gastoMensualBaseUSD": 16
   },
   {
     "id": "vw-bora",
@@ -931,7 +982,8 @@
       "turbo-opcional",
       "premium-generalista"
     ],
-    "eventoCanonico": "Puede ser sedán tranquilo o proyecto de performance; la originalidad empieza a pesar."
+    "eventoCanonico": "Puede ser sedán tranquilo o proyecto de performance; la originalidad empieza a pesar.",
+    "gastoMensualBaseUSD": 20
   },
   {
     "id": "peugeot-206",
@@ -949,7 +1001,8 @@
       "tuning",
       "inyeccion"
     ],
-    "eventoCanonico": "Estética y agilidad lo vuelven popular; suspensión y electrónica necesitan cuidado."
+    "eventoCanonico": "Estética y agilidad lo vuelven popular; suspensión y electrónica necesitan cuidado.",
+    "gastoMensualBaseUSD": 11
   },
   {
     "id": "renault-clio-ii",
@@ -967,7 +1020,8 @@
       "popular",
       "inyeccion"
     ],
-    "eventoCanonico": "Barato de usar y vender: el dilema es cuánto invertir antes de cambiarlo."
+    "eventoCanonico": "Barato de usar y vender: el dilema es cuánto invertir antes de cambiarlo.",
+    "gastoMensualBaseUSD": 13
   },
   {
     "id": "toyota-corolla-e120",
@@ -985,7 +1039,8 @@
       "confiable",
       "inyeccion"
     ],
-    "eventoCanonico": "La confiabilidad premia el mantenimiento constante; venderlo muy temprano puede ser un error."
+    "eventoCanonico": "La confiabilidad premia el mantenimiento constante; venderlo muy temprano puede ser un error.",
+    "gastoMensualBaseUSD": 16
   },
   {
     "id": "honda-fit-i",
@@ -1003,7 +1058,8 @@
       "familiar",
       "confiable"
     ],
-    "eventoCanonico": "Práctico y durable: mantenimiento periódico y caja en buen estado sostienen fuerte reventa."
+    "eventoCanonico": "Práctico y durable: mantenimiento periódico y caja en buen estado sostienen fuerte reventa.",
+    "gastoMensualBaseUSD": 19
   },
   {
     "id": "vw-fox",
@@ -1021,7 +1077,8 @@
       "inyeccion",
       "popular"
     ],
-    "eventoCanonico": "Simple y alto: embrague y tren delantero definen cuánto aguanta."
+    "eventoCanonico": "Simple y alto: embrague y tren delantero definen cuánto aguanta.",
+    "gastoMensualBaseUSD": 12
   },
   {
     "id": "vw-suran",
@@ -1039,7 +1096,8 @@
       "inyeccion",
       "popular"
     ],
-    "eventoCanonico": "Espacio y uso familiar significan kilómetros: prevenir antes de viajar puede ahorrar un evento caro."
+    "eventoCanonico": "Espacio y uso familiar significan kilómetros: prevenir antes de viajar puede ahorrar un evento caro.",
+    "gastoMensualBaseUSD": 18
   },
   {
     "id": "ford-ecosport-i",
@@ -1057,7 +1115,8 @@
       "familiar",
       "inyeccion"
     ],
-    "eventoCanonico": "La altura y versatilidad tientan a exigirla; tren delantero y refrigeración importan."
+    "eventoCanonico": "La altura y versatilidad tientan a exigirla; tren delantero y refrigeración importan.",
+    "gastoMensualBaseUSD": 21
   },
   {
     "id": "peugeot-307",
@@ -1075,7 +1134,8 @@
       "electronica",
       "inyeccion"
     ],
-    "eventoCanonico": "Mucho equipamiento para la época: cuidar electrónica y tren delantero evita que pequeñas fallas se acumulen."
+    "eventoCanonico": "Mucho equipamiento para la época: cuidar electrónica y tren delantero evita que pequeñas fallas se acumulen.",
+    "gastoMensualBaseUSD": 18
   },
   {
     "id": "chevrolet-astra",
@@ -1093,7 +1153,8 @@
       "robusto",
       "familiar"
     ],
-    "eventoCanonico": "Robusto y potente para su segmento: el consumo penaliza, pero la mecánica puede durar mucho."
+    "eventoCanonico": "Robusto y potente para su segmento: el consumo penaliza, pero la mecánica puede durar mucho.",
+    "gastoMensualBaseUSD": 14
   },
   {
     "id": "vw-gol-power",
@@ -1111,7 +1172,8 @@
       "tuning",
       "popular"
     ],
-    "eventoCanonico": "Barato de mantener y fácil de modificar: no todo lo que gastás vuelve en la reventa."
+    "eventoCanonico": "Barato de mantener y fácil de modificar: no todo lo que gastás vuelve en la reventa.",
+    "gastoMensualBaseUSD": 13
   },
   {
     "id": "nissan-tiida",
@@ -1129,7 +1191,8 @@
       "confiable",
       "inyeccion"
     ],
-    "eventoCanonico": "Mucho espacio y buena mecánica: conservar una unidad sana puede ser más rentable que perseguir algo más moderno."
+    "eventoCanonico": "Mucho espacio y buena mecánica: conservar una unidad sana puede ser más rentable que perseguir algo más moderno.",
+    "gastoMensualBaseUSD": 16
   },
   {
     "id": "honda-civic-viii",
@@ -1147,7 +1210,8 @@
       "confiable",
       "deportivo-potencial"
     ],
-    "eventoCanonico": "Diseño y confiabilidad envejecen bien; una preparación agresiva reduce atractivo futuro."
+    "eventoCanonico": "Diseño y confiabilidad envejecen bien; una preparación agresiva reduce atractivo futuro.",
+    "gastoMensualBaseUSD": 17
   },
   {
     "id": "toyota-corolla-e140",
@@ -1165,7 +1229,8 @@
       "confiable",
       "inyeccion"
     ],
-    "eventoCanonico": "Es difícil justificar venderlo por problemas si está bien mantenido; el riesgo es aburrirse y cambiar antes de tiempo."
+    "eventoCanonico": "Es difícil justificar venderlo por problemas si está bien mantenido; el riesgo es aburrirse y cambiar antes de tiempo.",
+    "gastoMensualBaseUSD": 17
   },
   {
     "id": "vw-gol-trend",
@@ -1183,7 +1248,8 @@
       "popular",
       "inyeccion"
     ],
-    "eventoCanonico": "Fácil de vender y sostener: un buen historial vale más que modificaciones estéticas."
+    "eventoCanonico": "Fácil de vender y sostener: un buen historial vale más que modificaciones estéticas.",
+    "gastoMensualBaseUSD": 13
   },
   {
     "id": "ford-focus-ii",
@@ -1201,7 +1267,8 @@
       "inyeccion",
       "familiar"
     ],
-    "eventoCanonico": "El comportamiento dinámico invita a quedártelo; suspensión y electrónica sostienen su calidad."
+    "eventoCanonico": "El comportamiento dinámico invita a quedártelo; suspensión y electrónica sostienen su calidad.",
+    "gastoMensualBaseUSD": 16
   },
   {
     "id": "renault-sandero-i",
@@ -1219,7 +1286,8 @@
       "economico",
       "inyeccion"
     ],
-    "eventoCanonico": "Espacio y mecánica simple: conservarlo varios años puede ayudarte a juntar capital."
+    "eventoCanonico": "Espacio y mecánica simple: conservarlo varios años puede ayudarte a juntar capital.",
+    "gastoMensualBaseUSD": 15
   },
   {
     "id": "renault-duster",
@@ -1237,7 +1305,8 @@
       "familiar",
       "inyeccion"
     ],
-    "eventoCanonico": "La robustez invita a caminos malos: neumáticos y tren delantero pesan más si abusás de esa capacidad."
+    "eventoCanonico": "La robustez invita a caminos malos: neumáticos y tren delantero pesan más si abusás de esa capacidad.",
+    "gastoMensualBaseUSD": 23
   },
   {
     "id": "chevrolet-cruze-i",
@@ -1255,7 +1324,8 @@
       "electronica",
       "inyeccion"
     ],
-    "eventoCanonico": "Más sofisticado: el mantenimiento correcto evita que equipamiento y mecánica erosionen el presupuesto."
+    "eventoCanonico": "Más sofisticado: el mantenimiento correcto evita que equipamiento y mecánica erosionen el presupuesto.",
+    "gastoMensualBaseUSD": 17
   },
   {
     "id": "chevrolet-classic",
@@ -1273,7 +1343,8 @@
       "popular",
       "inyeccion"
     ],
-    "eventoCanonico": "Mecánica conocida y costos contenidos: puede ser una máquina de ahorrar si resistís la moda."
+    "eventoCanonico": "Mecánica conocida y costos contenidos: puede ser una máquina de ahorrar si resistís la moda.",
+    "gastoMensualBaseUSD": 16
   },
   {
     "id": "peugeot-308-i",
@@ -1291,7 +1362,8 @@
       "electronica",
       "inyeccion"
     ],
-    "eventoCanonico": "Equipamiento y confort elevan el costo del descuido; una unidad ordenada recompensa."
+    "eventoCanonico": "Equipamiento y confort elevan el costo del descuido; una unidad ordenada recompensa.",
+    "gastoMensualBaseUSD": 15
   },
   {
     "id": "peugeot-408",
@@ -1309,7 +1381,8 @@
       "familiar",
       "inyeccion"
     ],
-    "eventoCanonico": "Gran rutero y familiar: el dilema es invertir en preventivo o cambiar antes de una etapa más costosa."
+    "eventoCanonico": "Gran rutero y familiar: el dilema es invertir en preventivo o cambiar antes de una etapa más costosa.",
+    "gastoMensualBaseUSD": 18
   },
   {
     "id": "citroen-c4-lounge",
@@ -1327,7 +1400,8 @@
       "electronica",
       "turbo-opcional"
     ],
-    "eventoCanonico": "Mucho confort y tecnología: las versiones complejas vuelven el mantenimiento una decisión relevante."
+    "eventoCanonico": "Mucho confort y tecnología: las versiones complejas vuelven el mantenimiento una decisión relevante.",
+    "gastoMensualBaseUSD": 21
   },
   {
     "id": "ford-focus-iii",
@@ -1345,7 +1419,8 @@
       "electronica",
       "moderno"
     ],
-    "eventoCanonico": "Excelente chasis y equipamiento: elegir bien la versión y mantenerla puede cambiar toda la trayectoria."
+    "eventoCanonico": "Excelente chasis y equipamiento: elegir bien la versión y mantenerla puede cambiar toda la trayectoria.",
+    "gastoMensualBaseUSD": 17
   },
   {
     "id": "ford-fiesta-kinetic",
@@ -1363,7 +1438,8 @@
       "electronica",
       "moderno"
     ],
-    "eventoCanonico": "Ágil y equipado: cuidar tren delantero y electrónica mantiene el encanto."
+    "eventoCanonico": "Ágil y equipado: cuidar tren delantero y electrónica mantiene el encanto.",
+    "gastoMensualBaseUSD": 17
   },
   {
     "id": "toyota-etios",
@@ -1381,7 +1457,8 @@
       "economico",
       "confiable"
     ],
-    "eventoCanonico": "No busca lujo: gastar poco y fallar poco puede ser la herramienta perfecta para acumular dinero."
+    "eventoCanonico": "No busca lujo: gastar poco y fallar poco puede ser la herramienta perfecta para acumular dinero.",
+    "gastoMensualBaseUSD": 14
   },
   {
     "id": "toyota-corolla-e170",
@@ -1399,7 +1476,8 @@
       "confiable",
       "moderno"
     ],
-    "eventoCanonico": "Confiabilidad y reventa lo convierten en refugio seguro; cambiar por emoción puede salir caro."
+    "eventoCanonico": "Confiabilidad y reventa lo convierten en refugio seguro; cambiar por emoción puede salir caro.",
+    "gastoMensualBaseUSD": 19
   },
   {
     "id": "nissan-march",
@@ -1417,7 +1495,8 @@
       "economico",
       "compacto"
     ],
-    "eventoCanonico": "Liviano y urbano: usarlo barato durante años puede construir capital para un salto grande."
+    "eventoCanonico": "Liviano y urbano: usarlo barato durante años puede construir capital para un salto grande.",
+    "gastoMensualBaseUSD": 16
   },
   {
     "id": "nissan-sentra-b17",
@@ -1435,7 +1514,8 @@
       "confort",
       "moderno"
     ],
-    "eventoCanonico": "Cómodo y equilibrado: transmisión y mantenimiento correcto son claves si querés conservarlo muchos años."
+    "eventoCanonico": "Cómodo y equilibrado: transmisión y mantenimiento correcto son claves si querés conservarlo muchos años.",
+    "gastoMensualBaseUSD": 17
   },
   {
     "id": "vw-up",
@@ -1453,7 +1533,8 @@
       "compacto",
       "moderno"
     ],
-    "eventoCanonico": "Consume poco y es ágil: mantenerlo original puede ser mejor negocio que convertirlo en proyecto."
+    "eventoCanonico": "Consume poco y es ágil: mantenerlo original puede ser mejor negocio que convertirlo en proyecto.",
+    "gastoMensualBaseUSD": 14
   },
   {
     "id": "fiat-mobi",
@@ -1471,7 +1552,8 @@
       "compacto",
       "moderno"
     ],
-    "eventoCanonico": "Su objetivo es gastar poco: conservarlo puede ayudarte a juntar capital para un salto real."
+    "eventoCanonico": "Su objetivo es gastar poco: conservarlo puede ayudarte a juntar capital para un salto real.",
+    "gastoMensualBaseUSD": 13
   },
   {
     "id": "fiat-argo",
@@ -1489,7 +1571,8 @@
       "popular",
       "inyeccion"
     ],
-    "eventoCanonico": "Buen equilibrio general: decidir cuándo pasar a algo superior importa más que tunearlo."
+    "eventoCanonico": "Buen equilibrio general: decidir cuándo pasar a algo superior importa más que tunearlo.",
+    "gastoMensualBaseUSD": 15
   },
   {
     "id": "fiat-cronos",
@@ -1507,7 +1590,8 @@
       "popular",
       "familiar"
     ],
-    "eventoCanonico": "Espacioso y de buena salida: el mantenimiento prolijo sostiene una reventa útil."
+    "eventoCanonico": "Espacioso y de buena salida: el mantenimiento prolijo sostiene una reventa útil.",
+    "gastoMensualBaseUSD": 19
   },
   {
     "id": "renault-sandero-ii",
@@ -1525,7 +1609,8 @@
       "economico",
       "moderno"
     ],
-    "eventoCanonico": "Práctico y espacioso: puede acompañarte años si priorizás mantenimiento sobre accesorios."
+    "eventoCanonico": "Práctico y espacioso: puede acompañarte años si priorizás mantenimiento sobre accesorios.",
+    "gastoMensualBaseUSD": 15
   },
   {
     "id": "renault-logan-ii",
@@ -1543,7 +1628,8 @@
       "economico",
       "moderno"
     ],
-    "eventoCanonico": "Mucho espacio por el dinero: herramienta de ahorro si evitás cambiarlo solo por estética."
+    "eventoCanonico": "Mucho espacio por el dinero: herramienta de ahorro si evitás cambiarlo solo por estética.",
+    "gastoMensualBaseUSD": 15
   },
   {
     "id": "renault-captur",
@@ -1561,7 +1647,8 @@
       "familiar",
       "moderno"
     ],
-    "eventoCanonico": "Diseño y comodidad elevan el costo frente a un hatch; el juego te obliga a decidir si vale la diferencia."
+    "eventoCanonico": "Diseño y comodidad elevan el costo frente a un hatch; el juego te obliga a decidir si vale la diferencia.",
+    "gastoMensualBaseUSD": 21
   },
   {
     "id": "chevrolet-onix-i",
@@ -1579,7 +1666,8 @@
       "popular",
       "moderno"
     ],
-    "eventoCanonico": "Buena relación costo/uso: conservarlo sano puede hacer que el capital crezca más rápido."
+    "eventoCanonico": "Buena relación costo/uso: conservarlo sano puede hacer que el capital crezca más rápido.",
+    "gastoMensualBaseUSD": 15
   },
   {
     "id": "chevrolet-tracker-i",
@@ -1597,7 +1685,8 @@
       "familiar",
       "moderno"
     ],
-    "eventoCanonico": "SUV compacta con buen valor: neumáticos, suspensión y servicios pesan más que en un hatch."
+    "eventoCanonico": "SUV compacta con buen valor: neumáticos, suspensión y servicios pesan más que en un hatch.",
+    "gastoMensualBaseUSD": 23
   },
   {
     "id": "chevrolet-spin",
@@ -1615,7 +1704,8 @@
       "monovolumen",
       "popular"
     ],
-    "eventoCanonico": "La utilidad familiar hace que acumule kilómetros; el mantenimiento disciplinado evita que el desgaste se coma la reventa."
+    "eventoCanonico": "La utilidad familiar hace que acumule kilómetros; el mantenimiento disciplinado evita que el desgaste se coma la reventa.",
+    "gastoMensualBaseUSD": 21
   },
   {
     "id": "peugeot-208-i",
@@ -1633,7 +1723,8 @@
       "electronica",
       "compacto"
     ],
-    "eventoCanonico": "Diseño y equipamiento invitan a cuidarlo; electrónica y tren delantero marcan el costo de mantener esa sensación."
+    "eventoCanonico": "Diseño y equipamiento invitan a cuidarlo; electrónica y tren delantero marcan el costo de mantener esa sensación.",
+    "gastoMensualBaseUSD": 15
   },
   {
     "id": "peugeot-2008-i",
@@ -1651,7 +1742,8 @@
       "familiar",
       "moderno"
     ],
-    "eventoCanonico": "La moda SUV aumenta el valor de compra; el juego te obliga a decidir si pagás formato o necesidad."
+    "eventoCanonico": "La moda SUV aumenta el valor de compra; el juego te obliga a decidir si pagás formato o necesidad.",
+    "gastoMensualBaseUSD": 21
   },
   {
     "id": "citroen-c4-cactus",
@@ -1669,7 +1761,8 @@
       "moderno",
       "diseño"
     ],
-    "eventoCanonico": "Diseño singular y equipamiento: una unidad cuidada sostiene interés, pero la complejidad eleva el costo del abandono."
+    "eventoCanonico": "Diseño singular y equipamiento: una unidad cuidada sostiene interés, pero la complejidad eleva el costo del abandono.",
+    "gastoMensualBaseUSD": 24
   },
   {
     "id": "vw-polo",
@@ -1687,7 +1780,8 @@
       "turbo-opcional",
       "popular"
     ],
-    "eventoCanonico": "Plataforma moderna y buen valor de reventa: el mantenimiento impacta fuerte en cuánto recuperás."
+    "eventoCanonico": "Plataforma moderna y buen valor de reventa: el mantenimiento impacta fuerte en cuánto recuperás.",
+    "gastoMensualBaseUSD": 20
   },
   {
     "id": "vw-virtus",
@@ -1705,7 +1799,8 @@
       "familiar",
       "popular"
     ],
-    "eventoCanonico": "Espacio y plataforma moderna lo hacen versátil; venderlo demasiado pronto puede desperdiciar su buen valor residual."
+    "eventoCanonico": "Espacio y plataforma moderna lo hacen versátil; venderlo demasiado pronto puede desperdiciar su buen valor residual.",
+    "gastoMensualBaseUSD": 18
   },
   {
     "id": "vw-vento",
@@ -1723,7 +1818,8 @@
       "turbo-opcional",
       "tuning"
     ],
-    "eventoCanonico": "Prestaciones y confort elevan el riesgo de modificaciones caras; una unidad original es más fácil de vender."
+    "eventoCanonico": "Prestaciones y confort elevan el riesgo de modificaciones caras; una unidad original es más fácil de vender.",
+    "gastoMensualBaseUSD": 24
   },
   {
     "id": "vw-nivus",
@@ -1741,7 +1837,8 @@
       "moderno",
       "turbo"
     ],
-    "eventoCanonico": "Tecnología y turbo prometen mucho, pero suben el costo de mantenimiento frente a opciones simples."
+    "eventoCanonico": "Tecnología y turbo prometen mucho, pero suben el costo de mantenimiento frente a opciones simples.",
+    "gastoMensualBaseUSD": 28
   },
   {
     "id": "toyota-yaris",
@@ -1759,7 +1856,8 @@
       "confiable",
       "moderno"
     ],
-    "eventoCanonico": "Confiabilidad y reventa favorecen mantenerlo; cambiar por capricho puede ser la decisión más cara."
+    "eventoCanonico": "Confiabilidad y reventa favorecen mantenerlo; cambiar por capricho puede ser la decisión más cara.",
+    "gastoMensualBaseUSD": 19
   },
   {
     "id": "nissan-kicks",
@@ -1777,7 +1875,8 @@
       "suv",
       "moderno"
     ],
-    "eventoCanonico": "SUV racional y de consumo contenido: cuidar transmisión, cubiertas y servicios sostiene la reventa."
+    "eventoCanonico": "SUV racional y de consumo contenido: cuidar transmisión, cubiertas y servicios sostiene la reventa.",
+    "gastoMensualBaseUSD": 25
   },
   {
     "id": "honda-civic-x",
@@ -1795,6 +1894,7 @@
       "moderno",
       "turbo-opcional"
     ],
-    "eventoCanonico": "Tecnología y prestaciones lo hacen deseable; modificarlo puede ser divertido, pero una buena unidad original gana valor relativo."
+    "eventoCanonico": "Tecnología y prestaciones lo hacen deseable; modificarlo puede ser divertido, pero una buena unidad original gana valor relativo.",
+    "gastoMensualBaseUSD": 24
   }
 ]

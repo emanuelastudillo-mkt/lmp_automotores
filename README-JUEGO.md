@@ -1,27 +1,32 @@
-# Tu vida sobre ruedas — v0.1
+# Tu vida sobre ruedas — v0.2
 
-Incremental independiente para LMP Autos.
+Incremental del prototipo privado en `/juego/`.
 
-## URL
-Al subir la carpeta `juego/` a la raíz, queda disponible en `https://lmpautos.com/juego/`.
+## Cambios principales
 
-No se agrega ningún enlace desde la web principal.
+- 20+ tipos de eventos.
+- Todos los eventos con decisión muestran exactamente 2 opciones.
+- Opciones con iconos y animaciones.
+- Reparaciones cada vez más caras dentro del mismo vehículo.
+- Las reparaciones incrementan el valor interno del auto.
+- Se muestra valor actual del auto y venta estimada normal por separado.
+- Un coleccionista puede pagar el valor completo solamente cuando el auto supera 40 años, está en muy buen estado y conserva alta originalidad.
+- Choques, motor fundido, robo recuperado y granizo pueden provocar consecuencias antes de elegir.
+- Choque sin cobertura: reconstruir o vender como chatarra.
+- Divorcio: perder 50% del dinero o perder el auto.
+- Ingreso anual aleatorio entre USD 100 y USD 500.
+- Gasto mensual individual para cada uno de los 100 vehículos.
+- El gasto mensual aumenta por mal estado, originalidad alta y performance baja.
+- El gasto de uso se descuenta año por año durante los saltos temporales.
+- Se mantiene acceso únicamente por `/juego/` y `noindex,nofollow,noarchive`.
 
-## SEO
-La página incluye `noindex,nofollow,noarchive`, por lo que el prototipo queda accesible por URL directa sin incorporarlo al posicionamiento mientras esté en desarrollo.
+## Archivos del incremental
 
-## Datos
-- `juego/data/autos.json`: 100 modelos, estructura expandible.
-- `juego/data/eventos.json`: eventos base.
-- precios en USD de referencia para gameplay, no cotizaciones históricas.
+```text
+juego/index.html
+juego/data/autos.json
+juego/data/eventos.json
+README-JUEGO.md
+```
 
-## Juego
-- nombre del jugador y año inicial 1960–2018;
-- 3 opciones iniciales;
-- ahorro al pasar los años;
-- eventos cada 2–12 años;
-- mantenimiento, tuning, recalentamiento, carrocería, electrónica, ofertas y viajes;
-- estado, originalidad y performance;
-- mercado y cambio de auto;
-- final en 2026;
-- guardado local.
+Los valores y costos siguen siendo parámetros de gameplay aproximados.
