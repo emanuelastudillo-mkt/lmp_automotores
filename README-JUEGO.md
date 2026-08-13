@@ -1,3 +1,50 @@
+# Tu vida sobre ruedas — v0.36
+
+Base: v0.35.
+
+## Mercado reducido y rotativo por turno
+
+### Cantidad de vehículos
+
+Tanto **0 km** como **Usados** muestran ahora solamente:
+
+- 4, 5 o 6 vehículos por turno;
+- si en un año existen menos de 4 modelos 0 km disponibles, se muestran todos los disponibles.
+
+Se elimina la lista extensa de 0 km y el stock de 12–28 usados de versiones anteriores.
+
+### Rotación
+
+El mercado utiliza como identificador de turno:
+
+`año actual + decisiones resueltas`
+
+Por lo tanto:
+
+- abrir y cerrar el mercado dentro del mismo turno **no cambia las ofertas**;
+- cambiar entre pestañas 0 km / Usados tampoco cambia las ofertas;
+- al llegar a un nuevo turno se generan nuevos vehículos;
+- si el año cambia, también se renueva el mercado.
+
+### Menos repetición
+
+- El juego recuerda qué modelos aparecieron en el turno anterior.
+- Si hay suficientes modelos disponibles, la siguiente rotación evita completamente repetirlos.
+- En años con muy pocos 0 km puede ser necesario repetir algún modelo.
+- Los usados continúan generándose como unidades individuales con:
+  - año propio;
+  - Estado;
+  - Originalidad;
+  - Performance;
+  - precio;
+  - perfil de conservación.
+
+### Compra
+
+Una unidad comprada desaparece de la lista del turno actual, tanto en 0 km como en usados.
+
+---
+
 # Tu vida sobre ruedas — v0.35
 
 Base: v0.34.

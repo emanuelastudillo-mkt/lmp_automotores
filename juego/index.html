@@ -742,7 +742,7 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.35</div>
+    <div class="version">prototipo privado · v0.36</div>
   </div>
 </header>
 
@@ -1516,8 +1516,11 @@ function beginCareer(name,year,pace='fast'){
     collection:[],
     exhibitionIncome:0,
     exhibitionWins:0,
-    marketStockYear:null,
-    usedMarketStock:[]
+    marketStockKey:null,
+    newMarketStock:[],
+    usedMarketStock:[],
+    previousNewMarketIds:[],
+    previousUsedMarketIds:[]
   };
   persist();
   renderStarter();
@@ -1587,8 +1590,12 @@ function buyCar(id,first=false,unit=null){
       ? `Guardaste ${storedCurrent.marca} ${storedCurrent.modelo} en tu colección y compraste ${next.marca} ${next.modelo}${purchaseLabel?` ${purchaseLabel}`:''} por ${money(price)}.`
       : `Compraste ${next.marca} ${next.modelo}${purchaseLabel?` ${purchaseLabel}`:''} por ${money(price)}.`
   });
-  if(unit?.type==='used' && unit.stockId){
-    state.usedMarketStock=(state.usedMarketStock||[]).filter(item=>item.stockId!==unit.stockId);
+  if(unit?.stockId){
+    if(unit.type==='used'){
+      state.usedMarketStock=(state.usedMarketStock||[]).filter(item=>item.stockId!==unit.stockId);
+    }else if(unit.type==='new'){
+      state.newMarketStock=(state.newMarketStock||[]).filter(item=>item.stockId!==unit.stockId);
+    }
   }
   state.pendingEvent=null;
   state.pendingResult=null;
@@ -3222,15 +3229,36 @@ function renderGame(){
   persist();
   setTimeout(playYearAnimation,80);
 }
-function zeroKmMarket(){
-  return CARS
-    .filter(car=>{
-      const listedHasta=car.hasta??state.year;
-      const effectiveHasta=(listedHasta>=2026 && state.year>2026)?careerEndYear():listedHasta;
-      return car.desde<=state.year && state.year<=effectiveHasta;
-    })
+function marketRotationKey(){
+  return `${state.year}:${state.decisions||0}`;
+}
+function marketOfferCount(poolLength){
+  if(poolLength<=4)return poolLength;
+  return Math.min(poolLength,rand(4,6));
+}
+function rotatingSubset(pool,count,previousIds=[]){
+  if(!pool.length || count<=0)return [];
+  const previous=new Set(previousIds||[]);
+  const fresh=pool.filter(item=>!previous.has(item.id));
+
+  // Si alcanza la variedad, el turno siguiente evita completamente
+  // los modelos vistos en el turno anterior.
+  const source=fresh.length>=count ? fresh : pool;
+  return randomSubset(source,Math.min(count,source.length));
+}
+function availableZeroKmCars(){
+  return CARS.filter(car=>{
+    const listedHasta=car.hasta??state.year;
+    const effectiveHasta=(listedHasta>=2026 && state.year>2026)?careerEndYear():listedHasta;
+    return car.desde<=state.year && state.year<=effectiveHasta;
+  });
+}
+function generateZeroKmMarket(previousIds=[]){
+  const pool=availableZeroKmCars();
+  const target=marketOfferCount(pool.length);
+  return rotatingSubset(pool,target,previousIds)
     .map(car=>({
-      stockId:`new-${state.year}-${car.id}`,
+      stockId:`new-${marketRotationKey()}-${car.id}`,
       type:'new',
       id:car.id,
       modelYear:state.year,
@@ -3240,6 +3268,10 @@ function zeroKmMarket(){
       price:newCarPrice(car,state.year)
     }))
     .sort((a,b)=>a.price-b.price);
+}
+function zeroKmMarket(){
+  ensureMarketRotation();
+  return state.newMarketStock||[];
 }
 function usedQualityProfile(){
   const roll=Math.random();
@@ -3282,19 +3314,18 @@ function usedListingPrice(car,modelYear,condition,originality,performance){
   const negotiation=.88+Math.random()*.22;
   return Math.max(250,Math.round(reference*conditionFactor*originalityFactor*performanceFactor*negotiation));
 }
-function generateUsedMarket(){
-  const pool=CARS.filter(car=>car.desde<state.year);
-  if(!pool.length)return [];
+function generateUsedMarket(previousIds=[]){
+  const fullPool=CARS.filter(car=>car.desde<state.year);
+  if(!fullPool.length)return [];
 
-  const target=Math.min(28,Math.max(12,pool.length));
+  const target=marketOfferCount(fullPool.length);
+  const selectedCars=rotatingSubset(fullPool,target,previousIds);
   const stock=[];
-  let attempts=0;
 
-  while(stock.length<target && attempts<target*12){
-    attempts++;
-    const car=pool[rand(0,pool.length-1)];
+  for(const car of selectedCars){
     const maxYear=Math.min(car.hasta??state.year-1,state.year-1);
     if(maxYear<car.desde)continue;
+
     const modelYear=rand(car.desde,maxYear);
     const quality=usedQualityProfile();
     const price=usedListingPrice(
@@ -3306,7 +3337,7 @@ function generateUsedMarket(){
     );
 
     stock.push({
-      stockId:`used-${state.year}-${car.id}-${modelYear}-${stock.length}-${Math.random().toString(36).slice(2,7)}`,
+      stockId:`used-${marketRotationKey()}-${car.id}-${modelYear}-${Math.random().toString(36).slice(2,7)}`,
       type:'used',
       id:car.id,
       modelYear,
@@ -3320,13 +3351,31 @@ function generateUsedMarket(){
 
   return stock.sort((a,b)=>a.price-b.price);
 }
+function ensureMarketRotation(){
+  const key=marketRotationKey();
+  const validNew=Array.isArray(state.newMarketStock);
+  const validUsed=Array.isArray(state.usedMarketStock);
+
+  if(state.marketStockKey===key && validNew && validUsed)return;
+
+  const previousNew=(state.newMarketStock||[]).map(item=>item.id);
+  const previousUsed=(state.usedMarketStock||[]).map(item=>item.id);
+
+  state.previousNewMarketIds=previousNew.length
+    ? previousNew
+    : (state.previousNewMarketIds||[]);
+  state.previousUsedMarketIds=previousUsed.length
+    ? previousUsed
+    : (state.previousUsedMarketIds||[]);
+
+  state.newMarketStock=generateZeroKmMarket(state.previousNewMarketIds);
+  state.usedMarketStock=generateUsedMarket(state.previousUsedMarketIds);
+  state.marketStockKey=key;
+  persist();
+}
 function ensureUsedMarket(){
-  if(state.marketStockYear!==state.year || !Array.isArray(state.usedMarketStock)){
-    state.marketStockYear=state.year;
-    state.usedMarketStock=generateUsedMarket();
-    persist();
-  }
-  return state.usedMarketStock;
+  ensureMarketRotation();
+  return state.usedMarketStock||[];
 }
 function marketUnitMarkup(unit){
   const car=carById(unit.id);
@@ -3349,7 +3398,8 @@ function marketUnitMarkup(unit){
   </article>`;
 }
 function marketUnits(){
-  return marketView==='new' ? zeroKmMarket() : ensureUsedMarket();
+  ensureMarketRotation();
+  return marketView==='new' ? (state.newMarketStock||[]) : (state.usedMarketStock||[]);
 }
 function renderMarketView(){
   const units=marketUnits();
@@ -3364,9 +3414,10 @@ function renderMarketView(){
     button.onclick=()=>{
       const type=button.dataset.marketType;
       const stockId=button.dataset.marketStock;
+      ensureMarketRotation();
       const unit=type==='new'
-        ? zeroKmMarket().find(item=>item.stockId===stockId)
-        : ensureUsedMarket().find(item=>item.stockId===stockId);
+        ? (state.newMarketStock||[]).find(item=>item.stockId===stockId)
+        : (state.usedMarketStock||[]).find(item=>item.stockId===stockId);
       if(unit)buyCar(unit.id,false,unit);
     };
   });
@@ -3400,10 +3451,10 @@ function waitWithoutCar(){
 function openMarket(force=false){
   if(divorcePending() && !force)return;
   $('#marketModal').classList.add('open');
-  ensureUsedMarket();
+  ensureMarketRotation();
 
-  const zeroCount=zeroKmMarket().length;
-  const usedCount=state.usedMarketStock.length;
+  const zeroCount=(state.newMarketStock||[]).length;
+  const usedCount=(state.usedMarketStock||[]).length;
   $('#marketTitle').innerHTML=`Mercado ${state.year} · efectivo disponible ${moneyDisplay(buyingPower())}`;
   const newTab=document.querySelector('[data-market-view="new"]');
   const usedTab=document.querySelector('[data-market-view="used"]');
@@ -3614,8 +3665,13 @@ $('#marketModal').addEventListener('click',event=>{
     if(state && state.endYear===undefined)state.endYear=rand(2027,2031);
     if(state && state.endYear<2027)state.endYear=rand(2027,2031);
     if(state && state.endYear>MAX_END_YEAR)state.endYear=MAX_END_YEAR;
-    if(state && state.marketStockYear===undefined)state.marketStockYear=null;
+    if(state && state.marketStockKey===undefined)state.marketStockKey=null;
+    if(state && !Array.isArray(state.newMarketStock))state.newMarketStock=[];
     if(state && !Array.isArray(state.usedMarketStock))state.usedMarketStock=[];
+    if(state && !Array.isArray(state.previousNewMarketIds))state.previousNewMarketIds=[];
+    if(state && !Array.isArray(state.previousUsedMarketIds))state.previousUsedMarketIds=[];
+    // Campo viejo: ya no se usa porque el mercado rota por turno y no sólo por año.
+    if(state && state.marketStockYear!==undefined)delete state.marketStockYear;
     ensureCollectionIds();
     if(state?.car && state.car.fans===undefined)state.car.fans=0;
     if(state?.car && state.car.fanStatusLevel===undefined)state.car.fanStatusLevel=0;
