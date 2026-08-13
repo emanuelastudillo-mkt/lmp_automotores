@@ -1,0 +1,1800 @@
+[
+  {
+    "id": "fiat-600",
+    "marca": "Fiat",
+    "modelo": "600",
+    "desde": 1960,
+    "hasta": 1982,
+    "precioBaseUSD": 2200,
+    "segmento": "Popular",
+    "confiabilidad": 69,
+    "economia": 63,
+    "potencialClasico": 88,
+    "tags": [
+      "clasico",
+      "motor-trasero",
+      "carburador"
+    ],
+    "eventoCanonico": "Refrigeración, carburación y originalidad: podés cuidarlo, mejorarlo o arriesgar un recalentamiento."
+  },
+  {
+    "id": "ford-falcon",
+    "marca": "Ford",
+    "modelo": "Falcon",
+    "desde": 1962,
+    "hasta": 1991,
+    "precioBaseUSD": 3900,
+    "segmento": "Sedán",
+    "confiabilidad": 86,
+    "economia": 92,
+    "potencialClasico": 95,
+    "tags": [
+      "clasico",
+      "sedan-grande",
+      "carburador"
+    ],
+    "eventoCanonico": "Mecánica simple y enorme cultura de preparación: conservarlo original o modificarlo cambia su valor futuro."
+  },
+  {
+    "id": "chevrolet-400",
+    "marca": "Chevrolet",
+    "modelo": "400",
+    "desde": 1962,
+    "hasta": 1974,
+    "precioBaseUSD": 4000,
+    "segmento": "Sedán",
+    "confiabilidad": 88,
+    "economia": 68,
+    "potencialClasico": 83,
+    "tags": [
+      "clasico",
+      "sedan-grande",
+      "carburador"
+    ],
+    "eventoCanonico": "La chapa y la originalidad ganan peso con los años; una restauración temprana puede cambiar su futuro."
+  },
+  {
+    "id": "renault-gordini",
+    "marca": "Renault",
+    "modelo": "Gordini",
+    "desde": 1962,
+    "hasta": 1970,
+    "precioBaseUSD": 2500,
+    "segmento": "Compacto",
+    "confiabilidad": 78,
+    "economia": 74,
+    "potencialClasico": 77,
+    "tags": [
+      "clasico",
+      "motor-trasero",
+      "carburador"
+    ],
+    "eventoCanonico": "Liviano y simple: podés mantenerlo de época o prepararlo, sacrificando originalidad."
+  },
+  {
+    "id": "siam-di-tella-1500",
+    "marca": "Siam",
+    "modelo": "Di Tella 1500",
+    "desde": 1960,
+    "hasta": 1966,
+    "precioBaseUSD": 3300,
+    "segmento": "Sedán",
+    "confiabilidad": 82,
+    "economia": 73,
+    "potencialClasico": 93,
+    "tags": [
+      "clasico",
+      "raro",
+      "carburador"
+    ],
+    "eventoCanonico": "Los repuestos específicos se vuelven difíciles: conservar piezas correctas puede ser más importante que reparar rápido."
+  },
+  {
+    "id": "peugeot-404",
+    "marca": "Peugeot",
+    "modelo": "404",
+    "desde": 1962,
+    "hasta": 1980,
+    "precioBaseUSD": 3800,
+    "segmento": "Sedán",
+    "confiabilidad": 87,
+    "economia": 78,
+    "potencialClasico": 89,
+    "tags": [
+      "clasico",
+      "robusto",
+      "carburador"
+    ],
+    "eventoCanonico": "Su fortaleza es durar: mantenerlo bien permite usarlo décadas, pero la carrocería empieza a mandar."
+  },
+  {
+    "id": "citroen-2cv",
+    "marca": "Citroën",
+    "modelo": "2CV",
+    "desde": 1960,
+    "hasta": 1970,
+    "precioBaseUSD": 2100,
+    "segmento": "Compacto",
+    "confiabilidad": 88,
+    "economia": 67,
+    "potencialClasico": 84,
+    "tags": [
+      "clasico",
+      "economico",
+      "carburador"
+    ],
+    "eventoCanonico": "Mecánica sencilla y bajo peso: es barato de reparar, pero una unidad original empieza a ser especial."
+  },
+  {
+    "id": "ika-bergantin",
+    "marca": "IKA",
+    "modelo": "Bergantín",
+    "desde": 1960,
+    "hasta": 1962,
+    "precioBaseUSD": 3500,
+    "segmento": "Sedán",
+    "confiabilidad": 69,
+    "economia": 63,
+    "potencialClasico": 83,
+    "tags": [
+      "clasico",
+      "raro",
+      "carburador"
+    ],
+    "eventoCanonico": "La rareza puede aumentar el valor, aunque conseguir piezas correctas es cada vez más costoso."
+  },
+  {
+    "id": "rambler-classic",
+    "marca": "IKA Rambler",
+    "modelo": "Classic",
+    "desde": 1962,
+    "hasta": 1967,
+    "precioBaseUSD": 4800,
+    "segmento": "Sedán grande",
+    "confiabilidad": 85,
+    "economia": 64,
+    "potencialClasico": 86,
+    "tags": [
+      "clasico",
+      "americano",
+      "carburador"
+    ],
+    "eventoCanonico": "Mucho confort y consumo: sostenerlo cuesta, pero conservarlo completo puede volverlo muy singular."
+  },
+  {
+    "id": "renault-4",
+    "marca": "Renault",
+    "modelo": "4",
+    "desde": 1963,
+    "hasta": 1987,
+    "precioBaseUSD": 2400,
+    "segmento": "Familiar compacto",
+    "confiabilidad": 66,
+    "economia": 80,
+    "potencialClasico": 76,
+    "tags": [
+      "clasico",
+      "familiar",
+      "economico"
+    ],
+    "eventoCanonico": "Práctico y austero: el uso intensivo castiga chapa y suspensión, aunque sigue siendo barato de mantener."
+  },
+  {
+    "id": "fiat-1500",
+    "marca": "Fiat",
+    "modelo": "1500",
+    "desde": 1963,
+    "hasta": 1972,
+    "precioBaseUSD": 3400,
+    "segmento": "Sedán",
+    "confiabilidad": 71,
+    "economia": 89,
+    "potencialClasico": 63,
+    "tags": [
+      "clasico",
+      "carburador"
+    ],
+    "eventoCanonico": "Podés conservarlo como sedán de época o darle una preparación ligera; la originalidad empieza a pesar."
+  },
+  {
+    "id": "ika-torino",
+    "marca": "IKA",
+    "modelo": "Torino",
+    "desde": 1966,
+    "hasta": 1981,
+    "precioBaseUSD": 5400,
+    "segmento": "Gran turismo",
+    "confiabilidad": 74,
+    "economia": 72,
+    "potencialClasico": 93,
+    "tags": [
+      "clasico",
+      "deportivo",
+      "seis-cilindros"
+    ],
+    "eventoCanonico": "Potencia, identidad y valor histórico chocan con la tentación de modificarlo."
+  },
+  {
+    "id": "ford-fairlane",
+    "marca": "Ford",
+    "modelo": "Fairlane",
+    "desde": 1969,
+    "hasta": 1982,
+    "precioBaseUSD": 6200,
+    "segmento": "Sedán grande",
+    "confiabilidad": 74,
+    "economia": 78,
+    "potencialClasico": 82,
+    "tags": [
+      "clasico",
+      "americano",
+      "v8"
+    ],
+    "eventoCanonico": "El confort viene con consumo alto; mantener motor e interiores originales puede rendir a largo plazo."
+  },
+  {
+    "id": "chevrolet-chevy",
+    "marca": "Chevrolet",
+    "modelo": "Chevy",
+    "desde": 1969,
+    "hasta": 1978,
+    "precioBaseUSD": 5200,
+    "segmento": "Sedán/Coupé",
+    "confiabilidad": 78,
+    "economia": 81,
+    "potencialClasico": 51,
+    "tags": [
+      "clasico",
+      "deportivo",
+      "traccion-trasera"
+    ],
+    "eventoCanonico": "Es candidato natural a preparación: ganás rendimiento ahora o preservás valor histórico."
+  },
+  {
+    "id": "fiat-128",
+    "marca": "Fiat",
+    "modelo": "128",
+    "desde": 1971,
+    "hasta": 1990,
+    "precioBaseUSD": 3100,
+    "segmento": "Compacto",
+    "confiabilidad": 73,
+    "economia": 85,
+    "potencialClasico": 54,
+    "tags": [
+      "clasico",
+      "compacto",
+      "carburador"
+    ],
+    "eventoCanonico": "Ágil y popular: preparar el motor es tentador, pero las unidades originales empiezan a escasear."
+  },
+  {
+    "id": "dodge-1500",
+    "marca": "Dodge",
+    "modelo": "1500",
+    "desde": 1971,
+    "hasta": 1982,
+    "precioBaseUSD": 3600,
+    "segmento": "Sedán",
+    "confiabilidad": 71,
+    "economia": 85,
+    "potencialClasico": 81,
+    "tags": [
+      "clasico",
+      "carburador",
+      "traccion-trasera"
+    ],
+    "eventoCanonico": "Noble y reparable: llega un punto en el que invertir en carrocería compite con venderlo."
+  },
+  {
+    "id": "peugeot-504",
+    "marca": "Peugeot",
+    "modelo": "504",
+    "desde": 1969,
+    "hasta": 1999,
+    "precioBaseUSD": 4700,
+    "segmento": "Sedán",
+    "confiabilidad": 74,
+    "economia": 63,
+    "potencialClasico": 62,
+    "tags": [
+      "clasico",
+      "robusto",
+      "familiar"
+    ],
+    "eventoCanonico": "Puede durar décadas; una unidad bien cuidada vale más que una reparación improvisada."
+  },
+  {
+    "id": "fiat-125",
+    "marca": "Fiat",
+    "modelo": "125",
+    "desde": 1972,
+    "hasta": 1982,
+    "precioBaseUSD": 4100,
+    "segmento": "Sedán",
+    "confiabilidad": 70,
+    "economia": 80,
+    "potencialClasico": 88,
+    "tags": [
+      "clasico",
+      "carburador",
+      "traccion-trasera"
+    ],
+    "eventoCanonico": "Buen equilibrio entre uso y carácter: modificarlo suma diversión, conservarlo suma valor."
+  },
+  {
+    "id": "ford-taunus",
+    "marca": "Ford",
+    "modelo": "Taunus",
+    "desde": 1974,
+    "hasta": 1984,
+    "precioBaseUSD": 4300,
+    "segmento": "Sedán/Coupé",
+    "confiabilidad": 66,
+    "economia": 61,
+    "potencialClasico": 62,
+    "tags": [
+      "clasico",
+      "coupe",
+      "carburador"
+    ],
+    "eventoCanonico": "Las unidades sanas empiezan a diferenciarse: restaurar o seguir usándolo cambia el desenlace."
+  },
+  {
+    "id": "torino-zx",
+    "marca": "IKA Renault",
+    "modelo": "Torino ZX",
+    "desde": 1979,
+    "hasta": 1981,
+    "precioBaseUSD": 6900,
+    "segmento": "Gran turismo",
+    "confiabilidad": 87,
+    "economia": 56,
+    "potencialClasico": 90,
+    "tags": [
+      "clasico",
+      "deportivo",
+      "raro"
+    ],
+    "eventoCanonico": "Ya nace como versión especial: tocar demasiado su configuración puede destruir valor histórico."
+  },
+  {
+    "id": "renault-18",
+    "marca": "Renault",
+    "modelo": "18",
+    "desde": 1981,
+    "hasta": 1993,
+    "precioBaseUSD": 4700,
+    "segmento": "Sedán",
+    "confiabilidad": 84,
+    "economia": 92,
+    "potencialClasico": 72,
+    "tags": [
+      "youngtimer",
+      "familiar",
+      "carburador"
+    ],
+    "eventoCanonico": "El uso familiar lo vuelve confiable pero castigado; el mantenimiento preventivo evita gastos grandes."
+  },
+  {
+    "id": "renault-fuego",
+    "marca": "Renault",
+    "modelo": "Fuego",
+    "desde": 1982,
+    "hasta": 1992,
+    "precioBaseUSD": 7200,
+    "segmento": "Coupé",
+    "confiabilidad": 91,
+    "economia": 77,
+    "potencialClasico": 58,
+    "tags": [
+      "youngtimer",
+      "deportivo",
+      "coupe"
+    ],
+    "eventoCanonico": "Muchas unidades terminan modificadas: conservar una configuración correcta puede ser clave."
+  },
+  {
+    "id": "fiat-147",
+    "marca": "Fiat",
+    "modelo": "147",
+    "desde": 1982,
+    "hasta": 1997,
+    "precioBaseUSD": 2800,
+    "segmento": "Compacto",
+    "confiabilidad": 84,
+    "economia": 73,
+    "potencialClasico": 93,
+    "tags": [
+      "youngtimer",
+      "economico",
+      "compacto"
+    ],
+    "eventoCanonico": "Barato, simple y fácil de modificar: herramienta diaria o proyecto interminable."
+  },
+  {
+    "id": "peugeot-505",
+    "marca": "Peugeot",
+    "modelo": "505",
+    "desde": 1981,
+    "hasta": 1995,
+    "precioBaseUSD": 5900,
+    "segmento": "Sedán",
+    "confiabilidad": 92,
+    "economia": 90,
+    "potencialClasico": 55,
+    "tags": [
+      "youngtimer",
+      "robusto",
+      "traccion-trasera"
+    ],
+    "eventoCanonico": "Viaja bien y envejece con dignidad; restaurar interiores puede costar más que la mecánica."
+  },
+  {
+    "id": "ford-sierra",
+    "marca": "Ford",
+    "modelo": "Sierra",
+    "desde": 1984,
+    "hasta": 1993,
+    "precioBaseUSD": 6100,
+    "segmento": "Sedán",
+    "confiabilidad": 79,
+    "economia": 56,
+    "potencialClasico": 73,
+    "tags": [
+      "youngtimer",
+      "traccion-trasera",
+      "deportivo-potencial"
+    ],
+    "eventoCanonico": "Su plataforma permite jugar con prestaciones; una unidad sana puede transformarse en clásico."
+  },
+  {
+    "id": "vw-gacel",
+    "marca": "Volkswagen",
+    "modelo": "Gacel",
+    "desde": 1983,
+    "hasta": 1991,
+    "precioBaseUSD": 4100,
+    "segmento": "Sedán",
+    "confiabilidad": 82,
+    "economia": 87,
+    "potencialClasico": 72,
+    "tags": [
+      "youngtimer",
+      "carburador",
+      "traccion-delantera"
+    ],
+    "eventoCanonico": "Simple y durable: decidir cuándo pasar de mantenimiento cotidiano a restauración es clave."
+  },
+  {
+    "id": "renault-9",
+    "marca": "Renault",
+    "modelo": "9",
+    "desde": 1987,
+    "hasta": 1997,
+    "precioBaseUSD": 4000,
+    "segmento": "Sedán",
+    "confiabilidad": 68,
+    "economia": 68,
+    "potencialClasico": 72,
+    "tags": [
+      "youngtimer",
+      "economico",
+      "carburador"
+    ],
+    "eventoCanonico": "Buen auto de uso diario: ahorrar hoy en mantenimiento puede salir caro más adelante."
+  },
+  {
+    "id": "fiat-duna",
+    "marca": "Fiat",
+    "modelo": "Duna",
+    "desde": 1987,
+    "hasta": 2001,
+    "precioBaseUSD": 3500,
+    "segmento": "Sedán",
+    "confiabilidad": 91,
+    "economia": 58,
+    "potencialClasico": 87,
+    "tags": [
+      "youngtimer",
+      "economico",
+      "diesel-opcional"
+    ],
+    "eventoCanonico": "Su bajo costo ayuda a ahorrar; la decisión difícil es cuándo vender antes de que el desgaste supere el valor."
+  },
+  {
+    "id": "peugeot-205",
+    "marca": "Peugeot",
+    "modelo": "205",
+    "desde": 1986,
+    "hasta": 1996,
+    "precioBaseUSD": 5200,
+    "segmento": "Hatchback",
+    "confiabilidad": 67,
+    "economia": 77,
+    "potencialClasico": 73,
+    "tags": [
+      "youngtimer",
+      "hatch",
+      "deportivo-potencial"
+    ],
+    "eventoCanonico": "Liviano y divertido: una preparación cuidada puede hacerlo especial, pero una unidad original también gana interés."
+  },
+  {
+    "id": "ford-escort",
+    "marca": "Ford",
+    "modelo": "Escort",
+    "desde": 1988,
+    "hasta": 2004,
+    "precioBaseUSD": 4700,
+    "segmento": "Compacto",
+    "confiabilidad": 77,
+    "economia": 87,
+    "potencialClasico": 74,
+    "tags": [
+      "youngtimer",
+      "familiar",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Se presta al uso intensivo: la confiabilidad depende del mantenimiento acumulado."
+  },
+  {
+    "id": "fiat-uno",
+    "marca": "Fiat",
+    "modelo": "Uno",
+    "desde": 1989,
+    "hasta": 2014,
+    "precioBaseUSD": 3900,
+    "segmento": "Hatchback",
+    "confiabilidad": 69,
+    "economia": 70,
+    "potencialClasico": 61,
+    "tags": [
+      "youngtimer",
+      "economico",
+      "hatch"
+    ],
+    "eventoCanonico": "Puede durar muchísimo: mantenerlo simple suele ser rentable, pero el tuning barato tienta."
+  },
+  {
+    "id": "vw-gol-g1",
+    "marca": "Volkswagen",
+    "modelo": "Gol G1",
+    "desde": 1991,
+    "hasta": 1996,
+    "precioBaseUSD": 4300,
+    "segmento": "Hatchback",
+    "confiabilidad": 79,
+    "economia": 87,
+    "potencialClasico": 78,
+    "tags": [
+      "youngtimer",
+      "economico",
+      "tuning"
+    ],
+    "eventoCanonico": "Candidato típico a modificaciones: cada cambio suma personalidad y puede quitar originalidad."
+  },
+  {
+    "id": "renault-clio-i",
+    "marca": "Renault",
+    "modelo": "Clio I",
+    "desde": 1994,
+    "hasta": 2001,
+    "precioBaseUSD": 5200,
+    "segmento": "Hatchback",
+    "confiabilidad": 81,
+    "economia": 63,
+    "potencialClasico": 57,
+    "tags": [
+      "youngtimer",
+      "economico",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Compacto y ágil: los años premian las unidades cuidadas y castigan reparaciones improvisadas."
+  },
+  {
+    "id": "renault-19",
+    "marca": "Renault",
+    "modelo": "19",
+    "desde": 1993,
+    "hasta": 2001,
+    "precioBaseUSD": 5400,
+    "segmento": "Sedán/Hatch",
+    "confiabilidad": 91,
+    "economia": 64,
+    "potencialClasico": 72,
+    "tags": [
+      "youngtimer",
+      "familiar",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Equilibrado y cómodo: sostener suspensión, refrigeración e interiores preserva su valor de uso."
+  },
+  {
+    "id": "peugeot-405",
+    "marca": "Peugeot",
+    "modelo": "405",
+    "desde": 1992,
+    "hasta": 2001,
+    "precioBaseUSD": 6200,
+    "segmento": "Sedán",
+    "confiabilidad": 73,
+    "economia": 70,
+    "potencialClasico": 79,
+    "tags": [
+      "youngtimer",
+      "familiar",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Su comportamiento rutero hace que quieras conservarlo; la suspensión define su vejez."
+  },
+  {
+    "id": "chevrolet-corsa",
+    "marca": "Chevrolet",
+    "modelo": "Corsa",
+    "desde": 1994,
+    "hasta": 2016,
+    "precioBaseUSD": 4700,
+    "segmento": "Hatchback",
+    "confiabilidad": 82,
+    "economia": 64,
+    "potencialClasico": 94,
+    "tags": [
+      "popular",
+      "economico",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Simple y rendidor: posponer mantenimiento puede transformar pequeños problemas en una reparación grande."
+  },
+  {
+    "id": "vw-gol-g2",
+    "marca": "Volkswagen",
+    "modelo": "Gol G2",
+    "desde": 1995,
+    "hasta": 2005,
+    "precioBaseUSD": 5100,
+    "segmento": "Hatchback",
+    "confiabilidad": 92,
+    "economia": 89,
+    "potencialClasico": 87,
+    "tags": [
+      "popular",
+      "economico",
+      "tuning"
+    ],
+    "eventoCanonico": "La cultura de modificaciones aparece fuerte: cada cambio puede afectar la reventa."
+  },
+  {
+    "id": "ford-fiesta",
+    "marca": "Ford",
+    "modelo": "Fiesta",
+    "desde": 1996,
+    "hasta": 2002,
+    "precioBaseUSD": 5300,
+    "segmento": "Hatchback",
+    "confiabilidad": 88,
+    "economia": 61,
+    "potencialClasico": 51,
+    "tags": [
+      "economico",
+      "compacto",
+      "inyeccion"
+    ],
+    "eventoCanonico": "La ciudad lo favorece; embrague, refrigeración y tren delantero marcan el paso del tiempo."
+  },
+  {
+    "id": "fiat-palio",
+    "marca": "Fiat",
+    "modelo": "Palio",
+    "desde": 1997,
+    "hasta": 2017,
+    "precioBaseUSD": 5400,
+    "segmento": "Hatchback",
+    "confiabilidad": 79,
+    "economia": 91,
+    "potencialClasico": 51,
+    "tags": [
+      "popular",
+      "economico",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Versátil y fácil de mantener: el uso intensivo castiga interior y suspensión."
+  },
+  {
+    "id": "fiat-siena",
+    "marca": "Fiat",
+    "modelo": "Siena",
+    "desde": 1997,
+    "hasta": 2017,
+    "precioBaseUSD": 5600,
+    "segmento": "Sedán",
+    "confiabilidad": 82,
+    "economia": 83,
+    "potencialClasico": 70,
+    "tags": [
+      "familiar",
+      "economico",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Baúl y bajo costo lo vuelven práctico; mantenerlo sano permite usarlo muchos años."
+  },
+  {
+    "id": "peugeot-306",
+    "marca": "Peugeot",
+    "modelo": "306",
+    "desde": 1995,
+    "hasta": 2002,
+    "precioBaseUSD": 6500,
+    "segmento": "Hatchback",
+    "confiabilidad": 85,
+    "economia": 55,
+    "potencialClasico": 72,
+    "tags": [
+      "youngtimer",
+      "deportivo-potencial",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Su chasis invita a disfrutarlo; tren trasero y suspensión definen si sigue siendo una joya."
+  },
+  {
+    "id": "vw-polo-classic",
+    "marca": "Volkswagen",
+    "modelo": "Polo Classic",
+    "desde": 1996,
+    "hasta": 2008,
+    "precioBaseUSD": 6100,
+    "segmento": "Sedán",
+    "confiabilidad": 70,
+    "economia": 55,
+    "potencialClasico": 63,
+    "tags": [
+      "familiar",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Austero y robusto: el mantenimiento preventivo gana más dinero del que parece."
+  },
+  {
+    "id": "honda-civic-vi",
+    "marca": "Honda",
+    "modelo": "Civic VI",
+    "desde": 1996,
+    "hasta": 2001,
+    "precioBaseUSD": 8600,
+    "segmento": "Sedán",
+    "confiabilidad": 82,
+    "economia": 64,
+    "potencialClasico": 71,
+    "tags": [
+      "japones",
+      "deportivo-potencial",
+      "inyeccion"
+    ],
+    "eventoCanonico": "La confiabilidad invita a mantenerlo y el mercado valora unidades originales."
+  },
+  {
+    "id": "toyota-corolla-e110",
+    "marca": "Toyota",
+    "modelo": "Corolla E110",
+    "desde": 1998,
+    "hasta": 2002,
+    "precioBaseUSD": 8200,
+    "segmento": "Sedán",
+    "confiabilidad": 92,
+    "economia": 82,
+    "potencialClasico": 58,
+    "tags": [
+      "japones",
+      "confiable",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Su fortaleza es durar; un historial ordenado puede sostener valor mejor que autos más llamativos."
+  },
+  {
+    "id": "peugeot-406",
+    "marca": "Peugeot",
+    "modelo": "406",
+    "desde": 1997,
+    "hasta": 2005,
+    "precioBaseUSD": 9000,
+    "segmento": "Sedán",
+    "confiabilidad": 92,
+    "economia": 68,
+    "potencialClasico": 54,
+    "tags": [
+      "confort",
+      "inyeccion",
+      "premium-generalista"
+    ],
+    "eventoCanonico": "Más complejo y confortable: posponer mantenimiento puede ser caro."
+  },
+  {
+    "id": "renault-megane-i",
+    "marca": "Renault",
+    "modelo": "Mégane I",
+    "desde": 1998,
+    "hasta": 2009,
+    "precioBaseUSD": 6800,
+    "segmento": "Sedán/Hatch",
+    "confiabilidad": 80,
+    "economia": 80,
+    "potencialClasico": 87,
+    "tags": [
+      "familiar",
+      "inyeccion",
+      "electronica"
+    ],
+    "eventoCanonico": "Más equipamiento significa más cosas para mantener: resolver detalles temprano evita una cadena de fallas."
+  },
+  {
+    "id": "vw-golf-iv",
+    "marca": "Volkswagen",
+    "modelo": "Golf IV",
+    "desde": 1998,
+    "hasta": 2007,
+    "precioBaseUSD": 9500,
+    "segmento": "Hatchback",
+    "confiabilidad": 91,
+    "economia": 65,
+    "potencialClasico": 94,
+    "tags": [
+      "premium-generalista",
+      "tuning",
+      "inyeccion"
+    ],
+    "eventoCanonico": "La tentación del tuning es fuerte; una unidad original puede terminar siendo más valiosa."
+  },
+  {
+    "id": "ford-mondeo-i",
+    "marca": "Ford",
+    "modelo": "Mondeo",
+    "desde": 1995,
+    "hasta": 2001,
+    "precioBaseUSD": 8800,
+    "segmento": "Sedán",
+    "confiabilidad": 70,
+    "economia": 67,
+    "potencialClasico": 85,
+    "tags": [
+      "confort",
+      "complejo",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Mucho auto por poco dinero usado: el desafío es sostener equipamiento y mecánica."
+  },
+  {
+    "id": "citroen-zx",
+    "marca": "Citroën",
+    "modelo": "ZX",
+    "desde": 1995,
+    "hasta": 1998,
+    "precioBaseUSD": 6400,
+    "segmento": "Hatchback",
+    "confiabilidad": 86,
+    "economia": 78,
+    "potencialClasico": 91,
+    "tags": [
+      "youngtimer",
+      "inyeccion",
+      "raro"
+    ],
+    "eventoCanonico": "Cómodo y distinto: algunas piezas específicas pueden requerir paciencia."
+  },
+  {
+    "id": "chevrolet-vectra-b",
+    "marca": "Chevrolet",
+    "modelo": "Vectra B",
+    "desde": 1997,
+    "hasta": 2005,
+    "precioBaseUSD": 8200,
+    "segmento": "Sedán",
+    "confiabilidad": 89,
+    "economia": 79,
+    "potencialClasico": 59,
+    "tags": [
+      "confort",
+      "inyeccion",
+      "electronica"
+    ],
+    "eventoCanonico": "Equipado y rutero: electrónica, refrigeración y suspensión definen si es gran usado o gasto constante."
+  },
+  {
+    "id": "ford-focus-i",
+    "marca": "Ford",
+    "modelo": "Focus I",
+    "desde": 2000,
+    "hasta": 2008,
+    "precioBaseUSD": 7800,
+    "segmento": "Hatch/Sedán",
+    "confiabilidad": 70,
+    "economia": 92,
+    "potencialClasico": 91,
+    "tags": [
+      "chasis",
+      "inyeccion",
+      "familiar"
+    ],
+    "eventoCanonico": "Su gran comportamiento dinámico invita a conservarlo; suspensión y electrónica merecen cuidado."
+  },
+  {
+    "id": "vw-bora",
+    "marca": "Volkswagen",
+    "modelo": "Bora",
+    "desde": 2000,
+    "hasta": 2014,
+    "precioBaseUSD": 9800,
+    "segmento": "Sedán",
+    "confiabilidad": 86,
+    "economia": 79,
+    "potencialClasico": 55,
+    "tags": [
+      "tuning",
+      "turbo-opcional",
+      "premium-generalista"
+    ],
+    "eventoCanonico": "Puede ser sedán tranquilo o proyecto de performance; la originalidad empieza a pesar."
+  },
+  {
+    "id": "peugeot-206",
+    "marca": "Peugeot",
+    "modelo": "206",
+    "desde": 1999,
+    "hasta": 2013,
+    "precioBaseUSD": 6900,
+    "segmento": "Hatchback",
+    "confiabilidad": 91,
+    "economia": 80,
+    "potencialClasico": 89,
+    "tags": [
+      "compacto",
+      "tuning",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Estética y agilidad lo vuelven popular; suspensión y electrónica necesitan cuidado."
+  },
+  {
+    "id": "renault-clio-ii",
+    "marca": "Renault",
+    "modelo": "Clio II",
+    "desde": 2000,
+    "hasta": 2016,
+    "precioBaseUSD": 6200,
+    "segmento": "Hatchback",
+    "confiabilidad": 75,
+    "economia": 92,
+    "potencialClasico": 80,
+    "tags": [
+      "economico",
+      "popular",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Barato de usar y vender: el dilema es cuánto invertir antes de cambiarlo."
+  },
+  {
+    "id": "toyota-corolla-e120",
+    "marca": "Toyota",
+    "modelo": "Corolla E120",
+    "desde": 2002,
+    "hasta": 2008,
+    "precioBaseUSD": 10500,
+    "segmento": "Sedán",
+    "confiabilidad": 84,
+    "economia": 76,
+    "potencialClasico": 95,
+    "tags": [
+      "japones",
+      "confiable",
+      "inyeccion"
+    ],
+    "eventoCanonico": "La confiabilidad premia el mantenimiento constante; venderlo muy temprano puede ser un error."
+  },
+  {
+    "id": "honda-fit-i",
+    "marca": "Honda",
+    "modelo": "Fit I",
+    "desde": 2004,
+    "hasta": 2008,
+    "precioBaseUSD": 10200,
+    "segmento": "Monovolumen",
+    "confiabilidad": 75,
+    "economia": 72,
+    "potencialClasico": 76,
+    "tags": [
+      "japones",
+      "familiar",
+      "confiable"
+    ],
+    "eventoCanonico": "Práctico y durable: mantenimiento periódico y caja en buen estado sostienen fuerte reventa."
+  },
+  {
+    "id": "vw-fox",
+    "marca": "Volkswagen",
+    "modelo": "Fox",
+    "desde": 2005,
+    "hasta": 2015,
+    "precioBaseUSD": 7200,
+    "segmento": "Hatchback",
+    "confiabilidad": 82,
+    "economia": 88,
+    "potencialClasico": 60,
+    "tags": [
+      "compacto",
+      "inyeccion",
+      "popular"
+    ],
+    "eventoCanonico": "Simple y alto: embrague y tren delantero definen cuánto aguanta."
+  },
+  {
+    "id": "vw-suran",
+    "marca": "Volkswagen",
+    "modelo": "Suran",
+    "desde": 2006,
+    "hasta": 2019,
+    "precioBaseUSD": 7900,
+    "segmento": "Familiar",
+    "confiabilidad": 66,
+    "economia": 76,
+    "potencialClasico": 58,
+    "tags": [
+      "familiar",
+      "inyeccion",
+      "popular"
+    ],
+    "eventoCanonico": "Espacio y uso familiar significan kilómetros: prevenir antes de viajar puede ahorrar un evento caro."
+  },
+  {
+    "id": "ford-ecosport-i",
+    "marca": "Ford",
+    "modelo": "EcoSport I",
+    "desde": 2003,
+    "hasta": 2012,
+    "precioBaseUSD": 9300,
+    "segmento": "SUV",
+    "confiabilidad": 68,
+    "economia": 80,
+    "potencialClasico": 56,
+    "tags": [
+      "suv",
+      "familiar",
+      "inyeccion"
+    ],
+    "eventoCanonico": "La altura y versatilidad tientan a exigirla; tren delantero y refrigeración importan."
+  },
+  {
+    "id": "peugeot-307",
+    "marca": "Peugeot",
+    "modelo": "307",
+    "desde": 2004,
+    "hasta": 2011,
+    "precioBaseUSD": 9400,
+    "segmento": "Hatch/Sedán",
+    "confiabilidad": 65,
+    "economia": 88,
+    "potencialClasico": 85,
+    "tags": [
+      "confort",
+      "electronica",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Mucho equipamiento para la época: cuidar electrónica y tren delantero evita que pequeñas fallas se acumulen."
+  },
+  {
+    "id": "chevrolet-astra",
+    "marca": "Chevrolet",
+    "modelo": "Astra",
+    "desde": 2000,
+    "hasta": 2011,
+    "precioBaseUSD": 8500,
+    "segmento": "Hatch/Sedán",
+    "confiabilidad": 92,
+    "economia": 63,
+    "potencialClasico": 89,
+    "tags": [
+      "inyeccion",
+      "robusto",
+      "familiar"
+    ],
+    "eventoCanonico": "Robusto y potente para su segmento: el consumo penaliza, pero la mecánica puede durar mucho."
+  },
+  {
+    "id": "vw-gol-power",
+    "marca": "Volkswagen",
+    "modelo": "Gol Power",
+    "desde": 2003,
+    "hasta": 2014,
+    "precioBaseUSD": 6100,
+    "segmento": "Hatchback",
+    "confiabilidad": 77,
+    "economia": 74,
+    "potencialClasico": 74,
+    "tags": [
+      "economico",
+      "tuning",
+      "popular"
+    ],
+    "eventoCanonico": "Barato de mantener y fácil de modificar: no todo lo que gastás vuelve en la reventa."
+  },
+  {
+    "id": "nissan-tiida",
+    "marca": "Nissan",
+    "modelo": "Tiida",
+    "desde": 2008,
+    "hasta": 2014,
+    "precioBaseUSD": 10400,
+    "segmento": "Hatch/Sedán",
+    "confiabilidad": 82,
+    "economia": 64,
+    "potencialClasico": 60,
+    "tags": [
+      "japones",
+      "confiable",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Mucho espacio y buena mecánica: conservar una unidad sana puede ser más rentable que perseguir algo más moderno."
+  },
+  {
+    "id": "honda-civic-viii",
+    "marca": "Honda",
+    "modelo": "Civic VIII",
+    "desde": 2006,
+    "hasta": 2011,
+    "precioBaseUSD": 12800,
+    "segmento": "Sedán",
+    "confiabilidad": 83,
+    "economia": 56,
+    "potencialClasico": 85,
+    "tags": [
+      "japones",
+      "confiable",
+      "deportivo-potencial"
+    ],
+    "eventoCanonico": "Diseño y confiabilidad envejecen bien; una preparación agresiva reduce atractivo futuro."
+  },
+  {
+    "id": "toyota-corolla-e140",
+    "marca": "Toyota",
+    "modelo": "Corolla E140",
+    "desde": 2008,
+    "hasta": 2014,
+    "precioBaseUSD": 12200,
+    "segmento": "Sedán",
+    "confiabilidad": 81,
+    "economia": 88,
+    "potencialClasico": 73,
+    "tags": [
+      "japones",
+      "confiable",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Es difícil justificar venderlo por problemas si está bien mantenido; el riesgo es aburrirse y cambiar antes de tiempo."
+  },
+  {
+    "id": "vw-gol-trend",
+    "marca": "Volkswagen",
+    "modelo": "Gol Trend",
+    "desde": 2008,
+    "hasta": 2021,
+    "precioBaseUSD": 8200,
+    "segmento": "Hatchback",
+    "confiabilidad": 80,
+    "economia": 61,
+    "potencialClasico": 73,
+    "tags": [
+      "economico",
+      "popular",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Fácil de vender y sostener: un buen historial vale más que modificaciones estéticas."
+  },
+  {
+    "id": "ford-focus-ii",
+    "marca": "Ford",
+    "modelo": "Focus II",
+    "desde": 2009,
+    "hasta": 2013,
+    "precioBaseUSD": 10800,
+    "segmento": "Hatch/Sedán",
+    "confiabilidad": 81,
+    "economia": 67,
+    "potencialClasico": 60,
+    "tags": [
+      "chasis",
+      "inyeccion",
+      "familiar"
+    ],
+    "eventoCanonico": "El comportamiento dinámico invita a quedártelo; suspensión y electrónica sostienen su calidad."
+  },
+  {
+    "id": "renault-sandero-i",
+    "marca": "Renault",
+    "modelo": "Sandero I",
+    "desde": 2008,
+    "hasta": 2014,
+    "precioBaseUSD": 8500,
+    "segmento": "Hatchback",
+    "confiabilidad": 67,
+    "economia": 80,
+    "potencialClasico": 94,
+    "tags": [
+      "familiar",
+      "economico",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Espacio y mecánica simple: conservarlo varios años puede ayudarte a juntar capital."
+  },
+  {
+    "id": "renault-duster",
+    "marca": "Renault",
+    "modelo": "Duster",
+    "desde": 2011,
+    "hasta": 2022,
+    "precioBaseUSD": 12800,
+    "segmento": "SUV",
+    "confiabilidad": 66,
+    "economia": 64,
+    "potencialClasico": 55,
+    "tags": [
+      "suv",
+      "familiar",
+      "inyeccion"
+    ],
+    "eventoCanonico": "La robustez invita a caminos malos: neumáticos y tren delantero pesan más si abusás de esa capacidad."
+  },
+  {
+    "id": "chevrolet-cruze-i",
+    "marca": "Chevrolet",
+    "modelo": "Cruze I",
+    "desde": 2011,
+    "hasta": 2016,
+    "precioBaseUSD": 13500,
+    "segmento": "Sedán/Hatch",
+    "confiabilidad": 82,
+    "economia": 82,
+    "potencialClasico": 66,
+    "tags": [
+      "confort",
+      "electronica",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Más sofisticado: el mantenimiento correcto evita que equipamiento y mecánica erosionen el presupuesto."
+  },
+  {
+    "id": "chevrolet-classic",
+    "marca": "Chevrolet",
+    "modelo": "Classic",
+    "desde": 2010,
+    "hasta": 2016,
+    "precioBaseUSD": 7600,
+    "segmento": "Sedán",
+    "confiabilidad": 74,
+    "economia": 82,
+    "potencialClasico": 86,
+    "tags": [
+      "economico",
+      "popular",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Mecánica conocida y costos contenidos: puede ser una máquina de ahorrar si resistís la moda."
+  },
+  {
+    "id": "peugeot-308-i",
+    "marca": "Peugeot",
+    "modelo": "308 I",
+    "desde": 2012,
+    "hasta": 2021,
+    "precioBaseUSD": 13800,
+    "segmento": "Hatchback",
+    "confiabilidad": 85,
+    "economia": 88,
+    "potencialClasico": 56,
+    "tags": [
+      "confort",
+      "electronica",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Equipamiento y confort elevan el costo del descuido; una unidad ordenada recompensa."
+  },
+  {
+    "id": "peugeot-408",
+    "marca": "Peugeot",
+    "modelo": "408",
+    "desde": 2011,
+    "hasta": 2021,
+    "precioBaseUSD": 14000,
+    "segmento": "Sedán",
+    "confiabilidad": 77,
+    "economia": 79,
+    "potencialClasico": 56,
+    "tags": [
+      "confort",
+      "familiar",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Gran rutero y familiar: el dilema es invertir en preventivo o cambiar antes de una etapa más costosa."
+  },
+  {
+    "id": "citroen-c4-lounge",
+    "marca": "Citroën",
+    "modelo": "C4 Lounge",
+    "desde": 2013,
+    "hasta": 2021,
+    "precioBaseUSD": 14500,
+    "segmento": "Sedán",
+    "confiabilidad": 78,
+    "economia": 81,
+    "potencialClasico": 60,
+    "tags": [
+      "confort",
+      "electronica",
+      "turbo-opcional"
+    ],
+    "eventoCanonico": "Mucho confort y tecnología: las versiones complejas vuelven el mantenimiento una decisión relevante."
+  },
+  {
+    "id": "ford-focus-iii",
+    "marca": "Ford",
+    "modelo": "Focus III",
+    "desde": 2013,
+    "hasta": 2019,
+    "precioBaseUSD": 14800,
+    "segmento": "Hatch/Sedán",
+    "confiabilidad": 89,
+    "economia": 84,
+    "potencialClasico": 83,
+    "tags": [
+      "chasis",
+      "electronica",
+      "moderno"
+    ],
+    "eventoCanonico": "Excelente chasis y equipamiento: elegir bien la versión y mantenerla puede cambiar toda la trayectoria."
+  },
+  {
+    "id": "ford-fiesta-kinetic",
+    "marca": "Ford",
+    "modelo": "Fiesta Kinetic",
+    "desde": 2010,
+    "hasta": 2019,
+    "precioBaseUSD": 11200,
+    "segmento": "Hatch/Sedán",
+    "confiabilidad": 75,
+    "economia": 68,
+    "potencialClasico": 71,
+    "tags": [
+      "compacto",
+      "electronica",
+      "moderno"
+    ],
+    "eventoCanonico": "Ágil y equipado: cuidar tren delantero y electrónica mantiene el encanto."
+  },
+  {
+    "id": "toyota-etios",
+    "marca": "Toyota",
+    "modelo": "Etios",
+    "desde": 2013,
+    "hasta": 2021,
+    "precioBaseUSD": 9800,
+    "segmento": "Hatch/Sedán",
+    "confiabilidad": 92,
+    "economia": 61,
+    "potencialClasico": 73,
+    "tags": [
+      "japones",
+      "economico",
+      "confiable"
+    ],
+    "eventoCanonico": "No busca lujo: gastar poco y fallar poco puede ser la herramienta perfecta para acumular dinero."
+  },
+  {
+    "id": "toyota-corolla-e170",
+    "marca": "Toyota",
+    "modelo": "Corolla E170",
+    "desde": 2014,
+    "hasta": 2020,
+    "precioBaseUSD": 15800,
+    "segmento": "Sedán",
+    "confiabilidad": 79,
+    "economia": 91,
+    "potencialClasico": 52,
+    "tags": [
+      "japones",
+      "confiable",
+      "moderno"
+    ],
+    "eventoCanonico": "Confiabilidad y reventa lo convierten en refugio seguro; cambiar por emoción puede salir caro."
+  },
+  {
+    "id": "nissan-march",
+    "marca": "Nissan",
+    "modelo": "March",
+    "desde": 2012,
+    "hasta": 2020,
+    "precioBaseUSD": 9200,
+    "segmento": "Hatchback",
+    "confiabilidad": 66,
+    "economia": 80,
+    "potencialClasico": 92,
+    "tags": [
+      "japones",
+      "economico",
+      "compacto"
+    ],
+    "eventoCanonico": "Liviano y urbano: usarlo barato durante años puede construir capital para un salto grande."
+  },
+  {
+    "id": "nissan-sentra-b17",
+    "marca": "Nissan",
+    "modelo": "Sentra B17",
+    "desde": 2014,
+    "hasta": 2020,
+    "precioBaseUSD": 13500,
+    "segmento": "Sedán",
+    "confiabilidad": 86,
+    "economia": 75,
+    "potencialClasico": 62,
+    "tags": [
+      "japones",
+      "confort",
+      "moderno"
+    ],
+    "eventoCanonico": "Cómodo y equilibrado: transmisión y mantenimiento correcto son claves si querés conservarlo muchos años."
+  },
+  {
+    "id": "vw-up",
+    "marca": "Volkswagen",
+    "modelo": "up!",
+    "desde": 2014,
+    "hasta": 2021,
+    "precioBaseUSD": 8900,
+    "segmento": "Hatchback",
+    "confiabilidad": 78,
+    "economia": 68,
+    "potencialClasico": 66,
+    "tags": [
+      "economico",
+      "compacto",
+      "moderno"
+    ],
+    "eventoCanonico": "Consume poco y es ágil: mantenerlo original puede ser mejor negocio que convertirlo en proyecto."
+  },
+  {
+    "id": "fiat-mobi",
+    "marca": "Fiat",
+    "modelo": "Mobi",
+    "desde": 2016,
+    "hasta": 2026,
+    "precioBaseUSD": 9000,
+    "segmento": "Hatchback",
+    "confiabilidad": 87,
+    "economia": 64,
+    "potencialClasico": 75,
+    "tags": [
+      "economico",
+      "compacto",
+      "moderno"
+    ],
+    "eventoCanonico": "Su objetivo es gastar poco: conservarlo puede ayudarte a juntar capital para un salto real."
+  },
+  {
+    "id": "fiat-argo",
+    "marca": "Fiat",
+    "modelo": "Argo",
+    "desde": 2017,
+    "hasta": 2026,
+    "precioBaseUSD": 12500,
+    "segmento": "Hatchback",
+    "confiabilidad": 79,
+    "economia": 58,
+    "potencialClasico": 53,
+    "tags": [
+      "moderno",
+      "popular",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Buen equilibrio general: decidir cuándo pasar a algo superior importa más que tunearlo."
+  },
+  {
+    "id": "fiat-cronos",
+    "marca": "Fiat",
+    "modelo": "Cronos",
+    "desde": 2018,
+    "hasta": 2026,
+    "precioBaseUSD": 13800,
+    "segmento": "Sedán",
+    "confiabilidad": 70,
+    "economia": 62,
+    "potencialClasico": 87,
+    "tags": [
+      "moderno",
+      "popular",
+      "familiar"
+    ],
+    "eventoCanonico": "Espacioso y de buena salida: el mantenimiento prolijo sostiene una reventa útil."
+  },
+  {
+    "id": "renault-sandero-ii",
+    "marca": "Renault",
+    "modelo": "Sandero II",
+    "desde": 2015,
+    "hasta": 2022,
+    "precioBaseUSD": 11200,
+    "segmento": "Hatchback",
+    "confiabilidad": 80,
+    "economia": 57,
+    "potencialClasico": 70,
+    "tags": [
+      "familiar",
+      "economico",
+      "moderno"
+    ],
+    "eventoCanonico": "Práctico y espacioso: puede acompañarte años si priorizás mantenimiento sobre accesorios."
+  },
+  {
+    "id": "renault-logan-ii",
+    "marca": "Renault",
+    "modelo": "Logan II",
+    "desde": 2014,
+    "hasta": 2022,
+    "precioBaseUSD": 11100,
+    "segmento": "Sedán",
+    "confiabilidad": 87,
+    "economia": 79,
+    "potencialClasico": 82,
+    "tags": [
+      "familiar",
+      "economico",
+      "moderno"
+    ],
+    "eventoCanonico": "Mucho espacio por el dinero: herramienta de ahorro si evitás cambiarlo solo por estética."
+  },
+  {
+    "id": "renault-captur",
+    "marca": "Renault",
+    "modelo": "Captur",
+    "desde": 2016,
+    "hasta": 2022,
+    "precioBaseUSD": 14700,
+    "segmento": "SUV",
+    "confiabilidad": 91,
+    "economia": 78,
+    "potencialClasico": 89,
+    "tags": [
+      "suv",
+      "familiar",
+      "moderno"
+    ],
+    "eventoCanonico": "Diseño y comodidad elevan el costo frente a un hatch; el juego te obliga a decidir si vale la diferencia."
+  },
+  {
+    "id": "chevrolet-onix-i",
+    "marca": "Chevrolet",
+    "modelo": "Onix I",
+    "desde": 2013,
+    "hasta": 2019,
+    "precioBaseUSD": 10700,
+    "segmento": "Hatchback",
+    "confiabilidad": 77,
+    "economia": 73,
+    "potencialClasico": 53,
+    "tags": [
+      "economico",
+      "popular",
+      "moderno"
+    ],
+    "eventoCanonico": "Buena relación costo/uso: conservarlo sano puede hacer que el capital crezca más rápido."
+  },
+  {
+    "id": "chevrolet-tracker-i",
+    "marca": "Chevrolet",
+    "modelo": "Tracker I",
+    "desde": 2013,
+    "hasta": 2020,
+    "precioBaseUSD": 14800,
+    "segmento": "SUV",
+    "confiabilidad": 77,
+    "economia": 69,
+    "potencialClasico": 59,
+    "tags": [
+      "suv",
+      "familiar",
+      "moderno"
+    ],
+    "eventoCanonico": "SUV compacta con buen valor: neumáticos, suspensión y servicios pesan más que en un hatch."
+  },
+  {
+    "id": "chevrolet-spin",
+    "marca": "Chevrolet",
+    "modelo": "Spin",
+    "desde": 2012,
+    "hasta": 2026,
+    "precioBaseUSD": 13200,
+    "segmento": "Monovolumen",
+    "confiabilidad": 68,
+    "economia": 91,
+    "potencialClasico": 72,
+    "tags": [
+      "familiar",
+      "monovolumen",
+      "popular"
+    ],
+    "eventoCanonico": "La utilidad familiar hace que acumule kilómetros; el mantenimiento disciplinado evita que el desgaste se coma la reventa."
+  },
+  {
+    "id": "peugeot-208-i",
+    "marca": "Peugeot",
+    "modelo": "208 I",
+    "desde": 2013,
+    "hasta": 2020,
+    "precioBaseUSD": 11800,
+    "segmento": "Hatchback",
+    "confiabilidad": 78,
+    "economia": 74,
+    "potencialClasico": 53,
+    "tags": [
+      "moderno",
+      "electronica",
+      "compacto"
+    ],
+    "eventoCanonico": "Diseño y equipamiento invitan a cuidarlo; electrónica y tren delantero marcan el costo de mantener esa sensación."
+  },
+  {
+    "id": "peugeot-2008-i",
+    "marca": "Peugeot",
+    "modelo": "2008 I",
+    "desde": 2016,
+    "hasta": 2020,
+    "precioBaseUSD": 14200,
+    "segmento": "SUV",
+    "confiabilidad": 86,
+    "economia": 56,
+    "potencialClasico": 89,
+    "tags": [
+      "suv",
+      "familiar",
+      "moderno"
+    ],
+    "eventoCanonico": "La moda SUV aumenta el valor de compra; el juego te obliga a decidir si pagás formato o necesidad."
+  },
+  {
+    "id": "citroen-c4-cactus",
+    "marca": "Citroën",
+    "modelo": "C4 Cactus",
+    "desde": 2018,
+    "hasta": 2021,
+    "precioBaseUSD": 15000,
+    "segmento": "SUV",
+    "confiabilidad": 65,
+    "economia": 57,
+    "potencialClasico": 73,
+    "tags": [
+      "suv",
+      "moderno",
+      "diseño"
+    ],
+    "eventoCanonico": "Diseño singular y equipamiento: una unidad cuidada sostiene interés, pero la complejidad eleva el costo del abandono."
+  },
+  {
+    "id": "vw-polo",
+    "marca": "Volkswagen",
+    "modelo": "Polo",
+    "desde": 2018,
+    "hasta": 2026,
+    "precioBaseUSD": 15200,
+    "segmento": "Hatchback",
+    "confiabilidad": 73,
+    "economia": 85,
+    "potencialClasico": 64,
+    "tags": [
+      "moderno",
+      "turbo-opcional",
+      "popular"
+    ],
+    "eventoCanonico": "Plataforma moderna y buen valor de reventa: el mantenimiento impacta fuerte en cuánto recuperás."
+  },
+  {
+    "id": "vw-virtus",
+    "marca": "Volkswagen",
+    "modelo": "Virtus",
+    "desde": 2018,
+    "hasta": 2026,
+    "precioBaseUSD": 15800,
+    "segmento": "Sedán",
+    "confiabilidad": 81,
+    "economia": 89,
+    "potencialClasico": 86,
+    "tags": [
+      "moderno",
+      "familiar",
+      "popular"
+    ],
+    "eventoCanonico": "Espacio y plataforma moderna lo hacen versátil; venderlo demasiado pronto puede desperdiciar su buen valor residual."
+  },
+  {
+    "id": "vw-vento",
+    "marca": "Volkswagen",
+    "modelo": "Vento",
+    "desde": 2011,
+    "hasta": 2026,
+    "precioBaseUSD": 18500,
+    "segmento": "Sedán",
+    "confiabilidad": 85,
+    "economia": 55,
+    "potencialClasico": 56,
+    "tags": [
+      "premium-generalista",
+      "turbo-opcional",
+      "tuning"
+    ],
+    "eventoCanonico": "Prestaciones y confort elevan el riesgo de modificaciones caras; una unidad original es más fácil de vender."
+  },
+  {
+    "id": "vw-nivus",
+    "marca": "Volkswagen",
+    "modelo": "Nivus",
+    "desde": 2020,
+    "hasta": 2026,
+    "precioBaseUSD": 21500,
+    "segmento": "Crossover",
+    "confiabilidad": 76,
+    "economia": 88,
+    "potencialClasico": 68,
+    "tags": [
+      "suv",
+      "moderno",
+      "turbo"
+    ],
+    "eventoCanonico": "Tecnología y turbo prometen mucho, pero suben el costo de mantenimiento frente a opciones simples."
+  },
+  {
+    "id": "toyota-yaris",
+    "marca": "Toyota",
+    "modelo": "Yaris",
+    "desde": 2018,
+    "hasta": 2026,
+    "precioBaseUSD": 15500,
+    "segmento": "Hatch/Sedán",
+    "confiabilidad": 79,
+    "economia": 68,
+    "potencialClasico": 60,
+    "tags": [
+      "japones",
+      "confiable",
+      "moderno"
+    ],
+    "eventoCanonico": "Confiabilidad y reventa favorecen mantenerlo; cambiar por capricho puede ser la decisión más cara."
+  },
+  {
+    "id": "nissan-kicks",
+    "marca": "Nissan",
+    "modelo": "Kicks",
+    "desde": 2017,
+    "hasta": 2026,
+    "precioBaseUSD": 17500,
+    "segmento": "SUV",
+    "confiabilidad": 70,
+    "economia": 85,
+    "potencialClasico": 70,
+    "tags": [
+      "japones",
+      "suv",
+      "moderno"
+    ],
+    "eventoCanonico": "SUV racional y de consumo contenido: cuidar transmisión, cubiertas y servicios sostiene la reventa."
+  },
+  {
+    "id": "honda-civic-x",
+    "marca": "Honda",
+    "modelo": "Civic X",
+    "desde": 2017,
+    "hasta": 2021,
+    "precioBaseUSD": 23500,
+    "segmento": "Sedán",
+    "confiabilidad": 92,
+    "economia": 75,
+    "potencialClasico": 73,
+    "tags": [
+      "japones",
+      "moderno",
+      "turbo-opcional"
+    ],
+    "eventoCanonico": "Tecnología y prestaciones lo hacen deseable; modificarlo puede ser divertido, pero una buena unidad original gana valor relativo."
+  }
+]

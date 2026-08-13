@@ -1,0 +1,247 @@
+[
+  {
+    "id": "mantenimiento",
+    "title": "Es hora de hacerle mantenimiento",
+    "tags": [
+      "*"
+    ],
+    "text": "El auto viene cumpliendo, pero aparecen señales de desgaste normal. ¿Invertís ahora o estirás un poco más?",
+    "choices": [
+      {
+        "label": "Mantenimiento completo",
+        "money": -550,
+        "condition": 10,
+        "originality": 1,
+        "performance": 0,
+        "risk": 0.02,
+        "note": "Gastaste ahora para evitar problemas después."
+      },
+      {
+        "label": "Hacer lo mínimo",
+        "money": -180,
+        "condition": 3,
+        "originality": 0,
+        "performance": 0,
+        "risk": 0.18,
+        "note": "Ahorraste, pero quedó mantenimiento pendiente."
+      },
+      {
+        "label": "Seguir así",
+        "money": 0,
+        "condition": -5,
+        "originality": 0,
+        "performance": 0,
+        "risk": 0.34,
+        "note": "No gastaste nada, aunque el auto quedó más expuesto."
+      }
+    ]
+  },
+  {
+    "id": "recalentamiento",
+    "title": "La aguja de temperatura sube",
+    "tags": [
+      "carburador",
+      "motor-trasero",
+      "*"
+    ],
+    "text": "La temperatura empieza a subir más de la cuenta. Podés parar y revisar o seguir hasta llegar.",
+    "choices": [
+      {
+        "label": "Parar y reparar bien",
+        "money": -850,
+        "condition": 7,
+        "originality": 0,
+        "performance": 0,
+        "risk": 0.02,
+        "note": "Cortaste el problema antes de que escalara."
+      },
+      {
+        "label": "Dejar enfriar y seguir",
+        "money": -120,
+        "condition": -3,
+        "originality": 0,
+        "performance": 0,
+        "risk": 0.22,
+        "note": "Llegaste, pero la causa sigue ahí."
+      },
+      {
+        "label": "Seguir manejando",
+        "money": 0,
+        "condition": -18,
+        "originality": 0,
+        "performance": 0,
+        "risk": 0.55,
+        "note": "Fue una apuesta fuerte con la mecánica."
+      }
+    ]
+  },
+  {
+    "id": "tuning",
+    "title": "Te picó el bichito de modificarlo",
+    "tags": [
+      "tuning",
+      "deportivo",
+      "deportivo-potencial",
+      "turbo",
+      "turbo-opcional",
+      "*"
+    ],
+    "text": "Aparece la oportunidad de gastar plata en mejoras. Puede hacerlo más divertido, aunque no necesariamente más valioso.",
+    "choices": [
+      {
+        "label": "Preparación seria",
+        "money": -1600,
+        "condition": -1,
+        "originality": -18,
+        "performance": 14,
+        "risk": 0.12,
+        "note": "Ganaste rendimiento y perdiste originalidad."
+      },
+      {
+        "label": "Mejoras reversibles",
+        "money": -650,
+        "condition": 1,
+        "originality": -6,
+        "performance": 6,
+        "risk": 0.06,
+        "note": "Un toque de personalidad sin ir demasiado lejos."
+      },
+      {
+        "label": "Mantenerlo original",
+        "money": 0,
+        "condition": 1,
+        "originality": 5,
+        "performance": 0,
+        "risk": 0,
+        "note": "Resististe la tentación y preservaste la unidad."
+      }
+    ]
+  },
+  {
+    "id": "carroceria",
+    "title": "La carrocería empieza a pedir cariño",
+    "tags": [
+      "clasico",
+      "youngtimer",
+      "*"
+    ],
+    "text": "El paso del tiempo aparece en pintura, burletes y algunos puntos de chapa.",
+    "choices": [
+      {
+        "label": "Restaurar como corresponde",
+        "money": -2100,
+        "condition": 16,
+        "originality": 9,
+        "performance": 0,
+        "risk": 0.03,
+        "note": "Una inversión importante que deja el auto mucho mejor."
+      },
+      {
+        "label": "Arreglo cosmético",
+        "money": -550,
+        "condition": 5,
+        "originality": -2,
+        "performance": 0,
+        "risk": 0.1,
+        "note": "Mejoró a simple vista, aunque no quedó perfecto."
+      },
+      {
+        "label": "Dejarlo para más adelante",
+        "money": 0,
+        "condition": -8,
+        "originality": -1,
+        "performance": 0,
+        "risk": 0.18,
+        "note": "La deuda estética sigue creciendo."
+      }
+    ]
+  },
+  {
+    "id": "oferta",
+    "title": "Te hacen una oferta por el auto",
+    "tags": [
+      "*"
+    ],
+    "text": "Alguien vio tu auto y quiere comprarlo. La oferta es tentadora, pero vender significa volver al mercado.",
+    "special": "sale"
+  },
+  {
+    "id": "electronica",
+    "title": "Una falla eléctrica intermitente",
+    "tags": [
+      "electronica",
+      "moderno",
+      "premium-generalista"
+    ],
+    "text": "Aparece una falla difícil de reproducir. Puede ser algo menor o el comienzo de una cadena de gastos.",
+    "choices": [
+      {
+        "label": "Diagnóstico completo",
+        "money": -700,
+        "condition": 7,
+        "originality": 0,
+        "performance": 0,
+        "risk": 0.03,
+        "note": "Pagaste diagnóstico y solucionaste la causa."
+      },
+      {
+        "label": "Cambiar lo más probable",
+        "money": -280,
+        "condition": 2,
+        "originality": 0,
+        "performance": 0,
+        "risk": 0.16,
+        "note": "Podría estar solucionado… o no."
+      },
+      {
+        "label": "Ignorarlo mientras funcione",
+        "money": 0,
+        "condition": -6,
+        "originality": 0,
+        "performance": 0,
+        "risk": 0.25,
+        "note": "Decidiste convivir con la falla."
+      }
+    ]
+  },
+  {
+    "id": "viaje",
+    "title": "Se viene un viaje largo",
+    "tags": [
+      "familiar",
+      "suv",
+      "monovolumen",
+      "*"
+    ],
+    "text": "Tenés la oportunidad de hacer un viaje importante. Preparar el auto cuesta, pero también construye historia.",
+    "choices": [
+      {
+        "label": "Service y viaje",
+        "money": -620,
+        "condition": 5,
+        "originality": 0,
+        "performance": 0,
+        "risk": 0.02,
+        "note": "El auto sumó kilómetros y una buena historia."
+      },
+      {
+        "label": "Viajar sin hacer nada",
+        "money": -220,
+        "condition": -5,
+        "originality": 0,
+        "performance": 0,
+        "risk": 0.15,
+        "note": "Salió barato, aunque exigiste más al auto."
+      },
+      {
+        "label": "No viajar y ahorrar",
+        "money": 0,
+        "condition": 1,
+        "originality": 0,
+        "performance": 0,
+        "risk": 0,
+        "note": "Priorizaste el bolsillo."
+      }
+    ]
+  }
+]
