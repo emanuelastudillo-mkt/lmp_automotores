@@ -1,3 +1,30 @@
+# Tu vida sobre ruedas — v0.38
+
+Base: v0.37.
+
+## Mercado mobile 3 × 2
+
+En pantallas móviles:
+
+- el mercado muestra **3 vehículos por fila**;
+- hasta **6 vehículos quedan distribuidos en 2 filas**;
+- las seis opciones están diseñadas para entrar dentro de una sola pantalla;
+- las tarjetas pasan a formato vertical compacto;
+- cada tarjeta conserva:
+  - imagen del vehículo;
+  - marca;
+  - modelo;
+  - año/tipo;
+  - Estado / Originalidad / Performance;
+  - precio;
+  - botón Comprar.
+- Las imágenes siguen usando `object-fit: contain`, por lo que **no se recortan**.
+- En pantallas de hasta 360 px se aplica una compactación adicional de tipografía, espacios e imagen.
+
+La versión desktop no cambia.
+
+---
+
 # Tu vida sobre ruedas — v0.37
 
 Base: v0.36.
