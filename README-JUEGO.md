@@ -1,3 +1,50 @@
+# Tu vida sobre ruedas — v0.29
+
+Base: v0.28.
+
+## 20 vehículos y submodelos nuevos
+
+Se amplía la base de 100 a 120 vehículos.
+
+Numeración de imágenes:
+
+101. Volkswagen Amarok
+102. Toyota Hilux
+103. Jeep Wrangler
+104. Mercedes-Benz 300 SL
+105. Mercedes-Benz 190 E
+106. Ferrari F40
+107. Lamborghini Diablo
+108. Porsche 911 Carrera 3.2
+109. Tesla Model S
+110. Ford Mustang GT
+111. Renault 12
+112. Ford Falcon Sprint
+113. Chevrolet Chevy Serie 2
+114. IKA Torino 380W
+115. Volkswagen Gol GTI G1
+116. Fiat Uno Turbo i.e.
+117. Renault Clio Williams
+118. Peugeot 206 CC
+119. Volkswagen Bora 1.8T
+120. Ford Focus II 2.0 Ghia
+
+Cada entrada incorpora:
+- año inicial y final;
+- precio base de gameplay;
+- segmento;
+- confiabilidad;
+- economía;
+- potencial clásico;
+- gasto mensual;
+- tags;
+- evento canónico;
+- `imageBase` compatible con la nueva numeración.
+
+Las variantes específicas se mantienen como vehículos independientes de sus modelos base.
+
+---
+
 # Tu vida sobre ruedas — v0.28
 
 Base: v0.27.
