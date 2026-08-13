@@ -1,3 +1,56 @@
+# Tu vida sobre ruedas — v0.40
+
+Base: v0.39.
+
+## Paleta semántica para iconos SVG
+
+Los SVG dejan de ser monocromáticos y pasan a usar color según su significado.
+
+### Colores principales
+
+- Fuegos / popularidad: rojo.
+- Estrellas / prestigio / premios: amarillo dorado.
+- Dinero / ventas / crecimiento: verde.
+- Caídas / advertencias / picadas: rojo.
+- Mecánica / herramientas: ámbar.
+- Performance: celeste.
+- Vehículos: azul.
+- Mercado: azul intenso.
+- Colección: violeta.
+- Combustible: naranja.
+- Batería: verde.
+- Electricidad: amarillo.
+- Granizo: celeste.
+- Herencias / llaves: dorado.
+- Documentación / búsquedas: gris técnico.
+- Personas / comunidad: azul violáceo.
+
+### Implementación
+
+`uiIcon()` ahora agrega automáticamente una clase semántica:
+
+`icon-<nombre>`
+
+Ejemplo:
+
+`icon-flame`
+`icon-star`
+`icon-wallet`
+`icon-warning`
+
+Esto permite que el mismo icono mantenga el mismo color en:
+- estadísticas;
+- garage;
+- eventos;
+- botones;
+- mercado;
+- colección;
+- resultados.
+
+Los iconos siguen usando SVG vectorial y `currentColor`; sólo se añade una capa cromática consistente.
+
+---
+
 # Tu vida sobre ruedas — v0.39
 
 Base: v0.38.

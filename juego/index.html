@@ -1120,6 +1120,181 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
   }
 }
 
+
+/* v0.40 — semantic SVG color system */
+:root{
+  --icon-red:#e53935;
+  --icon-red-deep:#c62828;
+  --icon-gold:#f4b400;
+  --icon-amber:#f59e0b;
+  --icon-green:#2e9d58;
+  --icon-green-soft:#46b96d;
+  --icon-blue:#3b82f6;
+  --icon-cyan:#38a8c8;
+  --icon-violet:#8b5cf6;
+  --icon-orange:#ef7d22;
+  --icon-steel:#8b98a7;
+  --icon-white:#f4f4f5;
+}
+
+/* Identity / status */
+.ui-icon.icon-flame{
+  color:var(--icon-red);
+  fill:var(--icon-red);
+  stroke:var(--icon-red-deep);
+}
+.ui-icon.icon-star{
+  color:var(--icon-gold);
+  fill:var(--icon-gold);
+  stroke:#c58d00;
+}
+.ui-icon.icon-heart{
+  color:#e04c59;
+  fill:rgba(224,76,89,.16);
+}
+.ui-icon.icon-trophy{
+  color:var(--icon-gold);
+}
+.ui-icon.icon-spark{
+  color:var(--icon-violet);
+}
+
+/* Economy */
+.ui-icon.icon-wallet,
+.ui-icon.icon-sell,
+.ui-icon.icon-chart,
+.ui-icon.icon-trend-up{
+  color:var(--icon-green);
+}
+.ui-icon.icon-trend-down{
+  color:var(--icon-red);
+}
+
+/* Vehicle / navigation */
+.ui-icon.icon-car{
+  color:#5c8fd8;
+}
+.ui-icon.icon-market{
+  color:var(--icon-blue);
+}
+.ui-icon.icon-collection{
+  color:var(--icon-violet);
+}
+.ui-icon.icon-road{
+  color:var(--icon-steel);
+}
+.ui-icon.icon-calendar,
+.ui-icon.icon-time,
+.ui-icon.icon-arrow{
+  color:#9aa4b1;
+}
+
+/* Mechanics / performance */
+.ui-icon.icon-wrench,
+.ui-icon.icon-hammer,
+.ui-icon.icon-settings{
+  color:var(--icon-amber);
+}
+.ui-icon.icon-gauge{
+  color:var(--icon-cyan);
+}
+.ui-icon.icon-race{
+  color:var(--icon-red);
+}
+.ui-icon.icon-fuel{
+  color:var(--icon-orange);
+}
+.ui-icon.icon-battery{
+  color:var(--icon-green-soft);
+}
+.ui-icon.icon-bolt{
+  color:#f2c94c;
+}
+
+/* Alerts / security */
+.ui-icon.icon-warning{
+  color:var(--icon-red);
+  fill:rgba(229,57,53,.09);
+}
+.ui-icon.icon-lock{
+  color:#9ca3af;
+}
+.ui-icon.icon-check{
+  color:var(--icon-green);
+}
+
+/* Objects / people / documentation */
+.ui-icon.icon-package{
+  color:#b7791f;
+}
+.ui-icon.icon-home{
+  color:#7c8da6;
+}
+.ui-icon.icon-people{
+  color:#6f83c7;
+}
+.ui-icon.icon-camera{
+  color:#a86fd5;
+}
+.ui-icon.icon-hail{
+  color:#68b9df;
+}
+.ui-icon.icon-key{
+  color:var(--icon-gold);
+}
+.ui-icon.icon-document,
+.ui-icon.icon-search{
+  color:#9aa4b1;
+}
+
+/* Rating components */
+.rating-icons.flames .ui-icon{
+  color:var(--icon-red);
+  fill:var(--icon-red);
+  stroke:var(--icon-red-deep);
+  filter:drop-shadow(0 1px 2px rgba(229,57,53,.18));
+}
+.rating-icons.stars .ui-icon{
+  color:var(--icon-gold);
+  fill:var(--icon-gold);
+  stroke:#bd8700;
+  filter:drop-shadow(0 1px 2px rgba(244,180,0,.18));
+}
+
+/* Make the most important icon states slightly more vivid on dark cards */
+.event-icon .icon-warning,
+.event-icon .icon-race,
+.event-icon .icon-flame{
+  filter:drop-shadow(0 0 8px rgba(229,57,53,.16));
+}
+.event-icon .icon-trophy,
+.event-icon .icon-star,
+.event-icon .icon-key{
+  filter:drop-shadow(0 0 8px rgba(244,180,0,.16));
+}
+
+/* Buttons keep semantic icon colors instead of inheriting the button text */
+.garage-actions .icon-collection{color:var(--icon-violet)}
+.garage-actions .icon-sell{color:var(--icon-green)}
+.garage-actions .icon-market{color:var(--icon-blue)}
+.market-item>button .icon-market{color:var(--icon-blue)}
+
+/* Disabled controls become neutral but remain readable */
+button:disabled .ui-icon{
+  color:#7c7f86!important;
+  fill:none!important;
+  filter:none!important;
+}
+
+/* Small mobile correction: preserve visual distinction at reduced size */
+@media(max-width:580px){
+  .rating-icons{gap:1px}
+  .rating-icons.flames .ui-icon,
+  .rating-icons.stars .ui-icon{
+    filter:none;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1168,7 +1343,7 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.39</div>
+    <div class="version">prototipo privado · v0.40</div>
   </div>
 </header>
 
@@ -1286,7 +1461,7 @@ const moneyDisplay=n=>{
 };
 
 function uiIcon(name,extraClass=''){
-  return `<svg class="ui-icon ${extraClass}" aria-hidden="true"><use href="#i-${name}"></use></svg>`;
+  return `<svg class="ui-icon icon-${name} ${extraClass}" aria-hidden="true"><use href="#i-${name}"></use></svg>`;
 }
 const ICON_TOKEN_MAP={
   '🔧':'wrench','🛠️':'wrench','🧰':'wrench','🧑‍🔧':'wrench','🪛':'wrench',
