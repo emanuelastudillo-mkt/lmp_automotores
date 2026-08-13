@@ -1,3 +1,18 @@
+# Tu vida sobre ruedas — v0.17
+
+Base: v0.16.
+
+## Cambios v0.17
+
+- Nueva elección de ritmo al iniciar la trayectoria:
+  - **Rápido**: mantiene exactamente el sistema actual de saltos entre eventos.
+  - **Lento**: el calendario avanza **1 año por vez**.
+- El ritmo elegido queda guardado en la partida.
+- Las partidas anteriores se interpretan automáticamente como modo Rápido.
+- El ritmo elegido se muestra también al comenzar y al finalizar la trayectoria.
+
+---
+
 # Tu vida sobre ruedas — v0.16
 
 Base: v0.15.

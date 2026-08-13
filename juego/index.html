@@ -192,7 +192,7 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.16</div>
+    <div class="version">prototipo privado · v0.17</div>
   </div>
 </header>
 
@@ -217,8 +217,15 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
         <h2>Crear trayectoria</h2>
         <div class="field"><label for="playerName">Nombre</label><input id="playerName" maxlength="28" placeholder="Ej: Emanuel" required></div>
         <div class="field"><label for="startYear">Año de inicio</label><select id="startYear"></select></div>
+        <div class="field">
+          <label for="gamePace">Ritmo de trayectoria</label>
+          <select id="gamePace">
+            <option value="fast">Rápido · versión actual</option>
+            <option value="slow">Lento · año por año</option>
+          </select>
+        </div>
         <button class="primary" type="submit">Empezar mi historia</button>
-        <p class="version" style="margin-top:12px">El juego termina en 2026. Los eventos avanzan entre 2 y 12 años.</p>
+        <p class="version" style="margin-top:12px">El juego termina en 2026. En Rápido se mantienen los saltos actuales; en Lento se avanza de a 1 año.</p>
       </form>
     </div>
   </section>
@@ -567,11 +574,12 @@ function carCard(car,first=false){
     </div>
   </article>`;
 }
-function beginCareer(name,year){
+function beginCareer(name,year,pace='fast'){
   state={
     player:clean(name)||'Conductor',
     startYear:year,
     year,
+    pace,
     money:initialCash(year),
     car:null,
     history:[],
@@ -597,7 +605,7 @@ function beginCareer(name,year){
 function renderStarter(){
   screen('starterScreen');
   $('#starterTitle').textContent=`${state.player}, elegí tu primer auto`;
-  $('#starterSubtitle').textContent=`Estamos en ${state.year}. Tenés ${money(state.money)} para empezar.`;
+  $('#starterSubtitle').textContent=`Estamos en ${state.year}. Tenés ${money(state.money)} para empezar. Ritmo: ${state.pace==='slow'?'Lento · año por año':'Rápido'}.`;
   renderStats($('#starterStats'));
   $('#starterCars').innerHTML=starterOptions(state.year,state.money).map(car=>carCard(car,true)).join('');
   document.querySelectorAll('[data-buy]').forEach(button=>{
@@ -658,6 +666,7 @@ function buyCar(id,first=false){
 }
 function nextGap(){
   const remaining=END_YEAR-state.year;
+  if(state.pace==='slow')return Math.min(1,Math.max(0,remaining));
   if(remaining<=2)return Math.max(1,remaining);
   const roll=Math.random();
   if(roll<.55)return Math.min(remaining,rand(2,4));
@@ -1666,7 +1675,7 @@ function finish(){
   if(car && state.car.originality>90 && vehicleAge()>35)title='Purista';
 
   $('#resultTitle').textContent=title;
-  $('#resultCopy').textContent=`${state.player}, llegaste a 2026 después de ${state.decisions} decisiones y ${state.history.length} autos.`;
+  $('#resultCopy').textContent=`${state.player}, llegaste a 2026 después de ${state.decisions} decisiones y ${state.history.length} autos. Ritmo: ${state.pace==='slow'?'Lento':'Rápido'}.`;
 
   $('#resultCard').innerHTML=`
     <div class="stats">
@@ -1716,7 +1725,7 @@ function reset(){
 
 $('#startForm').addEventListener('submit',event=>{
   event.preventDefault();
-  beginCareer($('#playerName').value,Number($('#startYear').value));
+  beginCareer($('#playerName').value,Number($('#startYear').value),$('#gamePace').value);
 });
 $('#restartFromStarter').onclick=reset;
 $('#playAgain').onclick=reset;
@@ -1733,6 +1742,7 @@ $('#marketModal').addEventListener('click',event=>{
   if(saved){
     state=JSON.parse(saved);
     if(state && state.pendingResult===undefined)state.pendingResult=null;
+    if(state && state.pace===undefined)state.pace='fast';
     if(state && state.fans===undefined)state.fans=0;
     if(state && state.flags===undefined)state.flags={};
     if(state && state.divorceCount===undefined)state.divorceCount=0;
