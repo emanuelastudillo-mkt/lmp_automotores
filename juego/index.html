@@ -164,13 +164,35 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
 .year-transition-line{height:3px;border-radius:999px;background:#27272b;overflow:hidden;margin-top:18px}
 .year-transition-line b{display:block;height:100%;width:0;background:var(--red);transition:width .7s ease}
 @keyframes yearPulse{0%{opacity:0;transform:scale(.9) translateY(12px)}100%{opacity:1;transform:none}}
+
+.vehicle-image-square{
+  width:100%;
+  max-width:100%;
+  aspect-ratio:1 / 1;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  margin:auto;
+}
+.vehicle-image-square img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:center;
+  display:block;
+}
+.vehicle-image-fallback{
+  width:100%;
+  height:100%;
+  place-items:center;
+}
 </style>
 </head>
 <body>
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.15</div>
+    <div class="version">prototipo privado · v0.16</div>
   </div>
 </header>
 
@@ -315,8 +337,10 @@ function tryCarImage(img){
 }
 function carImageMarkup(car){
   if(!car)return `<div class="icon">🚗</div>`;
-  return `<img src="${carImageSrc(car)}" data-car-id="${car.id}" data-try="0" onerror="tryCarImage(this)" alt="${car.marca} ${car.modelo}" style="width:100%;height:100%;object-fit:contain;display:block">
-    <div class="icon" style="display:none">🚗</div>`;
+  return `<span class="vehicle-image-square">
+    <img src="${carImageSrc(car)}" data-car-id="${car.id}" data-try="0" onerror="tryCarImage(this)" alt="${car.marca} ${car.modelo}">
+    <span class="icon vehicle-image-fallback" style="display:none">🚗</span>
+  </span>`;
 }
 function collectionMonthlyExpense(item){
   const car=carById(item.id);
@@ -529,7 +553,7 @@ function carCard(car,first=false){
   const price=car.market??marketPrice(car,state.year);
   const can=state.money>=price;
   return `<article class="car-card">
-    <div class="car-art" style="overflow:hidden">${carImageMarkup(car)}<span class="car-year">${car.desde}</span></div>
+    <div class="car-art" style="overflow:hidden;aspect-ratio:1/1;height:auto">${carImageMarkup(car)}<span class="car-year">${car.desde}</span></div>
     <div class="car-body">
       <span class="make">${car.marca}</span>
       <h3>${car.modelo}</h3>
@@ -724,7 +748,7 @@ function renderGarage(){
 
   $('#garagePanel').innerHTML=`
     <div class="garage-card">
-      <div class="garage-art">${carImageMarkup(car)}</div>
+      <div class="garage-art" style="aspect-ratio:1/1;height:auto;overflow:hidden">${carImageMarkup(car)}</div>
       <div class="garage-info">
         <span class="make">${car.marca}</span>
         <h3>${car.modelo}</h3>
@@ -1566,7 +1590,7 @@ function openMarket(force=false){
 
   $('#marketList').innerHTML=marketCandidates().map(car=>`
     <article class="market-item">
-      <div style="height:105px;margin-bottom:10px;display:grid;place-items:center;overflow:hidden">${carImageMarkup(car)}</div>
+      <div style="width:100%;margin-bottom:10px">${carImageMarkup(car)}</div>
       <span class="make">${car.marca}</span>
       <h4>${car.modelo}</h4>
       <p>${car.segmento} · desde ${car.desde} · ${money(car.gastoMensualBaseUSD)}/mes base</p>
@@ -1666,7 +1690,7 @@ function finish(){
       const c=carById(item.id);
       return `<div class="history-item" style="align-items:center">
         <span style="display:flex;gap:12px;align-items:center">
-          <span style="width:90px;height:58px;display:grid;place-items:center;overflow:hidden">${carImageMarkup(c)}</span>
+          <span style="width:78px;flex:0 0 78px;display:block">${carImageMarkup(c)}</span>
           <span>${item.brand} ${item.model}<br><small>${starIcons(item.stars||1)} · ${flameIcons(item.flames||0)||'—'} · guardado desde ${item.collectedYear}</small></span>
         </span>
         <strong>${money(collectionValue(item))}</strong>

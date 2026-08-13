@@ -1,3 +1,17 @@
+# Tu vida sobre ruedas — v0.16
+
+Base: v0.15.
+
+## Cambios v0.16
+
+- Todas las imágenes de vehículos se muestran siempre en formato **cuadrado 1:1**.
+- Se usa `object-fit: contain`: el vehículo/imagen completa queda visible y **nunca se recorta**.
+- El tamaño del contenedor puede ampliarse o reducirse según la sección, pero conserva siempre la proporción cuadrada.
+- Aplicado a selección inicial, vehículo actual, mercado y colección final.
+- Se mantienen JPG, JPEG, PNG y WEBP en `/juego/imagenes/`.
+
+---
+
 # Tu vida sobre ruedas — v0.15
 
 Base: v0.14.
