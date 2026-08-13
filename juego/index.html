@@ -170,7 +170,7 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.8</div>
+    <div class="version">prototipo privado · v0.9</div>
   </div>
 </header>
 
@@ -341,6 +341,44 @@ function vehicleValue(){
     Math.round(market*conditionFactor*originalityFactor + invested - damage)
   );
 }
+
+function carStatus(){
+  if(!state.car)return {level:0,name:'Sin auto',icon:'—',score:0,high:false};
+  const car=currentCar();
+  const market=Math.max(1,marketPrice(car,state.year));
+  const valueRatio=vehicleValue()/market;
+  const age=Math.max(0,state.year-car.desde);
+  const score=Math.round(
+    state.car.originality*.42 +
+    state.car.condition*.23 +
+    Math.min(135,valueRatio*100)*.25 +
+    Math.min(100,age*2)*.10
+  );
+
+  if(score>=100 && state.car.originality>=90)return {level:5,name:'El tesoro de los coleccionistas',icon:'👑',score,high:true};
+  if(score>=92)return {level:4,name:'La envidia del barrio',icon:'🔥',score,high:true};
+  if(score>=84)return {level:3,name:'Diamante en bruto',icon:'💎',score,high:false};
+  if(score>=72)return {level:2,name:'Muy bien parado',icon:'✨',score,high:false};
+  if(score>=58)return {level:1,name:'Con potencial',icon:'🔧',score,high:false};
+  return {level:0,name:'Uno más del montón',icon:'🚗',score,high:false};
+}
+function updateCarFans(){
+  if(!state.car)return;
+  if(state.fans===undefined)state.fans=0;
+  if(state.fanStatusLevel===undefined)state.fanStatusLevel=0;
+  const status=carStatus();
+
+  // Fans are awarded only when a car reaches a new high-status tier.
+  if(status.high && status.level>state.fanStatusLevel){
+    const gained=status.level===5?rand(35,80):rand(12,35);
+    state.fans+=gained;
+    state.fanStatusLevel=status.level;
+    state.events.unshift({
+      year:state.year,
+      text:`Tu auto alcanzó el estatus "${status.name}". Empezó a llamar la atención y sumaste ${gained} fans.`
+    });
+  }
+}
 function normalSaleValue(){
   if(!state.car)return 0;
   const car=currentCar();
@@ -402,6 +440,7 @@ function renderStats(target){
   target.innerHTML=`
     <div class="stat"><span>Año</span><strong>${state.year}</strong></div>
     <div class="stat"><span>Dinero</span><strong>${money(state.money)}</strong></div>
+    <div class="stat"><span>Fans</span><strong>${state.fans||0}</strong></div>
     <div class="stat"><span>Autos</span><strong>${state.history.length}</strong></div>
     <div class="stat highlight"><span>Valor de tu auto</span><strong>${state.car?money(currentValue):'—'}</strong></div>
     <div class="stat"><span>Gasto mensual</span><strong>${state.car?money(monthlyExpense()):'—'}</strong></div>`;
@@ -439,7 +478,9 @@ function beginCareer(name,year){
     decisions:0,
     totalIncome:0,
     totalRunningCosts:0,
-    saleOffer:null
+    saleOffer:null,
+    fans:0,
+    fanStatusLevel:0
   };
   persist();
   renderStarter();
@@ -487,6 +528,7 @@ function buyCar(id,first=false){
     purchaseYear:state.year
   };
   state.saleOffer=null;
+  state.fanStatusLevel=0;
   state.history.push({
     id,
     brand:next.marca,
@@ -596,6 +638,11 @@ function renderGarage(){
       <div class="garage-info">
         <span class="make">${car.marca}</span>
         <h3>${car.modelo}</h3>
+
+        <div class="canonical" style="margin:10px 0 14px">
+          <strong>${carStatus().icon} Estatus: ${carStatus().name}</strong><br>
+          Nivel de reconocimiento ${carStatus().score} · ${state.fans||0} fans
+        </div>
 
         <div class="value-box">
           <div class="value-cell current">
@@ -1137,6 +1184,7 @@ function completeEvent(event,text,icon='🎲'){
 function renderEventResult(){
   const result=state.pendingResult;
   if(!result)return;
+  updateCarFans();
   renderStats($('#gameStats'));
   renderGarage();
   renderLog();
@@ -1229,6 +1277,7 @@ function renderGame(){
     return;
   }
 
+  updateCarFans();
   renderStats($('#gameStats'));
   renderGarage();
   $('#yearPill').textContent=state.year;
@@ -1312,6 +1361,7 @@ function finish(){
       <div class="stat"><span>Valor teórico total</span><strong>${money(theoretical)}</strong></div>
       <div class="stat"><span>Ingresos acumulados</span><strong>${money(state.totalIncome)}</strong></div>
       <div class="stat"><span>Gastos de uso</span><strong>${money(state.totalRunningCosts)}</strong></div>
+      <div class="stat"><span>Fans conseguidos</span><strong>${state.fans||0}</strong></div>
     </div>
     <h3 style="margin:18px 0 7px">Tu garaje histórico</h3>
     <div class="history">${state.history.map(item=>`
@@ -1350,6 +1400,8 @@ $('#marketModal').addEventListener('click',event=>{
   if(saved){
     state=JSON.parse(saved);
     if(state && state.pendingResult===undefined)state.pendingResult=null;
+    if(state && state.fans===undefined)state.fans=0;
+    if(state && state.fanStatusLevel===undefined)state.fanStatusLevel=0;
     if(state?.car||state?.player)renderGame();
   }
 })().catch(error=>{

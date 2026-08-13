@@ -1,3 +1,19 @@
+# Tu vida sobre ruedas — v0.9
+
+Base: v0.8.
+
+## Cambios v0.9
+
+- Se incorpora un **Estatus del auto**, calculado dinámicamente según originalidad, estado, valor relativo al mercado y antigüedad.
+- Escalones de reconocimiento: **Uno más del montón**, **Con potencial**, **Muy bien parado**, **Diamante en bruto**, **La envidia del barrio** y **El tesoro de los coleccionistas**.
+- El estatus se muestra permanentemente en el garaje.
+- Los dos niveles superiores pueden generar **fans** al alcanzarse por primera vez con cada auto.
+- Los fans quedan acumulados durante toda la partida aunque se cambie de vehículo.
+- El total de fans aparece en las estadísticas y en el resultado final.
+- Se mantiene el sistema de resultados previo al avance temporal de v0.8.
+
+---
+
 # Tu vida sobre ruedas — v0.8
 
 Base: v0.7.
