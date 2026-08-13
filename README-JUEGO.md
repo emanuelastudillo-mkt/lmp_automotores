@@ -1,3 +1,25 @@
+# Tu vida sobre ruedas — v0.12
+
+Base: v0.11.
+
+## Cambios v0.12
+
+- Máximo de **3 divorcios por carrera**.
+- Se agrega el evento histórico **Corralito 2001**:
+  - sólo puede aparecer en 2001;
+  - se dispara una sola vez;
+  - provoca una pérdida aleatoria de entre **50% y 80% del dinero disponible**.
+- Se agregan eventos premium caros de mejora fuerte:
+  - restauración integral;
+  - preparación de motor profesional;
+  - reconstrucción de chasis y suspensión;
+  - detailing de concurso;
+  - proyecto extremo de performance.
+- Estas mejoras pueden subir mucho Estado, Originalidad o Performance, pero exigen inversiones equivalentes a una porción importante del valor del vehículo.
+- Se mantienen ⭐, 🔥, cadenas de eventos y pantalla de resultado previa al avance temporal.
+
+---
+
 # Tu vida sobre ruedas — v0.11
 
 Base: v0.10.

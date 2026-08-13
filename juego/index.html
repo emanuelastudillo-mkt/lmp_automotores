@@ -170,7 +170,7 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.11</div>
+    <div class="version">prototipo privado · v0.12</div>
   </div>
 </header>
 
@@ -502,7 +502,8 @@ function beginCareer(name,year){
     saleOffer:null,
     fans:0,
     fanStatusLevel:0,
-    flags:{}
+    flags:{},
+    divorceCount:0
   };
   persist();
   renderStarter();
@@ -710,7 +711,10 @@ function eligibleEvents(){
       return vehicleAge()>=40 && state.car.condition>=82 && state.car.originality>=78;
     }
     if(event.special==='divorce'){
-      return state.year-state.startYear>=8;
+      return state.year-state.startYear>=8 && (state.divorceCount||0)<3;
+    }
+    if(event.special==='corralito'){
+      return state.year===2001 && !state.flags?.corralito_ocurrido;
     }
     if(event.requiresFlag && !state.flags?.[event.requiresFlag])return false;
     if(event.excludesFlag && state.flags?.[event.excludesFlag])return false;
@@ -723,6 +727,14 @@ function eligibleEvents(){
 }
 function chooseEvent(){
   const eligible=eligibleEvents();
+
+  const corralito=eligible.find(event=>event.special==='corralito');
+  if(corralito){
+    state.pendingEvent={id:corralito.id,forcedApplied:false};
+    persist();
+    return;
+  }
+
   const recent=new Set(state.events.slice(0,4).map(item=>item.eventId).filter(Boolean));
   let pool=eligible.filter(event=>!recent.has(event.id));
   if(!pool.length)pool=eligible;
@@ -1024,15 +1036,17 @@ function renderSpecialEvent(event,car,forcedText){
         ${specialButton('🚗','Entregar el auto',`Conservás tu dinero, pero perdés el vehículo sin cobrar ${money(carValue)}.`,'divorce-car')}
       </div>`;
     $('#divorce-money').onclick=()=>{
+      state.divorceCount=(state.divorceCount||0)+1;
       state.money=Math.max(0,state.money-half);
-      finishSpecial(event,`El divorcio te costó ${money(half)}, pero conservaste el auto.`);
+      finishSpecial(event,`El divorcio te costó ${money(half)}, pero conservaste el auto. Divorcios vividos: ${state.divorceCount}/3.`);
     };
     $('#divorce-car').onclick=()=>{
+      state.divorceCount=(state.divorceCount||0)+1;
       const history=state.history.at(-1);
       history.soldYear=state.year;
       history.soldFor=0;
       history.saleReason='divorcio';
-      state.events.unshift({year:state.year,eventId:event.id,text:`El divorcio te obligó a entregar ${car.marca} ${car.modelo} sin recibir dinero.`});
+      state.events.unshift({year:state.year,eventId:event.id,text:`El divorcio te obligó a entregar ${car.marca} ${car.modelo} sin recibir dinero. Divorcios vividos: ${state.divorceCount}/3.`});
       updateCurrentCarLegacy();
   state.car=null;
       state.saleOffer=null;
@@ -1040,6 +1054,30 @@ function renderSpecialEvent(event,car,forcedText){
       state.decisions++;
       persist();
       openMarket(true);
+    };
+    return;
+  }
+
+  if(event.special==='corralito'){
+    if(!state.pendingEvent.corralitoLossPct){
+      state.pendingEvent.corralitoLossPct=.50+Math.random()*.30;
+      persist();
+    }
+    const pct=state.pendingEvent.corralitoLossPct;
+    const loss=Math.round(state.money*pct);
+    $('#eventCard').innerHTML=`
+      <div class="event-icon">${event.icon}</div>
+      <span class="eyebrow">2001 · evento histórico</span>
+      <h2>${event.title}</h2>
+      <p>${event.text}</p>
+      <div class="choices">
+        ${specialButton('🏦','El corralito te alcanza',`Perdés ${money(loss)} · ${Math.round(pct*100)}% de tu dinero.`,'corralito-accept')}
+      </div>`;
+    $('#corralito-accept').onclick=()=>{
+      state.money=Math.max(0,state.money-loss);
+      state.flags=state.flags||{};
+      state.flags.corralito_ocurrido=true;
+      finishSpecial(event,`El corralito te golpeó de lleno: perdiste ${money(loss)}, equivalente al ${Math.round(pct*100)}% de tu dinero disponible.`);
     };
     return;
   }
@@ -1482,6 +1520,7 @@ $('#marketModal').addEventListener('click',event=>{
     if(state && state.pendingResult===undefined)state.pendingResult=null;
     if(state && state.fans===undefined)state.fans=0;
     if(state && state.flags===undefined)state.flags={};
+    if(state && state.divorceCount===undefined)state.divorceCount=0;
     if(state?.car && state.car.fans===undefined)state.car.fans=0;
     if(state?.car && state.car.fanStatusLevel===undefined)state.car.fanStatusLevel=0;
     if(state?.history)state.history.forEach(item=>{

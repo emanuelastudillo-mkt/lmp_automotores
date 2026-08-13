@@ -1738,5 +1738,163 @@
         "note": "Rechazaste la exposición pública."
       }
     ]
+  },
+  {
+    "id": "corralito_2001",
+    "icon": "🏦",
+    "title": "El corralito",
+    "tags": [
+      "*"
+    ],
+    "special": "corralito",
+    "text": "Es 2001. El sistema financiero entra en crisis y una parte muy grande de tus ahorros queda atrapada o directamente se pierde."
+  },
+  {
+    "id": "restauracion_integral_premium",
+    "icon": "🛠️",
+    "title": "Restauración integral de primer nivel",
+    "tags": [
+      "*"
+    ],
+    "minAge": 15,
+    "text": "Un taller de restauración reconocido te ofrece reconstruir el auto casi desde cero. Es carísimo, pero el salto de calidad puede ser enorme.",
+    "choices": [
+      {
+        "icon": "⭐",
+        "label": "Hacer la restauración completa",
+        "costPctVehicle": 0.35,
+        "condition": 24,
+        "originality": 18,
+        "performance": 4,
+        "valueShare": 0.95,
+        "fanGain": 8,
+        "note": "La restauración fue profunda y profesional. El auto recuperó muchísimo estado y originalidad."
+      },
+      {
+        "icon": "💸",
+        "label": "Es demasiado caro",
+        "note": "Decidiste no inmovilizar tanto dinero en el proyecto."
+      }
+    ]
+  },
+  {
+    "id": "preparacion_motor_premium",
+    "icon": "⚙️",
+    "title": "Preparación de motor profesional",
+    "tags": [
+      "deportivo",
+      "deportivo-potencial",
+      "turbo",
+      "tuning",
+      "*"
+    ],
+    "text": "Un preparador de renombre te ofrece un trabajo serio de motor, admisión, escape y puesta a punto.",
+    "choices": [
+      {
+        "icon": "🚀",
+        "label": "Hacer la preparación completa",
+        "costPctVehicle": 0.3,
+        "condition": 5,
+        "originality": -10,
+        "performance": 28,
+        "fanGain": 10,
+        "valueShare": 0.55,
+        "note": "El auto cambió por completo: ganó muchísima performance y también bastante notoriedad."
+      },
+      {
+        "icon": "🏛️",
+        "label": "Mantener la mecánica actual",
+        "originality": 2,
+        "note": "Preferiste conservar la configuración actual."
+      }
+    ]
+  },
+  {
+    "id": "reconstruccion_chasis_suspension",
+    "icon": "🏗️",
+    "title": "Reconstrucción de chasis y suspensión",
+    "tags": [
+      "*"
+    ],
+    "minAge": 12,
+    "text": "Un especialista detecta que con una intervención grande podrías devolverle firmeza y comportamiento casi de fábrica.",
+    "choices": [
+      {
+        "icon": "🧰",
+        "label": "Reconstruir todo",
+        "costPctVehicle": 0.24,
+        "condition": 20,
+        "performance": 12,
+        "originality": 4,
+        "valueShare": 0.8,
+        "note": "Renovaste tren delantero, suspensión, bujes y componentes estructurales. El auto quedó muchísimo más sólido."
+      },
+      {
+        "icon": "🔧",
+        "label": "Hacer sólo mantenimiento básico",
+        "money": -180,
+        "condition": 3,
+        "note": "Resolviste lo urgente, pero no hiciste la reconstrucción completa."
+      }
+    ]
+  },
+  {
+    "id": "detailing_concurso_premium",
+    "icon": "✨",
+    "title": "Detailing de concurso",
+    "tags": [
+      "*"
+    ],
+    "minStars": 3,
+    "text": "Un estudio especializado ofrece un tratamiento extremo de carrocería, interior y terminaciones para llevar el auto a nivel exposición.",
+    "choices": [
+      {
+        "icon": "✨",
+        "label": "Hacerlo completo",
+        "costPctVehicle": 0.14,
+        "condition": 13,
+        "originality": 7,
+        "fanGain": 12,
+        "valueShare": 0.65,
+        "note": "El resultado fue espectacular. El auto quedó con presentación de exposición y ganó mucha atención."
+      },
+      {
+        "icon": "🧽",
+        "label": "Lavado y pulido común",
+        "money": -90,
+        "condition": 3,
+        "note": "Mejoraste la presentación sin entrar en un trabajo extremo."
+      }
+    ]
+  },
+  {
+    "id": "swap_extremo_profesional",
+    "icon": "🔥",
+    "title": "Proyecto extremo de performance",
+    "tags": [
+      "tuning",
+      "deportivo-potencial",
+      "*"
+    ],
+    "text": "Un taller te propone una transformación radical: frenos, suspensión, motor y puesta a punto como un solo paquete.",
+    "choices": [
+      {
+        "icon": "🔥",
+        "label": "Hacer el proyecto completo",
+        "costPctVehicle": 0.42,
+        "condition": 8,
+        "originality": -22,
+        "performance": 35,
+        "fanGain": 18,
+        "valueShare": 0.45,
+        "note": "El auto se volvió una bestia. La performance subió muchísimo, aunque sacrificaste gran parte de la originalidad."
+      },
+      {
+        "icon": "🚫",
+        "label": "No tocarlo",
+        "originality": 2,
+        "note": "Decidiste no convertirlo en un proyecto extremo."
+      }
+    ]
   }
 ]
