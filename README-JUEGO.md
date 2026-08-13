@@ -1,3 +1,17 @@
+# Tu vida sobre ruedas — v0.8
+
+Base: v0.7.
+
+## Cambios v0.8
+
+- Los eventos resueltos ahora muestran una pantalla intermedia de **Resultado** antes de que avance el tiempo.
+- El botón **Continuar** es el que habilita el salto hacia el próximo evento/año.
+- La picada ilegal ahora informa resultados concretos y variables: premio, bonus ocasional por apuesta de un primo, o averías específicas con costo de reparación.
+- Si una avería de la picada supera el dinero disponible, se informa cuánto se pudo pagar y cuánto daño/costo quedó pendiente.
+- Se corrigió el ahorro anual sin auto para usar también el rango vigente de **USD 300–700**.
+
+---
+
 # Tu vida sobre ruedas — v0.7
 
 Base: v0.6.

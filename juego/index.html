@@ -170,7 +170,7 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.7</div>
+    <div class="version">prototipo privado · v0.8</div>
   </div>
 </header>
 
@@ -435,6 +435,7 @@ function beginCareer(name,year){
     events:[],
     nextEventYear:year,
     pendingEvent:null,
+    pendingResult:null,
     decisions:0,
     totalIncome:0,
     totalRunningCosts:0,
@@ -763,23 +764,42 @@ function resolveHardshipNeglect(event){
 function resolveIllegalRace(event){
   const before=vehicleValue();
   const win=Math.random()<.46;
+
   if(win){
     const prize=Math.max(180,Math.round(before*(.06+Math.random()*.08)));
-    state.money+=prize;
+    const cousinBonus=Math.random()<.38 ? Math.max(50,Math.round(prize*(.18+Math.random()*.32))) : 0;
+    state.money+=prize+cousinBonus;
     state.car.condition=clamp(state.car.condition-rand(1,5),0,100);
     state.car.performance=clamp(state.car.performance+rand(0,2),0,100);
-    completeEvent(event,`Corriste una picada ilegal y ganaste ${money(prize)}. El auto sufrió desgaste extra.`);
+
+    const text=cousinBonus
+      ? `Ganaste la picada y cobraste ${money(prize)}. Tu primo también ganó una apuesta por vos y te dio ${money(cousinBonus)} extra.`
+      : `Ganaste la picada y cobraste ${money(prize)}. El auto terminó con algo de desgaste, pero esta vez salió bien.`;
+    completeEvent(event,text,'🏁');
     return;
   }
+
   const severe=Math.random()<.42;
+  const failures=severe
+    ? ['se rompió la caja de cambios','rompiste el embrague y parte de la transmisión','el motor quedó seriamente dañado']
+    : ['quemaste el embrague','rompiste una homocinética','dañaste la suspensión delantera'];
+  const failure=failures[rand(0,failures.length-1)];
   const damage=severe?rand(20,38):rand(8,18);
+  const repairBill=repairCost(severe?rand(900,2100):rand(350,950));
+  const paid=Math.min(Math.max(0,state.money),repairBill);
+  state.money-=paid;
+  const unpaid=repairBill-paid;
+
   const valueHit=Math.round(before*(severe?(.16+Math.random()*.14):(.06+Math.random()*.08)));
   state.car.condition=clamp(state.car.condition-damage,0,100);
   state.car.performance=clamp(state.car.performance-rand(severe?6:2,severe?15:7),0,100);
   state.car.originality=clamp(state.car.originality-rand(severe?2:0,severe?8:3),0,100);
   state.car.valueDamage+=valueHit;
   state.car.expenseModifier=clamp((state.car.expenseModifier||0)+(severe?.14:.06),-.35,.65);
-  completeEvent(event,severe?'La picada salió muy mal: no ganaste dinero y el auto quedó seriamente dañado.':'Perdiste la picada y el auto terminó con daños y desgaste adicional.');
+  state.car.repairs++;
+
+  const debtText=unpaid>0?` Sólo pudiste pagar ${money(paid)}; quedaron ${money(unpaid)} pendientes y el auto sigue deteriorado.`:'';
+  completeEvent(event,`Perdiste la picada y ${failure}. La reparación te costó ${money(repairBill)}.${debtText}`,'💥');
 }
 function renderPendingEvent(){
   const event=eventById(state.pendingEvent.id);
@@ -1100,13 +1120,44 @@ function resolveDynamicRepair(event,cost,effects,risk=0){
 
   completeEvent(event,text);
 }
-function completeEvent(event,text){
+function completeEvent(event,text,icon='🎲'){
   state.events.unshift({year:state.year,eventId:event.id,text});
   state.decisions++;
   state.pendingEvent=null;
+  state.pendingResult={
+    year:state.year,
+    title:'Resultado',
+    text,
+    icon
+  };
   state.nextEventYear=Math.min(END_YEAR,state.year+nextGap());
   persist();
   renderGame();
+}
+function renderEventResult(){
+  const result=state.pendingResult;
+  if(!result)return;
+  renderStats($('#gameStats'));
+  renderGarage();
+  renderLog();
+  $('#eventCard').className='event-card enter';
+  $('#eventCard').innerHTML=`
+    <div class="event-icon">${result.icon||'🎲'}</div>
+    <span class="eyebrow">${result.year} · resultado de tu decisión</span>
+    <h2>${result.title||'Resultado'}</h2>
+    <div class="forced-banner"><strong>¿Qué pasó?</strong><span>${result.text}</span></div>
+    <div class="choices">
+      <button class="choice" id="continueAfterResult">
+        <span class="choice-icon">⏩</span>
+        <strong>Continuar</strong>
+        <small>Recién ahora avanzará el tiempo hacia el próximo evento.</small>
+      </button>
+    </div>`;
+  $('#continueAfterResult').onclick=()=>{
+    state.pendingResult=null;
+    persist();
+    renderGame();
+  };
 }
 function finishSpecial(event,text){
   completeEvent(event,text);
@@ -1161,6 +1212,12 @@ function renderGame(){
     return;
   }
 
+  if(state.pendingResult){
+    renderEventResult();
+    persist();
+    return;
+  }
+
   if(!state.pendingEvent && state.nextEventYear>state.year){
     const years=Math.min(state.nextEventYear,END_YEAR)-state.year;
     if(years>0)advanceYears(years);
@@ -1194,7 +1251,7 @@ function waitWithoutCar(){
   if(state.car||state.year>=END_YEAR)return;
   const fromYear=state.year;
 
-  const income=rand(100,500);
+  const income=rand(300,700);
   state.money+=income;
   state.totalIncome+=income;
   state.year=Math.min(END_YEAR,state.year+1);
@@ -1292,6 +1349,7 @@ $('#marketModal').addEventListener('click',event=>{
   const saved=localStorage.getItem(SAVE_KEY);
   if(saved){
     state=JSON.parse(saved);
+    if(state && state.pendingResult===undefined)state.pendingResult=null;
     if(state?.car||state?.player)renderGame();
   }
 })().catch(error=>{
