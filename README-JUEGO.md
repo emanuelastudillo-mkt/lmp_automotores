@@ -1,3 +1,24 @@
+# Tu vida sobre ruedas — v0.20
+
+Base: v0.19.
+
+## Cambios v0.20
+
+- Selector inicial simplificado a únicamente:
+  - **Rápida**
+  - **Lenta**
+- Se eliminaron de la pantalla inicial las explicaciones técnicas de cada ritmo.
+- Nueva lógica de motor fundido:
+  - un auto debe tener al menos **5 años de antigüedad** para poder sufrir esta falla;
+  - el riesgo depende principalmente de su **Estado**;
+  - por debajo de 30 el riesgo aumenta de forma marcada;
+  - entre 30 y 60 todavía existe una posibilidad menor;
+  - con buen estado el riesgo es muy bajo;
+  - autos de 20 y 35+ años reciben un pequeño incremento adicional de riesgo.
+- El evento `motor-fundido` ya no entra como un evento dramático genérico: ahora aparece mediante esta lógica de riesgo ligada al vehículo.
+
+---
+
 # Tu vida sobre ruedas — v0.19
 
 Base: v0.18.

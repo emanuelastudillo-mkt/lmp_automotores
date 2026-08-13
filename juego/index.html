@@ -192,7 +192,7 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.19</div>
+    <div class="version">prototipo privado · v0.20</div>
   </div>
 </header>
 
@@ -220,12 +220,12 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
         <div class="field">
           <label for="gamePace">Ritmo de trayectoria</label>
           <select id="gamePace">
-            <option value="fast">Rápido · versión actual</option>
-            <option value="slow">Lento · año por año</option>
+            <option value="fast">Rápida</option>
+            <option value="slow">Lenta</option>
           </select>
         </div>
         <button class="primary" type="submit">Empezar mi historia</button>
-        <p class="version" style="margin-top:12px">El juego termina en 2026. En Rápido se mantienen los saltos actuales; en Lento se avanza de a 1 año.</p>
+        <p class="version" style="margin-top:12px">El juego termina en 2026.</p>
       </form>
     </div>
   </section>
@@ -673,7 +673,7 @@ function beginCareer(name,year,pace='fast'){
 function renderStarter(){
   screen('starterScreen');
   $('#starterTitle').textContent=`${state.player}, elegí tu primer auto`;
-  $('#starterSubtitle').textContent=`Estamos en ${state.year}. Tenés ${money(state.money)} para empezar. Ritmo: ${state.pace==='slow'?'Lento · año por año':'Rápido'}.`;
+  $('#starterSubtitle').textContent=`Estamos en ${state.year}. Tenés ${money(state.money)} para empezar.`;
   renderStats($('#starterStats'));
   $('#starterCars').innerHTML=starterOptions(state.year,state.money).map(car=>carCard(car,true)).join('');
   document.querySelectorAll('[data-buy]').forEach(button=>{
@@ -880,6 +880,9 @@ function eligibleEvents(){
     if(event.special==='collector'){
       return vehicleAge()>=40 && state.car.condition>=82 && state.car.originality>=78;
     }
+    if(event.special==='engine'){
+      return vehicleAge()>=5;
+    }
     if(event.special==='divorce'){
       return state.year-state.startYear>=8 && (state.divorceCount||0)<3;
     }
@@ -905,6 +908,26 @@ function chooseEvent(){
     return;
   }
 
+  const engineEvent=eligible.find(event=>event.special==='engine');
+  if(engineEvent && state.car && vehicleAge()>=5){
+    const condition=state.car.condition;
+    let engineFailureChance=.0025;
+    if(condition<=15)engineFailureChance=.22;
+    else if(condition<30)engineFailureChance=.12;
+    else if(condition<45)engineFailureChance=.04;
+    else if(condition<60)engineFailureChance=.01;
+
+    // Los autos muy viejos suman un pequeño riesgo, pero el estado sigue siendo el factor principal.
+    if(vehicleAge()>=20)engineFailureChance+=.006;
+    if(vehicleAge()>=35)engineFailureChance+=.008;
+
+    if(Math.random()<engineFailureChance){
+      state.pendingEvent={id:engineEvent.id,forcedApplied:false};
+      persist();
+      return;
+    }
+  }
+
   const collectionEvents=eligible.filter(event=>event.collectionOnly);
   if(collectionEvents.length && Math.random()<Math.min(.34,.12+(state.collection||[]).length*.045)){
     const selected=collectionEvents[rand(0,collectionEvents.length-1)];
@@ -914,8 +937,8 @@ function chooseEvent(){
   }
 
   const recent=new Set(state.events.slice(0,4).map(item=>item.eventId).filter(Boolean));
-  let pool=eligible.filter(event=>!event.collectionOnly && !recent.has(event.id));
-  if(!pool.length)pool=eligible.filter(event=>!event.collectionOnly);
+  let pool=eligible.filter(event=>!event.collectionOnly && event.special!=='engine' && !recent.has(event.id));
+  if(!pool.length)pool=eligible.filter(event=>!event.collectionOnly && event.special!=='engine');
   if(!pool.length)pool=eligible;
 
   // Eventos fuertes aparecen menos seguido.
@@ -1855,7 +1878,7 @@ function finish(){
   if(car && state.car.originality>90 && vehicleAge()>35)title='Purista';
 
   $('#resultTitle').textContent=title;
-  $('#resultCopy').textContent=`${state.player}, llegaste a 2026 después de ${state.decisions} decisiones y ${state.history.length} autos. Ritmo: ${state.pace==='slow'?'Lento':'Rápido'}.`;
+  $('#resultCopy').textContent=`${state.player}, llegaste a 2026 después de ${state.decisions} decisiones y ${state.history.length} autos.`;
 
   $('#resultCard').innerHTML=`
     <div class="stats">
