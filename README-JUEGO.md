@@ -1,3 +1,35 @@
+# Tu vida sobre ruedas — v0.26
+
+Base: v0.25.
+
+## Rediseño mobile-first
+
+- Adaptación específica para teléfonos usando `100dvh` y safe areas.
+- La pantalla principal de juego queda contenida dentro del viewport móvil.
+- Estadísticas reducidas a una banda compacta.
+- Garage convertido en una ficha horizontal resumida:
+  - foto;
+  - modelo;
+  - estrellas/fans;
+  - Estado, Originalidad y Performance;
+  - accesos rápidos a Colección, Vender y Mercado.
+- Detalles secundarios del garage se ocultan en móvil para priorizar el panorama de juego.
+- La colección se convirtió en un panel desplegable; al abrirse en móvil funciona como overlay y no empuja el evento fuera de pantalla.
+- El evento usa todo el espacio vertical restante.
+- Las decisiones quedan **sticky en la parte inferior del evento**, por lo que permanecen visibles mientras se lee el contenido.
+- Las decisiones se compactaron en una grilla de dos columnas para reducir scroll.
+- El historial de eventos se oculta durante el gameplay móvil para recuperar espacio.
+- Mercado rediseñado como navegador full-screen:
+  - vehículos en filas compactas;
+  - imagen, datos, precio y botón visibles en una sola fila;
+  - lista vertical desplazable.
+- Selección inicial de autos convertida en carrusel horizontal.
+- Reset trasladado a la zona superior en móvil para no interferir con las decisiones.
+- Pantalla final y formularios adaptados a pantallas pequeñas.
+- Se agregó soporte explícito de `viewport-fit=cover`.
+
+---
+
 # Tu vida sobre ruedas — v0.25
 
 Base: v0.24.

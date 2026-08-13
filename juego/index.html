@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow,noarchive">
 <title>Tu vida sobre ruedas — LMP Autos</title>
 <meta name="description" content="Prototipo privado del juego automotor de LMP Autos.">
@@ -187,13 +187,442 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
   place-items:center;
 }
 .debt-money{color:#ff4d4f!important;font-weight:800}
+
+/* v0.26 — mobile-first gameplay */
+.collection-drawer{
+  margin-top:12px;
+  border-radius:11px;
+  background:#f3f3ef;
+  color:#555;
+  font-size:10px;
+}
+.collection-drawer summary{
+  cursor:pointer;
+  list-style:none;
+  padding:11px;
+  font-weight:900;
+  color:#444;
+}
+.collection-drawer summary::-webkit-details-marker{display:none}
+.collection-drawer summary:after{content:"＋";float:right}
+.collection-drawer[open] summary:after{content:"−"}
+.collection-drawer-body{padding:0 10px 10px;display:grid;gap:8px}
+.collection-row{
+  display:grid;
+  grid-template-columns:64px 1fr;
+  gap:10px;
+  align-items:center;
+  padding:8px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  background:#fff;
+}
+.collection-thumb{width:64px}
+.collection-row-info button{width:100%;margin-top:7px}
+.garage-actions{display:grid;gap:8px;margin-top:12px}
+.garage-actions button{width:100%;margin:0!important}
+
+@media(max-width:580px){
+  html,body{min-height:100%;overscroll-behavior:none}
+  body{font-size:13px}
+  header{height:44px}
+  .shell{width:calc(100% - 12px)}
+  .topbar{min-height:44px;height:44px;padding-right:58px}
+  .topbar .brand{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .topbar .version{font-size:7px;white-space:nowrap}
+  main{padding:6px 0 max(8px,env(safe-area-inset-bottom))}
+  #emergencyReset{
+    top:7px!important;
+    right:7px!important;
+    bottom:auto!important;
+    padding:7px 9px!important;
+    font-size:9px!important;
+    z-index:10020!important;
+  }
+
+  /* Start */
+  .hero{display:block;min-height:auto}
+  .hero>div:first-child{padding:10px 4px 14px}
+  .hero h1{font-size:40px;line-height:.92;margin:9px 0 12px}
+  .hero-copy{font-size:13px;line-height:1.45}
+  .private-note{font-size:9px;margin-top:10px;padding:8px}
+  .start-panel{padding:14px;border-radius:17px}
+  .start-panel h2{font-size:18px;margin-bottom:12px}
+  .field{margin-bottom:9px}
+  .field input,.field select{padding:11px 12px}
+  .primary{min-height:44px}
+
+  /* Career choice */
+  #starterScreen.active,#resultScreen.active{max-height:calc(100dvh - 52px);overflow:auto}
+  .head-row{position:sticky;top:0;z-index:4;background:var(--bg);padding:6px 0}
+  #starterTitle{font-size:20px;margin:4px 0}
+  #starterSubtitle{font-size:10px;margin:2px 0 5px}
+  .car-grid{
+    display:grid;
+    grid-auto-flow:column;
+    grid-auto-columns:min(82vw,310px);
+    grid-template-columns:none;
+    gap:9px;
+    overflow-x:auto;
+    overscroll-behavior-x:contain;
+    scroll-snap-type:x mandatory;
+    padding-bottom:8px;
+  }
+  .car-card{scroll-snap-align:start;min-height:0}
+  .car-body{padding:12px}
+  .car-body h3{font-size:18px}
+  .car-price{font-size:18px}
+
+  /* Main gameplay is one viewport */
+  #gameScreen.active{
+    height:calc(100dvh - 52px - env(safe-area-inset-bottom));
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+  }
+  #gameScreen>.stats{
+    flex:0 0 auto;
+    display:grid;
+    grid-template-columns:repeat(6,minmax(0,1fr));
+    gap:3px;
+    margin:0 0 5px;
+  }
+  #gameScreen .stat{
+    min-width:0;
+    padding:5px 3px;
+    border-radius:8px;
+    text-align:center;
+  }
+  #gameScreen .stat span{
+    font-size:6px;
+    letter-spacing:0;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  #gameScreen .stat strong{
+    font-size:9px;
+    margin-top:2px;
+    white-space:nowrap;
+  }
+  #gameScreen .event-wrap{
+    flex:1 1 auto;
+    min-height:0;
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+  }
+
+  /* Compact current vehicle */
+  #gameScreen .garage{
+    flex:0 0 auto;
+    padding:5px;
+    border-radius:13px;
+    max-height:142px;
+    overflow:visible;
+  }
+  #gameScreen .garage-card{
+    display:grid;
+    grid-template-columns:82px minmax(0,1fr);
+    border-radius:11px;
+    overflow:visible;
+  }
+  #gameScreen .garage-art{
+    width:82px;
+    height:82px!important;
+    aspect-ratio:1/1!important;
+    border-radius:10px 0 0 10px;
+  }
+  #gameScreen .garage-info{
+    min-width:0;
+    padding:7px 8px;
+    display:grid;
+    grid-template-columns:1fr;
+    align-content:start;
+  }
+  #gameScreen .garage-info>.make{font-size:7px}
+  #gameScreen .garage-info>h3{
+    font-size:15px;
+    line-height:1;
+    margin:2px 0 4px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  #gameScreen .garage-status{
+    margin:0 0 5px!important;
+    padding:4px 6px;
+    font-size:8px;
+    line-height:1.2;
+  }
+  #gameScreen .garage-secondary{display:none}
+  #gameScreen .meters{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:4px;
+    margin:0 0 5px;
+  }
+  #gameScreen .meter-row{
+    display:grid;
+    grid-template-columns:1fr 18px;
+    gap:2px;
+    font-size:6px;
+  }
+  #gameScreen .meter-row .meter{
+    grid-column:1/3;
+    grid-row:2;
+    height:4px;
+  }
+  #gameScreen .meter-row strong{text-align:right;font-size:7px}
+  #gameScreen .garage-actions{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:4px;
+    margin:0;
+  }
+  #gameScreen .garage-actions button{
+    min-width:0;
+    min-height:27px;
+    padding:5px 4px!important;
+    border-radius:7px;
+    font-size:0!important;
+    line-height:1;
+  }
+  #gameScreen .garage-actions button:after{
+    content:attr(data-mobile-label);
+    font-size:7px;
+    font-weight:900;
+  }
+
+  /* Collection opens above gameplay instead of pushing it down */
+  #gameScreen .collection-drawer{
+    position:absolute;
+    right:7px;
+    top:90px;
+    margin:0;
+    z-index:25;
+    background:#f3f3ef;
+    box-shadow:0 10px 35px rgba(0,0,0,.45);
+    max-width:calc(100vw - 110px);
+  }
+  #gameScreen .collection-drawer:not([open]){
+    max-width:190px;
+  }
+  #gameScreen .collection-drawer:not([open]) summary{
+    padding:5px 7px;
+    font-size:7px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  #gameScreen .collection-drawer[open]{
+    position:fixed;
+    inset:48px 6px max(6px,env(safe-area-inset-bottom)) 6px;
+    max-width:none;
+    overflow:auto;
+    z-index:10010;
+    border:1px solid #ddd;
+  }
+  #gameScreen .collection-drawer[open] summary{
+    position:sticky;
+    top:0;
+    z-index:2;
+    background:#f3f3ef;
+    padding:13px;
+    font-size:12px;
+  }
+  #gameScreen .collection-drawer[open] .collection-drawer-body{padding:0 10px 12px}
+  #gameScreen .collection-row{grid-template-columns:76px 1fr}
+  #gameScreen .collection-thumb{width:76px}
+
+  /* Event owns remaining space */
+  #gameScreen .timeline{
+    flex:1 1 auto;
+    min-height:0;
+    padding:6px;
+    border-radius:13px;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+  }
+  #gameScreen .timeline-top{
+    flex:0 0 auto;
+    margin:0 0 5px;
+    min-height:25px;
+  }
+  #gameScreen .timeline-top .eyebrow{display:none}
+  #gameScreen #playerLabel{font-size:8px;color:var(--muted)}
+  #gameScreen .year-pill{font-size:9px;padding:5px 7px}
+  #gameScreen .event-card{
+    flex:1 1 auto;
+    min-height:0;
+    overflow-y:auto;
+    overscroll-behavior:contain;
+    padding:10px;
+    padding-bottom:0;
+    border-radius:12px;
+    display:flex;
+    flex-direction:column;
+  }
+  #gameScreen .event-icon{
+    width:35px;
+    height:35px;
+    border-radius:10px;
+    font-size:19px;
+    margin-bottom:6px;
+  }
+  #gameScreen .event-card .eyebrow{font-size:7px}
+  #gameScreen .event-card h2{
+    font-size:20px;
+    line-height:1;
+    margin:3px 0 6px;
+  }
+  #gameScreen .event-card p{
+    font-size:10px;
+    line-height:1.35;
+    margin-bottom:8px;
+  }
+  #gameScreen .forced-banner{
+    margin-bottom:7px;
+    padding:7px;
+    font-size:8px;
+    line-height:1.3;
+  }
+  #gameScreen .choices{
+    position:sticky;
+    bottom:0;
+    z-index:8;
+    margin-top:auto;
+    padding:7px 0 max(7px,env(safe-area-inset-bottom));
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:5px;
+    background:linear-gradient(to bottom,rgba(16,16,18,.72),#101012 16px);
+    box-shadow:0 -8px 18px rgba(16,16,18,.72);
+  }
+  #gameScreen .choice{
+    min-height:58px;
+    padding:7px 8px;
+    border-radius:9px;
+    display:grid;
+    grid-template-columns:24px 1fr;
+    grid-template-rows:auto auto;
+    column-gap:6px;
+    align-content:center;
+  }
+  #gameScreen .choice:hover{transform:none}
+  #gameScreen .choice-icon{
+    grid-row:1/3;
+    align-self:center;
+    font-size:18px;
+    margin:0;
+  }
+  #gameScreen .choice strong{font-size:8px;line-height:1.15}
+  #gameScreen .choice small{
+    margin-top:2px;
+    font-size:6.5px;
+    line-height:1.2;
+  }
+  #gameScreen .log{display:none}
+
+  /* Market becomes a full-screen mobile browser */
+  .market-modal{padding:0;overflow:hidden;background:#0b0b0d}
+  .market-box{
+    width:100%;
+    height:100dvh;
+    margin:0;
+    padding:8px 7px max(8px,env(safe-area-inset-bottom));
+    border:0;
+    border-radius:0;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+  }
+  .market-top{
+    flex:0 0 auto;
+    position:relative;
+    margin:0 0 7px;
+    padding:5px 1px 7px;
+    border-bottom:1px solid var(--line);
+  }
+  .market-top h2{font-size:15px!important}
+  .market-list{
+    flex:1 1 auto;
+    min-height:0;
+    display:grid;
+    grid-template-columns:1fr;
+    align-content:start;
+    gap:5px;
+    overflow-y:auto;
+    overscroll-behavior:contain;
+    padding-bottom:5px;
+  }
+  .market-item{
+    min-height:91px;
+    display:grid;
+    grid-template-columns:80px minmax(0,1fr) 74px;
+    grid-template-areas:
+      "img make action"
+      "img title action"
+      "img meta action"
+      "img price action";
+    column-gap:8px;
+    row-gap:1px;
+    padding:6px;
+    border-radius:10px;
+    align-items:center;
+  }
+  .market-thumb{grid-area:img;width:80px;height:80px;margin:0}
+  .market-thumb .vehicle-image-square{height:80px}
+  .market-item>.make{grid-area:make;font-size:7px}
+  .market-item>h4{grid-area:title;font-size:12px;margin:0}
+  .market-item>p{grid-area:meta;font-size:6.5px;line-height:1.2}
+  .market-item>strong{grid-area:price;font-size:11px;margin:0}
+  .market-item>button{
+    grid-area:action;
+    height:100%;
+    min-height:68px;
+    padding:5px;
+    font-size:8px;
+  }
+  .market-wait{
+    flex:0 0 auto;
+    margin-top:6px;
+    padding:7px;
+    border-radius:9px;
+    gap:7px;
+  }
+  .market-wait p{font-size:7px;line-height:1.25}
+  .market-wait strong{font-size:8px}
+  .market-wait button{padding:8px 9px;font-size:8px}
+
+  /* Final screen */
+  .result{margin:8px auto 30px}
+  .result h2{font-size:38px}
+  .result-card{margin-top:12px;padding:12px;border-radius:14px}
+  .history-item{font-size:9px;gap:7px}
+
+  /* Touch targets */
+  button,select,input{touch-action:manipulation}
+}
+
+@media(max-width:390px){
+  #gameScreen .stat span{font-size:5.5px}
+  #gameScreen .stat strong{font-size:8px}
+  #gameScreen .garage{max-height:136px}
+  #gameScreen .garage-card{grid-template-columns:74px minmax(0,1fr)}
+  #gameScreen .garage-art{width:74px;height:74px!important}
+  #gameScreen .event-card h2{font-size:18px}
+  #gameScreen .choice{min-height:54px;padding:6px}
+  #gameScreen .choice small{font-size:6px}
+}
+
 </style>
 </head>
 <body>
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.25</div>
+    <div class="version">prototipo privado · v0.26</div>
   </div>
 </header>
 
@@ -404,23 +833,29 @@ function sellCollectionCar(uid,amount=null,reason='venta desde colección',silen
 }
 function collectionPanelMarkup(){
   ensureCollectionIds();
-  if(!(state.collection||[]).length)return `<div class="canonical" style="margin-top:12px"><strong>Mi colección</strong><br>Todavía no guardaste vehículos.</div>`;
-  return `<div class="canonical" style="margin-top:14px">
-    <strong>Mi colección · ${(state.collection||[]).length} vehículos · ${money(collectionTotalValue())}</strong>
-    <div style="display:grid;gap:10px;margin-top:10px">
+  const count=(state.collection||[]).length;
+  if(!count){
+    return `<details class="collection-drawer">
+      <summary>Mi colección · vacía</summary>
+      <div class="collection-drawer-body">Todavía no guardaste vehículos.</div>
+    </details>`;
+  }
+  return `<details class="collection-drawer">
+    <summary>Mi colección · ${count} ${count===1?'vehículo':'vehículos'} · ${money(collectionTotalValue())}</summary>
+    <div class="collection-drawer-body">
       ${(state.collection||[]).map(item=>{
         const car=carById(item.id);
-        return `<div style="display:grid;grid-template-columns:64px 1fr;gap:10px;align-items:center;padding:8px;border:1px solid rgba(255,255,255,.08);border-radius:12px">
-          <div>${carImageMarkup(car)}</div>
-          <div>
+        return `<div class="collection-row">
+          <div class="collection-thumb">${carImageMarkup(car)}</div>
+          <div class="collection-row-info">
             <strong>${item.brand} ${item.model}</strong><br>
             <small>Valor estimado ${money(collectionValue(item))} · ${starIcons(item.stars||1)} ${flameIcons(item.flames||0)||''}</small>
-            <button class="ghost" data-sell-collection="${item.uid}" style="width:100%;margin-top:7px">Vender de la colección</button>
+            <button class="ghost" data-sell-collection="${item.uid}">Vender de la colección</button>
           </div>
         </div>`;
       }).join('')}
     </div>
-  </div>`;
+  </details>`;
 }
 function bindCollectionButtons(){
   document.querySelectorAll('[data-sell-collection]').forEach(button=>{
@@ -864,12 +1299,12 @@ function renderGarage(){
         <span class="make">${car.marca}</span>
         <h3>${car.modelo}</h3>
 
-        <div class="canonical" style="margin:10px 0 14px">
+        <div class="canonical garage-status" style="margin:10px 0 14px">
           <strong>${starIcons(carStatus().stars)} · ${carStatus().name}</strong><br>
           ${flameIcons(fanFlamesFromCount(state.car.fans||0))||'Sin seguidores todavía'}
         </div>
 
-        <div class="value-box">
+        <div class="value-box garage-secondary">
           <div class="value-cell current">
             <span>Valor actual de tu auto</span>
             <strong>${money(vehicleValue())}</strong>
@@ -879,7 +1314,7 @@ function renderGarage(){
             <strong>${money(normalSaleValue())}</strong>
           </div>
         </div>
-        <p class="value-note">El valor actual refleja estado, originalidad e inversiones. No significa que el mercado vaya a pagarlo. Un coleccionista excepcional sí puede hacerlo.</p>
+        <p class="value-note garage-secondary">El valor actual refleja estado, originalidad e inversiones. No significa que el mercado vaya a pagarlo. Un coleccionista excepcional sí puede hacerlo.</p>
 
         <div class="meters">
           ${meter('Estado',state.car.condition)}
@@ -887,13 +1322,15 @@ function renderGarage(){
           ${meter('Performance',state.car.performance)}
         </div>
 
-        <div class="cost-line"><span>Gasto mensual actual</span><strong>${money(monthlyExpense())}</strong></div>
-        <div class="cost-line"><span>Reparaciones hechas</span><strong>${state.car.repairs}</strong></div>
+        <div class="cost-line garage-secondary"><span>Gasto mensual actual</span><strong>${money(monthlyExpense())}</strong></div>
+        <div class="cost-line garage-secondary"><span>Reparaciones hechas</span><strong>${state.car.repairs}</strong></div>
 
-        <div class="canonical"><strong>Historia del modelo:</strong><br>${car.eventoCanonico}</div>
-        <button class="ghost" id="collectCarNow" style="width:100%;margin-top:12px" ${vehicleActionsLocked()?'disabled':''}>${vehicleActionsLocked()?'Acción disponible después de continuar':'Guardar en mi colección'}</button>
-        <button class="car-select" id="sellCarNow" style="width:100%;margin-top:8px" ${vehicleActionsLocked()?'disabled':''}>${vehicleActionsLocked()?'Acción disponible después de continuar':`Vender ahora · ${currentSaleOffer().mood} · ${money(currentSaleOffer().amount)}`}</button>
-        <button class="ghost" id="openMarket" style="width:100%;margin-top:8px" ${divorcePending()?'disabled':''}>${divorcePending()?'Mercado bloqueado durante el divorcio':'Ver mercado / cambiar auto'}</button>
+        <div class="canonical garage-secondary"><strong>Historia del modelo:</strong><br>${car.eventoCanonico}</div>
+        <div class="garage-actions">
+          <button class="ghost" id="collectCarNow" data-mobile-label="Colección" ${vehicleActionsLocked()?'disabled':''}>${vehicleActionsLocked()?'Acción disponible después de continuar':'Guardar en mi colección'}</button>
+          <button class="car-select" id="sellCarNow" data-mobile-label="Vender" ${vehicleActionsLocked()?'disabled':''}>${vehicleActionsLocked()?'Acción disponible después de continuar':`Vender ahora · ${currentSaleOffer().mood} · ${money(currentSaleOffer().amount)}`}</button>
+          <button class="ghost" id="openMarket" data-mobile-label="Mercado" ${vehicleActionsLocked()?'disabled':''}>${vehicleActionsLocked()?'Acción disponible después de continuar':'Ver mercado / cambiar auto'}</button>
+        </div>
         ${collectionPanelMarkup()}
       </div>
     </div>`;
@@ -2042,7 +2479,7 @@ function openMarket(force=false){
 
   $('#marketList').innerHTML=marketCandidates().map(car=>`
     <article class="market-item">
-      <div style="width:100%;margin-bottom:10px">${carImageMarkup(car)}</div>
+      <div class="market-thumb">${carImageMarkup(car)}</div>
       <span class="make">${car.marca}</span>
       <h4>${car.modelo}</h4>
       <p>${car.segmento} · desde ${car.desde} · ${money(car.gastoMensualBaseUSD)}/mes base</p>
