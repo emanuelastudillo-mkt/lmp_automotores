@@ -1,32 +1,55 @@
-# Tu vida sobre ruedas — v0.2
+# Tu vida sobre ruedas — v0.3
 
 Incremental del prototipo privado en `/juego/`.
 
-## Cambios principales
+## Duración de la partida
 
-- 20+ tipos de eventos.
-- Todos los eventos con decisión muestran exactamente 2 opciones.
-- Opciones con iconos y animaciones.
-- Reparaciones cada vez más caras dentro del mismo vehículo.
-- Las reparaciones incrementan el valor interno del auto.
-- Se muestra valor actual del auto y venta estimada normal por separado.
-- Un coleccionista puede pagar el valor completo solamente cuando el auto supera 40 años, está en muy buen estado y conserva alta originalidad.
-- Choques, motor fundido, robo recuperado y granizo pueden provocar consecuencias antes de elegir.
-- Choque sin cobertura: reconstruir o vender como chatarra.
-- Divorcio: perder 50% del dinero o perder el auto.
-- Ingreso anual aleatorio entre USD 100 y USD 500.
-- Gasto mensual individual para cada uno de los 100 vehículos.
-- El gasto mensual aumenta por mal estado, originalidad alta y performance baja.
-- El gasto de uso se descuenta año por año durante los saltos temporales.
-- Se mantiene acceso únicamente por `/juego/` y `noindex,nofollow,noarchive`.
+- Año mínimo de inicio: 1960.
+- Año máximo de inicio: 2008.
+- Final obligatorio: 2026.
+- Cada partida contiene entre 18 y 30 eventos.
+- El calendario de eventos se genera al comenzar la trayectoria.
+- El último evento siempre ocurre en 2026.
+- Si comenzás en 2008, hay exactamente 18 años disponibles y por eso el juego genera un evento por año: 2009, 2010, ... 2026.
+- Para inicios más antiguos, los 18–30 eventos se distribuyen a lo largo de toda la trayectoria.
+
+La interfaz muestra el progreso:
+
+```text
+Eventos 7/24
+```
+
+## Reparaciones
+
+Se aumentaron especialmente las reparaciones grandes.
+
+Las reparaciones siguen encareciéndose dentro del mismo vehículo mediante el multiplicador acumulativo.
+
+Además, algunas reparaciones grandes tienen un piso relacionado con el valor actual del vehículo, evitando que reconstruir un auto caro resulte artificialmente barato.
+
+Ejemplos:
+
+- reconstrucción después de choque: base alta + mínimo aproximado del 38% del valor del auto;
+- reconstrucción de motor fundido: base alta + mínimo aproximado del 30%;
+- restauración de carrocería: reparación grande;
+- suspensión completa, embrague, interior, frenos y recuperación después de robo: costos aumentados.
 
 ## Archivos del incremental
 
 ```text
 juego/index.html
-juego/data/autos.json
 juego/data/eventos.json
 README-JUEGO.md
 ```
 
-Los valores y costos siguen siendo parámetros de gameplay aproximados.
+`autos.json` no necesita reemplazarse en esta versión.
+
+## SEO
+
+`/juego/` continúa con:
+
+```html
+<meta name="robots" content="noindex,nofollow,noarchive">
+```
+
+No se modifica ninguna página pública de LMP Autos.

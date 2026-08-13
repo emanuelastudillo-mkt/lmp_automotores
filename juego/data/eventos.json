@@ -50,13 +50,15 @@
         "icon": "🛠️",
         "label": "Reparar refrigeración completa",
         "costType": "repair",
-        "repairBase": 760,
+        "repairBase": 1350,
         "condition": 8,
         "originality": 2,
         "performance": 1,
         "valueShare": 0.68,
         "risk": 0.03,
-        "note": "Resolviste la causa y recuperaste confiabilidad."
+        "note": "Resolviste la causa y recuperaste confiabilidad.",
+        "majorRepair": true,
+        "minVehicleShare": 0.12
       },
       {
         "icon": "💧",
@@ -127,19 +129,21 @@
         "icon": "✨",
         "label": "Restaurar bien",
         "costType": "repair",
-        "repairBase": 1450,
+        "repairBase": 2800,
         "condition": 14,
         "originality": 8,
         "performance": 0,
         "valueShare": 0.78,
         "risk": 0.02,
-        "note": "La restauración levantó mucho el estado y el valor del auto."
+        "note": "La restauración levantó mucho el estado y el valor del auto.",
+        "majorRepair": true,
+        "minVehicleShare": 0.2
       },
       {
         "icon": "🪛",
         "label": "Hacer un arreglo económico",
         "costType": "repair",
-        "repairBase": 430,
+        "repairBase": 760,
         "condition": 5,
         "originality": -4,
         "performance": 0,
@@ -164,7 +168,7 @@
         "icon": "🔬",
         "label": "Diagnóstico completo",
         "costType": "repair",
-        "repairBase": 620,
+        "repairBase": 900,
         "condition": 7,
         "originality": 1,
         "performance": 1,
@@ -203,13 +207,15 @@
         "icon": "🔩",
         "label": "Renovar el conjunto",
         "costType": "repair",
-        "repairBase": 690,
+        "repairBase": 1250,
         "condition": 9,
         "originality": 1,
         "performance": 5,
         "valueShare": 0.64,
         "risk": 0.02,
-        "note": "Recuperaste estabilidad y mejoraste el estado general."
+        "note": "Recuperaste estabilidad y mejoraste el estado general.",
+        "majorRepair": true,
+        "minVehicleShare": 0.11
       },
       {
         "icon": "🧱",
@@ -238,13 +244,15 @@
         "icon": "🔧",
         "label": "Cambiar kit completo",
         "costType": "repair",
-        "repairBase": 610,
+        "repairBase": 1050,
         "condition": 8,
         "originality": 1,
         "performance": 3,
         "valueShare": 0.6,
         "risk": 0.02,
-        "note": "Quedó resuelto para varios años."
+        "note": "Quedó resuelto para varios años.",
+        "majorRepair": true,
+        "minVehicleShare": 0.1
       },
       {
         "icon": "⏳",
@@ -273,7 +281,7 @@
         "icon": "✅",
         "label": "Poner cuatro buenas",
         "costType": "repair",
-        "repairBase": 520,
+        "repairBase": 720,
         "condition": 5,
         "originality": 0,
         "performance": 4,
@@ -569,13 +577,15 @@
         "icon": "🧰",
         "label": "Reponer piezas correctas",
         "costType": "repair",
-        "repairBase": 760,
+        "repairBase": 1850,
         "condition": 9,
         "originality": 6,
         "performance": 0,
         "valueShare": 0.6,
         "risk": 0.04,
-        "note": "Recuperaste buena parte del auto con piezas adecuadas."
+        "note": "Recuperaste buena parte del auto con piezas adecuadas.",
+        "majorRepair": true,
+        "minVehicleShare": 0.15
       },
       {
         "icon": "🔩",
@@ -606,13 +616,15 @@
         "icon": "🧵",
         "label": "Restaurar respetando lo original",
         "costType": "repair",
-        "repairBase": 720,
+        "repairBase": 1500,
         "condition": 6,
         "originality": 8,
         "performance": 0,
         "valueShare": 0.72,
         "risk": 0.02,
-        "note": "El interior volvió a estar a la altura del auto."
+        "note": "El interior volvió a estar a la altura del auto.",
+        "majorRepair": true,
+        "minVehicleShare": 0.12
       },
       {
         "icon": "🛋️",
@@ -641,13 +653,15 @@
         "icon": "✅",
         "label": "Renovar el sistema",
         "costType": "repair",
-        "repairBase": 590,
+        "repairBase": 980,
         "condition": 8,
         "originality": 1,
         "performance": 4,
         "valueShare": 0.58,
         "risk": 0.01,
-        "note": "El auto volvió a frenar como corresponde."
+        "note": "El auto volvió a frenar como corresponde.",
+        "majorRepair": true,
+        "minVehicleShare": 0.09
       },
       {
         "icon": "⚠️",
