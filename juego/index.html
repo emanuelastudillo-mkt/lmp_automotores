@@ -742,7 +742,7 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.32</div>
+    <div class="version">prototipo privado · v0.33</div>
   </div>
 </header>
 
@@ -1776,6 +1776,9 @@ function eligibleEvents(){
   return EVENTS.filter(event=>{
     if(event.collectionOnly)return (state.collection||[]).length>0;
 
+    if(event.vehicleId && event.vehicleId!==car?.id)return false;
+    if(event.exclusiveVehicleEvent && state.careerFlags?.[`seen_${event.id}`])return false;
+
     if(event.special==='inheritance_father'){
       return state.year-state.startYear>=10 && !state.careerFlags?.fatherInheritance;
     }
@@ -1908,8 +1911,20 @@ function chooseEvent(){
 
   if(maybeChooseCollectionEvent())return;
 
+  const exclusiveEvents=eligible.filter(event=>
+    event.exclusiveVehicleEvent &&
+    !state.events.slice(0,4).some(item=>item.eventId===event.id)
+  );
+  if(exclusiveEvents.length && Math.random()<.38){
+    const selected=exclusiveEvents[rand(0,exclusiveEvents.length-1)];
+    state.pendingEvent={id:selected.id,forcedApplied:false};
+    persist();
+    return;
+  }
+
   const recent=new Set(state.events.slice(0,4).map(item=>item.eventId).filter(Boolean));
-  let pool=eligible.filter(event=>!event.collectionOnly && !['engine','crash'].includes(event.special) && !recent.has(event.id));
+  let pool=eligible.filter(event=>!event.collectionOnly && !event.exclusiveVehicleEvent && !['engine','crash'].includes(event.special) && !recent.has(event.id));
+  if(!pool.length)pool=eligible.filter(event=>!event.collectionOnly && !event.exclusiveVehicleEvent && !['engine','crash'].includes(event.special));
   if(!pool.length)pool=eligible.filter(event=>!event.collectionOnly && !['engine','crash'].includes(event.special));
   if(!pool.length)pool=eligible;
 
@@ -2974,6 +2989,10 @@ function resolveDynamicRepair(event,cost,effects,risk=0){
   completeEvent(event,text);
 }
 function completeEvent(event,text,icon='🎲'){
+  if(event?.exclusiveVehicleEvent){
+    state.careerFlags=state.careerFlags||{};
+    state.careerFlags[`seen_${event.id}`]=true;
+  }
   if(event?.special==='crash'){
     state.crashCount=(state.crashCount||0)+1;
     if(state.pendingEvent?.mechanicalCrash && state.pendingEvent?.crashReason && !text.includes(state.pendingEvent.crashReason)){
@@ -3445,6 +3464,10 @@ function careerStory(){
   if((state.hailCount||0)>=2)parts.push(`Además sobreviviste a ${state.hailCount} tormentas de granizo; comprobaste que no siempre un auto más nuevo resiste mejor la chapa.`);
   else if((state.hailCount||0)===1)parts.push(`Una tormenta de granizo también dejó su marca en tu historia automotriz.`);
 
+  const exclusiveSeen=Object.keys(state.careerFlags||{}).filter(key=>key.startsWith('seen_ex_')).length;
+  if(exclusiveSeen>=8)parts.push(`Conociste a fondo varios modelos: atravesaste ${exclusiveSeen} situaciones exclusivas ligadas a los autos que elegiste.`);
+  else if(exclusiveSeen>0)parts.push(`Algunos modelos también te mostraron sus propias rarezas: viviste ${exclusiveSeen} situaciones exclusivas de vehículo.`);
+
   if(crashes>=3)parts.push(`La chapa tampoco tuvo una vida tranquila: acumulaste ${crashes} choques.`);
   else if(crashes>0)parts.push(`En el camino también hubo ${crashes} ${crashes===1?'choque':'choques'} que dejaron su marca.`);
 
@@ -3494,6 +3517,7 @@ function finish(){
       <div class="stat"><span>Mecánico amigo</span><strong>${state.friendMechanicUses||0} usos · ${friendMechanicLabel()}</strong></div>
       <div class="stat"><span>Granizadas</span><strong>${state.hailCount||0}</strong></div>
       <div class="stat"><span>Herencias</span><strong>${state.inheritanceCount||0}</strong></div>
+      <div class="stat"><span>Eventos exclusivos</span><strong>${Object.keys(state.careerFlags||{}).filter(key=>key.startsWith('seen_ex_')).length}</strong></div>
       <div class="stat"><span>Premios de exhibición</span><strong>${state.exhibitionWins||0} · ${money(state.exhibitionIncome||0)}</strong></div>
       <div class="stat highlight"><span>Vehículos en colección</span><strong>${(state.collection||[]).length}</strong></div>
       <div class="stat"><span>Valor de colección</span><strong>${money(collectionValueTotal)}</strong></div>

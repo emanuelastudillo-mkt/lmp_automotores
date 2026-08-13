@@ -1,3 +1,55 @@
+# Tu vida sobre ruedas — v0.33
+
+Base: v0.32.
+
+## 260 eventos exclusivos de vehículo
+
+Se agregan **2 eventos exclusivos para cada uno de los 130 vehículos** de la base.
+
+Total del juego:
+- 130 vehículos;
+- 327 eventos;
+- 260 eventos exclusivos de modelo/submodelo;
+- 67 eventos generales, históricos, familiares, de colección o especiales.
+
+### Dos tipos de evento por vehículo
+
+Cada auto recibe:
+
+1. **Evento técnico/mecánico**
+   - se construye a partir de la mecánica, tecnología y particularidades del vehículo;
+   - puede involucrar turbo, carburación, inyección, transmisión 4x4, techo retráctil, electrónica, batería, motor trasero, diésel, mantenimiento de superdeportivos, etc.;
+   - utiliza además el `eventoCanonico` específico de cada auto para que el texto y el contexto no sean intercambiables entre modelos.
+
+2. **Evento de identidad/uso**
+   - refleja cómo se vive ese vehículo;
+   - puede ser encuentro de coleccionistas, pieza original difícil de conseguir, jornada deportiva, salida 4x4, trabajo pesado, evento de lujo, club del modelo, viaje largo, exposición de una rareza, etc.
+
+### Exclusividad real
+
+Los eventos incorporan `vehicleId`.
+
+Esto significa que:
+- el Falcon Sprint no usa eventos del Falcon base;
+- el Gol GTI G1 no usa los del Gol G1 común;
+- el Bora 1.8T no usa los del Bora estándar;
+- cada versión y submodelo mantiene sus propios eventos.
+
+### Control de repetición
+
+- Cada evento exclusivo puede ocurrir **una sola vez por trayectoria**.
+- El juego registra los eventos ya vistos en `careerFlags`.
+- Cuando todavía quedan eventos exclusivos sin ver para el auto actual, existe una probabilidad controlada de priorizarlos.
+- Una vez vistos, vuelven a dominar los eventos generales.
+- Los eventos exclusivos no se agregan indiscriminadamente al pool normal, evitando que tapen divorcios, granizo, herencias, choques, colección y otros sistemas.
+
+### Resultado final
+
+El resumen final muestra cuántos **eventos exclusivos** de vehículo viviste durante la trayectoria.
+La historia final también menciona si conociste en profundidad varios modelos diferentes.
+
+---
+
 # Tu vida sobre ruedas — v0.32
 
 Base: v0.31.
