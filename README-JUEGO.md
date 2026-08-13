@@ -1,3 +1,20 @@
+# Tu vida sobre ruedas — v0.37
+
+Base: v0.36.
+
+## El último auto pasa a la colección final
+
+- Al finalizar la partida, si todavía tenés un vehículo activo:
+  - se guarda automáticamente en **Mi colección**;
+  - conserva Estado, Originalidad, Performance, reparaciones, fans, inversiones y valor;
+  - aparece dentro de **Tu colección final**;
+  - suma al valor total de la colección.
+- El valor teórico final ya no cuenta el auto activo por separado, evitando duplicarlo.
+- El resumen muestra cuál fue tu **último auto** y cuánto valía al cerrar la trayectoria.
+- El título final `Purista` sigue evaluando correctamente el último vehículo aunque ya haya sido movido a la colección.
+
+---
+
 # Tu vida sobre ruedas — v0.36
 
 Base: v0.35.

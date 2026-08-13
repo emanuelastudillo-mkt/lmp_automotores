@@ -742,7 +742,7 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.36</div>
+    <div class="version">prototipo privado · v0.37</div>
   </div>
 </header>
 
@@ -3541,11 +3541,23 @@ function careerStory(){
 
 function finish(){
   updateCurrentCarLegacy();
+
+  // El último auto activo también forma parte del patrimonio final.
+  // Lo guardamos automáticamente antes de calcular la colección.
+  const finalCar=currentCar();
+  const finalCarName=finalCar?`${finalCar.marca} ${finalCar.modelo}`:'—';
+  const finalCarValue=finalCar?vehicleValue():0;
+  const finalCarOriginality=state.car?.originality??0;
+  const finalCarAge=finalCar?vehicleAge():0;
+
+  if(state.car){
+    storeActiveCarInCollection('fin de partida',false);
+  }
+
   screen('resultScreen');
-  const car=currentCar();
   const liquid=state.money;
   const collectionValueTotal=collectionTotalValue();
-  const theoretical=state.money+(car?vehicleValue():0)+collectionValueTotal;
+  const theoretical=state.money+collectionValueTotal;
 
   let title='Coleccionista accidental';
   if(state.history.length>=7)title='Cambiador serial';
@@ -3556,7 +3568,7 @@ function finish(){
   if((state.exhibitionWins||0)>=2)title='Figura de las exhibiciones';
   if(state.money>50000)title='Magnate del garage';
   if((state.raceSkill||0)>=10 && (state.illegalRaceCount||0)>=10)title='Leyenda de la noche';
-  if(car && state.car.originality>90 && vehicleAge()>35 && (state.raceSkill||0)<10)title='Purista';
+  if(finalCar && finalCarOriginality>90 && finalCarAge>35 && (state.raceSkill||0)<10)title='Purista';
 
   $('#resultTitle').textContent=title;
   if($('#resultEndLabel'))$('#resultEndLabel').textContent=`${careerEndYear()} · fin de trayectoria`;
@@ -3565,7 +3577,7 @@ function finish(){
   $('#resultCard').innerHTML=`
     <div class="stats">
       <div class="stat"><span>Dinero final</span><strong>${moneyDisplay(liquid)}</strong></div>
-      <div class="stat highlight"><span>Valor actual del auto</span><strong>${car?money(vehicleValue()):'—'}</strong></div>
+      <div class="stat highlight"><span>Último auto</span><strong>${finalCar?`${finalCarName} · ${money(finalCarValue)}`:'—'}</strong></div>
       <div class="stat"><span>Valor teórico total</span><strong>${moneyDisplay(theoretical)}</strong></div>
       <div class="stat"><span>Ingresos acumulados</span><strong>${money(state.totalIncome)}</strong></div>
       <div class="stat"><span>Gastos de uso</span><strong>${money(state.totalRunningCosts)}</strong></div>
