@@ -1,3 +1,18 @@
+# Tu vida sobre ruedas — v0.23
+
+Base: v0.22.
+
+## Cambios v0.23
+
+- Al vender un vehículo de la colección, la unidad se elimina inmediatamente de `state.collection` y deja de aparecer en cualquier vista de colección activa o en la colección final.
+- El registro histórico de haber poseído ese vehículo se conserva.
+- Se agregó una imagen específica `imagenes/sin-vehiculo.svg`.
+- Al vender, entregar o mandar a chatarra el auto actual, el garage se actualiza inmediatamente y muestra **Sin vehículo** antes de abrir el mercado.
+- La pantalla sin auto también conserva visible la colección que todavía poseés.
+- Se corrigió el flujo sin vehículo para evitar que debajo del mercado quedara renderizado el auto anterior o una colección desactualizada.
+
+---
+
 # Tu vida sobre ruedas — v0.22
 
 Base: v0.21.

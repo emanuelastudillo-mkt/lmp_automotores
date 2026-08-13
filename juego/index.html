@@ -192,7 +192,7 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.22</div>
+    <div class="version">prototipo privado · v0.23</div>
   </div>
 </header>
 
@@ -378,8 +378,7 @@ function sellCollectionCar(uid,amount=null,reason='venta desde colección',silen
   if(!item)return;
   const price=amount??collectionSaleValue(item);
   state.money+=price;
-  const idx=state.collection.findIndex(entry=>entry.uid===uid);
-  state.collection.splice(idx,1);
+  state.collection=(state.collection||[]).filter(entry=>entry.uid!==uid);
   const history=[...state.history].reverse().find(h=>h.id===item.id && h.collected && !h.collectionSoldYear);
   if(history){
     history.collectionSoldYear=state.year;
@@ -816,10 +815,25 @@ function advanceYears(years){
 function meter(label,value){
   return `<div class="meter-row"><span>${label}</span><div class="meter"><b style="width:${clamp(value,0,100)}%"></b></div><strong>${Math.round(value)}</strong></div>`;
 }
+function noVehicleMarkup(){
+  return `<div class="garage-card">
+    <div class="garage-art" style="aspect-ratio:1/1;height:auto;overflow:hidden">
+      <span class="vehicle-image-square">
+        <img src="./imagenes/sin-vehiculo.svg" alt="Sin vehículo" style="width:100%;height:100%;object-fit:contain;display:block">
+      </span>
+    </div>
+    <div class="garage-info">
+      <span class="make">Garage actual</span>
+      <h3>Sin vehículo</h3>
+      <p class="value-note">Vendiste o entregaste tu auto actual. Podés comprar otro desde el mercado.</p>
+      ${collectionPanelMarkup()}
+    </div>
+  </div>`;
+}
 function renderGarage(){
   const car=currentCar();
   if(!car||!state.car){
-    $('#garagePanel').innerHTML=`<div style="padding:24px">No tenés auto de uso actualmente.${collectionPanelMarkup()}</div>`;
+    $('#garagePanel').innerHTML=noVehicleMarkup();
     bindCollectionButtons();
     return;
   }
@@ -1369,6 +1383,8 @@ function renderSpecialEvent(event,car,forcedText){
       state.pendingEvent=null;
       state.decisions++;
       persist();
+      renderStats($('#gameStats'));
+      renderGarage();
       openMarket(true);
     };
     return;
@@ -1621,6 +1637,8 @@ function sellCurrentCarOffer(){
   state.car=null;
   state.saleOffer=null;
   persist();
+  renderStats($('#gameStats'));
+  renderGarage();
   openMarket(true);
 }
 function resolveDynamicRepair(event,cost,effects,risk=0){
@@ -1706,6 +1724,8 @@ function sellAndForceMarket(amount,reason,event){
   state.pendingEvent=null;
   state.decisions++;
   persist();
+  renderStats($('#gameStats'));
+  renderGarage();
   openMarket(true);
 }
 function scrapAndForceMarket(amount,event,reason){
@@ -1722,6 +1742,8 @@ function scrapAndForceMarket(amount,event,reason){
   state.pendingEvent=null;
   state.decisions++;
   persist();
+  renderStats($('#gameStats'));
+  renderGarage();
   openMarket(true);
 }
 function renderLog(){
@@ -1740,7 +1762,18 @@ function renderGame(){
   }
 
   if(!state.car){
+    renderStats($('#gameStats'));
+    renderGarage();
+    renderLog();
+    $('#eventCard').className='event-card';
+    $('#eventCard').innerHTML=`
+      <div class="event-icon">🚘</div>
+      <span class="eyebrow">${state.year}</span>
+      <h2>Sin vehículo actual</h2>
+      <p>Elegí otro auto en el mercado o pasá un año para seguir ahorrando.</p>`;
+    persist();
     openMarket(true);
+    setTimeout(playYearAnimation,80);
     return;
   }
 

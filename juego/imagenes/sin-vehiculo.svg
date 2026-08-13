@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+<rect width="800" height="800" rx="48" fill="#121214"/>
+<rect x="70" y="70" width="660" height="660" rx="36" fill="#1c1c20" stroke="#3a3a40" stroke-width="4"/>
+<g fill="none" stroke="#777780" stroke-width="24" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M230 470h340l-38-108c-11-31-40-52-73-52H341c-33 0-62 21-73 52l-38 108Z"/>
+  <path d="M215 470v70h54"/>
+  <path d="M585 470v70h-54"/>
+  <circle cx="295" cy="505" r="34"/>
+  <circle cx="505" cy="505" r="34"/>
+</g>
+<path d="M205 205 595 595" stroke="#d84a4a" stroke-width="34" stroke-linecap="round"/>
+<text x="400" y="675" text-anchor="middle" fill="#e7e7ea" font-family="Arial, Helvetica, sans-serif" font-size="54" font-weight="700">SIN VEHÍCULO</text>
+</svg>
