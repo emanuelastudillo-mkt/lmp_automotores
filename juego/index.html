@@ -170,7 +170,7 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.9</div>
+    <div class="version">prototipo privado · v0.10</div>
   </div>
 </header>
 
@@ -343,7 +343,7 @@ function vehicleValue(){
 }
 
 function carStatus(){
-  if(!state.car)return {level:0,name:'Sin auto',icon:'—',score:0,high:false};
+  if(!state.car)return {stars:0,name:'Sin auto',score:0,high:false};
   const car=currentCar();
   const market=Math.max(1,marketPrice(car,state.year));
   const valueRatio=vehicleValue()/market;
@@ -355,29 +355,50 @@ function carStatus(){
     Math.min(100,age*2)*.10
   );
 
-  if(score>=100 && state.car.originality>=90)return {level:5,name:'El tesoro de los coleccionistas',icon:'👑',score,high:true};
-  if(score>=92)return {level:4,name:'La envidia del barrio',icon:'🔥',score,high:true};
-  if(score>=84)return {level:3,name:'Diamante en bruto',icon:'💎',score,high:false};
-  if(score>=72)return {level:2,name:'Muy bien parado',icon:'✨',score,high:false};
-  if(score>=58)return {level:1,name:'Con potencial',icon:'🔧',score,high:false};
-  return {level:0,name:'Uno más del montón',icon:'🚗',score,high:false};
+  if(score>=100 && state.car.originality>=90)return {stars:5,name:'El tesoro de los coleccionistas',score,high:true};
+  if(score>=92)return {stars:4,name:'La envidia del barrio',score,high:true};
+  if(score>=84)return {stars:3,name:'Diamante en bruto',score,high:false};
+  if(score>=72)return {stars:2,name:'Muy bien parado',score,high:false};
+  return {stars:1,name:score>=58?'Con potencial':'Uno más del montón',score,high:false};
+}
+function starIcons(stars){
+  return '⭐'.repeat(clamp(Math.round(stars||0),0,5));
+}
+function fanFlamesFromCount(count){
+  if(count>=70)return 3;
+  if(count>=30)return 2;
+  if(count>0)return 1;
+  return 0;
+}
+function flameIcons(flames){
+  return '🔥'.repeat(clamp(Math.round(flames||0),0,3));
+}
+function updateCurrentCarLegacy(){
+  if(!state.car || !state.history.length)return;
+  const history=state.history.at(-1);
+  const status=carStatus();
+  const flames=fanFlamesFromCount(state.car.fans||0);
+  history.maxStars=Math.max(history.maxStars||1,status.stars||1);
+  history.maxFlames=Math.max(history.maxFlames||0,flames);
 }
 function updateCarFans(){
   if(!state.car)return;
   if(state.fans===undefined)state.fans=0;
-  if(state.fanStatusLevel===undefined)state.fanStatusLevel=0;
+  if(state.car.fans===undefined)state.car.fans=0;
+  if(state.car.fanStatusLevel===undefined)state.car.fanStatusLevel=0;
   const status=carStatus();
 
-  // Fans are awarded only when a car reaches a new high-status tier.
-  if(status.high && status.level>state.fanStatusLevel){
-    const gained=status.level===5?rand(35,80):rand(12,35);
+  if(status.high && status.stars>state.car.fanStatusLevel){
+    const gained=status.stars===5?rand(35,80):rand(12,35);
     state.fans+=gained;
-    state.fanStatusLevel=status.level;
+    state.car.fans+=gained;
+    state.car.fanStatusLevel=status.stars;
     state.events.unshift({
       year:state.year,
-      text:`Tu auto alcanzó el estatus "${status.name}". Empezó a llamar la atención y sumaste ${gained} fans.`
+      text:`Tu auto llegó a ${starIcons(status.stars)} "${status.name}". Sumó seguidores y ahora tiene ${flameIcons(fanFlamesFromCount(state.car.fans))||'sin fueguitos'} de popularidad.`
     });
   }
+  updateCurrentCarLegacy();
 }
 function normalSaleValue(){
   if(!state.car)return 0;
@@ -440,7 +461,7 @@ function renderStats(target){
   target.innerHTML=`
     <div class="stat"><span>Año</span><strong>${state.year}</strong></div>
     <div class="stat"><span>Dinero</span><strong>${money(state.money)}</strong></div>
-    <div class="stat"><span>Fans</span><strong>${state.fans||0}</strong></div>
+    <div class="stat"><span>Fans</span><strong>${flameIcons(fanFlamesFromCount(state.fans||0))||'—'}</strong></div>
     <div class="stat"><span>Autos</span><strong>${state.history.length}</strong></div>
     <div class="stat highlight"><span>Valor de tu auto</span><strong>${state.car?money(currentValue):'—'}</strong></div>
     <div class="stat"><span>Gasto mensual</span><strong>${state.car?money(monthlyExpense()):'—'}</strong></div>`;
@@ -524,17 +545,20 @@ function buyCar(id,first=false){
     investedValue:0,
     valueDamage:0,
     expenseModifier:0,
+    fans:0,
+    fanStatusLevel:0,
     purchasePrice:price,
     purchaseYear:state.year
   };
   state.saleOffer=null;
-  state.fanStatusLevel=0;
   state.history.push({
     id,
     brand:next.marca,
     model:next.modelo,
     boughtYear:state.year,
-    boughtFor:price
+    boughtFor:price,
+    maxStars:1,
+    maxFlames:0
   });
   state.events.unshift({year:state.year,text:`Compraste ${next.marca} ${next.modelo} por ${money(price)}.`});
   state.pendingEvent=null;
@@ -640,8 +664,8 @@ function renderGarage(){
         <h3>${car.modelo}</h3>
 
         <div class="canonical" style="margin:10px 0 14px">
-          <strong>${carStatus().icon} Estatus: ${carStatus().name}</strong><br>
-          Nivel de reconocimiento ${carStatus().score} · ${state.fans||0} fans
+          <strong>${starIcons(carStatus().stars)} · ${carStatus().name}</strong><br>
+          Estatus ${carStatus().stars}/5 · Fans del auto ${flameIcons(fanFlamesFromCount(state.car.fans||0))||'—'}
         </div>
 
         <div class="value-box">
@@ -995,7 +1019,8 @@ function renderSpecialEvent(event,car,forcedText){
       history.soldFor=0;
       history.saleReason='divorcio';
       state.events.unshift({year:state.year,eventId:event.id,text:`El divorcio te obligó a entregar ${car.marca} ${car.modelo} sin recibir dinero.`});
-      state.car=null;
+      updateCurrentCarLegacy();
+  state.car=null;
       state.saleOffer=null;
       state.pendingEvent=null;
       state.decisions++;
@@ -1142,6 +1167,7 @@ function sellCurrentCarOffer(){
   history.soldFor=offer.amount;
   history.saleReason='venta voluntaria';
   state.events.unshift({year:state.year,text:`Vendiste ${car.marca} ${car.modelo} por ${money(offer.amount)}. ${offer.mood}.`});
+  updateCurrentCarLegacy();
   state.car=null;
   state.saleOffer=null;
   persist();
@@ -1218,6 +1244,7 @@ function sellAndForceMarket(amount,reason,event){
   history.soldFor=amount;
   history.saleReason=reason;
   state.events.unshift({year:state.year,eventId:event.id,text:`Vendiste ${car.marca} ${car.modelo} por ${money(amount)} (${reason}).`});
+  updateCurrentCarLegacy();
   state.car=null;
   state.saleOffer=null;
   state.pendingEvent=null;
@@ -1233,6 +1260,7 @@ function scrapAndForceMarket(amount,event,reason){
   history.soldFor=amount;
   history.saleReason='chatarra';
   state.events.unshift({year:state.year,eventId:event.id,text:`${reason} Lo vendiste como chatarra por ${money(amount)}.`});
+  updateCurrentCarLegacy();
   state.car=null;
   state.saleOffer=null;
   state.pendingEvent=null;
@@ -1340,6 +1368,7 @@ function closeMarket(){
   $('#closeMarket').style.display='inline-block';
 }
 function finish(){
+  updateCurrentCarLegacy();
   screen('resultScreen');
   const car=currentCar();
   const liquid=state.money;
@@ -1361,12 +1390,12 @@ function finish(){
       <div class="stat"><span>Valor teórico total</span><strong>${money(theoretical)}</strong></div>
       <div class="stat"><span>Ingresos acumulados</span><strong>${money(state.totalIncome)}</strong></div>
       <div class="stat"><span>Gastos de uso</span><strong>${money(state.totalRunningCosts)}</strong></div>
-      <div class="stat"><span>Fans conseguidos</span><strong>${state.fans||0}</strong></div>
+      <div class="stat"><span>Popularidad máxima</span><strong>${flameIcons(fanFlamesFromCount(state.fans||0))||'—'}</strong></div>
     </div>
     <h3 style="margin:18px 0 7px">Tu garaje histórico</h3>
     <div class="history">${state.history.map(item=>`
       <div class="history-item">
-        <span>${item.brand} ${item.model}</span>
+        <span>${item.brand} ${item.model}<br><small>${starIcons(item.maxStars||1)} · ${flameIcons(item.maxFlames||0)||'—'}</small></span>
         <strong>${item.boughtYear}${item.soldYear?` → ${item.soldYear}`:' → 2026'}</strong>
       </div>`).join('')}</div>`;
 
@@ -1401,7 +1430,12 @@ $('#marketModal').addEventListener('click',event=>{
     state=JSON.parse(saved);
     if(state && state.pendingResult===undefined)state.pendingResult=null;
     if(state && state.fans===undefined)state.fans=0;
-    if(state && state.fanStatusLevel===undefined)state.fanStatusLevel=0;
+    if(state?.car && state.car.fans===undefined)state.car.fans=0;
+    if(state?.car && state.car.fanStatusLevel===undefined)state.car.fanStatusLevel=0;
+    if(state?.history)state.history.forEach(item=>{
+      if(item.maxStars===undefined)item.maxStars=1;
+      if(item.maxFlames===undefined)item.maxFlames=0;
+    });
     if(state?.car||state?.player)renderGame();
   }
 })().catch(error=>{

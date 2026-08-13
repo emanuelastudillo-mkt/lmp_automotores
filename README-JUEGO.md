@@ -1,3 +1,18 @@
+# Tu vida sobre ruedas — v0.10
+
+Base: v0.9.
+
+## Cambios v0.10
+
+- El estatus del vehículo ahora se representa visualmente con **1 a 5 estrellas (⭐)**.
+- La popularidad/fans de cada auto se representa con **1 a 3 fueguitos (🔥)**.
+- Cada vehículo acumula sus propios fans mientras está en posesión del jugador.
+- El historial guarda el **máximo de estrellas y fueguitos alcanzado por cada auto**.
+- Al finalizar la partida, cada vehículo del garaje histórico muestra sus estrellas y fueguitos máximos.
+- Los fans globales siguen acumulándose entre distintos vehículos, pero se muestran visualmente mediante fueguitos.
+
+---
+
 # Tu vida sobre ruedas — v0.9
 
 Base: v0.8.
