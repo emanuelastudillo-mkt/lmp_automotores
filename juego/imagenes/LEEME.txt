@@ -1,0 +1,14 @@
+Colocar aquí las imágenes de los vehículos.
+
+Nombre esperado: NUMERO-Marca Modelo.ext
+Ejemplos:
+1-Fiat 600.jpg
+22-Renault Fuego.png
+
+Extensiones admitidas automáticamente:
+.jpg
+.jpeg
+.png
+.webp
+
+El número corresponde al orden del vehículo en autos.json.

@@ -1,3 +1,30 @@
+# Tu vida sobre ruedas — v0.15
+
+Base: v0.14.
+
+## Cambios v0.15
+
+- Nueva opción **Guardar en mi colección**.
+- Un vehículo coleccionado:
+  - deja de ser el auto de uso diario;
+  - no se vende ni genera dinero inmediato;
+  - tiene gastos mínimos de guarda/mantenimiento;
+  - prácticamente no se deteriora;
+  - aumenta su valor año tras año;
+  - la apreciación depende de antigüedad y potencial de clásico.
+- La colección sigue generando gastos aunque el jugador esté un año sin auto de uso.
+- Al finalizar se muestran:
+  - cantidad de vehículos coleccionados;
+  - valor total de la colección;
+  - galería de la colección con valor individual, ⭐ y 🔥.
+- El valor teórico final ahora incluye dinero + auto actual + colección.
+- Soporte para imágenes reales en `/juego/imagenes/`.
+- Convención de archivos: `1-Fiat 600.jpg`, `22-Renault Fuego.png`, etc.
+- Se intentan automáticamente extensiones JPG, JPEG, PNG y WEBP.
+- Se agregó `imageBase` a cada vehículo en `autos.json` para relacionar de forma estable cada auto con su imagen.
+
+---
+
 # Tu vida sobre ruedas — v0.14
 
 Base: v0.13.

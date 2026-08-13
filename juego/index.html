@@ -170,7 +170,7 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.14</div>
+    <div class="version">prototipo privado · v0.15</div>
   </div>
 </header>
 
@@ -291,6 +291,61 @@ function initialCash(year){
 }
 function currentCar(){
   return CARS.find(car=>car.id===state?.car?.id);
+}
+function carById(id){
+  return CARS.find(car=>car.id===id);
+}
+function imageBaseFor(car){
+  return car?.imageBase||`${Math.max(1,CARS.findIndex(item=>item.id===car?.id)+1)}-${car?.marca||''} ${car?.modelo||''}`.trim();
+}
+function carImageSrc(car,ext='jpg'){
+  return `./imagenes/${encodeURIComponent(imageBaseFor(car))}.${ext}`;
+}
+function tryCarImage(img){
+  const exts=['jpg','jpeg','png','webp'];
+  const step=Number(img.dataset.try||0)+1;
+  if(step<exts.length){
+    img.dataset.try=step;
+    img.src=carImageSrc(carById(img.dataset.carId),exts[step]);
+  }else{
+    img.style.display='none';
+    const fallback=img.nextElementSibling;
+    if(fallback)fallback.style.display='grid';
+  }
+}
+function carImageMarkup(car){
+  if(!car)return `<div class="icon">🚗</div>`;
+  return `<img src="${carImageSrc(car)}" data-car-id="${car.id}" data-try="0" onerror="tryCarImage(this)" alt="${car.marca} ${car.modelo}" style="width:100%;height:100%;object-fit:contain;display:block">
+    <div class="icon" style="display:none">🚗</div>`;
+}
+function collectionMonthlyExpense(item){
+  const car=carById(item.id);
+  const base=Number(car?.gastoMensualBaseUSD)||14;
+  return Math.max(2,Math.round(base*.16));
+}
+function collectionValue(item){
+  return Math.max(300,Math.round(item?.collectionValue||item?.valueAtCollection||item?.purchasePrice||300));
+}
+function collectionTotalValue(){
+  return (state.collection||[]).reduce((sum,item)=>sum+collectionValue(item),0);
+}
+function collectionAnnualGrowth(item,year){
+  const car=carById(item.id);
+  if(!car)return .02;
+  const age=Math.max(0,year-car.desde);
+  const classic=(car.potencialClasico||50)/100;
+  const ageBoost=age>=30?.025:age>=20?.015:.006;
+  return .012+classic*.022+ageBoost;
+}
+function ageCollectionOneYear(year){
+  let cost=0;
+  for(const item of state.collection||[]){
+    cost+=collectionMonthlyExpense(item)*12;
+    item.collectionValue=Math.round(collectionValue(item)*(1+collectionAnnualGrowth(item,year)));
+    item.yearsStored=(item.yearsStored||0)+1;
+    if(Math.random()<.08)item.condition=Math.max(0,(item.condition??90)-1);
+  }
+  return cost;
 }
 function availableCars(year){
   return CARS.filter(car=>car.desde<=year && year-car.desde<=18);
@@ -474,7 +529,7 @@ function carCard(car,first=false){
   const price=car.market??marketPrice(car,state.year);
   const can=state.money>=price;
   return `<article class="car-card">
-    <div class="car-art"><span class="car-year">${car.desde}</span></div>
+    <div class="car-art" style="overflow:hidden">${carImageMarkup(car)}<span class="car-year">${car.desde}</span></div>
     <div class="car-body">
       <span class="make">${car.marca}</span>
       <h3>${car.modelo}</h3>
@@ -509,7 +564,8 @@ function beginCareer(name,year){
     flags:{},
     divorceCount:0,
     crashCount:0,
-    illegalRaceCount:0
+    illegalRaceCount:0,
+    collection:[]
   };
   persist();
   renderStarter();
@@ -629,9 +685,10 @@ function advanceYears(years){
     income+=annualIncome;
 
     const yearlyCost=monthlyExpense()*12;
-    running+=yearlyCost;
+    const collectionCost=ageCollectionOneYear(state.year+i+1);
+    running+=yearlyCost+collectionCost;
 
-    state.money+=annualIncome-yearlyCost;
+    state.money+=annualIncome-yearlyCost-collectionCost;
 
     if(state.car){
       state.car.condition=clamp(state.car.condition-rand(1,3),0,100);
@@ -647,7 +704,7 @@ function advanceYears(years){
 
   state.events.unshift({
     year:state.year,
-    text:`Pasaron ${years} años. Ingresaste ${money(income)} y el auto consumió ${money(running)} en gastos de uso.`
+    text:`Pasaron ${years} años. Ingresaste ${money(income)} y tus vehículos consumieron ${money(running)} entre uso, guarda y mantenimiento.`
   });
 
   if(state.car?.expenseModifier){
@@ -667,7 +724,7 @@ function renderGarage(){
 
   $('#garagePanel').innerHTML=`
     <div class="garage-card">
-      <div class="garage-art"><div class="icon">🚗</div></div>
+      <div class="garage-art">${carImageMarkup(car)}</div>
       <div class="garage-info">
         <span class="make">${car.marca}</span>
         <h3>${car.modelo}</h3>
@@ -700,11 +757,13 @@ function renderGarage(){
         <div class="cost-line"><span>Próxima reparación</span><strong>x${repairMultiplier().toFixed(2)}</strong></div>
 
         <div class="canonical"><strong>Historia del modelo:</strong><br>${car.eventoCanonico}</div>
-        <button class="car-select" id="sellCarNow" style="width:100%;margin-top:12px" ${divorcePending()?'disabled':''}>${divorcePending()?'Venta bloqueada durante el divorcio':`Vender ahora · ${currentSaleOffer().mood} · ${money(currentSaleOffer().amount)}`}</button>
+        <button class="ghost" id="collectCarNow" style="width:100%;margin-top:12px" ${divorcePending()?'disabled':''}>${divorcePending()?'Colección bloqueada durante el divorcio':'Guardar en mi colección'}</button>
+        <button class="car-select" id="sellCarNow" style="width:100%;margin-top:8px" ${divorcePending()?'disabled':''}>${divorcePending()?'Venta bloqueada durante el divorcio':`Vender ahora · ${currentSaleOffer().mood} · ${money(currentSaleOffer().amount)}`}</button>
         <button class="ghost" id="openMarket" style="width:100%;margin-top:8px" ${divorcePending()?'disabled':''}>${divorcePending()?'Mercado bloqueado durante el divorcio':'Ver mercado / cambiar auto'}</button>
       </div>
     </div>`;
 
+  if(!$('#collectCarNow').disabled)$('#collectCarNow').onclick=()=>collectCurrentCar();
   if(!$('#sellCarNow').disabled)$('#sellCarNow').onclick=()=>sellCurrentCarOffer();
   if(!$('#openMarket').disabled)$('#openMarket').onclick=()=>openMarket(false);
 }
@@ -1268,6 +1327,50 @@ function resolveFriendRepair(event,cost,effects=null){
   }
   completeEvent(event,text);
 }
+function collectCurrentCar(){
+  if(!state.car || divorcePending())return;
+  updateCurrentCarLegacy();
+  const car=currentCar();
+  const history=state.history.at(-1);
+  const value=vehicleValue();
+  const status=carStatus();
+  const flames=fanFlamesFromCount(state.car.fans||0);
+
+  state.collection=state.collection||[];
+  state.collection.push({
+    id:car.id,
+    brand:car.marca,
+    model:car.modelo,
+    collectedYear:state.year,
+    purchaseYear:state.car.purchaseYear,
+    purchasePrice:state.car.purchasePrice,
+    valueAtCollection:value,
+    collectionValue:value,
+    condition:state.car.condition,
+    originality:state.car.originality,
+    performance:state.car.performance,
+    stars:status.stars,
+    flames,
+    fans:state.car.fans||0,
+    yearsStored:0
+  });
+
+  history.soldYear=state.year;
+  history.soldFor=0;
+  history.saleReason='colección';
+  history.collected=true;
+  state.events.unshift({
+    year:state.year,
+    text:`Guardaste ${car.marca} ${car.modelo} en tu colección con un valor de ${money(value)}.`
+  });
+
+  state.car=null;
+  state.saleOffer=null;
+  state.pendingEvent=null;
+  state.decisions++;
+  persist();
+  openMarket(true);
+}
 function sellCurrentCarOffer(){
   if(!state.car || divorcePending())return;
   const offer=currentSaleOffer();
@@ -1441,13 +1544,16 @@ function waitWithoutCar(){
   const fromYear=state.year;
 
   const income=rand(300,700);
-  state.money+=income;
+  const collectionCost=ageCollectionOneYear(state.year+1);
+  state.money+=income-collectionCost;
+  state.money=Math.max(0,Math.round(state.money));
   state.totalIncome+=income;
+  state.totalRunningCosts+=collectionCost;
   state.year=Math.min(END_YEAR,state.year+1);
   queueYearAnimation(fromYear,state.year);
   state.events.unshift({
     year:state.year,
-    text:`Pasó 1 año sin auto. Ahorraste ${money(income)} y ahora tenés ${money(state.money)}.`
+    text:`Pasó 1 año sin auto de uso. Ingresaste ${money(income)}, la colección costó ${money(collectionCost)} y ahora tenés ${money(state.money)}.`
   });
   persist();
   closeMarket();
@@ -1460,6 +1566,7 @@ function openMarket(force=false){
 
   $('#marketList').innerHTML=marketCandidates().map(car=>`
     <article class="market-item">
+      <div style="height:105px;margin-bottom:10px;display:grid;place-items:center;overflow:hidden">${carImageMarkup(car)}</div>
       <span class="make">${car.marca}</span>
       <h4>${car.modelo}</h4>
       <p>${car.segmento} · desde ${car.desde} · ${money(car.gastoMensualBaseUSD)}/mes base</p>
@@ -1489,11 +1596,15 @@ function careerStory(){
   const fans=state.fans||0;
   const bestStars=Math.max(1,...state.history.map(item=>item.maxStars||1));
   const bestFlames=Math.max(0,...state.history.map(item=>item.maxFlames||0));
+  const collected=(state.collection||[]).length;
 
   let parts=[];
   if(cars<=2)parts.push(`Durante ${years} años fuiste de los que se encariñan: apenas ${cars} ${cars===1?'auto pasó':'autos pasaron'} por tu garage.`);
   else if(cars>=7)parts.push(`Durante ${years} años viviste cambiando de volante: ${cars} autos formaron parte de tu historia.`);
   else parts.push(`Durante ${years} años construiste una vida sobre ruedas con ${cars} autos distintos.`);
+
+  if(collected>=4)parts.push(`Además construiste una colección propia de ${collected} vehículos que decidiste no vender.`);
+  else if(collected>0)parts.push(`Terminaste conservando ${collected} ${collected===1?'vehículo':'vehículos'} como parte de tu colección personal.`);
 
   if(bestStars>=5)parts.push(`Al menos uno terminó convertido en una verdadera joya de ${starIcons(5)}.`);
   else if(bestStars>=4)parts.push(`Llegaste a tener un auto que era la envidia del barrio.`);
@@ -1521,7 +1632,8 @@ function finish(){
   screen('resultScreen');
   const car=currentCar();
   const liquid=state.money;
-  const theoretical=state.money+(car?vehicleValue():0);
+  const collectionValueTotal=collectionTotalValue();
+  const theoretical=state.money+(car?vehicleValue():0)+collectionValueTotal;
 
   let title='Coleccionista accidental';
   if(state.history.length>=7)title='Cambiador serial';
@@ -1543,10 +1655,23 @@ function finish(){
       <div class="stat"><span>Divorcios</span><strong>${state.divorceCount||0}</strong></div>
       <div class="stat"><span>Choques</span><strong>${state.crashCount||0}</strong></div>
       <div class="stat"><span>Picadas ilegales</span><strong>${state.illegalRaceCount||0}</strong></div>
+      <div class="stat highlight"><span>Vehículos en colección</span><strong>${(state.collection||[]).length}</strong></div>
+      <div class="stat"><span>Valor de colección</span><strong>${money(collectionValueTotal)}</strong></div>
     </div>
     <div class="canonical" style="margin-top:18px">
       <strong>Tu historia</strong><br>${careerStory()}
     </div>
+    <h3 style="margin:18px 0 7px">Tu colección final</h3>
+    <div class="history">${(state.collection||[]).length?(state.collection||[]).map(item=>{
+      const c=carById(item.id);
+      return `<div class="history-item" style="align-items:center">
+        <span style="display:flex;gap:12px;align-items:center">
+          <span style="width:90px;height:58px;display:grid;place-items:center;overflow:hidden">${carImageMarkup(c)}</span>
+          <span>${item.brand} ${item.model}<br><small>${starIcons(item.stars||1)} · ${flameIcons(item.flames||0)||'—'} · guardado desde ${item.collectedYear}</small></span>
+        </span>
+        <strong>${money(collectionValue(item))}</strong>
+      </div>`;
+    }).join(''):'<div class="history-item"><span>No conservaste vehículos en colección.</span><strong>—</strong></div>'}</div>
     <h3 style="margin:18px 0 7px">Tu garaje histórico</h3>
     <div class="history">${state.history.map(item=>`
       <div class="history-item">
@@ -1589,6 +1714,7 @@ $('#marketModal').addEventListener('click',event=>{
     if(state && state.divorceCount===undefined)state.divorceCount=0;
     if(state && state.crashCount===undefined)state.crashCount=0;
     if(state && state.illegalRaceCount===undefined)state.illegalRaceCount=0;
+    if(state && state.collection===undefined)state.collection=[];
     if(state?.car && state.car.fans===undefined)state.car.fans=0;
     if(state?.car && state.car.fanStatusLevel===undefined)state.car.fanStatusLevel=0;
     if(state?.history)state.history.forEach(item=>{
