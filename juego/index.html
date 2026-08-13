@@ -170,7 +170,7 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.10</div>
+    <div class="version">prototipo privado · v0.11</div>
   </div>
 </header>
 
@@ -501,7 +501,8 @@ function beginCareer(name,year){
     totalRunningCosts:0,
     saleOffer:null,
     fans:0,
-    fanStatusLevel:0
+    fanStatusLevel:0,
+    flags:{}
   };
   persist();
   renderStarter();
@@ -551,6 +552,7 @@ function buyCar(id,first=false){
     purchaseYear:state.year
   };
   state.saleOffer=null;
+  state.flags={};
   state.history.push({
     id,
     brand:next.marca,
@@ -710,6 +712,12 @@ function eligibleEvents(){
     if(event.special==='divorce'){
       return state.year-state.startYear>=8;
     }
+    if(event.requiresFlag && !state.flags?.[event.requiresFlag])return false;
+    if(event.excludesFlag && state.flags?.[event.excludesFlag])return false;
+    if(event.minStars && carStatus().stars<event.minStars)return false;
+    if(event.minFlames && fanFlamesFromCount(state.car.fans||0)<event.minFlames)return false;
+    if(event.minAge && vehicleAge()<event.minAge)return false;
+    if(event.maxAge && vehicleAge()>event.maxAge)return false;
     return event.tags.includes('*') || event.tags.some(tag=>car.tags.includes(tag));
   });
 }
@@ -754,6 +762,7 @@ function applyForced(event){
 }
 function choiceCost(choice){
   if(choice.costType==='repair')return repairCost(choice.repairBase||0);
+  if(choice.costPctVehicle)return Math.max(0,Math.round(vehicleValue()*choice.costPctVehicle));
   return Math.abs(Math.min(0,choice.money||0));
 }
 function choicePreview(choice){
@@ -761,6 +770,10 @@ function choicePreview(choice){
   if(choice.costType==='repair'){
     parts.push(`Reparación ${money(choiceCost(choice))}`);
     parts.push(`costo x${repairMultiplier().toFixed(2)}`);
+  }else if(choice.costPctVehicle){
+    parts.push(`Costo ${money(choiceCost(choice))}`);
+  }else if(choice.moneyPctVehicle){
+    parts.push(`Ingreso aprox. ${money(Math.round(vehicleValue()*choice.moneyPctVehicle))}`);
   }else if(choice.money){
     parts.push(`${choice.money<0?'Costo':'Ingreso'} ${money(Math.abs(choice.money))}`);
   }
@@ -768,6 +781,7 @@ function choicePreview(choice){
   if(choice.condition)parts.push(`Estado ${choice.condition>0?'+':''}${choice.condition}`);
   if(choice.originality)parts.push(`Originalidad ${choice.originality>0?'+':''}${choice.originality}`);
   if(choice.performance)parts.push(`Performance ${choice.performance>0?'+':''}${choice.performance}`);
+  if(choice.fanGain)parts.push(`Fans +${choice.fanGain}`);
   if(choice.risk>=.20)parts.push('Riesgo alto');
 
   return parts.join(' · ')||'Sin impacto económico inmediato';
@@ -1095,8 +1109,12 @@ function applyMoneyAndEffects(choice,actualCost=0){
     state.money=Math.max(0,state.money-actualCost);
     state.car.repairs++;
     state.car.investedValue+=Math.round(actualCost*(choice.valueShare??.55));
+  }else if(choice.costPctVehicle){
+    state.money=Math.max(0,state.money-actualCost);
+    state.car.investedValue+=Math.round(actualCost*(choice.valueShare??.35));
   }else{
-    state.money=Math.max(0,state.money+(choice.money||0));
+    const pctIncome=choice.moneyPctVehicle?Math.round(vehicleValue()*choice.moneyPctVehicle):0;
+    state.money=Math.max(0,state.money+(choice.money||0)+pctIncome);
     state.car.investedValue+=Math.max(0,choice.valueAdd||0);
     if((choice.valueAdd||0)<0)state.car.valueDamage+=Math.abs(choice.valueAdd);
   }
@@ -1108,14 +1126,47 @@ function applyMoneyAndEffects(choice,actualCost=0){
   if(choice.expenseModifier){
     state.car.expenseModifier=clamp((state.car.expenseModifier||0)+choice.expenseModifier,-.35,.65);
   }
+  if(choice.fanGain){
+    state.car.fans=(state.car.fans||0)+choice.fanGain;
+    state.fans=(state.fans||0)+choice.fanGain;
+  }
+  if(choice.setFlag){
+    state.flags=state.flags||{};
+    state.flags[choice.setFlag]=true;
+  }
+  if(choice.clearFlag && state.flags){
+    delete state.flags[choice.clearFlag];
+  }
 }
 function resolveChoice(event,choice){
   if(!canAffordChoice(choice))return;
-  const actualCost=choice.costType==='repair'?choiceCost(choice):0;
+  const actualCost=(choice.costType==='repair'||choice.costPctVehicle)?choiceCost(choice):0;
   applyMoneyAndEffects(choice,actualCost);
 
   let text=choice.note||'Tomaste una decisión.';
-  if(Math.random()<(choice.risk||0)){
+
+  if(choice.outcomes?.length){
+    const roll=Math.random();
+    let acc=0;
+    let selected=choice.outcomes.at(-1);
+    for(const outcome of choice.outcomes){
+      acc+=outcome.chance||0;
+      if(roll<=acc){selected=outcome;break;}
+    }
+    if(selected.money)state.money=Math.max(0,state.money+selected.money);
+    if(selected.moneyPctVehicle)state.money+=Math.round(vehicleValue()*selected.moneyPctVehicle);
+    state.car.condition=clamp(state.car.condition+(selected.condition||0),0,100);
+    state.car.originality=clamp(state.car.originality+(selected.originality||0),0,100);
+    state.car.performance=clamp(state.car.performance+(selected.performance||0),0,100);
+    if(selected.valueAdd>0)state.car.investedValue+=selected.valueAdd;
+    if(selected.valueAdd<0)state.car.valueDamage+=Math.abs(selected.valueAdd);
+    if(selected.fanGain){
+      state.car.fans=(state.car.fans||0)+selected.fanGain;
+      state.fans=(state.fans||0)+selected.fanGain;
+    }
+    if(selected.setFlag){state.flags=state.flags||{};state.flags[selected.setFlag]=true;}
+    text=selected.note||text;
+  }else if(Math.random()<(choice.risk||0)){
     const extra=repairCost(rand(380,1150));
     state.money=Math.max(0,state.money-extra);
     state.car.repairs++;
@@ -1124,7 +1175,7 @@ function resolveChoice(event,choice){
     text+=` La decisión trajo una reparación adicional de ${money(extra)}.`;
   }
 
-  completeEvent(event,text);
+  completeEvent(event,text,choice.resultIcon||'🎲');
 }
 function resolveFriendRepair(event,cost,effects=null){
   if(state.money<cost)return;
@@ -1430,6 +1481,7 @@ $('#marketModal').addEventListener('click',event=>{
     state=JSON.parse(saved);
     if(state && state.pendingResult===undefined)state.pendingResult=null;
     if(state && state.fans===undefined)state.fans=0;
+    if(state && state.flags===undefined)state.flags={};
     if(state?.car && state.car.fans===undefined)state.car.fans=0;
     if(state?.car && state.car.fanStatusLevel===undefined)state.car.fanStatusLevel=0;
     if(state?.history)state.history.forEach(item=>{

@@ -676,5 +676,1067 @@
         "note": "Solucionaste lo urgente, pero el sistema quedó desparejo."
       }
     ]
+  },
+  {
+    "id": "semaforo_desafio",
+    "icon": "🚦",
+    "title": "Te buscan en el semáforo",
+    "tags": [
+      "*"
+    ],
+    "text": "Un auto se pone a tu lado, acelera en vacío y el conductor te hace señas. Podés ignorarlo o entrar en el juego.",
+    "choices": [
+      {
+        "icon": "😌",
+        "label": "Dejarlo ir",
+        "note": "Lo dejaste ir. El auto volvió a casa entero."
+      },
+      {
+        "icon": "🏁",
+        "label": "Aceptar el desafío",
+        "outcomes": [
+          {
+            "chance": 0.48,
+            "performance": 2,
+            "fanGain": 8,
+            "note": "Le ganaste por media cuadra. Alguien lo filmó y el auto sumó fama."
+          },
+          {
+            "chance": 0.34,
+            "condition": -5,
+            "performance": -2,
+            "note": "Perdiste. No pasó nada grave, pero castigaste embrague y cubiertas."
+          },
+          {
+            "chance": 0.18,
+            "condition": -14,
+            "performance": -6,
+            "valueAdd": -500,
+            "note": "La exigencia fue demasiado: rompiste transmisión y la noche terminó en grúa."
+          }
+        ],
+        "resultIcon": "🚦"
+      }
+    ]
+  },
+  {
+    "id": "repuestos_originales",
+    "icon": "📦",
+    "title": "Apareció un lote de repuestos originales",
+    "tags": [
+      "*"
+    ],
+    "minAge": 12,
+    "text": "Un conocido encontró piezas originales de época que cada vez aparecen menos.",
+    "choices": [
+      {
+        "icon": "💸",
+        "label": "Comprar el lote",
+        "costPctVehicle": 0.08,
+        "originality": 9,
+        "condition": 3,
+        "valueShare": 0.8,
+        "setFlag": "repuestos_originales",
+        "note": "Compraste piezas difíciles de conseguir. La originalidad del auto dio un salto."
+      },
+      {
+        "icon": "🙅",
+        "label": "Dejarlo pasar",
+        "note": "Decidiste no gastar. A los pocos días el lote se vendió."
+      }
+    ]
+  },
+  {
+    "id": "mecanico_ya_que_estamos",
+    "icon": "🔩",
+    "title": "El mecánico tira la frase peligrosa",
+    "tags": [
+      "*"
+    ],
+    "text": "Mientras revisa una falla menor te dice: “ya que estamos, yo haría todo esto también”.",
+    "choices": [
+      {
+        "icon": "🧰",
+        "label": "Hacer el trabajo completo",
+        "costType": "repair",
+        "repairBase": 900,
+        "condition": 12,
+        "originality": 4,
+        "performance": 3,
+        "valueShare": 0.72,
+        "note": "Aprovechaste el desarme y dejaste varios problemas resueltos de una vez."
+      },
+      {
+        "icon": "🔧",
+        "label": "Sólo lo necesario",
+        "costType": "repair",
+        "repairBase": 260,
+        "condition": 4,
+        "originality": 0,
+        "note": "Arreglaste lo urgente y nada más."
+      }
+    ]
+  },
+  {
+    "id": "modificacion_epoca",
+    "icon": "🛞",
+    "title": "Accesorios de época",
+    "tags": [
+      "*"
+    ],
+    "minAge": 15,
+    "text": "Te ofrecen accesorios muy buscados de la época del auto. No son exactamente de fábrica, pero le quedan perfectos.",
+    "choices": [
+      {
+        "icon": "✨",
+        "label": "Instalarlos",
+        "costPctVehicle": 0.05,
+        "originality": -3,
+        "performance": 2,
+        "valueShare": 0.65,
+        "fanGain": 4,
+        "note": "El auto ganó presencia y llamó más la atención, aunque dejó de estar completamente original."
+      },
+      {
+        "icon": "🏛️",
+        "label": "Conservarlo de fábrica",
+        "originality": 3,
+        "note": "Elegiste preservar la configuración original."
+      }
+    ]
+  },
+  {
+    "id": "hijo_aprende",
+    "icon": "🧑‍🦱",
+    "title": "Tu hijo quiere aprender a manejar",
+    "tags": [
+      "*"
+    ],
+    "text": "Te pide usar tu auto para practicar. Promete ir despacio.",
+    "choices": [
+      {
+        "icon": "🗝️",
+        "label": "Prestarle las llaves",
+        "outcomes": [
+          {
+            "chance": 0.58,
+            "fanGain": 2,
+            "note": "La práctica salió bien. Volvió orgulloso y el auto intacto."
+          },
+          {
+            "chance": 0.3,
+            "condition": -4,
+            "note": "Volvió con un cordonazo y un raspón menor."
+          },
+          {
+            "chance": 0.12,
+            "condition": -12,
+            "valueAdd": -350,
+            "note": "Calculó mal una maniobra y golpeó fuerte una esquina del auto."
+          }
+        ]
+      },
+      {
+        "icon": "🚫",
+        "label": "Ni loco",
+        "note": "Preferiste no arriesgar el auto. La conversación terminó ahí."
+      }
+    ]
+  },
+  {
+    "id": "viaje_vacaciones",
+    "icon": "🛣️",
+    "title": "Vacaciones en ruta",
+    "tags": [
+      "*"
+    ],
+    "text": "Tenés un viaje largo por delante. Podés ir con tu auto o evitarle kilómetros.",
+    "choices": [
+      {
+        "icon": "🚗",
+        "label": "Viajar con el auto",
+        "outcomes": [
+          {
+            "chance": 0.6,
+            "condition": -2,
+            "fanGain": 2,
+            "note": "El viaje fue perfecto. Sumaste kilómetros y una buena historia."
+          },
+          {
+            "chance": 0.28,
+            "condition": -6,
+            "money": -180,
+            "note": "Tuviste una falla menor en ruta y pagaste una reparación improvisada."
+          },
+          {
+            "chance": 0.12,
+            "condition": -14,
+            "performance": -5,
+            "money": -450,
+            "note": "El auto volvió en grúa después de una avería seria lejos de casa."
+          }
+        ]
+      },
+      {
+        "icon": "🚌",
+        "label": "Dejar el auto guardado",
+        "money": -220,
+        "condition": 1,
+        "note": "Gastaste en otro medio de transporte, pero el auto no sufrió desgaste."
+      }
+    ]
+  },
+  {
+    "id": "exposicion_local",
+    "icon": "🏆",
+    "title": "Invitación a una exposición",
+    "tags": [
+      "*"
+    ],
+    "minStars": 3,
+    "text": "Un club de autos te invita a exhibirlo durante el fin de semana.",
+    "choices": [
+      {
+        "icon": "🏆",
+        "label": "Participar",
+        "money": -120,
+        "outcomes": [
+          {
+            "chance": 0.55,
+            "fanGain": 10,
+            "originality": 1,
+            "note": "El auto gustó mucho y volvió con nuevos admiradores."
+          },
+          {
+            "chance": 0.3,
+            "fanGain": 4,
+            "note": "Pasó una buena tarde, aunque no fue de los más comentados."
+          },
+          {
+            "chance": 0.15,
+            "condition": -3,
+            "note": "La exposición fue tranquila, pero una maniobra torpe terminó en un pequeño toque."
+          }
+        ]
+      },
+      {
+        "icon": "🏠",
+        "label": "No ir",
+        "note": "Preferiste disfrutarlo en privado."
+      }
+    ]
+  },
+  {
+    "id": "concurso_elegancia",
+    "icon": "🎖️",
+    "title": "Concurso de elegancia",
+    "tags": [
+      "*"
+    ],
+    "minStars": 4,
+    "minAge": 20,
+    "text": "Tu auto entra en la selección de un concurso donde la originalidad pesa mucho.",
+    "choices": [
+      {
+        "icon": "🎖️",
+        "label": "Presentarlo",
+        "money": -250,
+        "outcomes": [
+          {
+            "chance": 0.42,
+            "fanGain": 24,
+            "originality": 2,
+            "setFlag": "premio_elegancia",
+            "note": "Ganaste una distinción. El auto salió del evento con mucha más reputación."
+          },
+          {
+            "chance": 0.4,
+            "fanGain": 8,
+            "note": "No ganó, pero llamó la atención de varios coleccionistas."
+          },
+          {
+            "chance": 0.18,
+            "note": "El jurado fue implacable. No obtuviste premio."
+          }
+        ]
+      },
+      {
+        "icon": "🙅",
+        "label": "No competir",
+        "note": "Decidiste no exponerlo al juicio de nadie."
+      }
+    ]
+  },
+  {
+    "id": "llantas_perfectas",
+    "icon": "🛞",
+    "title": "“Tengo las llantas que le van perfectas”",
+    "tags": [
+      "*"
+    ],
+    "text": "Un amigo aparece con un juego de llantas que cambia por completo la presencia del auto.",
+    "choices": [
+      {
+        "icon": "🔥",
+        "label": "Comprarlas",
+        "money": -420,
+        "originality": -7,
+        "performance": 1,
+        "fanGain": 6,
+        "valueAdd": 180,
+        "note": "El auto quedó más llamativo y ganó seguidores, aunque perdió originalidad."
+      },
+      {
+        "icon": "⭐",
+        "label": "Seguir original",
+        "originality": 2,
+        "note": "Te quedaste con las llantas originales."
+      }
+    ]
+  },
+  {
+    "id": "modelo_se_vuelve_clasico",
+    "icon": "📈",
+    "title": "Tu modelo empieza a ser buscado",
+    "tags": [
+      "*"
+    ],
+    "minAge": 20,
+    "excludesFlag": "modelo_clasico",
+    "text": "Notas que aparecen notas, clubes y compradores interesados en ejemplares como el tuyo.",
+    "choices": [
+      {
+        "icon": "🔒",
+        "label": "Guardarlo y cuidarlo",
+        "originality": 3,
+        "condition": 2,
+        "setFlag": "modelo_clasico",
+        "valueAdd": 350,
+        "note": "Decidiste conservarlo. El auto empezó a beneficiarse del interés creciente."
+      },
+      {
+        "icon": "💵",
+        "label": "Aprovechar para vender mejor después",
+        "setFlag": "modelo_clasico",
+        "note": "No vendiste todavía, pero ahora sabés que el mercado está cambiando."
+      }
+    ]
+  },
+  {
+    "id": "modelo_de_moda",
+    "icon": "📣",
+    "title": "De golpe todos quieren uno",
+    "tags": [
+      "*"
+    ],
+    "requiresFlag": "modelo_clasico",
+    "text": "El modelo se puso de moda y empiezan a aparecer consultas espontáneas.",
+    "choices": [
+      {
+        "icon": "📈",
+        "label": "Esperar un poco más",
+        "fanGain": 7,
+        "valueAdd": 500,
+        "note": "Aguantaste la tentación. La fama del modelo siguió empujando su valor."
+      },
+      {
+        "icon": "🧽",
+        "label": "Prepararlo para futuras ofertas",
+        "money": -160,
+        "condition": 3,
+        "fanGain": 4,
+        "note": "Lo dejaste impecable para aprovechar una posible venta."
+      }
+    ]
+  },
+  {
+    "id": "nadie_quiere_modelo",
+    "icon": "📉",
+    "title": "El mercado le dio la espalda",
+    "tags": [
+      "*"
+    ],
+    "text": "Tu modelo atraviesa una etapa donde casi nadie pregunta por él.",
+    "choices": [
+      {
+        "icon": "⏳",
+        "label": "Esperar mejores tiempos",
+        "condition": -1,
+        "note": "Decidiste conservarlo y esperar que el mercado cambie."
+      },
+      {
+        "icon": "🧼",
+        "label": "Invertir en presentación",
+        "money": -180,
+        "condition": 4,
+        "fanGain": 2,
+        "note": "Lo dejaste presentable para diferenciarlo del resto."
+      }
+    ]
+  },
+  {
+    "id": "robo_piezas",
+    "icon": "🕵️",
+    "title": "Te robaron piezas del auto",
+    "tags": [
+      "*"
+    ],
+    "minAge": 8,
+    "text": "Una mañana encontrás que faltan insignias y algunas piezas exteriores.",
+    "forced": {
+      "originality": -4,
+      "condition": -2,
+      "note": "El robo ya ocurrió y el auto quedó incompleto."
+    },
+    "choices": [
+      {
+        "icon": "📦",
+        "label": "Buscar originales",
+        "costType": "repair",
+        "repairBase": 380,
+        "originality": 7,
+        "condition": 3,
+        "valueShare": 0.8,
+        "note": "Con paciencia encontraste repuestos originales y recuperaste gran parte de lo perdido."
+      },
+      {
+        "icon": "🧩",
+        "label": "Poner alternativos",
+        "money": -120,
+        "originality": -3,
+        "condition": 2,
+        "note": "Lo completaste barato, pero los reemplazos no son originales."
+      }
+    ]
+  },
+  {
+    "id": "intento_robo",
+    "icon": "🔐",
+    "title": "Intentaron llevarse el auto",
+    "tags": [
+      "*"
+    ],
+    "text": "Forzaron una cerradura durante la noche. No pudieron llevárselo.",
+    "forced": {
+      "condition": -4,
+      "note": "La cerradura y una moldura quedaron dañadas."
+    },
+    "choices": [
+      {
+        "icon": "🚨",
+        "label": "Instalar alarma",
+        "money": -280,
+        "condition": 3,
+        "setFlag": "alarma",
+        "note": "Reparaste el daño e instalaste una alarma."
+      },
+      {
+        "icon": "🔧",
+        "label": "Sólo reparar la cerradura",
+        "money": -90,
+        "condition": 2,
+        "note": "Arreglaste lo visible y nada más."
+      }
+    ]
+  },
+  {
+    "id": "amigo_cuotas",
+    "icon": "🤝",
+    "title": "Un amigo quiere comprártelo en cuotas",
+    "tags": [
+      "*"
+    ],
+    "text": "Te ofrece pagar más que el mercado, pero necesita hacerlo en varias cuotas.",
+    "choices": [
+      {
+        "icon": "🤝",
+        "label": "Confiar en él",
+        "outcomes": [
+          {
+            "chance": 0.68,
+            "moneyPctVehicle": 0.18,
+            "note": "Cumplió con lo prometido y terminaste cobrando un extra importante."
+          },
+          {
+            "chance": 0.32,
+            "moneyPctVehicle": -0.08,
+            "note": "Dejó de pagar y recuperar parte del dinero terminó costándote caro."
+          }
+        ]
+      },
+      {
+        "icon": "💵",
+        "label": "Sólo vendo al contado",
+        "note": "No aceptaste el riesgo."
+      }
+    ]
+  },
+  {
+    "id": "dinero_urgente",
+    "icon": "💸",
+    "title": "Necesitás dinero urgente",
+    "tags": [
+      "*"
+    ],
+    "text": "Apareció un gasto familiar que no estaba en los planes.",
+    "choices": [
+      {
+        "icon": "💳",
+        "label": "Cubrirlo con tus ahorros",
+        "money": -650,
+        "note": "Pagaste el gasto y conservaste el auto."
+      },
+      {
+        "icon": "🔧",
+        "label": "Recortar mantenimiento por un tiempo",
+        "condition": -6,
+        "performance": -2,
+        "expenseModifier": 0.06,
+        "note": "Conservaste el efectivo, pero el auto empezó a pagar el precio."
+      }
+    ]
+  },
+  {
+    "id": "auto_donante",
+    "icon": "🚙",
+    "title": "Apareció otro igual, abandonado",
+    "tags": [
+      "*"
+    ],
+    "minAge": 15,
+    "excludesFlag": "auto_donante",
+    "text": "Encontraste un ejemplar muy deteriorado que podría servir como donante de piezas.",
+    "choices": [
+      {
+        "icon": "🧰",
+        "label": "Comprar el auto donante",
+        "costPctVehicle": 0.12,
+        "setFlag": "auto_donante",
+        "originality": 2,
+        "note": "Compraste el donante y guardaste piezas que podrían ser valiosas más adelante."
+      },
+      {
+        "icon": "🚫",
+        "label": "No meterte en otro problema",
+        "note": "Lo dejaste pasar."
+      }
+    ]
+  },
+  {
+    "id": "pieza_rara_donante",
+    "icon": "🧿",
+    "title": "Había una pieza rarísima en el donante",
+    "tags": [
+      "*"
+    ],
+    "requiresFlag": "auto_donante",
+    "excludesFlag": "pieza_rara",
+    "text": "Revisando las piezas aparece un componente original que casi nunca sale a la venta.",
+    "choices": [
+      {
+        "icon": "💎",
+        "label": "Restaurarla y guardarla",
+        "money": -180,
+        "originality": 5,
+        "valueAdd": 500,
+        "setFlag": "pieza_rara",
+        "fanGain": 4,
+        "note": "La pieza quedó recuperada. Para un coleccionista, eso cambia bastante la historia del auto."
+      },
+      {
+        "icon": "💵",
+        "label": "Vender la pieza",
+        "money": 420,
+        "clearFlag": "auto_donante",
+        "note": "Vendiste la rareza y recuperaste parte de lo invertido en el donante."
+      }
+    ]
+  },
+  {
+    "id": "motor_cansado",
+    "icon": "🫀",
+    "title": "El motor empieza a pedir una decisión",
+    "tags": [
+      "*"
+    ],
+    "minAge": 12,
+    "text": "Consume aceite, perdió compresión y ya no suena como antes.",
+    "choices": [
+      {
+        "icon": "🔧",
+        "label": "Rectificación completa",
+        "costType": "repair",
+        "repairBase": 1500,
+        "condition": 14,
+        "originality": 5,
+        "performance": 7,
+        "valueShare": 0.75,
+        "note": "Reconstruiste el motor respetando su configuración. Fue caro, pero quedó muy sano."
+      },
+      {
+        "icon": "⚡",
+        "label": "Hacer un swap",
+        "costPctVehicle": 0.16,
+        "condition": 8,
+        "originality": -18,
+        "performance": 18,
+        "fanGain": 7,
+        "note": "El auto ahora corre mucho más, aunque su originalidad cayó fuerte."
+      },
+      {
+        "icon": "🩹",
+        "label": "Seguir agregando aceite",
+        "money": -80,
+        "condition": -5,
+        "performance": -4,
+        "expenseModifier": 0.07,
+        "note": "Lo estiraste un poco más, pero el problema sigue ahí."
+      }
+    ]
+  },
+  {
+    "id": "ruido_no_es_nada",
+    "icon": "👂",
+    "title": "“Ese ruido no es nada”",
+    "tags": [
+      "*"
+    ],
+    "text": "Aparece un golpeteo nuevo. Un conocido asegura que podés seguir usando el auto.",
+    "choices": [
+      {
+        "icon": "🔍",
+        "label": "Revisarlo ahora",
+        "money": -120,
+        "outcomes": [
+          {
+            "chance": 0.62,
+            "condition": 2,
+            "note": "Era algo menor y lo resolviste antes de que empeorara."
+          },
+          {
+            "chance": 0.38,
+            "condition": 5,
+            "performance": 2,
+            "note": "Encontraron una falla real a tiempo. Haber revisado evitó una reparación grande."
+          }
+        ]
+      },
+      {
+        "icon": "😎",
+        "label": "Seguir manejando",
+        "outcomes": [
+          {
+            "chance": 0.52,
+            "note": "Pasaron meses y el ruido no empeoró."
+          },
+          {
+            "chance": 0.48,
+            "condition": -11,
+            "performance": -5,
+            "money": -420,
+            "note": "El ruido sí era algo: terminó en una avería costosa."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "fuga_aceite_viaje",
+    "icon": "🛢️",
+    "title": "Fuga de aceite antes de salir",
+    "tags": [
+      "*"
+    ],
+    "text": "Encontrás una mancha debajo del auto justo antes de un viaje.",
+    "choices": [
+      {
+        "icon": "🔧",
+        "label": "Reparar antes de salir",
+        "costType": "repair",
+        "repairBase": 340,
+        "condition": 5,
+        "note": "Cambiaste retenes y juntas antes del viaje."
+      },
+      {
+        "icon": "🛢️",
+        "label": "Completar aceite y salir igual",
+        "money": -35,
+        "outcomes": [
+          {
+            "chance": 0.58,
+            "condition": -2,
+            "note": "Llegaste y volviste sin problemas importantes."
+          },
+          {
+            "chance": 0.42,
+            "condition": -14,
+            "performance": -7,
+            "money": -500,
+            "note": "La fuga empeoró en ruta y el motor trabajó sin lubricación suficiente."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "seguro_choque_decision",
+    "icon": "🧾",
+    "title": "El seguro paga el choque",
+    "tags": [
+      "*"
+    ],
+    "text": "Después de un golpe, la aseguradora ofrece indemnizar. Ahora decidís qué calidad de reparación hacer.",
+    "choices": [
+      {
+        "icon": "🛠️",
+        "label": "Reparar correctamente",
+        "costType": "repair",
+        "repairBase": 800,
+        "condition": 10,
+        "originality": 4,
+        "valueShare": 0.7,
+        "note": "El auto quedó correctamente reparado y con piezas razonables."
+      },
+      {
+        "icon": "💵",
+        "label": "Arreglo barato y guardar diferencia",
+        "money": 220,
+        "condition": 4,
+        "originality": -7,
+        "valueAdd": -250,
+        "note": "Gastaste lo mínimo y te quedó efectivo, pero el auto perdió calidad y originalidad."
+      }
+    ]
+  },
+  {
+    "id": "permuta_sorpresa",
+    "icon": "🔄",
+    "title": "Te ofrecen una permuta rara",
+    "tags": [
+      "*"
+    ],
+    "text": "Alguien quiere tu auto y propone un negocio poco convencional. No sabés si es oportunidad o problema.",
+    "choices": [
+      {
+        "icon": "🎲",
+        "label": "Aceptar el negocio",
+        "outcomes": [
+          {
+            "chance": 0.45,
+            "moneyPctVehicle": 0.12,
+            "fanGain": 3,
+            "note": "El negocio salió mejor de lo esperado y terminaste con una diferencia a favor."
+          },
+          {
+            "chance": 0.35,
+            "note": "Fue un intercambio razonable. No ganaste ni perdiste demasiado."
+          },
+          {
+            "chance": 0.2,
+            "moneyPctVehicle": -0.12,
+            "condition": -4,
+            "note": "Descubriste tarde varios problemas ocultos y el negocio terminó saliendo caro."
+          }
+        ]
+      },
+      {
+        "icon": "🚫",
+        "label": "Quedarte con lo conocido",
+        "note": "Preferiste no entrar en un negocio que no terminabas de entender."
+      }
+    ]
+  },
+  {
+    "id": "foto_viral",
+    "icon": "📸",
+    "title": "Una foto del auto se vuelve viral",
+    "tags": [
+      "*"
+    ],
+    "minStars": 3,
+    "text": "Alguien publica una foto de tu auto y empieza a circular por grupos y páginas.",
+    "choices": [
+      {
+        "icon": "📸",
+        "label": "Aprovechar la exposición",
+        "fanGain": 15,
+        "setFlag": "foto_viral",
+        "note": "Compartiste más fotos y la popularidad del auto creció rápido."
+      },
+      {
+        "icon": "🙈",
+        "label": "No darle importancia",
+        "fanGain": 4,
+        "note": "La publicación siguió circulando unos días y después se apagó."
+      }
+    ]
+  },
+  {
+    "id": "estacion_reconocido",
+    "icon": "⛽",
+    "title": "Te reconocen cargando nafta",
+    "tags": [
+      "*"
+    ],
+    "minFlames": 3,
+    "text": "Alguien se acerca y te pregunta si ese es “el auto de las fotos”.",
+    "choices": [
+      {
+        "icon": "🔥",
+        "label": "Quedarte charlando",
+        "fanGain": 8,
+        "note": "Terminaste sacándote fotos con desconocidos. El auto ya tiene una pequeña fama propia."
+      },
+      {
+        "icon": "🙂",
+        "label": "Saludar y seguir",
+        "fanGain": 2,
+        "note": "Fue un momento breve, pero confirmó que el auto ya es reconocido."
+      }
+    ]
+  },
+  {
+    "id": "pelicula",
+    "icon": "🎬",
+    "title": "Una productora busca tu auto",
+    "tags": [
+      "*"
+    ],
+    "minStars": 3,
+    "text": "Necesitan un vehículo como el tuyo para una filmación de época.",
+    "choices": [
+      {
+        "icon": "🎬",
+        "label": "Alquilarlo para la filmación",
+        "outcomes": [
+          {
+            "chance": 0.58,
+            "money": 550,
+            "fanGain": 10,
+            "note": "La filmación salió perfecta. Cobraste y el auto ganó exposición."
+          },
+          {
+            "chance": 0.3,
+            "money": 420,
+            "condition": -4,
+            "fanGain": 6,
+            "note": "Cobraste bien, aunque volvió con algunos detalles por el uso del rodaje."
+          },
+          {
+            "chance": 0.12,
+            "money": 300,
+            "condition": -12,
+            "valueAdd": -450,
+            "note": "Una escena salió mal y el auto volvió bastante golpeado."
+          }
+        ]
+      },
+      {
+        "icon": "🚫",
+        "label": "No prestarlo",
+        "note": "Preferiste no ponerlo en manos de una producción."
+      }
+    ]
+  },
+  {
+    "id": "casamiento_amigo",
+    "icon": "💍",
+    "title": "Un amigo quiere usarlo en su casamiento",
+    "tags": [
+      "*"
+    ],
+    "minStars": 2,
+    "text": "Le encanta tu auto y quiere llegar a la fiesta con él.",
+    "choices": [
+      {
+        "icon": "💍",
+        "label": "Prestarlo",
+        "outcomes": [
+          {
+            "chance": 0.7,
+            "fanGain": 5,
+            "note": "El auto fue protagonista de muchas fotos y volvió intacto."
+          },
+          {
+            "chance": 0.22,
+            "condition": -3,
+            "fanGain": 3,
+            "note": "Volvió con un pequeño detalle de estacionamiento."
+          },
+          {
+            "chance": 0.08,
+            "condition": -10,
+            "note": "Un invitado hizo una maniobra desafortunada y terminó golpeándolo."
+          }
+        ]
+      },
+      {
+        "icon": "🚫",
+        "label": "Decir que no",
+        "note": "Tu amigo entendió. El auto se quedó seguro en casa."
+      }
+    ]
+  },
+  {
+    "id": "pareja_odia_auto",
+    "icon": "💔",
+    "title": "Tu pareja ya no soporta ese auto",
+    "tags": [
+      "*"
+    ],
+    "text": "Dice que gasta, hace ruido y ocupa lugar. Te plantea seriamente que lo vendas.",
+    "choices": [
+      {
+        "icon": "❤️",
+        "label": "Prometer gastar menos",
+        "condition": -2,
+        "expenseModifier": -0.03,
+        "note": "Conservaste el auto, pero durante un tiempo evitaste gastos y caprichos."
+      },
+      {
+        "icon": "🚗",
+        "label": "Defender el auto",
+        "fanGain": 2,
+        "setFlag": "tension_pareja",
+        "note": "Te plantaste y te quedaste con el auto. La discusión no quedó del todo cerrada."
+      }
+    ]
+  },
+  {
+    "id": "coleccionista_por_premio",
+    "icon": "🧐",
+    "title": "Un coleccionista pregunta por tu auto",
+    "tags": [
+      "*"
+    ],
+    "requiresFlag": "premio_elegancia",
+    "minStars": 4,
+    "text": "Después del concurso aparece alguien que conoce exactamente lo que tenés y empieza a hacer preguntas serias.",
+    "choices": [
+      {
+        "icon": "🧽",
+        "label": "Prepararlo y esperar una oferta",
+        "money": -120,
+        "condition": 3,
+        "fanGain": 5,
+        "setFlag": "coleccionista_interesado",
+        "note": "Lo dejaste impecable. El coleccionista prometió volver a contactarte."
+      },
+      {
+        "icon": "🔒",
+        "label": "Decir que no está en venta",
+        "originality": 2,
+        "note": "Cerraste la puerta a una venta y reafirmaste tu intención de conservarlo."
+      }
+    ]
+  },
+  {
+    "id": "restauracion_donante",
+    "icon": "🛠️",
+    "title": "Tenés todo para una restauración especial",
+    "tags": [
+      "*"
+    ],
+    "requiresFlag": "pieza_rara",
+    "minAge": 20,
+    "text": "Entre el donante y la pieza rara, ahora sí podés encarar una restauración mucho más fiel.",
+    "choices": [
+      {
+        "icon": "⭐",
+        "label": "Restaurarlo a fondo",
+        "costPctVehicle": 0.18,
+        "condition": 14,
+        "originality": 14,
+        "valueShare": 0.9,
+        "fanGain": 8,
+        "setFlag": "restauracion_especial",
+        "note": "La restauración transformó el auto. Conservaste piezas correctas y recuperaste buena parte de su esencia."
+      },
+      {
+        "icon": "📦",
+        "label": "Guardar todo para más adelante",
+        "originality": 1,
+        "note": "Decidiste no apurarte. Las piezas siguen guardadas."
+      }
+    ]
+  },
+  {
+    "id": "club_propietarios",
+    "icon": "👥",
+    "title": "Te invitan a un club de propietarios",
+    "tags": [
+      "*"
+    ],
+    "minStars": 2,
+    "text": "Un grupo de fanáticos del modelo te invita a reuniones, encuentros y salidas.",
+    "choices": [
+      {
+        "icon": "👥",
+        "label": "Sumarte al club",
+        "money": -80,
+        "fanGain": 7,
+        "originality": 1,
+        "setFlag": "club_propietarios",
+        "note": "Conociste gente que sabe mucho del modelo y el auto empezó a ser más conocido."
+      },
+      {
+        "icon": "🏠",
+        "label": "Seguir por tu cuenta",
+        "note": "Preferiste disfrutarlo sin compromisos."
+      }
+    ]
+  },
+  {
+    "id": "mecanico_famoso",
+    "icon": "🧑‍🔧",
+    "title": "Un especialista famoso acepta verlo",
+    "tags": [
+      "*"
+    ],
+    "minStars": 3,
+    "text": "Un mecánico muy reconocido por trabajar con autos como el tuyo te ofrece un turno.",
+    "choices": [
+      {
+        "icon": "🧑‍🔧",
+        "label": "Llevarlo",
+        "costPctVehicle": 0.07,
+        "condition": 8,
+        "originality": 4,
+        "performance": 4,
+        "valueShare": 0.75,
+        "fanGain": 3,
+        "note": "El especialista corrigió detalles que otros ni habían visto."
+      },
+      {
+        "icon": "💸",
+        "label": "Es demasiado caro",
+        "note": "Dejaste pasar el turno."
+      }
+    ]
+  },
+  {
+    "id": "revista_clasicos",
+    "icon": "📰",
+    "title": "Una revista quiere hacer una nota",
+    "tags": [
+      "*"
+    ],
+    "minStars": 4,
+    "minFlames": 2,
+    "text": "Te contactan para fotografiar el auto y contar su historia.",
+    "choices": [
+      {
+        "icon": "📰",
+        "label": "Aceptar la nota",
+        "fanGain": 16,
+        "setFlag": "nota_revista",
+        "note": "La nota salió publicada y el auto ganó reconocimiento entre aficionados."
+      },
+      {
+        "icon": "🙅",
+        "label": "Mantener perfil bajo",
+        "note": "Rechazaste la exposición pública."
+      }
+    ]
   }
 ]

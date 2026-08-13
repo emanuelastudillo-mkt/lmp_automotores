@@ -1,3 +1,24 @@
+# Tu vida sobre ruedas — v0.11
+
+Base: v0.10.
+
+## Cambios v0.11
+
+- Biblioteca ampliada de **22 a 55 eventos**.
+- Se agregan eventos de decisiones personales, mecánicas, mercado, viajes, familia, robos, clima, exposiciones, fama y coleccionismo.
+- Algunos eventos ahora requieren determinado nivel de **⭐ estatus**, **🔥 popularidad** o antigüedad del vehículo.
+- Se incorporan **cadenas de eventos persistentes por vehículo** mediante decisiones previas.
+- Ejemplos de cadenas:
+  - auto donante → pieza rara → restauración especial;
+  - concurso de elegancia → interés de coleccionistas;
+  - modelo que se vuelve clásico → auge de demanda;
+  - foto viral / club de propietarios → mayor exposición.
+- Se agregan resultados aleatorios internos a varias decisiones, siempre mostrados antes de avanzar el tiempo.
+- Los eventos pueden modificar dinero, estado, originalidad, performance, valor, gastos, fans y futuras oportunidades.
+- Las cadenas se reinician al cambiar de vehículo para evitar que decisiones de un auto afecten incorrectamente al siguiente.
+
+---
+
 # Tu vida sobre ruedas — v0.10
 
 Base: v0.9.
