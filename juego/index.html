@@ -170,7 +170,7 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.6</div>
+    <div class="version">prototipo privado · v0.7</div>
   </div>
 </header>
 
@@ -287,7 +287,7 @@ async function loadData(){
   EVENTS=await eventsRes.json();
 }
 function initialCash(year){
-  return Math.round(3200+((year-1960)/58)*10500);
+  return 5000;
 }
 function currentCar(){
   return CARS.find(car=>car.id===state?.car?.id);
@@ -549,7 +549,7 @@ function advanceYears(years){
   let running=0;
 
   for(let i=0;i<years;i++){
-    const annualIncome=rand(100,500);
+    const annualIncome=rand(300,700);
     income+=annualIncome;
 
     const yearlyCost=monthlyExpense()*12;

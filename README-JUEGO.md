@@ -1,3 +1,17 @@
+# Tu vida sobre ruedas — v0.7
+
+Base: v0.6.
+
+## Cambios v0.7
+
+- El jugador comienza todas las partidas con **USD 5.000**, independientemente del año inicial.
+- La ganancia anual probable aumenta en **USD 200**:
+  - antes: USD 100–500 por año;
+  - ahora: **USD 300–700 por año**.
+- Se mantienen las mecánicas, eventos y correcciones incorporadas hasta v0.6.
+
+---
+
 # Tu vida sobre ruedas — v0.6
 
 Base: v0.5.
