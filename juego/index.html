@@ -192,7 +192,7 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.23</div>
+    <div class="version">prototipo privado · v0.24</div>
   </div>
 </header>
 
@@ -264,6 +264,11 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
     </div>
   </section>
 </main>
+
+<button id="emergencyReset" class="ghost" type="button"
+  style="position:fixed;right:14px;bottom:14px;z-index:9999;background:#1b1b1f;border:1px solid #555;box-shadow:0 8px 28px rgba(0,0,0,.35)">
+  Reset
+</button>
 
 <div class="market-modal" id="marketModal">
   <div class="market-box">
@@ -1278,6 +1283,9 @@ function renderSpecialEvent(event,car,forcedText){
   }
 
   if(event.special==='crash'){
+    const mechanicalReason=state.pendingEvent?.mechanicalCrash
+      ? (state.pendingEvent.crashReason||'una falla mecánica asociada al desgaste')
+      : '';
     if(!state.pendingEvent.forcedApplied){
       state.car.condition=clamp(state.car.condition-28,0,100);
       state.car.originality=clamp(state.car.originality-18,0,100);
@@ -1373,19 +1381,31 @@ function renderSpecialEvent(event,car,forcedText){
     $('#divorce-car').onclick=()=>{
       state.divorceCount=(state.divorceCount||0)+1;
       const history=state.history.at(-1);
-      history.soldYear=state.year;
-      history.soldFor=0;
-      history.saleReason='divorcio';
-      state.events.unshift({year:state.year,eventId:event.id,text:`El divorcio te obligó a entregar ${car.marca} ${car.modelo} sin recibir dinero.`});
+      if(history){
+        history.soldYear=state.year;
+        history.soldFor=0;
+        history.saleReason='divorcio';
+      }
+      const lostCar=`${car.marca} ${car.modelo}`;
       updateCurrentCarLegacy();
-  state.car=null;
+      state.car=null;
       state.saleOffer=null;
       state.pendingEvent=null;
       state.decisions++;
+      state.pendingResult={
+        year:state.year,
+        title:'Resultado',
+        text:`El divorcio te obligó a entregar ${lostCar} sin recibir dinero.`,
+        icon:'🚗'
+      };
+      state.nextEventYear=Math.min(END_YEAR,state.year+nextGap());
+      state.events.unshift({
+        year:state.year,
+        eventId:event.id,
+        text:`El divorcio te obligó a entregar ${lostCar} sin recibir dinero.`
+      });
       persist();
-      renderStats($('#gameStats'));
-      renderGarage();
-      openMarket(true);
+      renderGame();
     };
     return;
   }
@@ -1751,13 +1771,46 @@ function renderLog(){
     .map(item=>`<div class="log-item"><b>${item.year}</b><span>${item.text}</span></div>`)
     .join('');
 }
+function repairStaleState(){
+  if(!state)return;
+  const pending=state.pendingEvent ? eventById(state.pendingEvent.id) : null;
+
+  // Una partida vieja podía quedar con divorcio abierto pero sin auto.
+  // Cerramos ese estado como auto entregado y dejamos continuar.
+  if(pending?.special==='divorce' && !state.car){
+    state.pendingEvent=null;
+    if(!state.pendingResult){
+      state.pendingResult={
+        year:state.year,
+        title:'Resultado recuperado',
+        text:'El divorcio quedó resuelto con la entrega del vehículo. La partida fue recuperada y puede continuar.',
+        icon:'🛠️'
+      };
+    }
+    state.nextEventYear=Math.max(
+      state.nextEventYear||state.year,
+      Math.min(END_YEAR,state.year+nextGap())
+    );
+  }
+
+  if(!Number.isFinite(state.nextEventYear)){
+    state.nextEventYear=Math.min(END_YEAR,state.year+nextGap());
+  }
+}
 function renderGame(){
+  repairStaleState();
   screen('gameScreen');
   $('#playerLabel').textContent=`${state.player} · ${state.startYear} → ${END_YEAR}`;
   $('#yearPill').textContent=state.year;
 
   if(state.year>=END_YEAR){
     finish();
+    return;
+  }
+
+  if(state.pendingResult){
+    renderEventResult();
+    persist();
     return;
   }
 
@@ -1774,12 +1827,6 @@ function renderGame(){
     persist();
     openMarket(true);
     setTimeout(playYearAnimation,80);
-    return;
-  }
-
-  if(state.pendingResult){
-    renderEventResult();
-    persist();
     return;
   }
 
@@ -1970,6 +2017,9 @@ $('#startForm').addEventListener('submit',event=>{
 });
 $('#restartFromStarter').onclick=reset;
 $('#playAgain').onclick=reset;
+$('#emergencyReset').onclick=()=>{
+  if(confirm('¿Reiniciar completamente la partida? Se borrará el progreso guardado.'))reset();
+};
 $('#closeMarket').onclick=closeMarket;
 $('#marketModal').addEventListener('click',event=>{
   if(event.target===$('#marketModal'))closeMarket();
@@ -2000,7 +2050,22 @@ $('#marketModal').addEventListener('click',event=>{
     if(state?.car||state?.player)renderGame();
   }
 })().catch(error=>{
-  document.body.innerHTML=`<main class="shell" style="padding:50px"><h1 style="font-size:48px">No se pudo iniciar el juego.</h1><p>${error.message}</p></main>`;
+  console.error(error);
+  document.querySelectorAll('.screen').forEach(el=>el.classList.remove('active'));
+  const start=$('#startScreen');
+  if(start){
+    start.classList.add('active');
+    start.innerHTML=`
+      <div class="hero">
+        <div class="hero-copy">
+          <span class="eyebrow">Error de recuperación</span>
+          <h1>No se pudo iniciar el juego.</h1>
+          <p>${clean(error?.message)||'Ocurrió un error inesperado.'}</p>
+          <button class="primary" id="errorReset" type="button">Reiniciar partida</button>
+        </div>
+      </div>`;
+    $('#errorReset').onclick=reset;
+  }
 });
 </script>
 </body>

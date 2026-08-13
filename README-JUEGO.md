@@ -1,3 +1,21 @@
+# Tu vida sobre ruedas — v0.24
+
+Base: v0.23.
+
+## Correcciones v0.24
+
+- Corregido el error de inicio `mechanicalReason is not defined`.
+- El motivo mecánico de un choque ahora se define únicamente dentro del evento correspondiente.
+- Corregido el flujo de divorcio:
+  - entregar el 50% del dinero cierra correctamente el evento y programa el próximo avance;
+  - entregar el vehículo también genera una pantalla de resultado y programa el próximo avance;
+  - después de continuar, si no hay auto se abre el mercado normalmente.
+- Se agregó recuperación automática para partidas antiguas que hayan quedado trabadas en un divorcio sin vehículo.
+- Se agregó un botón **Reset** fijo, visible durante toda la partida.
+- Si ocurre un error al iniciar, se conserva una pantalla de recuperación con botón **Reiniciar partida**, en lugar de reemplazar toda la interfaz.
+
+---
+
 # Tu vida sobre ruedas — v0.23
 
 Base: v0.22.
