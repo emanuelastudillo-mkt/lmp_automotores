@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-12T19:29:38.640Z",
+  "generatedAt": "2026-08-13T03:01:53.963Z",
   "source": "Google Sheets CSV publicado",
   "rowCount": 132,
-  "contentHash": "8a0f7828d672bd3455e42275d00603e105605f2caf6440aae4126cf59790c4a6",
+  "contentHash": "37ee246c322ac63f379ad86aa988ba7f6774570c44637d27db2f39bd37948b6b",
   "rows": [
     {
       "ID": "A005",
@@ -4374,7 +4374,7 @@
       "% de anticipo": "64%",
       "Ultima publicacion": "",
       "Reel": "",
-      "Fotos": "",
+      "Fotos": "si",
       "Combustible": "Diesel",
       "Transmision": "Manual",
       "Fecha de salida o venta": "",
@@ -4460,9 +4460,9 @@
       "Oportunidad": "46"
     },
     {
-      "ID": "$1.492,51",
+      "ID": "$1.492,50",
       "Marca": "Oficial",
-      "Modelo": "$1.525,35",
+      "Modelo": "$1.525,33",
       "Año": "Blue",
       "Kilometraje": "",
       "Color": "",
