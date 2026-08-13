@@ -1929,5 +1929,35 @@
     "special": "collection_offer",
     "collectionOnly": true,
     "text": "Un interesado conoce tu colección y hace una oferta concreta por uno de tus vehículos."
+  },
+  {
+    "id": "granizo_tormenta",
+    "icon": "🌨️",
+    "title": "La tormenta llegó antes que vos",
+    "tags": [
+      "*"
+    ],
+    "special": "hail",
+    "text": "Una tormenta de granizo golpeó la zona. La edad y el tipo de construcción de tu auto hacen una diferencia enorme en cuánto daño recibió."
+  },
+  {
+    "id": "herencia_padre",
+    "icon": "🗝️",
+    "title": "Tu viejo sabía exactamente qué dejarte",
+    "tags": [
+      "*"
+    ],
+    "special": "inheritance_father",
+    "text": "Después de su muerte aparece una última sorpresa: tu padre sabía cuánto te gustan los autos y dejó reservado un vehículo especial para vos."
+  },
+  {
+    "id": "herencia_suegro",
+    "icon": "📜",
+    "title": "Una herencia inesperada del suegro",
+    "tags": [
+      "*"
+    ],
+    "special": "inheritance_inlaw",
+    "text": "Tu suegro siempre supo que los autos eran tu debilidad. En su herencia aparece una unidad especial con tu nombre."
   }
 ]

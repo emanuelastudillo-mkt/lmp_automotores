@@ -1,3 +1,106 @@
+# Tu vida sobre ruedas — v0.32
+
+Base: v0.31.
+
+## Nuevos sistemas y eventos
+
+### Granizo
+
+- Se agrega un evento especial de tormenta de granizo.
+- El daño depende fuertemente de la antigüedad de la unidad:
+  - autos de 30 años o más: impacto generalmente mínimo;
+  - autos de 16 a 29 años: daño moderado;
+  - autos de 8 a 15 años: daño fuerte;
+  - autos de hasta 7 años: la chapa moderna y liviana puede sufrir un daño destructivo.
+- El granizo afecta Estado, Originalidad y valor.
+- El jugador puede:
+  - reparar correctamente;
+  - recurrir al mecánico amigo;
+  - conservar el auto con las marcas.
+- Las granizadas tienen una separación mínima de varios años para evitar repetición excesiva.
+
+### Experiencia en picadas
+
+- La habilidad en picadas ahora pertenece al jugador y se conserva al cambiar de auto.
+- Cada picada disputada aumenta la experiencia.
+- La probabilidad de ganar combina:
+  - experiencia acumulada;
+  - Performance;
+  - Estado del vehículo.
+- Un conductor muy experimentado con un auto de gran Performance puede acercarse a ser prácticamente invencible.
+- La probabilidad nunca llega a 100%: siempre existe un riesgo mínimo.
+- Los premios aumentan con la experiencia.
+- La progresión se aplica a:
+  - desafíos de semáforo;
+  - picadas para conseguir dinero;
+  - picadas con autos de la colección.
+- Los desafíos de semáforo ahora también pueden generar dinero y seguidores.
+
+### Mecánico amigo
+
+- Se agrega experiencia persistente para el mecánico amigo.
+- Cada vez que lo usás:
+  - gana experiencia;
+  - reduce progresivamente su probabilidad de fallar;
+  - mejora el resultado de reparaciones exitosas;
+  - puede cobrar proporcionalmente menos.
+- La mejora usa una curva exponencial.
+- Nunca se elimina completamente la posibilidad de que una reparación salga mal.
+- Su nivel aparece en la ficha del auto y en el resumen final.
+
+### Herencias familiares
+
+Se agregan dos eventos especiales:
+
+- Herencia de tu padre:
+  - puede aparecer después de varios años de trayectoria;
+  - deja un vehículo especial al saber que te gustan los autos.
+- Herencia de tu suegro:
+  - solo puede aparecer si nunca te divorciaste;
+  - también deja un vehículo especial.
+
+Los autos heredados priorizan modelos con alto potencial clásico y llegan con:
+- año de unidad;
+- Estado;
+- Originalidad;
+- Performance;
+- valor estimado.
+
+Podés:
+- guardarlos directamente en la colección;
+- vender la herencia y recibir efectivo.
+
+### Final variable 2027–2031
+
+- Cada nueva trayectoria recibe un año final aleatorio entre 2027 y 2031.
+- Las partidas antiguas se migran automáticamente a este sistema.
+- Los modelos que seguían vigentes en 2026 continúan disponibles como 0 km durante el epílogo extendido para no dejar vacío ese mercado.
+- El final ahora utiliza el año real asignado a esa partida.
+
+### Final más personalizado
+
+El cierre ahora considera además:
+- experiencia en picadas;
+- uso y evolución del mecánico amigo;
+- granizadas sufridas;
+- herencias recibidas;
+- exhibiciones;
+- colección;
+- dinero;
+- cantidad de autos;
+- originalidad;
+- divorcios.
+
+Se agregan títulos finales como:
+- Leyenda de la noche;
+- Socio honorario del taller;
+- Figura de las exhibiciones;
+- Guardián del legado;
+- Curador de un garage serio;
+- Magnate del garage.
+
+---
+
 # Tu vida sobre ruedas — v0.31
 
 Base: v0.30.

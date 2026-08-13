@@ -690,7 +690,8 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
 .exhibition-income-line strong{color:#9b6a08}
 @media(max-width:580px){
   #gameScreen .fan-income-line,
-  #gameScreen .exhibition-income-line{
+  #gameScreen .exhibition-income-line,
+  #gameScreen .career-progress-line{
     display:flex;
     margin-top:3px;
     padding:3px 0;
@@ -698,13 +699,15 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
     line-height:1.1;
   }
   #gameScreen .fan-income-line span,
-  #gameScreen .exhibition-income-line span{
+  #gameScreen .exhibition-income-line span,
+  #gameScreen .career-progress-line span{
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
   }
   #gameScreen .fan-income-line strong,
-  #gameScreen .exhibition-income-line strong{
+  #gameScreen .exhibition-income-line strong,
+  #gameScreen .career-progress-line strong{
     white-space:nowrap;
     font-size:6.5px;
   }
@@ -739,7 +742,7 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.31</div>
+    <div class="version">prototipo privado · v0.32</div>
   </div>
 </header>
 
@@ -772,7 +775,7 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
           </select>
         </div>
         <button class="primary" type="submit">Empezar mi historia</button>
-        <p class="version" style="margin-top:12px">El juego termina en 2026.</p>
+        <p class="version" style="margin-top:12px">Cada trayectoria puede extenderse de forma distinta entre 2027 y 2031.</p>
       </form>
     </div>
   </section>
@@ -803,7 +806,7 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
 
   <section class="screen" id="resultScreen">
     <div class="result">
-      <span class="eyebrow">2026 · fin de trayectoria</span>
+      <span class="eyebrow" id="resultEndLabel">Fin de trayectoria</span>
       <h2 id="resultTitle"></h2>
       <p id="resultCopy"></p>
       <div class="result-card" id="resultCard"></div>
@@ -836,7 +839,8 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
 </div>
 
 <script>
-const END_YEAR=2026;
+const MAX_END_YEAR=2031;
+function careerEndYear(){ return state?.endYear||2026; }
 const SAVE_KEY='lmp_car_life_v02';
 let CARS=[];
 let EVENTS=[];
@@ -1207,6 +1211,47 @@ function vehicleAge(){
   const unitYear=state?.car?.modelYear??car?.desde;
   return car?Math.max(0,state.year-unitYear):0;
 }
+function raceSkillLabel(){
+  const skill=state?.raceSkill||0;
+  if(skill>=10)return 'Casi imbatible';
+  if(skill>=6)return 'Muy experimentado';
+  if(skill>=3)return 'Experimentado';
+  if(skill>=1)return 'Aprendiendo';
+  return 'Novato';
+}
+function raceWinChance(performance,condition){
+  const skill=state?.raceSkill||0;
+  const driver=.34+Math.min(.38,skill*.045);
+  const carBonus=(performance-50)*.0065+(condition-60)*.002;
+  return clamp(driver+carBonus,.12,.97);
+}
+function racePrizeMultiplier(){
+  return 1+Math.min(2.2,(state?.raceSkill||0)*.18);
+}
+function registerRaceAttempt(){
+  state.illegalRaceCount=(state.illegalRaceCount||0)+1;
+  state.raceSkill=(state.raceSkill||0)+1;
+}
+function friendMechanicLabel(){
+  const uses=state?.friendMechanicUses||0;
+  if(uses>=10)return 'Maestro improvisado';
+  if(uses>=6)return 'Muy experimentado';
+  if(uses>=3)return 'Cada vez mejor';
+  if(uses>=1)return 'Agarrando experiencia';
+  return 'Amigo entusiasta';
+}
+function friendRepairCostFactor(){
+  const uses=state?.friendMechanicUses||0;
+  return Math.max(.28,.58*Math.pow(.94,uses));
+}
+function friendFailureChance(){
+  const uses=state?.friendMechanicUses||0;
+  return Math.max(.08,.34*Math.pow(.82,uses));
+}
+function friendSuccessBoost(){
+  const uses=state?.friendMechanicUses||0;
+  return 1+Math.min(1.15,Math.pow(1.13,uses)-1);
+}
 function repairMultiplier(){
   return 1+(state.car?.repairs||0)*.28;
 }
@@ -1362,7 +1407,7 @@ function divorcePending(){
   return pending?.special==='divorce';
 }
 function vehicleActionsLocked(){
-  return divorcePending() || !!state?.pendingResult;
+  return !!state?.pendingEvent || !!state?.pendingResult;
 }
 function currentSaleOffer(){
   if(!state.car)return null;
@@ -1464,6 +1509,10 @@ function beginCareer(name,year,pace='fast'){
     divorceCount:0,
     crashCount:0,
     illegalRaceCount:0,
+    raceSkill:0,
+    friendMechanicUses:0,
+    hailCount:0,
+    endYear:rand(2027,2031),
     collection:[],
     exhibitionIncome:0,
     exhibitionWins:0,
@@ -1543,13 +1592,13 @@ function buyCar(id,first=false,unit=null){
   }
   state.pendingEvent=null;
   state.pendingResult=null;
-  state.nextEventYear=Math.min(END_YEAR,state.year+nextGap());
+  state.nextEventYear=Math.min(careerEndYear(),state.year+nextGap());
   persist();
   closeMarket();
   renderGame();
 }
 function nextGap(){
-  const remaining=END_YEAR-state.year;
+  const remaining=careerEndYear()-state.year;
   if(state.pace==='slow')return Math.min(1,Math.max(0,remaining));
   if(remaining<=2)return Math.max(1,remaining);
   const roll=Math.random();
@@ -1699,6 +1748,8 @@ function renderGarage(){
 
         <div class="cost-line garage-secondary"><span>Gasto mensual actual</span><strong>${money(monthlyExpense())}</strong></div>
         <div class="cost-line fan-income-line"><span>${fanMonthlyIncome()>0?'Fans piden fotos y encuentros':'Ingresos por fans'}</span><strong>${fanMonthlyIncome()>0?`+${money(fanMonthlyIncome())}/mes`:'—'}</strong></div>
+        ${(state.illegalRaceCount||0)>0?`<div class="cost-line career-progress-line"><span>Experiencia en picadas</span><strong>${raceSkillLabel()}</strong></div>`:''}
+        ${(state.friendMechanicUses||0)>0?`<div class="cost-line career-progress-line"><span>Mecánico amigo</span><strong>${friendMechanicLabel()}</strong></div>`:''}
         ${carStatus().stars>=5 && fanFlamesFromCount(state.car.fans||0)>=3
           ? `<div class="cost-line exhibition-income-line"><span>Exhibiciones</span><strong>Premios USD 2.000 · 3.000 · 10.000</strong></div>`
           : ''}
@@ -1724,7 +1775,19 @@ function eligibleEvents(){
 
   return EVENTS.filter(event=>{
     if(event.collectionOnly)return (state.collection||[]).length>0;
+
+    if(event.special==='inheritance_father'){
+      return state.year-state.startYear>=10 && !state.careerFlags?.fatherInheritance;
+    }
+    if(event.special==='inheritance_inlaw'){
+      return state.year-state.startYear>=12 && (state.divorceCount||0)===0 && !state.careerFlags?.inlawInheritance;
+    }
+
     if(!car||!state.car)return false;
+
+    if(event.special==='hail'){
+      return !state.lastHailYear || state.year-state.lastHailYear>=6;
+    }
     if(event.special==='collector'){
       return vehicleAge()>=40 && state.car.condition>=82 && state.car.originality>=78;
     }
@@ -1851,8 +1914,8 @@ function chooseEvent(){
   if(!pool.length)pool=eligible;
 
   // Eventos fuertes aparecen menos seguido.
-  const normal=pool.filter(e=>!['crash','engine','divorce','collector'].includes(e.special));
-  const dramatic=pool.filter(e=>['crash','engine','divorce','collector'].includes(e.special));
+  const normal=pool.filter(e=>!['crash','engine','divorce','collector','hail','inheritance_father','inheritance_inlaw'].includes(e.special));
+  const dramatic=pool.filter(e=>['crash','engine','divorce','collector','hail','inheritance_father','inheritance_inlaw'].includes(e.special));
 
   let selected;
   if(dramatic.length && Math.random()<.20){
@@ -1931,7 +1994,7 @@ function friendRepairMarkup(event){
   const repairChoices=event.choices.filter(choice=>choice.costType==='repair');
   if(!repairChoices.length)return '';
   const cheapest=Math.min(...repairChoices.map(choice=>choiceCost(choice)));
-  const friendCost=Math.max(40,Math.round(cheapest*(.45+Math.random()*.20)));
+  const friendCost=Math.max(40,Math.round(cheapest*(friendRepairCostFactor()+Math.random()*.10)));
   if(!state.pendingEvent.friendRepairCost){
     state.pendingEvent.friendRepairCost=friendCost;
     persist();
@@ -1976,21 +2039,57 @@ function resolveHardshipNeglect(event){
   state.car.valueDamage+=Math.round(vehicleValue()*.035);
   completeEvent(event,'No pudiste pagar el trabajo. Lo postergaste y el auto siguió deteriorándose.');
 }
-function resolveIllegalRace(event){
-  state.illegalRaceCount=(state.illegalRaceCount||0)+1;
+function resolveStreetRace(event){
+  registerRaceAttempt();
+
   const before=vehicleValue();
-  const win=Math.random()<.46;
+  const winChance=raceWinChance(state.car.performance,state.car.condition);
+  const win=Math.random()<winChance;
+  const multiplier=racePrizeMultiplier();
 
   if(win){
-    const prize=Math.max(180,Math.round(before*(.06+Math.random()*.08)));
+    const prize=Math.max(120,Math.round(before*(.02+Math.random()*.035)*multiplier));
+    const fans=rand(6,14)+Math.min(18,state.raceSkill||0);
+    state.money+=prize;
+    state.car.fans=(state.car.fans||0)+fans;
+    state.fans=(state.fans||0)+fans;
+    state.car.performance=clamp(state.car.performance+rand(1,3),0,100);
+    state.car.condition=clamp(state.car.condition-rand(0,3),0,100);
+    completeEvent(
+      event,
+      `Ganaste la picada del semáforo. La experiencia al volante ya se nota: cobraste ${money(prize)} y sumaste ${fans} seguidores.`,
+      '🏁'
+    );
+    return;
+  }
+
+  const severe=Math.random()<.30;
+  const damage=severe?rand(10,22):rand(3,9);
+  state.car.condition=clamp(state.car.condition-damage,0,100);
+  state.car.performance=clamp(state.car.performance-rand(1,severe?8:4),0,100);
+  const valueHit=Math.round(before*(severe?.08:.03));
+  state.car.valueDamage+=valueHit;
+  completeEvent(
+    event,
+    `Perdiste la picada. Aun así sumaste experiencia para la próxima.${severe?` El auto sufrió daños por aproximadamente ${money(valueHit)}.`:' Castigaste la mecánica, pero evitaste una rotura grave.'}`,
+    severe?'💥':'🚦'
+  );
+}
+function resolveIllegalRace(event){
+  registerRaceAttempt();
+  const before=vehicleValue();
+  const win=Math.random()<raceWinChance(state.car.performance,state.car.condition);
+
+  if(win){
+    const prize=Math.max(180,Math.round(before*(.06+Math.random()*.08)*racePrizeMultiplier()));
     const cousinBonus=Math.random()<.38 ? Math.max(50,Math.round(prize*(.18+Math.random()*.32))) : 0;
     state.money+=prize+cousinBonus;
     state.car.condition=clamp(state.car.condition-rand(1,5),0,100);
     state.car.performance=clamp(state.car.performance+rand(0,2),0,100);
 
     const text=cousinBonus
-      ? `Ganaste la picada y cobraste ${money(prize)}. Tu primo también ganó una apuesta por vos y te dio ${money(cousinBonus)} extra.`
-      : `Ganaste la picada y cobraste ${money(prize)}. El auto terminó con algo de desgaste, pero esta vez salió bien.`;
+      ? `Ganaste la picada y cobraste ${money(prize)}. Tu experiencia en picadas aumentó y tu primo también ganó una apuesta por vos: te dio ${money(cousinBonus)} extra.`
+      : `Ganaste la picada y cobraste ${money(prize)}. Cada carrera te vuelve más difícil de vencer; el auto terminó con algo de desgaste.`;
     completeEvent(event,text,'🏁');
     return;
   }
@@ -2050,7 +2149,296 @@ function renderPendingEvent(){
   bindFriendRepair(event);
   bindHardshipChoices(event);
 }
+function inheritedUnitCandidate(){
+  const owned=new Set([
+    state.car?.id,
+    ...(state.collection||[]).map(item=>item.id)
+  ].filter(Boolean));
+
+  let pool=CARS.filter(car=>
+    car.desde<=state.year-8 &&
+    (car.potencialClasico||0)>=88 &&
+    !owned.has(car.id)
+  );
+
+  if(!pool.length){
+    pool=CARS.filter(car=>car.desde<=state.year-5 && !owned.has(car.id));
+  }
+  if(!pool.length)return null;
+
+  // Priorizamos autos especiales, pero sigue habiendo azar.
+  const weighted=pool.flatMap(car=>{
+    const weight=Math.max(1,Math.round((car.potencialClasico||50)/20));
+    return Array(weight).fill(car);
+  });
+  return weighted[rand(0,weighted.length-1)];
+}
+function ensureInheritedUnit(){
+  if(state.pendingEvent.inheritedUnit)return state.pendingEvent.inheritedUnit;
+
+  const car=inheritedUnitCandidate();
+  if(!car)return null;
+
+  const maxYear=Math.min(car.hasta??car.desde,state.year-5);
+  const minYear=Math.max(car.desde,maxYear-5);
+  const modelYear=Math.max(car.desde,rand(minYear,maxYear));
+  const condition=rand(68,96);
+  const originality=rand(76,100);
+  const performance=rand(44,74);
+  const base=marketPrice(car,state.year,modelYear);
+  const value=Math.max(300,Math.round(
+    base*(.58+condition/245)*(.82+originality/560)
+  ));
+
+  state.pendingEvent.inheritedUnit={
+    id:car.id,
+    brand:car.marca,
+    model:car.modelo,
+    modelYear,
+    condition,
+    originality,
+    performance,
+    value
+  };
+  persist();
+  return state.pendingEvent.inheritedUnit;
+}
+function inheritedStars(unit){
+  const car=carById(unit.id);
+  const classic=car?.potencialClasico||50;
+  const score=unit.originality*.45+unit.condition*.30+classic*.25;
+  if(score>=91)return 5;
+  if(score>=84)return 4;
+  if(score>=76)return 3;
+  if(score>=66)return 2;
+  return 1;
+}
+function resolveInheritance(event,source,keep=true){
+  const unit=ensureInheritedUnit();
+  if(!unit){
+    completeEvent(event,'La herencia quedó en trámites y finalmente no apareció ningún vehículo utilizable.','📜');
+    return;
+  }
+
+  const sourceLabel=source==='father'?'tu padre':'tu suegro';
+  state.careerFlags=state.careerFlags||{};
+  if(source==='father')state.careerFlags.fatherInheritance=true;
+  else state.careerFlags.inlawInheritance=true;
+
+  state.inheritanceCount=(state.inheritanceCount||0)+1;
+
+  if(!keep){
+    const sale=Math.max(200,Math.round(unit.value*(.82+Math.random()*.14)));
+    state.money+=sale;
+    state.history.push({
+      id:unit.id,
+      brand:unit.brand,
+      model:unit.model,
+      modelYear:unit.modelYear,
+      purchaseType:'herencia',
+      inheritedFrom:source,
+      boughtYear:state.year,
+      boughtFor:0,
+      soldYear:state.year,
+      soldFor:sale,
+      saleReason:'venta de herencia',
+      maxStars:inheritedStars(unit),
+      maxFlames:0
+    });
+    completeEvent(event,`El vehículo que te dejó ${sourceLabel} era un ${unit.brand} ${unit.model} ${unit.modelYear}. Decidiste venderlo y recibiste ${money(sale)}.`,'💵');
+    return;
+  }
+
+  const uid=`inheritance-${source}-${unit.id}-${state.year}-${Math.random().toString(36).slice(2,7)}`;
+  const stars=inheritedStars(unit);
+
+  state.collection=state.collection||[];
+  state.collection.push({
+    uid,
+    id:unit.id,
+    brand:unit.brand,
+    model:unit.model,
+    modelYear:unit.modelYear,
+    purchaseType:'herencia',
+    collectedYear:state.year,
+    purchaseYear:state.year,
+    purchasePrice:0,
+    valueAtCollection:unit.value,
+    collectionValue:unit.value,
+    condition:unit.condition,
+    originality:unit.originality,
+    performance:unit.performance,
+    repairs:0,
+    investedValue:0,
+    valueDamage:0,
+    expenseModifier:0,
+    stars,
+    flames:0,
+    fans:0,
+    fanStatusLevel:0,
+    yearsStored:0,
+    inheritedFrom:source
+  });
+
+  state.history.push({
+    id:unit.id,
+    brand:unit.brand,
+    model:unit.model,
+    modelYear:unit.modelYear,
+    purchaseType:'herencia',
+    inheritedFrom:source,
+    boughtYear:state.year,
+    boughtFor:0,
+    maxStars:stars,
+    maxFlames:0,
+    collected:true,
+    collectionUid:uid
+  });
+
+  completeEvent(
+    event,
+    `${sourceLabel.charAt(0).toUpperCase()+sourceLabel.slice(1)} te dejó un ${unit.brand} ${unit.model} ${unit.modelYear}. Lo guardaste en tu colección con un valor estimado de ${money(unit.value)}.`,
+    '🗝️'
+  );
+}
+function hailDamageProfile(){
+  const age=vehicleAge();
+
+  if(age>=30){
+    return {
+      label:'La chapa vieja y gruesa resistió sorprendentemente bien.',
+      condition:rand(0,2),
+      originality:rand(0,1),
+      valuePct:.003+Math.random()*.012,
+      severity:'leve'
+    };
+  }
+  if(age>=16){
+    return {
+      label:'El auto recibió marcas visibles, pero la estructura aguantó bastante.',
+      condition:rand(2,6),
+      originality:rand(2,6),
+      valuePct:.025+Math.random()*.045,
+      severity:'moderado'
+    };
+  }
+  if(age>=8){
+    return {
+      label:'La chapa más moderna cedió bastante frente a las piedras.',
+      condition:rand(6,13),
+      originality:rand(6,14),
+      valuePct:.07+Math.random()*.09,
+      severity:'fuerte'
+    };
+  }
+  return {
+    label:'La chapa moderna y liviana quedó muy castigada: capot, techo y paneles recibieron golpes por todos lados.',
+    condition:rand(12,25),
+    originality:rand(12,28),
+    valuePct:.14+Math.random()*.16,
+    severity:'destructivo'
+  };
+}
 function renderSpecialEvent(event,car,forcedText){
+  if(['inheritance_father','inheritance_inlaw'].includes(event.special)){
+    const source=event.special==='inheritance_father'?'father':'inlaw';
+    const unit=ensureInheritedUnit();
+    const sourceLabel=source==='father'?'tu padre':'tu suegro';
+
+    if(!unit){
+      finishSpecial(event,'La herencia se resolvió sin ningún vehículo disponible.');
+      return;
+    }
+
+    $('#eventCard').innerHTML=`
+      <div class="event-icon">${event.icon}</div>
+      <span class="eyebrow">Herencia familiar</span>
+      <h2>${event.title}</h2>
+      <p>${event.text}</p>
+      <div class="forced-banner">
+        <strong>${unit.brand} ${unit.model} · ${unit.modelYear}</strong>
+        <span>Estado ${unit.condition} · Originalidad ${unit.originality} · Performance ${unit.performance} · valor estimado ${money(unit.value)}.</span>
+      </div>
+      <div class="choices">
+        ${specialButton('❤️','Guardarlo en mi colección',`Aceptás el vehículo que dejó ${sourceLabel}.`,'inherit-keep')}
+        ${specialButton('💵','Vender la herencia','Lo vendés sin usarlo y recibís efectivo.','inherit-sell')}
+      </div>`;
+    $('#inherit-keep').onclick=()=>resolveInheritance(event,source,true);
+    $('#inherit-sell').onclick=()=>resolveInheritance(event,source,false);
+    return;
+  }
+
+  if(event.special==='hail'){
+    if(!state.pendingEvent.hailApplied){
+      const profile=hailDamageProfile();
+      const valueBefore=vehicleValue();
+      const valueHit=Math.max(0,Math.round(valueBefore*profile.valuePct));
+
+      state.car.condition=clamp(state.car.condition-profile.condition,0,100);
+      state.car.originality=clamp(state.car.originality-profile.originality,0,100);
+      state.car.valueDamage+=valueHit;
+      state.pendingEvent.hailApplied=true;
+      state.pendingEvent.hailProfile=profile;
+      state.pendingEvent.hailValueHit=valueHit;
+      state.lastHailYear=state.year;
+      state.hailCount=(state.hailCount||0)+1;
+      persist();
+    }
+
+    const profile=state.pendingEvent.hailProfile;
+    const hit=state.pendingEvent.hailValueHit||0;
+    const repair=Math.max(120,repairCost(
+      profile.severity==='destructivo'?2100:
+      profile.severity==='fuerte'?1250:
+      profile.severity==='moderado'?620:220
+    ));
+
+    $('#eventCard').innerHTML=`
+      <div class="event-icon">${event.icon}</div>
+      <span class="eyebrow">Granizo · ${vehicleAge()} años de antigüedad</span>
+      <h2>${event.title}</h2>
+      <div class="forced-banner">
+        <strong>Daño ${profile.severity}</strong>
+        <span>${profile.label} El impacto sobre el valor ronda ${money(hit)}.</span>
+      </div>
+      <p>${event.text}</p>
+      <div class="choices">
+        ${state.money>=repair
+          ? specialButton('🛠️','Reparar la chapa',`Trabajo de chapa y pintura ${money(repair)}.`,'hail-repair')
+          : specialButton('🛠️','Reparar la chapa',`${money(repair)} · No te alcanza.`,'hail-repair-disabled')}
+        ${specialFriendRepairButton(event,repair)}
+        ${specialButton('🌨️','Dejarlo como quedó','No gastás ahora, pero las marcas y la pérdida de valor permanecen.','hail-leave')}
+      </div>`;
+
+    if($('#hail-repair')){
+      $('#hail-repair').onclick=()=>resolveDynamicRepair(event,repair,{
+        condition:Math.max(1,Math.round(profile.condition*.78)),
+        originality:Math.max(0,Math.round(profile.originality*.68)),
+        performance:0,
+        valueShare:.55,
+        valueRecovery:Math.round(hit*.90),
+        note:'Mandaste a reparar correctamente los daños del granizo. La mayor parte del impacto estético y económico quedó resuelta.'
+      });
+    }
+    if($('#hail-repair-disabled'))$('#hail-repair-disabled').disabled=true;
+
+    bindSpecialFriendRepair(event,repair,{
+      condition:Math.max(1,Math.round(profile.condition*.62)),
+      originality:Math.max(0,Math.round(profile.originality*.45)),
+      performance:0,
+      valueShare:.30,
+      valueRecovery:Math.round(hit*.65),
+      note:'Tu mecánico amigo se animó también a la chapa. El resultado dependió de toda la experiencia que fue acumulando.'
+    });
+
+    $('#hail-leave').onclick=()=>completeEvent(
+      event,
+      `Decidiste convivir con las marcas del granizo. En un auto de ${vehicleAge()} años el daño quedó catalogado como ${profile.severity}.`,
+      '🌨️'
+    );
+    return;
+  }
+
   if(['collection_fame','collection_race','collection_offer'].includes(event.special)){
     ensureCollectionIds();
     if(!state.pendingEvent.collectionUid){
@@ -2100,11 +2488,11 @@ function renderSpecialEvent(event,car,forcedText){
           ${specialButton('🚫','No arriesgarlo','El auto vuelve al garage.','collection-race-no')}
         </div>`;
       $('#collection-race-go').onclick=()=>{
-        state.illegalRaceCount=(state.illegalRaceCount||0)+1;
-        const win=Math.random()<.48;
+        registerRaceAttempt();
+        const win=Math.random()<raceWinChance(item.performance??50,item.condition??80);
         if(win){
           const gained=rand(12,32);
-          const prize=Math.max(120,Math.round(collectionValue(item)*(.025+Math.random()*.04)));
+          const prize=Math.max(120,Math.round(collectionValue(item)*(.025+Math.random()*.04)*racePrizeMultiplier()));
           item.fans=(item.fans||0)+gained;
           item.flames=fanFlamesFromCount(item.fans);
           state.fans=(state.fans||0)+gained;
@@ -2140,7 +2528,7 @@ function renderSpecialEvent(event,car,forcedText){
         state.decisions++;
         state.pendingEvent=null;
         state.pendingResult={year:state.year,title:'Resultado',text:`Aceptaste la oferta y vendiste ${soldName} por ${money(offer)}.`,icon:'🤝'};
-        state.nextEventYear=Math.min(END_YEAR,state.year+nextGap());
+        state.nextEventYear=Math.min(careerEndYear(),state.year+nextGap());
         persist();
         closeMarket();
         renderGame();
@@ -2303,7 +2691,7 @@ function renderSpecialEvent(event,car,forcedText){
         text:`El divorcio te obligó a entregar ${lostCar} sin recibir dinero.`,
         icon:'🚗'
       };
-      state.nextEventYear=Math.min(END_YEAR,state.year+nextGap());
+      state.nextEventYear=Math.min(careerEndYear(),state.year+nextGap());
       state.events.unshift({
         year:state.year,
         eventId:event.id,
@@ -2364,7 +2752,7 @@ function renderSpecialEvent(event,car,forcedText){
 
 function specialFriendRepairButton(event,referenceCost){
   if(!state.pendingEvent.friendRepairCost){
-    state.pendingEvent.friendRepairCost=Math.max(40,Math.round(referenceCost*(.45+Math.random()*.20)));
+    state.pendingEvent.friendRepairCost=Math.max(40,Math.round(referenceCost*(friendRepairCostFactor()+Math.random()*.10)));
     persist();
   }
   const cost=state.pendingEvent.friendRepairCost;
@@ -2373,7 +2761,7 @@ function specialFriendRepairButton(event,referenceCost){
 function bindSpecialFriendRepair(event,referenceCost,effects){
   const b=$('#special-friend-repair');
   if(!b)return;
-  const cost=state.pendingEvent.friendRepairCost||Math.max(40,Math.round(referenceCost*.55));
+  const cost=state.pendingEvent.friendRepairCost||Math.max(40,Math.round(referenceCost*friendRepairCostFactor()));
   if(state.money<cost){
     b.disabled=true;
     const small=b.querySelector('small');
@@ -2437,7 +2825,8 @@ function resolveChoice(event,choice){
   if(!canAffordChoice(choice))return;
 
   if(event.id==='semaforo_desafio' && choice.label==='Aceptar el desafío'){
-    state.illegalRaceCount=(state.illegalRaceCount||0)+1;
+    resolveStreetRace(event);
+    return;
   }
   if(event.id==='seguro_choque_decision'){
     state.crashCount=(state.crashCount||0)+1;
@@ -2482,34 +2871,58 @@ function resolveChoice(event,choice){
 }
 function resolveFriendRepair(event,cost,effects=null){
   if(state.money<cost)return;
+
   const before=vehicleValue();
+  const failureChance=friendFailureChance();
+  const boost=friendSuccessBoost();
+  const bad=Math.random()<failureChance;
+
   state.money-=cost;
   state.car.repairs++;
+  state.friendMechanicUses=(state.friendMechanicUses||0)+1;
   state.car.investedValue+=Math.round(cost*(effects?.valueShare??.22));
 
-  const bad=Math.random()<.34;
   if(effects){
-    state.car.condition=clamp(state.car.condition+(effects.condition||0),0,100);
-    state.car.originality=clamp(state.car.originality+(effects.originality||0),0,100);
-    state.car.performance=clamp(state.car.performance+(effects.performance||0),0,100);
+    const conditionEffect=effects.condition||0;
+    const originalityEffect=effects.originality||0;
+    const performanceEffect=effects.performance||0;
+
+    state.car.condition=clamp(
+      state.car.condition+(conditionEffect>0?Math.round(conditionEffect*boost):conditionEffect),
+      0,100
+    );
+    state.car.originality=clamp(
+      state.car.originality+(originalityEffect<0?Math.round(originalityEffect/boost):Math.round(originalityEffect*boost)),
+      0,100
+    );
+    state.car.performance=clamp(
+      state.car.performance+(performanceEffect>0?Math.round(performanceEffect*boost):performanceEffect),
+      0,100
+    );
+    if(effects.valueRecovery){
+      state.car.valueDamage=Math.max(0,state.car.valueDamage-Math.round(effects.valueRecovery*(bad?.45:boost)));
+    }
   }else{
-    state.car.condition=clamp(state.car.condition+(bad?rand(-3,2):rand(3,8)),0,100);
-    state.car.originality=clamp(state.car.originality-rand(2,7),0,100);
-    state.car.performance=clamp(state.car.performance+(bad?rand(-4,0):rand(0,2)),0,100);
+    state.car.condition=clamp(state.car.condition+(bad?rand(-3,2):Math.round(rand(3,8)*boost)),0,100);
+    state.car.originality=clamp(state.car.originality-rand(1,Math.max(2,Math.round(7/boost))),0,100);
+    state.car.performance=clamp(state.car.performance+(bad?rand(-4,0):Math.round(rand(0,2)*boost)),0,100);
   }
 
-  let text=effects?.note||`Un amigo hizo la reparación por ${money(cost)}.`;
+  let resultText=effects?.note||`Tu amigo hizo la reparación por ${money(cost)}.`;
   if(bad){
-    const hit=Math.round(before*(.03+Math.random()*.06));
+    const severity=Math.max(.45,1-(state.friendMechanicUses||0)*.035);
+    const hit=Math.round(before*(.03+Math.random()*.06)*severity);
     state.car.condition=clamp(state.car.condition-rand(3,9),0,100);
     state.car.performance=clamp(state.car.performance-rand(1,5),0,100);
     state.car.valueDamage+=hit;
     state.car.expenseModifier=clamp((state.car.expenseModifier||0)+.05,-.35,.65);
-    text+=` El arreglo quedó mal: aparecieron fallas nuevas y el auto perdió aproximadamente ${money(hit)} de valor.`;
+    resultText+=` Aunque ya tiene más experiencia, esta vez falló: aparecieron problemas nuevos y el auto perdió aproximadamente ${money(hit)} de valor.`;
   }else{
-    text+=` Esta vez el arreglo barato salió razonablemente bien.`;
+    resultText+=` La experiencia acumulada se notó: el trabajo quedó mejor que en sus primeros arreglos.`;
   }
-  completeEvent(event,text);
+
+  resultText+=` Tu mecánico amigo ahora está en nivel "${friendMechanicLabel()}".`;
+  completeEvent(event,resultText);
 }
 function collectCurrentCar(){
   if(!state.car || vehicleActionsLocked())return;
@@ -2545,6 +2958,9 @@ function resolveDynamicRepair(event,cost,effects,risk=0){
   state.car.condition=clamp(state.car.condition+(effects.condition||0),0,100);
   state.car.originality=clamp(state.car.originality+(effects.originality||0),0,100);
   state.car.performance=clamp(state.car.performance+(effects.performance||0),0,100);
+  if(effects.valueRecovery){
+    state.car.valueDamage=Math.max(0,state.car.valueDamage-Math.round(effects.valueRecovery));
+  }
 
   let text=effects.note;
   if(Math.random()<risk){
@@ -2573,7 +2989,7 @@ function completeEvent(event,text,icon='🎲'){
     text,
     icon
   };
-  state.nextEventYear=Math.min(END_YEAR,state.year+nextGap());
+  state.nextEventYear=Math.min(careerEndYear(),state.year+nextGap());
   persist();
   renderGame();
 }
@@ -2694,22 +3110,22 @@ function repairStaleState(){
     }
     state.nextEventYear=Math.max(
       state.nextEventYear||state.year,
-      Math.min(END_YEAR,state.year+nextGap())
+      Math.min(careerEndYear(),state.year+nextGap())
     );
   }
 
   if(!Number.isFinite(state.nextEventYear)){
-    state.nextEventYear=Math.min(END_YEAR,state.year+nextGap());
+    state.nextEventYear=Math.min(careerEndYear(),state.year+nextGap());
   }
   ensureCollectionIds();
 }
 function renderGame(){
   repairStaleState();
   screen('gameScreen');
-  $('#playerLabel').textContent=`${state.player} · ${state.startYear} → ${END_YEAR}`;
+  $('#playerLabel').textContent=`${state.player} · ${state.startYear} → ${careerEndYear()}`;
   $('#yearPill').textContent=state.year;
 
-  if(state.year>=END_YEAR){
+  if(state.year>=careerEndYear()){
     finish();
     return;
   }
@@ -2749,7 +3165,7 @@ function renderGame(){
   }
 
   if(!state.pendingEvent && state.nextEventYear>state.year){
-    let targetYear=Math.min(state.nextEventYear,END_YEAR);
+    let targetYear=Math.min(state.nextEventYear,careerEndYear());
     if(
       state.year<2001 &&
       targetYear>2001 &&
@@ -2761,18 +3177,19 @@ function renderGame(){
     if(years>0)advanceYears(years);
   }
 
-  if(state.year>=END_YEAR){
+  if(state.year>=careerEndYear()){
     persist();
     finish();
     return;
   }
 
   updateCarFans();
+  if(!state.pendingEvent)chooseEvent();
+
   renderStats($('#gameStats'));
   renderGarage();
   $('#yearPill').textContent=state.year;
 
-  if(!state.pendingEvent)chooseEvent();
   renderPendingEvent();
   renderLog();
   persist();
@@ -2780,7 +3197,11 @@ function renderGame(){
 }
 function zeroKmMarket(){
   return CARS
-    .filter(car=>car.desde<=state.year && state.year<=(car.hasta??state.year))
+    .filter(car=>{
+      const listedHasta=car.hasta??state.year;
+      const effectiveHasta=(listedHasta>=2026 && state.year>2026)?careerEndYear():listedHasta;
+      return car.desde<=state.year && state.year<=effectiveHasta;
+    })
     .map(car=>({
       stockId:`new-${state.year}-${car.id}`,
       type:'new',
@@ -2924,7 +3345,7 @@ function renderMarketView(){
   });
 }
 function waitWithoutCar(){
-  if(state.car||state.year>=END_YEAR)return;
+  if(state.car||state.year>=careerEndYear())return;
   const fromYear=state.year;
 
   const income=rand(300,700);
@@ -2933,7 +3354,7 @@ function waitWithoutCar(){
   state.money=Math.round(state.money);
   state.totalIncome+=income;
   state.totalRunningCosts+=collectionCost;
-  state.year=Math.min(END_YEAR,state.year+1);
+  state.year=Math.min(careerEndYear(),state.year+1);
   queueYearAnimation(fromYear,state.year);
   state.events.unshift({
     year:state.year,
@@ -2971,7 +3392,7 @@ function openMarket(force=false){
     };
   });
 
-  const stranded=force&&!state.car&&state.year<END_YEAR;
+  const stranded=force&&!state.car&&state.year<careerEndYear();
   $('#marketWait').classList.toggle('open',stranded);
   $('#waitOneYear').onclick=stranded?waitWithoutCar:null;
   $('#closeMarket').style.display=force?'none':'inline-block';
@@ -2981,7 +3402,7 @@ function closeMarket(){
   $('#closeMarket').style.display='inline-block';
 }
 function careerStory(){
-  const years=Math.max(0,END_YEAR-state.startYear);
+  const years=Math.max(0,careerEndYear()-state.startYear);
   const cars=state.history.length;
   const divorces=state.divorceCount||0;
   const crashes=state.crashCount||0;
@@ -3010,8 +3431,19 @@ function careerStory(){
     parts.push(`La fama también rindió: participaste de exhibiciones premiadas y acumulaste ${money(state.exhibitionIncome||0)} en premios.`);
   }
 
-  if(races>=3)parts.push(`Las picadas fueron una constante: corriste ${races} veces y más de una vez pusiste la mecánica al límite.`);
-  else if(races>0)parts.push(`No pudiste resistirte a ${races} ${races===1?'picada ilegal':'picadas ilegales'}.`);
+  if(races>=3)parts.push(`Las picadas fueron una constante: corriste ${races} veces y terminaste con experiencia de piloto "${raceSkillLabel()}". Con un auto realmente rápido llegaste a ser muy difícil de vencer.`);
+  else if(races>0)parts.push(`No pudiste resistirte a ${races} ${races===1?'picada ilegal':'picadas ilegales'} y fuiste aprendiendo de cada una.`);
+
+  if((state.friendMechanicUses||0)>=6)parts.push(`Tu mecánico amigo terminó siendo parte de la historia: lo llamaste ${state.friendMechanicUses} veces y pasó de improvisar a trabajar como "${friendMechanicLabel()}", aunque nunca dejó de existir el riesgo de que algo saliera mal.`);
+  else if((state.friendMechanicUses||0)>0)parts.push(`También recurriste ${state.friendMechanicUses} ${state.friendMechanicUses===1?'vez':'veces'} a tu mecánico amigo, que fue aprendiendo con cada arreglo.`);
+
+  const inheritances=[];
+  if(state.careerFlags?.fatherInheritance)inheritances.push('tu padre');
+  if(state.careerFlags?.inlawInheritance)inheritances.push('tu suegro');
+  if(inheritances.length)parts.push(`La familia también dejó huella en el garage: recibiste vehículos como herencia de ${inheritances.join(' y ')}.`);
+
+  if((state.hailCount||0)>=2)parts.push(`Además sobreviviste a ${state.hailCount} tormentas de granizo; comprobaste que no siempre un auto más nuevo resiste mejor la chapa.`);
+  else if((state.hailCount||0)===1)parts.push(`Una tormenta de granizo también dejó su marca en tu historia automotriz.`);
 
   if(crashes>=3)parts.push(`La chapa tampoco tuvo una vida tranquila: acumulaste ${crashes} choques.`);
   else if(crashes>0)parts.push(`En el camino también hubo ${crashes} ${crashes===1?'choque':'choques'} que dejaron su marca.`);
@@ -3021,6 +3453,7 @@ function careerStory(){
   else parts.push(`Curiosamente, ningún divorcio consiguió meterse entre vos y tus autos.`);
 
   if(state.money>25000)parts.push(`Terminaste además con una posición económica fuerte, demostrando que también supiste hacer buenos negocios.`);
+  parts.push(`Tu recorrido finalmente se cerró en ${careerEndYear()}, un año que esta vez el azar decidió para tu historia.`);
   return parts.join(' ');
 }
 
@@ -3035,11 +3468,17 @@ function finish(){
   let title='Coleccionista accidental';
   if(state.history.length>=7)title='Cambiador serial';
   if(state.history.length<=2)title='Fiel hasta el final';
-  if(state.money>25000)title='Cazador de oportunidades';
-  if(car && state.car.originality>90 && vehicleAge()>35)title='Purista';
+  if((state.collection||[]).length>=6)title='Curador de un garage serio';
+  if((state.inheritanceCount||0)>0 && (state.collection||[]).length>=3)title='Guardián del legado';
+  if((state.friendMechanicUses||0)>=8)title='Socio honorario del taller';
+  if((state.exhibitionWins||0)>=2)title='Figura de las exhibiciones';
+  if(state.money>50000)title='Magnate del garage';
+  if((state.raceSkill||0)>=10 && (state.illegalRaceCount||0)>=10)title='Leyenda de la noche';
+  if(car && state.car.originality>90 && vehicleAge()>35 && (state.raceSkill||0)<10)title='Purista';
 
   $('#resultTitle').textContent=title;
-  $('#resultCopy').textContent=`${state.player}, llegaste a 2026 después de ${state.decisions} decisiones y ${state.history.length} autos.`;
+  if($('#resultEndLabel'))$('#resultEndLabel').textContent=`${careerEndYear()} · fin de trayectoria`;
+  $('#resultCopy').textContent=`${state.player}, tu historia llegó hasta ${careerEndYear()} después de ${state.decisions} decisiones, ${state.history.length} autos y ${Math.max(0,careerEndYear()-state.startYear)} años de trayectoria.`;
 
   $('#resultCard').innerHTML=`
     <div class="stats">
@@ -3051,7 +3490,10 @@ function finish(){
       <div class="stat"><span>Popularidad máxima</span><strong>${flameIcons(fanFlamesFromCount(state.fans||0))||'—'}</strong></div>
       <div class="stat"><span>Divorcios</span><strong>${state.divorceCount||0}</strong></div>
       <div class="stat"><span>Choques</span><strong>${state.crashCount||0}</strong></div>
-      <div class="stat"><span>Picadas ilegales</span><strong>${state.illegalRaceCount||0}</strong></div>
+      <div class="stat"><span>Picadas ilegales</span><strong>${state.illegalRaceCount||0} · ${raceSkillLabel()}</strong></div>
+      <div class="stat"><span>Mecánico amigo</span><strong>${state.friendMechanicUses||0} usos · ${friendMechanicLabel()}</strong></div>
+      <div class="stat"><span>Granizadas</span><strong>${state.hailCount||0}</strong></div>
+      <div class="stat"><span>Herencias</span><strong>${state.inheritanceCount||0}</strong></div>
       <div class="stat"><span>Premios de exhibición</span><strong>${state.exhibitionWins||0} · ${money(state.exhibitionIncome||0)}</strong></div>
       <div class="stat highlight"><span>Vehículos en colección</span><strong>${(state.collection||[]).length}</strong></div>
       <div class="stat"><span>Valor de colección</span><strong>${money(collectionValueTotal)}</strong></div>
@@ -3074,7 +3516,7 @@ function finish(){
     <div class="history">${state.history.map(item=>`
       <div class="history-item">
         <span>${item.brand} ${item.model}<br><small>${starIcons(item.maxStars||1)} · ${flameIcons(item.maxFlames||0)||'—'}</small></span>
-        <strong>${item.boughtYear}${item.soldYear?` → ${item.soldYear}`:' → 2026'}</strong>
+        <strong>${item.boughtYear}${item.soldYear?` → ${item.soldYear}`:` → ${careerEndYear()}`}</strong>
       </div>`).join('')}</div>`;
 
   localStorage.removeItem(SAVE_KEY);
@@ -3133,6 +3575,13 @@ $('#marketModal').addEventListener('click',event=>{
     if(state && state.collection===undefined)state.collection=[];
     if(state && state.exhibitionIncome===undefined)state.exhibitionIncome=0;
     if(state && state.exhibitionWins===undefined)state.exhibitionWins=0;
+    if(state && state.raceSkill===undefined)state.raceSkill=state.illegalRaceCount||0;
+    if(state && state.friendMechanicUses===undefined)state.friendMechanicUses=0;
+    if(state && state.hailCount===undefined)state.hailCount=0;
+    if(state && state.inheritanceCount===undefined)state.inheritanceCount=0;
+    if(state && state.endYear===undefined)state.endYear=rand(2027,2031);
+    if(state && state.endYear<2027)state.endYear=rand(2027,2031);
+    if(state && state.endYear>MAX_END_YEAR)state.endYear=MAX_END_YEAR;
     if(state && state.marketStockYear===undefined)state.marketStockYear=null;
     if(state && !Array.isArray(state.usedMarketStock))state.usedMarketStock=[];
     ensureCollectionIds();
