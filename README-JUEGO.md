@@ -1,3 +1,22 @@
+# Tu vida sobre ruedas — v0.35
+
+Base: v0.34.
+
+## Ajuste de frecuencia de divorcio
+
+- Se reduce la aparición del evento **Divorcio** en un **60%**.
+- Cuando el divorcio cumple todas sus condiciones normales de elegibilidad, ahora sólo entra al pool de selección en el **40%** de esas ocasiones.
+- No se modifican:
+  - sus consecuencias;
+  - sus decisiones;
+  - el máximo de divorcios;
+  - la antigüedad mínima de trayectoria requerida;
+  - la regla especial de herencia del suegro.
+
+El objetivo es que siga siendo un evento importante, pero bastante menos repetitivo entre partidas.
+
+---
+
 # Tu vida sobre ruedas — v0.34
 
 Base: v0.33.

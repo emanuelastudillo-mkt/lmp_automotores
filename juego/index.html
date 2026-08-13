@@ -742,7 +742,7 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.34</div>
+    <div class="version">prototipo privado · v0.35</div>
   </div>
 </header>
 
@@ -1927,6 +1927,14 @@ function chooseEvent(){
   if(!pool.length)pool=eligible.filter(event=>!event.collectionOnly && !event.exclusiveVehicleEvent && !['engine','crash'].includes(event.special));
   if(!pool.length)pool=eligible.filter(event=>!event.collectionOnly && !['engine','crash'].includes(event.special));
   if(!pool.length)pool=eligible;
+
+  // El divorcio conserva las mismas condiciones y consecuencias,
+  // pero sólo participa en el 40% de los turnos en los que sería elegible.
+  // Esto reduce su frecuencia efectiva un 60% respecto de versiones anteriores.
+  if(Math.random()>=.40){
+    const withoutDivorce=pool.filter(event=>event.special!=='divorce');
+    if(withoutDivorce.length)pool=withoutDivorce;
+  }
 
   // Eventos fuertes aparecen menos seguido.
   const normal=pool.filter(e=>!['crash','engine','divorce','collector','hail','inheritance_father','inheritance_inlaw'].includes(e.special));
