@@ -1,3 +1,47 @@
+# Tu vida sobre ruedas — v0.25
+
+Base: v0.24.
+
+## Auditoría general de eventos y estados
+
+Se revisaron los 64 eventos, sus decisiones, probabilidades, flags, eventos especiales, colección, mercado, guardado/carga y transiciones de año.
+
+### Correcciones principales
+
+- Restaurado el riesgo de choque por **Estado** y **Performance** bajos.
+- Los choques mecánicos ya no aparecen como un evento dramático completamente aleatorio.
+- Restaurada y completada la **deuda real**:
+  - gastos inevitables y consecuencias de riesgo pueden dejar saldo negativo;
+  - el saldo negativo se muestra en rojo;
+  - decisiones sin costo siguen disponibles aunque exista deuda;
+  - una reparación impaga de una picada ahora genera deuda real.
+- Corregido `moneyDisplay`, que estaba referenciado al final de la partida pero no existía.
+- El **Corralito 2001** ya no puede ser salteado por un salto de años del modo rápido.
+- El Corralito usa `careerFlags`, separado de los flags del auto.
+- Las picadas del evento del semáforo ahora suman al contador de picadas ilegales.
+- El evento del seguro después de un choque suma al contador de choques.
+- Aceptar una oferta por un auto de colección cuenta como decisión.
+- Las ventas de colección ahora vinculan el historial mediante un `collectionUid` exacto.
+- Los eventos de colección pueden ocurrir aunque no tengas un auto de uso, especialmente al pasar un año sin vehículo.
+- Se recuperan partidas con `pendingEvent` inexistente o con un auto eliminado de la base.
+- `renderPendingEvent()` ahora tolera eventos guardados inválidos sin romper la partida.
+- Las acciones del garage quedan bloqueadas mientras hay una pantalla de resultado pendiente, evitando arrastrar un resultado viejo a un auto nuevo.
+- El botón Reset ahora realiza un reinicio completo con recarga.
+- Las reparaciones con `minVehicleShare` respetan correctamente el costo mínimo relativo al valor del auto.
+- Se quitaron de la interfaz algunos datos internos de balance, como multiplicadores de reparación y umbrales técnicos de ofertas.
+
+### Validaciones de datos
+
+- 64 eventos.
+- 100 vehículos.
+- Sin IDs de eventos duplicados.
+- Sin IDs de vehículos duplicados.
+- Todas las ramas de probabilidades de eventos suman 100%.
+- Todos los tipos `special` presentes en JSON tienen implementación en el motor.
+- Todos los flags requeridos por eventos tienen una vía válida para generarse.
+
+---
+
 # Tu vida sobre ruedas — v0.24
 
 Base: v0.23.
