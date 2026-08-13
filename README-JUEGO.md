@@ -1,3 +1,62 @@
+# Tu vida sobre ruedas — v0.42
+
+Base: v0.41.
+
+## Segunda línea cronológica: industria automotriz y automovilismo argentino
+
+Se agregan **8 nuevos hitos históricos reales**, esta vez centrados específicamente en autos, industria y competición.
+
+### Nuevos eventos
+
+- 1966 — Inicio de producción del Torino en Santa Isabel.
+- 1969 — Misión Argentina / Torino en las 84 Horas de Nürburgring.
+- 1987 — Creación de Autolatina entre Ford y Volkswagen.
+- 1995 — Regreso del Gran Premio de Argentina de Fórmula 1 a Buenos Aires.
+- 1997 — Inicio de producción de Toyota Hilux en Zárate.
+- 2009 — Primera edición sudamericana del Dakar, con Argentina y Chile como protagonistas.
+- 2010 — Inicio de producción en serie de Volkswagen Amarok en General Pacheco.
+- 2024 — Franco Colapinto vuelve a poner a un piloto argentino en una carrera de Fórmula 1 después de 23 años.
+
+### Gameplay
+
+Los nuevos eventos afectan principalmente:
+
+- Performance.
+- Estado.
+- Originalidad.
+- Fans.
+- Costos de reparación.
+- Pequeñas oportunidades económicas.
+- Cultura de colección y preservación.
+
+No son simples textos históricos: todos presentan al menos dos decisiones con consecuencias distintas.
+
+### Motor cronológico
+
+Utilizan el mismo sistema implementado en v0.41:
+
+- el avance rápido se detiene exactamente en el año correspondiente;
+- el evento aparece una sola vez;
+- no ocurre si la carrera empieza después de ese año;
+- se registra dentro de `careerFlags`.
+
+Se agrega además:
+
+`historicalAutomotive: true`
+
+para distinguir estos hitos de los eventos económicos/sociales anteriores.
+
+### Final
+
+El resultado final ahora muestra por separado:
+
+- Historia argentina.
+- Hitos automotores.
+
+La narración final también reconoce si una trayectoria atravesó muchos momentos importantes de la cultura fierrera argentina.
+
+---
+
 # Tu vida sobre ruedas — v0.41
 
 Base: v0.40.

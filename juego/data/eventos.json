@@ -10619,5 +10619,252 @@
         "note": "Preferiste no perseguir estaciones y el auto quedó preservado hasta que la situación empezó a normalizarse."
       }
     ]
+  },
+  {
+    "id": "arg_torino_nace_1966",
+    "icon": "🚗",
+    "title": "1966: nace el Torino",
+    "tags": [
+      "*"
+    ],
+    "historicalYear": 1966,
+    "historicalArgentina": true,
+    "historicalAutomotive": true,
+    "text": "Comienza la producción del Torino en Santa Isabel. El nuevo modelo mezcla ingeniería local, diseño europeo y una fuerte identidad argentina, y rápidamente despierta curiosidad entre los fierreros.",
+    "choices": [
+      {
+        "icon": "📸",
+        "label": "Ir a conocerlo y meterte en la movida",
+        "fanGain": 8,
+        "originality": 1,
+        "note": "Te contagiaste del entusiasmo por la industria nacional y tu propio auto empezó a llamar más la atención en reuniones y juntadas."
+      },
+      {
+        "icon": "🧰",
+        "label": "Inspirarte y mejorar tu propio auto",
+        "costType": "repair",
+        "repairBase": 220,
+        "condition": 4,
+        "originality": 3,
+        "performance": 2,
+        "valueShare": 0.55,
+        "note": "Aprovechaste el entusiasmo por los autos para dejar el tuyo más sano, prolijo y fiel a su configuración."
+      }
+    ]
+  },
+  {
+    "id": "arg_torino_nurburgring_1969",
+    "icon": "🏁",
+    "title": "1969: la Misión Argentina sorprende en Nürburgring",
+    "tags": [
+      "*"
+    ],
+    "historicalYear": 1969,
+    "historicalArgentina": true,
+    "historicalAutomotive": true,
+    "text": "Tres Torino argentinos compiten en las 84 Horas de Nürburgring. La actuación instala una idea poderosa: un auto desarrollado y producido en Argentina puede medirse con máquinas europeas.",
+    "choices": [
+      {
+        "icon": "🏁",
+        "label": "Dejarte llevar por la fiebre deportiva",
+        "performance": 5,
+        "condition": -2,
+        "fanGain": 14,
+        "note": "Empezaste a mirar tu auto con otros ojos, lo exigiste más y ganaste reputación entre los aficionados."
+      },
+      {
+        "icon": "🏆",
+        "label": "Preservar el espíritu histórico",
+        "originality": 5,
+        "fanGain": 9,
+        "note": "La hazaña te hizo valorar más la historia y la autenticidad. Tu auto ganó prestigio sin necesidad de castigarlo."
+      }
+    ]
+  },
+  {
+    "id": "arg_autolatina_1987",
+    "icon": "⚙️",
+    "title": "1987: Ford y Volkswagen forman Autolatina",
+    "tags": [
+      "*"
+    ],
+    "historicalYear": 1987,
+    "historicalArgentina": true,
+    "historicalAutomotive": true,
+    "text": "Ford y Volkswagen integran sus operaciones regionales bajo Autolatina. Plataformas, piezas y soluciones compartidas empiezan a cambiar la lógica del mercado y de los talleres.",
+    "choices": [
+      {
+        "icon": "🔧",
+        "label": "Aprovechar piezas compatibles",
+        "costType": "repair",
+        "repairBase": 180,
+        "condition": 5,
+        "originality": -2,
+        "performance": 2,
+        "valueShare": 0.42,
+        "note": "Encontraste una solución práctica gracias a una pieza compatible. Funcionó bien, aunque el auto quedó un poco menos original."
+      },
+      {
+        "icon": "📦",
+        "label": "Insistir con componentes específicos",
+        "costType": "repair",
+        "repairBase": 310,
+        "condition": 4,
+        "originality": 5,
+        "valueShare": 0.65,
+        "note": "Pagaste más, pero preservaste mejor la identidad mecánica de tu auto."
+      }
+    ]
+  },
+  {
+    "id": "arg_f1_regresa_1995",
+    "icon": "🏁",
+    "title": "1995: la Fórmula 1 vuelve a Buenos Aires",
+    "tags": [
+      "*"
+    ],
+    "historicalYear": 1995,
+    "historicalArgentina": true,
+    "historicalAutomotive": true,
+    "text": "El Gran Premio de Argentina vuelve al calendario de Fórmula 1 y el Autódromo de Buenos Aires recibe nuevamente a la máxima categoría. La fiebre por la performance reaparece con fuerza.",
+    "choices": [
+      {
+        "icon": "🏎️",
+        "label": "Meterte de lleno en la fiebre por la performance",
+        "performance": 6,
+        "condition": -3,
+        "fanGain": 12,
+        "risk": 0.12,
+        "note": "La F1 te contagió. Empezaste a exigir más al auto y a buscar mejor respuesta, a costa de algo de desgaste."
+      },
+      {
+        "icon": "📸",
+        "label": "Disfrutarlo como fan y cuidar tu auto",
+        "fanGain": 9,
+        "condition": 1,
+        "note": "Viviste el regreso de la F1 sin transformar tu auto en un experimento. Ganaste contactos y seguidores."
+      }
+    ]
+  },
+  {
+    "id": "arg_hilux_zarate_1997",
+    "icon": "🏭",
+    "title": "1997: comienza la producción argentina de Hilux",
+    "tags": [
+      "*"
+    ],
+    "historicalYear": 1997,
+    "historicalArgentina": true,
+    "historicalAutomotive": true,
+    "text": "Toyota pone en marcha su planta de Zárate y comienza a producir Hilux en Argentina. Las pick-ups empiezan a ganar todavía más peso dentro de la industria local.",
+    "choices": [
+      {
+        "icon": "🛞",
+        "label": "Mirar con otros ojos a las pick-ups",
+        "fanGain": 6,
+        "money": 120,
+        "note": "El mercado de utilitarios empieza a moverse y aprovechaste nuevas oportunidades de compra, venta y trabajo."
+      },
+      {
+        "icon": "🧰",
+        "label": "Aprovechar la expansión de proveedores",
+        "costType": "repair",
+        "repairBase": 230,
+        "condition": 5,
+        "originality": 2,
+        "valueShare": 0.52,
+        "note": "La mayor actividad industrial ayudó a encontrar mejores soluciones y proveedores para poner al día tu auto."
+      }
+    ]
+  },
+  {
+    "id": "arg_dakar_2009",
+    "icon": "🏔️",
+    "title": "2009: el Dakar desembarca en Argentina",
+    "tags": [
+      "*"
+    ],
+    "historicalYear": 2009,
+    "historicalArgentina": true,
+    "historicalAutomotive": true,
+    "text": "El Rally Dakar cruza el Atlántico y abre una nueva era en Sudamérica, con Buenos Aires como uno de sus grandes centros. Millones de personas se vuelcan a las rutas y la cultura del 4x4 y la resistencia explota.",
+    "choices": [
+      {
+        "icon": "🏔️",
+        "label": "Sumarte a una travesía inspirada en el Dakar",
+        "condition": -5,
+        "performance": 4,
+        "fanGain": 15,
+        "risk": 0.16,
+        "note": "Volviste con tierra por todos lados y una buena historia. El auto ganó fama y respuesta, aunque recibió castigo."
+      },
+      {
+        "icon": "📸",
+        "label": "Ir como espectador y cuidar el auto",
+        "fanGain": 10,
+        "condition": -1,
+        "note": "Te mezclaste con la fiebre del Dakar sin convertir tu auto en un vehículo de asistencia."
+      }
+    ]
+  },
+  {
+    "id": "arg_amarok_pacheco_2010",
+    "icon": "🚙",
+    "title": "2010: la Amarok empieza a salir de Pacheco",
+    "tags": [
+      "*"
+    ],
+    "historicalYear": 2010,
+    "historicalArgentina": true,
+    "historicalAutomotive": true,
+    "text": "Volkswagen inicia la producción en serie de Amarok en General Pacheco. Una nueva pick-up fabricada localmente entra en escena y refuerza el peso del segmento en Argentina.",
+    "choices": [
+      {
+        "icon": "💼",
+        "label": "Aprovechar el auge de las pick-ups",
+        "money": 180,
+        "condition": -2,
+        "note": "Encontraste pequeños trabajos y oportunidades alrededor del creciente mercado de utilitarios."
+      },
+      {
+        "icon": "⚙️",
+        "label": "Invertir en robustez y confiabilidad",
+        "costType": "repair",
+        "repairBase": 260,
+        "condition": 6,
+        "performance": 2,
+        "valueShare": 0.55,
+        "note": "La nueva generación de pick-ups te hizo priorizar robustez y mantenimiento preventivo en tu propio vehículo."
+      }
+    ]
+  },
+  {
+    "id": "arg_colapinto_f1_2024",
+    "icon": "🏁",
+    "title": "2024: un argentino vuelve a correr en Fórmula 1",
+    "tags": [
+      "*"
+    ],
+    "historicalYear": 2024,
+    "historicalArgentina": true,
+    "historicalAutomotive": true,
+    "text": "Franco Colapinto debuta en Fórmula 1 y se convierte en el primer piloto argentino en disputar un Gran Premio en 23 años. La conversación fierrera vuelve a instalarse en todos lados.",
+    "choices": [
+      {
+        "icon": "🔥",
+        "label": "Subirte a la nueva fiebre por la F1",
+        "fanGain": 20,
+        "performance": 3,
+        "condition": -1,
+        "note": "Tu auto se volvió parte de juntadas, charlas y contenido. Ganaste mucha visibilidad y algo de entusiasmo por mejorar su respuesta."
+      },
+      {
+        "icon": "🏆",
+        "label": "Disfrutar el momento y preservar tu auto",
+        "fanGain": 12,
+        "originality": 3,
+        "note": "La nueva fiebre te acercó a otros fanáticos y, en vez de modificar de más, empezaste a valorar mejor la identidad de tu auto."
+      }
+    ]
   }
 ]

@@ -1343,7 +1343,7 @@ button:disabled .ui-icon{
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.41</div>
+    <div class="version">prototipo privado · v0.42</div>
   </div>
 </header>
 
@@ -1482,7 +1482,7 @@ const ICON_TOKEN_MAP={
   '🕵️':'search','👀':'search','🧐':'search','🔍':'search',
   '📈':'chart','📉':'chart',
   '🗝️':'key','📜':'document','📰':'document',
-  '🚗':'car','🚙':'car','🚌':'car',
+  '🚗':'car','🚙':'car','🚌':'car','🛞':'gauge','🏭':'settings',
   '✅':'check','⏳':'time','🔄':'arrow',
   '🧼':'spark','🧽':'spark','🩹':'wrench','🧪':'search','🔬':'search',
   '🧵':'wrench','🛋️':'spark','🪑':'spark','🏷️':'sell','👂':'spark','📣':'spark'
@@ -4258,8 +4258,15 @@ function careerStory(){
   else if(exclusiveSeen>0)parts.push(`Algunos modelos también te mostraron sus propias rarezas: viviste ${exclusiveSeen} situaciones exclusivas de vehículo.`);
 
   const historicalSeen=Object.keys(state.careerFlags||{}).filter(key=>key.startsWith('historical_')).length + (state.careerFlags?.corralito_ocurrido?1:0);
-  if(historicalSeen>=5)parts.push(`Tu garage también atravesó de lleno la historia argentina: conviviste con ${historicalSeen} grandes eventos económicos y sociales que cambiaron la forma de tener un auto.`);
+  if(historicalSeen>=5)parts.push(`Tu garage también atravesó de lleno la historia argentina: conviviste con ${historicalSeen} grandes eventos que cambiaron la forma de tener, usar o disfrutar un auto.`);
   else if(historicalSeen>0)parts.push(`La historia argentina también se metió en tu garage en ${historicalSeen} momentos importantes.`);
+
+  const automotiveHistorySeen=EVENTS.filter(event=>
+    event.historicalAutomotive &&
+    state.careerFlags?.[`historical_${event.id}`]
+  ).length;
+  if(automotiveHistorySeen>=5)parts.push(`Además viviste ${automotiveHistorySeen} hitos específicamente automotrices o de competición: tu trayectoria quedó cruzada por la cultura fierrera argentina.`);
+  else if(automotiveHistorySeen>0)parts.push(`También atravesaste ${automotiveHistorySeen} hitos directamente ligados a la industria automotriz o al automovilismo argentino.`);
 
   if(crashes>=3)parts.push(`La chapa tampoco tuvo una vida tranquila: acumulaste ${crashes} choques.`);
   else if(crashes>0)parts.push(`En el camino también hubo ${crashes} ${crashes===1?'choque':'choques'} que dejaron su marca.`);
@@ -4324,6 +4331,7 @@ function finish(){
       <div class="stat"><span>Herencias</span><strong>${state.inheritanceCount||0}</strong></div>
       <div class="stat"><span>Eventos exclusivos</span><strong>${Object.keys(state.careerFlags||{}).filter(key=>key.startsWith('seen_ex_')).length}</strong></div>
       <div class="stat"><span>Historia argentina</span><strong>${Object.keys(state.careerFlags||{}).filter(key=>key.startsWith('historical_')).length + (state.careerFlags?.corralito_ocurrido?1:0)}</strong></div>
+      <div class="stat"><span>Hitos automotores</span><strong>${EVENTS.filter(event=>event.historicalAutomotive && state.careerFlags?.[`historical_${event.id}`]).length}</strong></div>
       <div class="stat"><span>Premios de exhibición</span><strong>${state.exhibitionWins||0} · ${money(state.exhibitionIncome||0)}</strong></div>
       <div class="stat highlight"><span>Vehículos en colección</span><strong>${(state.collection||[]).length}</strong></div>
       <div class="stat"><span>Valor de colección</span><strong>${money(collectionValueTotal)}</strong></div>
