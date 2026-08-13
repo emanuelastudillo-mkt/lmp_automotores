@@ -519,12 +519,12 @@
   {
     "id": "divorcio",
     "icon": "💔",
-    "title": "Un divorcio altera tu patrimonio",
+    "title": "Todos se dieron cuenta antes que vos",
     "tags": [
       "*"
     ],
     "special": "divorce",
-    "text": "La separación obliga a repartir bienes. Tenés que elegir qué parte de tu patrimonio conservar."
+    "text": "El matrimonio llegó a su fin. Esta vez no hay forma de vender el auto antes y esquivar el reparto."
   },
   {
     "id": "oferta",

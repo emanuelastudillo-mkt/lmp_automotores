@@ -170,7 +170,7 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.13</div>
+    <div class="version">prototipo privado · v0.14</div>
   </div>
 </header>
 
@@ -407,6 +407,10 @@ function normalSaleValue(){
   const conditionFactor=.50+state.car.condition/230;
   const originalityFactor=.88+state.car.originality/650;
   return Math.max(150,Math.round(market*conditionFactor*originalityFactor));
+}
+function divorcePending(){
+  const pending=state?.pendingEvent ? eventById(state.pendingEvent.id) : null;
+  return pending?.special==='divorce';
 }
 function currentSaleOffer(){
   if(!state.car)return null;
@@ -696,13 +700,13 @@ function renderGarage(){
         <div class="cost-line"><span>Próxima reparación</span><strong>x${repairMultiplier().toFixed(2)}</strong></div>
 
         <div class="canonical"><strong>Historia del modelo:</strong><br>${car.eventoCanonico}</div>
-        <button class="car-select" id="sellCarNow" style="width:100%;margin-top:12px">Vender ahora · ${currentSaleOffer().mood} · ${money(currentSaleOffer().amount)}</button>
-        <button class="ghost" id="openMarket" style="width:100%;margin-top:8px">Ver mercado / cambiar auto</button>
+        <button class="car-select" id="sellCarNow" style="width:100%;margin-top:12px" ${divorcePending()?'disabled':''}>${divorcePending()?'Venta bloqueada durante el divorcio':`Vender ahora · ${currentSaleOffer().mood} · ${money(currentSaleOffer().amount)}`}</button>
+        <button class="ghost" id="openMarket" style="width:100%;margin-top:8px" ${divorcePending()?'disabled':''}>${divorcePending()?'Mercado bloqueado durante el divorcio':'Ver mercado / cambiar auto'}</button>
       </div>
     </div>`;
 
-  $('#sellCarNow').onclick=()=>sellCurrentCarOffer();
-  $('#openMarket').onclick=()=>openMarket(false);
+  if(!$('#sellCarNow').disabled)$('#sellCarNow').onclick=()=>sellCurrentCarOffer();
+  if(!$('#openMarket').disabled)$('#openMarket').onclick=()=>openMarket(false);
 }
 function eligibleEvents(){
   const car=currentCar();
@@ -1029,11 +1033,26 @@ function renderSpecialEvent(event,car,forcedText){
   if(event.special==='divorce'){
     const half=Math.round(state.money*.5);
     const carValue=normalSaleValue();
+
+    if(!state.pendingEvent.divorceVariant){
+      const variants=[
+        {title:'Tu mamá tenía razón',text:'Al final, todas esas discusiones no eran sólo por el auto. Llegó el momento de repartir las pérdidas.'},
+        {title:'Tus amigos te avisaron',text:'Ellos lo vieron venir bastante antes que vos. Ahora toca decidir qué parte de tu vida sobre ruedas se queda en el camino.'},
+        {title:'Todos se dieron cuenta antes que vos',text:'Las señales estaban por todos lados, pero preferiste mirar el tablero. El divorcio ya es inevitable.'},
+        {title:'Ese auto atrajo muchas malas influencias para tu matrimonio',text:'Entre gastos, salidas, talleres y obsesiones, el auto terminó siendo parte de una discusión mucho más grande.'},
+        {title:'“Vendelo”, te dijeron. No era por el auto.',text:'Pensaste que la discusión era mecánica. Resultó ser bastante más personal.'},
+        {title:'El garage estaba mejor que la relación',text:'El auto recibió más atención, tiempo y dinero del que alguien estaba dispuesto a tolerar.'}
+      ];
+      state.pendingEvent.divorceVariant=variants[rand(0,variants.length-1)];
+      persist();
+    }
+    const variant=state.pendingEvent.divorceVariant;
+
     $('#eventCard').innerHTML=`
       <div class="event-icon">${event.icon}</div>
-      <span class="eyebrow">Evento personal</span>
-      <h2>${event.title}</h2>
-      <p>${event.text}</p>
+      <span class="eyebrow">Evento personal · divorcio ${(state.divorceCount||0)+1}/3</span>
+      <h2>${variant.title}</h2>
+      <p>${variant.text}</p>
       <div class="choices">
         ${specialButton('💵','Entregar el 50% del dinero',`Perdés ${money(half)} y conservás el auto.`,'divorce-money')}
         ${specialButton('🚗','Entregar el auto',`Conservás tu dinero, pero perdés el vehículo sin cobrar ${money(carValue)}.`,'divorce-car')}
@@ -1250,7 +1269,7 @@ function resolveFriendRepair(event,cost,effects=null){
   completeEvent(event,text);
 }
 function sellCurrentCarOffer(){
-  if(!state.car)return;
+  if(!state.car || divorcePending())return;
   const offer=currentSaleOffer();
   const car=currentCar();
   const history=state.history.at(-1);
@@ -1435,6 +1454,7 @@ function waitWithoutCar(){
   renderGame();
 }
 function openMarket(force=false){
+  if(divorcePending() && !force)return;
   $('#marketModal').classList.add('open');
   $('#marketTitle').textContent=`Mercado ${state.year} · poder de compra ${money(buyingPower())}`;
 

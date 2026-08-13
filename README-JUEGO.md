@@ -1,3 +1,25 @@
+# Tu vida sobre ruedas — v0.14
+
+Base: v0.13.
+
+## Cambios v0.14
+
+- Corregido el exploit del divorcio:
+  - mientras el evento está pendiente, **Vender ahora** queda bloqueado;
+  - también queda bloqueado el acceso voluntario al mercado/cambio de auto;
+  - la función de venta tiene una protección adicional para impedir saltarse el evento por código.
+- El divorcio conserva sus dos decisiones reales:
+  - entregar el 50% del dinero y conservar el auto;
+  - entregar el auto y conservar el dinero.
+- El evento de divorcio ahora usa títulos y textos irónicos aleatorios, entre ellos:
+  - “Tu mamá tenía razón”;
+  - “Tus amigos te avisaron”;
+  - “Todos se dieron cuenta antes que vos”;
+  - “Ese auto atrajo muchas malas influencias para tu matrimonio”.
+- La variante elegida queda fija mientras el evento esté abierto.
+
+---
+
 # Tu vida sobre ruedas — v0.13
 
 Base: v0.12.
