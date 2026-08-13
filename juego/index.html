@@ -192,7 +192,7 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.21</div>
+    <div class="version">prototipo privado · v0.22</div>
   </div>
 </header>
 
@@ -1889,7 +1889,7 @@ function finish(){
     <div class="stats">
       <div class="stat"><span>Dinero final</span><strong>${money(liquid)}</strong></div>
       <div class="stat highlight"><span>Valor actual del auto</span><strong>${car?money(vehicleValue()):'—'}</strong></div>
-      <div class="stat"><span>Valor teórico total</span><strong>${money(theoretical)}</strong></div>
+      <div class="stat"><span>Valor teórico total</span><strong>${moneyDisplay(theoretical)}</strong></div>
       <div class="stat"><span>Ingresos acumulados</span><strong>${money(state.totalIncome)}</strong></div>
       <div class="stat"><span>Gastos de uso</span><strong>${money(state.totalRunningCosts)}</strong></div>
       <div class="stat"><span>Popularidad máxima</span><strong>${flameIcons(fanFlamesFromCount(state.fans||0))||'—'}</strong></div>

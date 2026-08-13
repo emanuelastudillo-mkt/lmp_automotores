@@ -1,3 +1,18 @@
+# Tu vida sobre ruedas — v0.22
+
+Base: v0.21.
+
+## Cambios v0.22
+
+- El dinero ahora puede quedar por debajo de cero cuando los gastos anuales o el mantenimiento de la colección superan los fondos disponibles.
+- Cuando existe deuda, el saldo se muestra como un número **negativo y rojo**.
+- Ejemplo visual: `-USD 1.250`.
+- La deuda reduce el poder de compra y no permite comprar vehículos mientras el saldo disponible sea insuficiente.
+- Los ingresos futuros primero compensan automáticamente el saldo negativo.
+- Se mantiene la lógica de impedir decisiones pagas que el jugador no puede afrontar; la deuda surge principalmente de gastos inevitables/recurrentes.
+
+---
+
 # Tu vida sobre ruedas — v0.21
 
 Base: v0.20.
