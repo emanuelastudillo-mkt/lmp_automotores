@@ -1,3 +1,40 @@
+# Tu vida sobre ruedas — v0.31
+
+Base: v0.30.
+
+## Garage y colección intercambiables
+
+- Comprar otro vehículo **ya no vende automáticamente** el auto actual.
+- Si ya tenés un auto y comprás otro:
+  - el actual pasa directamente a **Mi colección**;
+  - no recibís dinero por él;
+  - el nuevo vehículo pasa a ser el auto de uso.
+- Por este cambio, el valor del auto actual ya no se suma al poder de compra del mercado:
+  - para comprar otro auto necesitás tener el efectivo disponible;
+  - si querés usar el valor del auto actual, primero debés venderlo explícitamente.
+- Cada auto de la colección ahora tiene:
+  - **Usar / intercambiar**;
+  - **Vender**.
+- Al elegir un auto de la colección:
+  - el auto actual se guarda automáticamente;
+  - el seleccionado vuelve a ser el auto de uso;
+  - no se compra ni se vende nada durante el intercambio.
+- Si no tenés auto actual, podés elegir directamente **Usar este auto**.
+- Al volver desde la colección se conservan:
+  - año de la unidad;
+  - Estado;
+  - Originalidad;
+  - Performance;
+  - reparaciones;
+  - inversiones;
+  - daños de valor;
+  - fans;
+  - progreso de popularidad;
+  - valor ganado mientras estuvo guardado.
+- Las partidas anteriores migran automáticamente los datos que faltaban en unidades antiguas de colección.
+
+---
+
 # Tu vida sobre ruedas — v0.30
 
 Base: v0.29.

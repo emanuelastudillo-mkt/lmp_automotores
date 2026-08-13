@@ -713,13 +713,33 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
   }
 }
 
+
+.collection-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+  margin-top:7px;
+}
+.collection-actions button{
+  width:100%;
+  margin:0!important;
+  padding:8px 7px;
+}
+@media(max-width:580px){
+  .collection-actions{gap:5px}
+  .collection-actions button{
+    min-height:36px;
+    font-size:8px;
+  }
+}
+
 </style>
 </head>
 <body>
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.30</div>
+    <div class="version">prototipo privado · v0.31</div>
   </div>
 </header>
 
@@ -909,11 +929,170 @@ function collectionItem(uid){
 function ensureCollectionIds(){
   for(const item of state.collection||[]){
     if(!item.uid)item.uid=`${item.id}-${item.collectedYear||state.year}-${Math.random().toString(36).slice(2,8)}`;
+    const car=carById(item.id);
+    if(item.modelYear===undefined)item.modelYear=car?.desde??state.year;
+    if(item.purchaseType===undefined)item.purchaseType='colección';
+    if(item.repairs===undefined)item.repairs=0;
+    if(item.investedValue===undefined)item.investedValue=0;
+    if(item.valueDamage===undefined)item.valueDamage=0;
+    if(item.expenseModifier===undefined)item.expenseModifier=0;
+    if(item.fanStatusLevel===undefined)item.fanStatusLevel=0;
   }
 }
 function collectionSaleValue(item){
   const factor=.82+Math.random()*.14;
   return Math.max(150,Math.round(collectionValue(item)*factor));
+}
+function storeActiveCarInCollection(reason='colección',logEvent=true){
+  if(!state.car)return null;
+  updateCurrentCarLegacy();
+
+  const car=currentCar();
+  if(!car)return null;
+
+  const history=state.history.at(-1);
+  const value=vehicleValue();
+  const status=carStatus();
+  const flames=fanFlamesFromCount(state.car.fans||0);
+  const collectionUid=`${car.id}-${state.year}-${Math.random().toString(36).slice(2,8)}`;
+
+  const item={
+    uid:collectionUid,
+    id:car.id,
+    brand:car.marca,
+    model:car.modelo,
+    modelYear:state.car.modelYear??car.desde,
+    purchaseType:state.car.purchaseType||'usado',
+    collectedYear:state.year,
+    purchaseYear:state.car.purchaseYear,
+    purchasePrice:state.car.purchasePrice,
+    valueAtCollection:value,
+    collectionValue:value,
+    condition:state.car.condition,
+    originality:state.car.originality,
+    performance:state.car.performance,
+    repairs:state.car.repairs||0,
+    investedValue:state.car.investedValue||0,
+    valueDamage:state.car.valueDamage||0,
+    expenseModifier:state.car.expenseModifier||0,
+    stars:status.stars,
+    flames,
+    fans:state.car.fans||0,
+    fanStatusLevel:state.car.fanStatusLevel||0,
+    yearsStored:0
+  };
+
+  state.collection=state.collection||[];
+  state.collection.push(item);
+
+  if(history){
+    history.storedYear=state.year;
+    history.saleReason='colección';
+    history.collected=true;
+    history.collectionUid=collectionUid;
+  }
+
+  if(logEvent){
+    state.events.unshift({
+      year:state.year,
+      text:`Guardaste ${car.marca} ${car.modelo} en tu colección con un valor estimado de ${money(value)}.`
+    });
+  }
+
+  state.car=null;
+  state.saleOffer=null;
+  state.flags={};
+  return item;
+}
+function activeCarFromCollectionItem(item){
+  const car=carById(item.id);
+  if(!car)return null;
+
+  const active={
+    id:item.id,
+    modelYear:item.modelYear??car.desde,
+    purchaseType:item.purchaseType||'colección',
+    condition:item.condition??88,
+    originality:item.originality??92,
+    performance:item.performance??50,
+    repairs:item.repairs||0,
+    investedValue:item.investedValue||0,
+    valueDamage:item.valueDamage||0,
+    expenseModifier:item.expenseModifier||0,
+    fans:item.fans||0,
+    fanStatusLevel:item.fanStatusLevel||0,
+    purchasePrice:item.purchasePrice||collectionValue(item),
+    purchaseYear:item.purchaseYear??state.year
+  };
+
+  // Si ganó valor mientras estuvo guardado, trasladamos esa apreciación
+  // al valor activo sin alterar Estado, Originalidad ni Performance.
+  const reference=marketPrice(car,state.year,active.modelYear);
+  const conditionFactor=.62+active.condition/235;
+  const originalityFactor=.84+active.originality/520;
+  const rawValue=Math.max(
+    300,
+    Math.round(reference*conditionFactor*originalityFactor + active.investedValue - active.valueDamage)
+  );
+  const storedValue=collectionValue(item);
+  if(storedValue>rawValue){
+    active.investedValue+=storedValue-rawValue;
+  }
+
+  return active;
+}
+function useCollectionCar(uid){
+  if(vehicleActionsLocked())return;
+  ensureCollectionIds();
+
+  const item=collectionItem(uid);
+  if(!item)return;
+
+  const selectedCar=carById(item.id);
+  if(!selectedCar)return;
+
+  const hadCurrent=!!state.car;
+  const previous=currentCar();
+  if(hadCurrent){
+    storeActiveCarInCollection('intercambio',false);
+  }
+
+  state.collection=(state.collection||[]).filter(entry=>entry.uid!==uid);
+
+  const oldHistory=[...state.history].reverse().find(h=>h.collectionUid===uid);
+  if(oldHistory){
+    oldHistory.collectionReactivatedYear=state.year;
+  }
+
+  state.car=activeCarFromCollectionItem(item);
+  state.saleOffer=null;
+  state.flags={};
+
+  state.history.push({
+    id:item.id,
+    brand:item.brand,
+    model:item.model,
+    modelYear:state.car.modelYear,
+    purchaseType:'reactivado desde colección',
+    boughtYear:state.year,
+    boughtFor:0,
+    maxStars:item.stars||1,
+    maxFlames:item.flames||0,
+    reactivatedFromCollection:true,
+    previousCollectionUid:uid
+  });
+
+  state.events.unshift({
+    year:state.year,
+    text:hadCurrent
+      ? `Guardaste ${previous.marca} ${previous.modelo} y volviste a usar ${item.brand} ${item.model} de tu colección.`
+      : `Volviste a usar ${item.brand} ${item.model} de tu colección.`
+  });
+
+  state.decisions++;
+  persist();
+  closeMarket();
+  renderGame();
 }
 function sellCollectionCar(uid,amount=null,reason='venta desde colección',silent=false){
   ensureCollectionIds();
@@ -924,7 +1103,7 @@ function sellCollectionCar(uid,amount=null,reason='venta desde colección',silen
   state.collection=(state.collection||[]).filter(entry=>entry.uid!==uid);
   const reversedHistory=[...state.history].reverse();
   const history=reversedHistory.find(h=>h.collectionUid===uid)
-    || reversedHistory.find(h=>h.id===item.id && h.collected && !h.collectionSoldYear);
+    || reversedHistory.find(h=>h.id===item.id && h.collected && !h.collectionSoldYear && !h.collectionReactivatedYear);
   if(history){
     history.collectionSoldYear=state.year;
     history.collectionSoldFor=price;
@@ -951,8 +1130,11 @@ function collectionPanelMarkup(){
           <div class="collection-thumb">${carImageMarkup(car)}</div>
           <div class="collection-row-info">
             <strong>${item.brand} ${item.model}</strong><br>
-            <small>Valor estimado ${money(collectionValue(item))} · ${starIcons(item.stars||1)} ${flameIcons(item.flames||0)||''}</small>
-            <button class="ghost" data-sell-collection="${item.uid}">Vender de la colección</button>
+            <small>Valor estimado ${money(collectionValue(item))} · Estado ${Math.round(item.condition??0)} · ${starIcons(item.stars||1)} ${flameIcons(item.flames||0)||''}</small>
+            <div class="collection-actions">
+              <button class="car-select" data-use-collection="${item.uid}" ${vehicleActionsLocked()?'disabled':''}>${state.car?'Usar / intercambiar':'Usar este auto'}</button>
+              <button class="ghost" data-sell-collection="${item.uid}" ${vehicleActionsLocked()?'disabled':''}>Vender</button>
+            </div>
           </div>
         </div>`;
       }).join('')}
@@ -960,8 +1142,16 @@ function collectionPanelMarkup(){
   </details>`;
 }
 function bindCollectionButtons(){
+  document.querySelectorAll('[data-use-collection]').forEach(button=>{
+    button.onclick=()=>{
+      if(button.disabled || vehicleActionsLocked())return;
+      useCollectionCar(button.dataset.useCollection);
+    };
+  });
+
   document.querySelectorAll('[data-sell-collection]').forEach(button=>{
     button.onclick=()=>{
+      if(button.disabled || vehicleActionsLocked())return;
       const item=collectionItem(button.dataset.sellCollection);
       if(!item)return;
       const price=collectionSaleValue(item);
@@ -1201,7 +1391,7 @@ function scrapValue(){
   return Math.max(120,Math.round(marketPrice(currentCar(),state.year,state.car.modelYear)*(0.08+Math.random()*.07)));
 }
 function buyingPower(){
-  return state.money+(state.car?normalSaleValue():0);
+  return Math.max(0,state.money);
 }
 function randomSubset(list,count){
   return [...list].sort(()=>Math.random()-.5).slice(0,count);
@@ -1298,18 +1488,13 @@ function buyCar(id,first=false,unit=null){
   if(!next)return;
   const price=unit?.price??marketPrice(next,state.year);
 
-  const power=state.money+(state.car&&!first?normalSaleValue():0);
+  const power=state.money;
   if(power<price)return;
 
+  let storedCurrent=null;
   if(state.car&&!first){
-    const current=currentCar();
-    const sold=normalSaleValue();
-    state.money+=sold;
-    const history=state.history.at(-1);
-    history.soldYear=state.year;
-    history.soldFor=sold;
-    history.saleReason='mercado';
-    state.events.unshift({year:state.year,text:`Vendiste ${current.marca} ${current.modelo} por ${money(sold)} para cambiar de auto.`});
+    storedCurrent=currentCar();
+    storeActiveCarInCollection('cambio por compra',false);
   }
 
   state.money-=price;
@@ -1349,7 +1534,9 @@ function buyCar(id,first=false,unit=null){
       : '';
   state.events.unshift({
     year:state.year,
-    text:`Compraste ${next.marca} ${next.modelo}${purchaseLabel?` ${purchaseLabel}`:''} por ${money(price)}.`
+    text:storedCurrent
+      ? `Guardaste ${storedCurrent.marca} ${storedCurrent.modelo} en tu colección y compraste ${next.marca} ${next.modelo}${purchaseLabel?` ${purchaseLabel}`:''} por ${money(price)}.`
+      : `Compraste ${next.marca} ${next.modelo}${purchaseLabel?` ${purchaseLabel}`:''} por ${money(price)}.`
   });
   if(unit?.type==='used' && unit.stockId){
     state.usedMarketStock=(state.usedMarketStock||[]).filter(item=>item.stockId!==unit.stockId);
@@ -1519,7 +1706,7 @@ function renderGarage(){
 
         <div class="canonical garage-secondary"><strong>Historia del modelo:</strong><br>${car.eventoCanonico}</div>
         <div class="garage-actions">
-          <button class="ghost" id="collectCarNow" data-mobile-label="Colección" ${vehicleActionsLocked()?'disabled':''}>${vehicleActionsLocked()?'Acción disponible después de continuar':'Guardar en mi colección'}</button>
+          <button class="ghost" id="collectCarNow" data-mobile-label="Colección" ${vehicleActionsLocked()?'disabled':''}>${vehicleActionsLocked()?'Acción disponible después de continuar':'Guardar / quedar sin auto'}</button>
           <button class="car-select" id="sellCarNow" data-mobile-label="Vender" ${vehicleActionsLocked()?'disabled':''}>${vehicleActionsLocked()?'Acción disponible después de continuar':`Vender ahora · ${currentSaleOffer().mood} · ${money(currentSaleOffer().amount)}`}</button>
           <button class="ghost" id="openMarket" data-mobile-label="Mercado" ${vehicleActionsLocked()?'disabled':''}>${vehicleActionsLocked()?'Acción disponible después de continuar':'Ver mercado / cambiar auto'}</button>
         </div>
@@ -2326,50 +2513,11 @@ function resolveFriendRepair(event,cost,effects=null){
 }
 function collectCurrentCar(){
   if(!state.car || vehicleActionsLocked())return;
-  updateCurrentCarLegacy();
-  const car=currentCar();
-  const history=state.history.at(-1);
-  const value=vehicleValue();
-  const status=carStatus();
-  const flames=fanFlamesFromCount(state.car.fans||0);
-
-  state.collection=state.collection||[];
-  const collectionUid=`${car.id}-${state.year}-${Math.random().toString(36).slice(2,8)}`;
-  state.collection.push({
-    uid:collectionUid,
-    id:car.id,
-    brand:car.marca,
-    model:car.modelo,
-    collectedYear:state.year,
-    purchaseYear:state.car.purchaseYear,
-    purchasePrice:state.car.purchasePrice,
-    valueAtCollection:value,
-    collectionValue:value,
-    condition:state.car.condition,
-    originality:state.car.originality,
-    performance:state.car.performance,
-    stars:status.stars,
-    flames,
-    fans:state.car.fans||0,
-    yearsStored:0
-  });
-
-  history.soldYear=state.year;
-  history.soldFor=0;
-  history.saleReason='colección';
-  history.collected=true;
-  history.collectionUid=collectionUid;
-  state.events.unshift({
-    year:state.year,
-    text:`Guardaste ${car.marca} ${car.modelo} en tu colección con un valor de ${money(value)}.`
-  });
-
-  state.car=null;
-  state.saleOffer=null;
+  storeActiveCarInCollection('colección',true);
   state.pendingEvent=null;
   state.decisions++;
   persist();
-  openMarket(true);
+  renderGame();
 }
 function sellCurrentCarOffer(){
   if(!state.car || vehicleActionsLocked())return;
@@ -2808,7 +2956,7 @@ function openMarket(force=false){
 
   const zeroCount=zeroKmMarket().length;
   const usedCount=state.usedMarketStock.length;
-  $('#marketTitle').innerHTML=`Mercado ${state.year} · poder de compra ${moneyDisplay(buyingPower())}`;
+  $('#marketTitle').innerHTML=`Mercado ${state.year} · efectivo disponible ${moneyDisplay(buyingPower())}`;
   const newTab=document.querySelector('[data-market-view="new"]');
   const usedTab=document.querySelector('[data-market-view="used"]');
   if(newTab)newTab.textContent=`0 km · ${zeroCount}`;
