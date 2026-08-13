@@ -1,3 +1,50 @@
+# Tu vida sobre ruedas — v0.27
+
+Base: v0.26.
+
+## Nuevo sistema de mercado
+
+### Mercado 0 km
+
+- Nueva pestaña **0 km**.
+- Solo aparecen modelos que, según la base `desde/hasta`, estaban efectivamente en producción durante el año de la partida.
+- Las unidades entran con:
+  - Estado 100;
+  - Originalidad 100;
+  - Performance de fábrica 50;
+  - año de unidad igual al año actual.
+- El precio 0 km parte del valor base del modelo con una pequeña reducción cuando el modelo lleva varios años en producción.
+
+### Mercado de usados
+
+- Nueva pestaña **Usados**.
+- Incluye autos de distintas épocas y segmentos, sin el límite anterior de 18 años.
+- Cada publicación representa una unidad individual con:
+  - año propio;
+  - Estado propio;
+  - Originalidad propia;
+  - Performance propia;
+  - precio propio.
+- Se generan cuatro perfiles de unidades:
+  - Para levantar;
+  - Uso normal;
+  - Muy cuidado;
+  - Modificado.
+- El precio del usado considera antigüedad, Estado, Originalidad, Performance y variación de mercado.
+- Al comprarlo, el vehículo conserva exactamente los valores publicados.
+- La antigüedad de eventos, desgaste, choques y motor fundido ahora usa el **año real de la unidad comprada**, no solamente el año de lanzamiento del modelo.
+- El stock de usados queda fijo durante cada año de la partida; cerrar y volver a abrir el mercado no vuelve a generar ofertas distintas.
+- Al avanzar de año se genera un nuevo stock.
+- Una unidad usada comprada se elimina de ese stock.
+
+### Interfaz
+
+- Ambas secciones se manejan con pestañas dentro del mismo mercado.
+- Cada usado muestra Estado, Originalidad y Performance antes de comprar.
+- Se mantiene el diseño mobile full-screen de v0.26.
+
+---
+
 # Tu vida sobre ruedas — v0.26
 
 Base: v0.25.

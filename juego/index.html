@@ -616,13 +616,82 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
   #gameScreen .choice small{font-size:6px}
 }
 
+
+.market-tabs{
+  display:flex;
+  gap:7px;
+  margin:0 0 12px;
+  padding:4px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:#0d0d0f;
+}
+.market-tab{
+  flex:1;
+  border:0;
+  border-radius:9px;
+  padding:10px 12px;
+  background:transparent;
+  color:var(--muted);
+  font-weight:900;
+}
+.market-tab.active{
+  background:#fff;
+  color:#111;
+}
+.market-metrics{
+  display:flex;
+  flex-wrap:wrap;
+  gap:4px;
+  margin-top:5px;
+}
+.market-metrics span{
+  display:inline-block;
+  padding:3px 5px;
+  border-radius:6px;
+  background:#29292e;
+  color:#d7d7db;
+  font-size:7px;
+  font-weight:800;
+}
+.market-empty{
+  grid-column:1/-1;
+  padding:30px 14px;
+  text-align:center;
+  border:1px dashed var(--line);
+  border-radius:14px;
+  color:var(--muted);
+}
+@media(max-width:580px){
+  .market-tabs{
+    flex:0 0 auto;
+    margin-bottom:6px;
+    gap:4px;
+    padding:3px;
+    border-radius:9px;
+  }
+  .market-tab{
+    min-height:34px;
+    padding:6px 8px;
+    font-size:9px;
+  }
+  .market-item>p .market-metrics{
+    margin-top:3px;
+    gap:2px;
+  }
+  .market-metrics span{
+    padding:2px 3px;
+    font-size:5.5px;
+  }
+}
+
 </style>
 </head>
 <body>
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.26</div>
+    <div class="version">prototipo privado · v0.27</div>
   </div>
 </header>
 
@@ -706,6 +775,10 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
       <div><span class="eyebrow">Mercado del año</span><h2 style="margin:4px 0 0" id="marketTitle"></h2></div>
       <button class="ghost" id="closeMarket">Cerrar</button>
     </div>
+    <div class="market-tabs" id="marketTabs">
+      <button class="market-tab" data-market-view="new">0 km</button>
+      <button class="market-tab active" data-market-view="used">Usados</button>
+    </div>
     <div class="market-list" id="marketList"></div>
     <div class="market-wait" id="marketWait">
       <p><strong>Actualmente no tenés auto.</strong>Si todavía no te alcanza para comprar, podés pasar un año sin vehículo y ahorrar el ingreso de ese período.</p>
@@ -720,6 +793,7 @@ const SAVE_KEY='lmp_car_life_v02';
 let CARS=[];
 let EVENTS=[];
 let state=null;
+let marketView='used';
 
 const $=s=>document.querySelector(s);
 const clean=v=>(v??'').toString().trim();
@@ -897,16 +971,23 @@ function ageCollectionOneYear(year){
 function availableCars(year){
   return CARS.filter(car=>car.desde<=year && year-car.desde<=18);
 }
-function marketPrice(car,year){
-  const age=Math.max(0,year-car.desde);
+function marketPrice(car,year,modelYear=null){
+  const unitYear=modelYear??car.desde;
+  const age=Math.max(0,year-unitYear);
   const depreciation=Math.pow(.91,Math.min(age,12));
   const classicYears=Math.max(0,age-22);
   const collectibleBoost=(car.potencialClasico/100)*classicYears*.018;
   return Math.max(900,Math.round(car.precioBaseUSD*depreciation*(1+collectibleBoost)));
 }
+function newCarPrice(car,year){
+  const yearsOnMarket=Math.max(0,year-car.desde);
+  const maturityDiscount=Math.min(.10,yearsOnMarket*.012);
+  return Math.max(900,Math.round(car.precioBaseUSD*(1-maturityDiscount)));
+}
 function vehicleAge(){
   const car=currentCar();
-  return car?Math.max(0,state.year-car.desde):0;
+  const unitYear=state?.car?.modelYear??car?.desde;
+  return car?Math.max(0,state.year-unitYear):0;
 }
 function repairMultiplier(){
   return 1+(state.car?.repairs||0)*.28;
@@ -932,7 +1013,7 @@ function monthlyExpense(){
 }
 function vehicleValue(){
   if(!state.car)return 0;
-  const market=marketPrice(currentCar(),state.year);
+  const market=marketPrice(currentCar(),state.year,state.car.modelYear);
   const conditionFactor=.62+state.car.condition/235;
   const originalityFactor=.84+state.car.originality/520;
   const invested=Math.max(0,state.car.investedValue||0);
@@ -947,9 +1028,9 @@ function vehicleValue(){
 function carStatus(){
   if(!state.car)return {stars:0,name:'Sin auto',score:0,high:false};
   const car=currentCar();
-  const market=Math.max(1,marketPrice(car,state.year));
+  const market=Math.max(1,marketPrice(car,state.year,state.car.modelYear));
   const valueRatio=vehicleValue()/market;
-  const age=Math.max(0,state.year-car.desde);
+  const age=Math.max(0,state.year-(state.car.modelYear??car.desde));
   const score=Math.round(
     state.car.originality*.42 +
     state.car.condition*.23 +
@@ -1005,7 +1086,7 @@ function updateCarFans(){
 function normalSaleValue(){
   if(!state.car)return 0;
   const car=currentCar();
-  const market=marketPrice(car,state.year);
+  const market=marketPrice(car,state.year,state.car.modelYear);
   const conditionFactor=.50+state.car.condition/230;
   const originalityFactor=.88+state.car.originality/650;
   return Math.max(150,Math.round(market*conditionFactor*originalityFactor));
@@ -1041,7 +1122,7 @@ function currentSaleOffer(){
 }
 function scrapValue(){
   if(!state.car)return 0;
-  return Math.max(120,Math.round(marketPrice(currentCar(),state.year)*(0.08+Math.random()*.07)));
+  return Math.max(120,Math.round(marketPrice(currentCar(),state.year,state.car.modelYear)*(0.08+Math.random()*.07)));
 }
 function buyingPower(){
   return state.money+(state.car?normalSaleValue():0);
@@ -1117,7 +1198,9 @@ function beginCareer(name,year,pace='fast'){
     divorceCount:0,
     crashCount:0,
     illegalRaceCount:0,
-    collection:[]
+    collection:[],
+    marketStockYear:null,
+    usedMarketStock:[]
   };
   persist();
   renderStarter();
@@ -1132,10 +1215,10 @@ function renderStarter(){
     button.onclick=()=>buyCar(button.dataset.buy,true);
   });
 }
-function buyCar(id,first=false){
+function buyCar(id,first=false,unit=null){
   const next=CARS.find(car=>car.id===id);
   if(!next)return;
-  const price=marketPrice(next,state.year);
+  const price=unit?.price??marketPrice(next,state.year);
 
   const power=state.money+(state.car&&!first?normalSaleValue():0);
   if(power<price)return;
@@ -1154,9 +1237,11 @@ function buyCar(id,first=false){
   state.money-=price;
   state.car={
     id,
-    condition:88,
-    originality:92,
-    performance:50,
+    modelYear:unit?.modelYear??next.desde,
+    purchaseType:unit?.type??(first?'inicio':'usado'),
+    condition:unit?.condition??88,
+    originality:unit?.originality??92,
+    performance:unit?.performance??50,
     repairs:0,
     investedValue:0,
     valueDamage:0,
@@ -1172,12 +1257,25 @@ function buyCar(id,first=false){
     id,
     brand:next.marca,
     model:next.modelo,
+    modelYear:state.car.modelYear,
+    purchaseType:state.car.purchaseType,
     boughtYear:state.year,
     boughtFor:price,
     maxStars:1,
     maxFlames:0
   });
-  state.events.unshift({year:state.year,text:`Compraste ${next.marca} ${next.modelo} por ${money(price)}.`});
+  const purchaseLabel=unit?.type==='new'
+    ? `0 km`
+    : unit?.type==='used'
+      ? `usado ${unit.modelYear}`
+      : '';
+  state.events.unshift({
+    year:state.year,
+    text:`Compraste ${next.marca} ${next.modelo}${purchaseLabel?` ${purchaseLabel}`:''} por ${money(price)}.`
+  });
+  if(unit?.type==='used' && unit.stockId){
+    state.usedMarketStock=(state.usedMarketStock||[]).filter(item=>item.stockId!==unit.stockId);
+  }
   state.pendingEvent=null;
   state.pendingResult=null;
   state.nextEventYear=Math.min(END_YEAR,state.year+nextGap());
@@ -2438,13 +2536,150 @@ function renderGame(){
   persist();
   setTimeout(playYearAnimation,80);
 }
-function marketCandidates(){
-  return availableCars(state.year)
-    .filter(car=>!state.car||car.id!==state.car.id)
-    .map(car=>({...car,market:marketPrice(car,state.year)}))
-    .sort((a,b)=>a.market-b.market)
-    .filter((car,index)=>car.market<=buyingPower()*1.25||index<12)
-    .slice(0,18);
+function zeroKmMarket(){
+  return CARS
+    .filter(car=>car.desde<=state.year && state.year<=(car.hasta??state.year))
+    .map(car=>({
+      stockId:`new-${state.year}-${car.id}`,
+      type:'new',
+      id:car.id,
+      modelYear:state.year,
+      condition:100,
+      originality:100,
+      performance:50,
+      price:newCarPrice(car,state.year)
+    }))
+    .sort((a,b)=>a.price-b.price);
+}
+function usedQualityProfile(){
+  const roll=Math.random();
+  if(roll<.22){
+    return {
+      label:'Para levantar',
+      condition:rand(22,48),
+      originality:rand(35,74),
+      performance:rand(25,55)
+    };
+  }
+  if(roll<.62){
+    return {
+      label:'Uso normal',
+      condition:rand(50,78),
+      originality:rand(55,90),
+      performance:rand(38,70)
+    };
+  }
+  if(roll<.84){
+    return {
+      label:'Muy cuidado',
+      condition:rand(76,95),
+      originality:rand(78,100),
+      performance:rand(45,72)
+    };
+  }
+  return {
+    label:'Modificado',
+    condition:rand(58,88),
+    originality:rand(28,65),
+    performance:rand(72,100)
+  };
+}
+function usedListingPrice(car,modelYear,condition,originality,performance){
+  const reference=marketPrice(car,state.year,modelYear);
+  const conditionFactor=.50+condition/210;
+  const originalityFactor=.78+originality/520;
+  const performanceFactor=1+Math.max(0,performance-50)*.0025-Math.max(0,50-performance)*.0015;
+  const negotiation=.88+Math.random()*.22;
+  return Math.max(250,Math.round(reference*conditionFactor*originalityFactor*performanceFactor*negotiation));
+}
+function generateUsedMarket(){
+  const pool=CARS.filter(car=>car.desde<state.year);
+  if(!pool.length)return [];
+
+  const target=Math.min(28,Math.max(12,pool.length));
+  const stock=[];
+  let attempts=0;
+
+  while(stock.length<target && attempts<target*12){
+    attempts++;
+    const car=pool[rand(0,pool.length-1)];
+    const maxYear=Math.min(car.hasta??state.year-1,state.year-1);
+    if(maxYear<car.desde)continue;
+    const modelYear=rand(car.desde,maxYear);
+    const quality=usedQualityProfile();
+    const price=usedListingPrice(
+      car,
+      modelYear,
+      quality.condition,
+      quality.originality,
+      quality.performance
+    );
+
+    stock.push({
+      stockId:`used-${state.year}-${car.id}-${modelYear}-${stock.length}-${Math.random().toString(36).slice(2,7)}`,
+      type:'used',
+      id:car.id,
+      modelYear,
+      condition:quality.condition,
+      originality:quality.originality,
+      performance:quality.performance,
+      quality:quality.label,
+      price
+    });
+  }
+
+  return stock.sort((a,b)=>a.price-b.price);
+}
+function ensureUsedMarket(){
+  if(state.marketStockYear!==state.year || !Array.isArray(state.usedMarketStock)){
+    state.marketStockYear=state.year;
+    state.usedMarketStock=generateUsedMarket();
+    persist();
+  }
+  return state.usedMarketStock;
+}
+function marketUnitMarkup(unit){
+  const car=carById(unit.id);
+  if(!car)return '';
+  const isNew=unit.type==='new';
+  const subtitle=isNew
+    ? `${car.segmento} · ${unit.modelYear} · 0 km`
+    : `${car.segmento} · ${unit.modelYear} · ${unit.quality}`;
+  const metrics=isNew
+    ? `<span>Estado 100</span><span>Originalidad 100</span><span>Performance ${unit.performance}</span>`
+    : `<span>Estado ${unit.condition}</span><span>Originalidad ${unit.originality}</span><span>Performance ${unit.performance}</span>`;
+
+  return `<article class="market-item">
+    <div class="market-thumb">${carImageMarkup(car)}</div>
+    <span class="make">${car.marca}</span>
+    <h4>${car.modelo}</h4>
+    <p>${subtitle}<span class="market-metrics">${metrics}</span></p>
+    <strong>${money(unit.price)}</strong>
+    <button data-market-stock="${unit.stockId}" data-market-type="${unit.type}" ${buyingPower()>=unit.price?'':'disabled'}>Comprar</button>
+  </article>`;
+}
+function marketUnits(){
+  return marketView==='new' ? zeroKmMarket() : ensureUsedMarket();
+}
+function renderMarketView(){
+  const units=marketUnits();
+  document.querySelectorAll('[data-market-view]').forEach(button=>{
+    button.classList.toggle('active',button.dataset.marketView===marketView);
+  });
+  $('#marketList').innerHTML=units.length
+    ? units.map(marketUnitMarkup).join('')
+    : `<div class="market-empty">No hay unidades disponibles en este mercado para ${state.year}.</div>`;
+
+  document.querySelectorAll('[data-market-stock]').forEach(button=>{
+    button.onclick=()=>{
+      const type=button.dataset.marketType;
+      const stockId=button.dataset.marketStock;
+      const unit=type==='new'
+        ? zeroKmMarket().find(item=>item.stockId===stockId)
+        : ensureUsedMarket().find(item=>item.stockId===stockId);
+      if(unit)buyCar(unit.id,false,unit);
+    };
+  });
 }
 function waitWithoutCar(){
   if(state.car||state.year>=END_YEAR)return;
@@ -2475,20 +2710,23 @@ function waitWithoutCar(){
 function openMarket(force=false){
   if(divorcePending() && !force)return;
   $('#marketModal').classList.add('open');
+  ensureUsedMarket();
+
+  const zeroCount=zeroKmMarket().length;
+  const usedCount=state.usedMarketStock.length;
   $('#marketTitle').innerHTML=`Mercado ${state.year} · poder de compra ${moneyDisplay(buyingPower())}`;
+  const newTab=document.querySelector('[data-market-view="new"]');
+  const usedTab=document.querySelector('[data-market-view="used"]');
+  if(newTab)newTab.textContent=`0 km · ${zeroCount}`;
+  if(usedTab)usedTab.textContent=`Usados · ${usedCount}`;
 
-  $('#marketList').innerHTML=marketCandidates().map(car=>`
-    <article class="market-item">
-      <div class="market-thumb">${carImageMarkup(car)}</div>
-      <span class="make">${car.marca}</span>
-      <h4>${car.modelo}</h4>
-      <p>${car.segmento} · desde ${car.desde} · ${money(car.gastoMensualBaseUSD)}/mes base</p>
-      <strong>${money(car.market)}</strong>
-      <button data-market-buy="${car.id}" ${buyingPower()>=car.market?'':'disabled'}>Comprar</button>
-    </article>`).join('');
+  renderMarketView();
 
-  document.querySelectorAll('[data-market-buy]').forEach(button=>{
-    button.onclick=()=>buyCar(button.dataset.marketBuy,false);
+  document.querySelectorAll('[data-market-view]').forEach(button=>{
+    button.onclick=()=>{
+      marketView=button.dataset.marketView;
+      renderMarketView();
+    };
   });
 
   const stranded=force&&!state.car&&state.year<END_YEAR;
@@ -2646,6 +2884,8 @@ $('#marketModal').addEventListener('click',event=>{
     if(state && state.crashCount===undefined)state.crashCount=0;
     if(state && state.illegalRaceCount===undefined)state.illegalRaceCount=0;
     if(state && state.collection===undefined)state.collection=[];
+    if(state && state.marketStockYear===undefined)state.marketStockYear=null;
+    if(state && !Array.isArray(state.usedMarketStock))state.usedMarketStock=[];
     ensureCollectionIds();
     if(state?.car && state.car.fans===undefined)state.car.fans=0;
     if(state?.car && state.car.fanStatusLevel===undefined)state.car.fanStatusLevel=0;
