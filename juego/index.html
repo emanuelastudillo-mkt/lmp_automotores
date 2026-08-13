@@ -125,6 +125,11 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
 .market-item strong{display:block;margin:10px 0;font-size:16px}
 .market-item button{width:100%;border:0;border-radius:9px;padding:9px;background:#fff;color:#111;font-weight:900}
 .market-item button:disabled{opacity:.35}
+.market-wait{margin-top:14px;padding:15px;border:1px solid var(--line);border-radius:14px;background:#171719;display:none;gap:12px;align-items:center;justify-content:space-between}
+.market-wait.open{display:flex}
+.market-wait p{margin:0;color:var(--muted);font-size:10px;line-height:1.5}
+.market-wait strong{display:block;color:#fff;font-size:12px;margin-bottom:3px}
+.market-wait button{flex:0 0 auto;border:0;border-radius:10px;padding:11px 14px;background:#fff;color:#111;font-weight:900}
 .result{max-width:780px;margin:35px auto;text-align:center}
 .result h2{font-size:clamp(42px,8vw,80px);line-height:.9;letter-spacing:-.06em;margin:12px 0}
 .result-card{margin-top:25px;text-align:left;padding:22px;border:1px solid var(--line);border-radius:21px;background:#171719}
@@ -218,6 +223,10 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
       <button class="ghost" id="closeMarket">Cerrar</button>
     </div>
     <div class="market-list" id="marketList"></div>
+    <div class="market-wait" id="marketWait">
+      <p><strong>Actualmente no tenés auto.</strong>Si todavía no te alcanza para comprar, podés pasar un año sin vehículo y ahorrar el ingreso de ese período.</p>
+      <button id="waitOneYear">Pasar 1 año y ahorrar</button>
+    </div>
   </div>
 </div>
 
@@ -918,6 +927,21 @@ function marketCandidates(){
     .filter((car,index)=>car.market<=buyingPower()*1.25||index<12)
     .slice(0,18);
 }
+function waitWithoutCar(){
+  if(state.car||state.year>=END_YEAR)return;
+
+  const income=rand(100,500);
+  state.money+=income;
+  state.totalIncome+=income;
+  state.year=Math.min(END_YEAR,state.year+1);
+  state.events.unshift({
+    year:state.year,
+    text:`Pasó 1 año sin auto. Ahorraste ${money(income)} y ahora tenés ${money(state.money)}.`
+  });
+  persist();
+  closeMarket();
+  renderGame();
+}
 function openMarket(force=false){
   $('#marketModal').classList.add('open');
   $('#marketTitle').textContent=`Mercado ${state.year} · poder de compra ${money(buyingPower())}`;
@@ -935,6 +959,9 @@ function openMarket(force=false){
     button.onclick=()=>buyCar(button.dataset.marketBuy,false);
   });
 
+  const stranded=force&&!state.car&&state.year<END_YEAR;
+  $('#marketWait').classList.toggle('open',stranded);
+  $('#waitOneYear').onclick=stranded?waitWithoutCar:null;
   $('#closeMarket').style.display=force?'none':'inline-block';
 }
 function closeMarket(){
