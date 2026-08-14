@@ -1295,6 +1295,29 @@ button:disabled .ui-icon{
   }
 }
 
+
+/* v0.43 — avoid duplicate primary information */
+.value-box.single{
+  grid-template-columns:1fr;
+}
+.timeline-top .year-pill{
+  display:none;
+}
+
+
+.market-wait button:disabled{
+  opacity:.34;
+  cursor:not-allowed;
+  background:#2b2b2f;
+  color:#85858b;
+}
+@media(max-width:580px){
+  .market-wait{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) auto;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1343,7 +1366,7 @@ button:disabled .ui-icon{
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.42</div>
+    <div class="version">prototipo privado · v0.43</div>
   </div>
 </header>
 
@@ -1432,9 +1455,9 @@ button:disabled .ui-icon{
       <button class="market-tab active" data-market-view="used">Usados</button>
     </div>
     <div class="market-list" id="marketList"></div>
-    <div class="market-wait" id="marketWait">
-      <p><strong>Actualmente no tenés auto.</strong>Si todavía no te alcanza para comprar, podés pasar un año sin vehículo y ahorrar el ingreso de ese período.</p>
-      <button id="waitOneYear">Pasar 1 año y ahorrar</button>
+    <div class="market-wait open" id="marketWait">
+      <p id="marketWaitText"><strong>Esperar 1 año y ahorrar</strong>Esta opción sólo se habilita cuando no tenés ningún vehículo activo.</p>
+      <button id="waitOneYear" disabled>Esperar 1 año y ahorrar</button>
     </div>
   </div>
 </div>
@@ -2417,21 +2440,16 @@ function renderGarage(){
         <h3>${car.modelo}</h3>
 
         <div class="canonical garage-status" style="margin:10px 0 14px">
-          <strong>${starIcons(carStatus().stars)} · ${carStatus().name}</strong><br>
-          ${flameIcons(fanFlamesFromCount(state.car.fans||0))||'Sin seguidores todavía'}
+          <strong>${starIcons(carStatus().stars)} · ${carStatus().name}</strong>
         </div>
 
-        <div class="value-box garage-secondary">
-          <div class="value-cell current">
-            <span>Valor actual de tu auto</span>
-            <strong>${money(vehicleValue())}</strong>
-          </div>
+        <div class="value-box garage-secondary single">
           <div class="value-cell">
             <span>Venta estimada normal</span>
             <strong>${money(normalSaleValue())}</strong>
           </div>
         </div>
-        <p class="value-note garage-secondary">El valor actual refleja estado, originalidad e inversiones. No significa que el mercado vaya a pagarlo. Un coleccionista excepcional sí puede hacerlo.</p>
+        <p class="value-note garage-secondary">La venta estimada refleja lo que normalmente podría ofrecer el mercado; una oferta puntual puede ser distinta.</p>
 
         <div class="meters">
           ${meter('Estado',state.car.condition,'condition')}
@@ -2439,7 +2457,6 @@ function renderGarage(){
           ${meter('Performance',state.car.performance,'performance')}
         </div>
 
-        <div class="cost-line garage-secondary"><span>Gasto mensual actual</span><strong>${money(monthlyExpense())}</strong></div>
         <div class="cost-line fan-income-line"><span>${fanMonthlyIncome()>0?'Fans piden fotos y encuentros':'Ingresos por fans'}</span><strong>${fanMonthlyIncome()>0?`+${money(fanMonthlyIncome())}/mes`:'—'}</strong></div>
         ${(state.illegalRaceCount||0)>0?`<div class="cost-line career-progress-line"><span>Experiencia en picadas</span><strong>${raceSkillLabel()}</strong></div>`:''}
         ${(state.friendMechanicUses||0)>0?`<div class="cost-line career-progress-line"><span>Mecánico amigo</span><strong>${friendMechanicLabel()}</strong></div>`:''}
@@ -4200,9 +4217,19 @@ function openMarket(force=false){
     };
   });
 
-  const stranded=force&&!state.car&&state.year<careerEndYear();
-  $('#marketWait').classList.toggle('open',stranded);
-  $('#waitOneYear').onclick=stranded?waitWithoutCar:null;
+  const canWait=!state.car && state.year<careerEndYear();
+  const waitBox=$('#marketWait');
+  const waitButton=$('#waitOneYear');
+  const waitText=$('#marketWaitText');
+
+  // Siempre visible: sólo se habilita si no hay vehículo activo.
+  waitBox.classList.add('open');
+  waitButton.disabled=!canWait;
+  waitButton.onclick=canWait?waitWithoutCar:null;
+  waitText.innerHTML=canWait
+    ? `<strong>Esperar 1 año y ahorrar</strong>No tenés un auto en uso. Podés pasar un año, cobrar el ingreso del período y volver a revisar el mercado.`
+    : `<strong>Esperar 1 año y ahorrar</strong>Disponible únicamente cuando no tengas ningún vehículo activo.`;
+
   $('#closeMarket').style.display=force?'none':'inline-block';
 }
 function closeMarket(){

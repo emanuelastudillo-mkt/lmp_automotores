@@ -1,3 +1,55 @@
+# Tu vida sobre ruedas — v0.43
+
+Base: v0.42.
+
+## Menos información duplicada
+
+Las tarjetas superiores pasan a ser la fuente principal para los datos globales del turno.
+
+Se elimina del resto de la pantalla la repetición de:
+
+- Año actual: se oculta el segundo indicador del timeline.
+- Valor actual del vehículo: queda únicamente en la tarjeta superior.
+- Gasto mensual: queda únicamente en la tarjeta superior.
+- Fans / fuegos del vehículo actual: quedan en la tarjeta superior.
+
+El garage conserva únicamente información complementaria:
+
+- marca y modelo;
+- estrellas / categoría del vehículo;
+- Estado;
+- Originalidad;
+- Performance;
+- venta estimada;
+- ingresos por fans;
+- experiencia en picadas;
+- evolución del mecánico amigo;
+- exhibiciones;
+- reparaciones;
+- historia del modelo;
+- acciones de colección, venta y mercado.
+
+## Esperar 1 año y ahorrar
+
+El botón **Esperar 1 año y ahorrar** aparece ahora siempre dentro del mercado.
+
+Comportamiento:
+
+- Con vehículo activo:
+  - el botón permanece visible;
+  - está deshabilitado;
+  - explica que sólo puede utilizarse sin un vehículo activo.
+- Sin vehículo activo:
+  - el botón se habilita;
+  - permite pasar un año;
+  - se cobra el ingreso correspondiente;
+  - se mantienen los costos de colección ya existentes;
+  - luego se vuelve al flujo normal del mercado.
+
+La disponibilidad ya no depende de que el mercado haya sido abierto de forma forzada.
+
+---
+
 # Tu vida sobre ruedas — v0.42
 
 Base: v0.41.
