@@ -220,9 +220,27 @@ function numericValue(value) {
 
   if (!text) return 0;
 
-  const normalized = text.includes(',') && text.includes('.')
-    ? text.replace(/\./g, '').replace(',', '.')
-    : text.replace(',', '.');
+  const commaCount = (text.match(/,/g) || []).length;
+  const dotCount = (text.match(/\./g) || []).length;
+  let normalized = text;
+
+  if (commaCount && dotCount) {
+    // Formato argentino: 16.300.000,50
+    normalized = text.replace(/\./g, '').replace(',', '.');
+  } else if (commaCount) {
+    // Una coma con tres cifras finales es separador de miles; con otra
+    // cantidad de cifras se interpreta como decimal (por ejemplo, 68,6).
+    const decimals = text.length - text.lastIndexOf(',') - 1;
+    normalized = commaCount > 1 || decimals === 3
+      ? text.replace(/,/g, '')
+      : text.replace(',', '.');
+  } else if (dotCount) {
+    // Admite tanto 54.100.000 como valores decimales escritos con punto.
+    const decimals = text.length - text.lastIndexOf('.') - 1;
+    normalized = dotCount > 1 || decimals === 3
+      ? text.replace(/\./g, '')
+      : text;
+  }
 
   const number = Number(normalized);
   return Number.isFinite(number) ? Math.round(number) : 0;
@@ -1115,12 +1133,14 @@ function vehicleJsonLd(row, url) {
     offers: price
       ? {
           '@type': 'Offer',
+          url,
           priceCurrency: 'ARS',
           price,
           availability:
             normalize(rowValue(row, 'Estado actual del auto')) === 'DISPONIBLE'
               ? 'https://schema.org/InStock'
               : 'https://schema.org/LimitedAvailability',
+          itemCondition: 'https://schema.org/UsedCondition',
           seller: {
             '@type': 'AutoDealer',
             '@id': `${SITE_URL}/#autodealer`,
