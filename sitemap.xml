@@ -112,6 +112,24 @@
     </image:image>
   </url>
   <url>
+    <loc>https://lmpautos.com/vehiculos/chevrolet-onix-1-4-lt-2017/</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://lmpautos.com/img/vehiculos/A132.webp?v=41e5de7e84af</image:loc>
+      <image:title>Chevrolet Onix 1.4 LT 2017</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://lmpautos.com/img/vehiculos/A132-1.webp?v=41e5de7e84af</image:loc>
+      <image:title>Chevrolet Onix 1.4 LT 2017</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://lmpautos.com/img/vehiculos/A132-3.webp?v=41e5de7e84af</image:loc>
+      <image:title>Chevrolet Onix 1.4 LT 2017</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://lmpautos.com/vehiculos/renault-sandero-1-6-authentique-2017/</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>daily</changefreq>
@@ -433,24 +451,6 @@
     <image:image>
       <image:loc>https://lmpautos.com/img/vehiculos/A130.webp?v=41e5de7e84af</image:loc>
       <image:title>Fiat Cronos 1.8 Precision 2019</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://lmpautos.com/vehiculos/chevrolet-onix-1-4-lt-2017/</loc>
-    <lastmod>2026-08-19</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://lmpautos.com/img/vehiculos/A132.webp?v=41e5de7e84af</image:loc>
-      <image:title>Chevrolet Onix 1.4 LT 2017</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://lmpautos.com/img/vehiculos/A132-1.webp?v=41e5de7e84af</image:loc>
-      <image:title>Chevrolet Onix 1.4 LT 2017</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://lmpautos.com/img/vehiculos/A132-3.webp?v=41e5de7e84af</image:loc>
-      <image:title>Chevrolet Onix 1.4 LT 2017</image:title>
     </image:image>
   </url>
 </urlset>
