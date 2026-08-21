@@ -1,4 +1,4 @@
-name: Actualizar stock, SEO e imágenes
+name: Actualizar stock, SEO, imágenes y Meta
 
 on:
   workflow_dispatch:
@@ -30,7 +30,7 @@ jobs:
       - name: Instalar procesador de imágenes
         run: npm install --no-save --no-package-lock sharp@0.34.3
 
-      - name: Sincronizar stock, imágenes y SEO
+      - name: Sincronizar stock, imágenes, SEO y catálogo de Meta
         run: node scripts/actualizar-stock.mjs
 
       - name: Guardar cambios
@@ -40,9 +40,11 @@ jobs:
             data/stock.json \
             data/image-sync.json \
             index.html \
+            meta-catalog.csv \
             robots.txt \
             sitemap.xml \
             vehiculos/ \
+            img/meta/ \
             img/vehiculos/
 
           if git diff --cached --quiet; then
