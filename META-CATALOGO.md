@@ -1,6 +1,7 @@
-# Catálogo de vehículos para Meta
+# Catálogo automotor para Meta
 
-La web genera automáticamente un feed CSV compatible con Meta Commerce Manager:
+La web genera automáticamente un feed CSV para un catálogo de tipo **Vehículos**
+en Meta Commerce Manager:
 
 ```text
 https://lmpautos.com/meta-catalog.csv
@@ -13,11 +14,20 @@ https://lmpautos.com/meta-catalog.csv
 3. Seleccionar una actualización automática diaria.
 4. Elegir `ARS` como moneda predeterminada si Meta lo solicita.
 
+No se debe cargar este archivo en un catálogo de tipo "Productos". Sus columnas
+corresponden al esquema automotor de Meta.
+
 ## Actualización
 
 El feed se reconstruye con el workflow `Actualizar stock, SEO e imágenes`, junto
-con el catálogo de la web. Solo exporta vehículos públicos que tienen precio e
-imagen. Los vendidos o dados de baja desaparecen del archivo automáticamente.
+con el catálogo de la web. Solo exporta vehículos públicos que tienen precio,
+imagen, marca, modelo, año y kilometraje. Los vendidos o dados de baja desaparecen
+del archivo automáticamente.
 
 Las imágenes del catálogo se publican en JPEG dentro de `/img/meta/` para evitar
 problemas de compatibilidad con Meta.
+
+El feed incluye los campos obligatorios `vehicle_id`, `url`, `make`, `model`,
+`year`, `mileage.value`, `mileage.unit`, `image[0].url`, `body_style`,
+`state_of_vehicle` y `address`. Los valores enumerados usan el formato admitido
+por Meta, por ejemplo `AVAILABLE`, `USED` y `GOOD`.

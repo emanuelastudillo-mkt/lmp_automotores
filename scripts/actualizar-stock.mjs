@@ -19,6 +19,13 @@ const CSV_URL =
 const SITE_URL = 'https://lmpautos.com';
 const DEALER_NAME = 'LMP Autos';
 const DEALER_PHONE = '+54 9 11 3262-7744';
+const DEALER_ADDRESS = {
+  addr1: 'Av. General Enrique Mosconi 799',
+  city: 'Lomas del Mirador',
+  region: 'Buenos Aires',
+  country: 'AR',
+  postal_code: 'B1752CXH'
+};
 
 const IMAGE_WIDTH = 1400;
 const IMAGE_QUALITY = 80;
@@ -1106,13 +1113,86 @@ function csvCell(value) {
 function metaAvailability(row) {
   const status = normalize(rowValue(row, 'Estado actual del auto'));
 
-  if (status === 'RESERVADO') return 'out of stock';
-  if (status === 'PREPARANDO') return 'available for order';
-  return 'in stock';
+  if (status === 'RESERVADO') return 'NOT_AVAILABLE';
+  if (status === 'PREPARANDO') return 'PENDING';
+  return 'AVAILABLE';
 }
 
-function metaInventory(row) {
-  return metaAvailability(row) === 'out of stock' ? 0 : 1;
+function metaBodyStyle(row) {
+  const supplied = normalize(rowValue(
+    row,
+    'Tipo de carrocería',
+    'Tipo de carroceria',
+    'Carrocería',
+    'Carroceria',
+    'Body style'
+  ));
+  const model = normalize(rowValue(row, 'Modelo'));
+
+  const suppliedStyles = {
+    BERLINA: 'SEDAN',
+    CAMIONETA: 'SUV',
+    COUPE: 'COUPE',
+    CUPE: 'COUPE',
+    CROSSOVER: 'CROSSOVER',
+    FURGON: 'VAN',
+    HATCH: 'HATCHBACK',
+    HATCHBACK: 'HATCHBACK',
+    MINIBUS: 'MINIBUS',
+    MINIVAN: 'MINIVAN',
+    MONOVOLUMEN: 'MPV',
+    PICKUP: 'PICKUP',
+    'PICK UP': 'PICKUP',
+    RURAL: 'WAGON',
+    SEDAN: 'SEDAN',
+    SUV: 'SUV',
+    UTILITARIO: 'VAN',
+    VAN: 'VAN',
+    WAGON: 'WAGON'
+  };
+
+  if (suppliedStyles[supplied]) return suppliedStyles[supplied];
+
+  if (/AMAROK|PICK\s?UP/.test(model)) return 'PICKUP';
+  if (/JUMPER|PARTNER|BERLINGO|BOXER|DUCATO|FURGON|MASTER|TRANSIT/.test(model)) {
+    return 'VAN';
+  }
+  if (/ECOSPORT|TRACKER|SORENTO|DUSTER/.test(model)) return 'SUV';
+  if (/NIVUS/.test(model)) return 'CROSSOVER';
+  if (/CRONOS|CRUZE|FLUENCE|VENTO/.test(model)) return 'SEDAN';
+  if (/ABARTH|ONIX|SANDERO|CLIO|FOCUS|206|208|ETIOS/.test(model)) {
+    return 'HATCHBACK';
+  }
+
+  return 'OTHER';
+}
+
+function metaFuelType(row) {
+  const fuel = normalize(rowValue(row, 'Combustible'));
+
+  if (!fuel) return '';
+  if (fuel.includes('DIESEL')) return 'DIESEL';
+  if (fuel.includes('ELECTR')) return 'ELECTRIC';
+  if (fuel.includes('HIBRID')) return 'HYBRID';
+  if (fuel.includes('GNC') && fuel.includes('NAFTA')) return 'FLEX';
+  if (fuel.includes('NAFTA')) return 'GASOLINE';
+  return 'OTHER';
+}
+
+function metaTransmission(row) {
+  const transmission = normalize(rowValue(row, 'Transmision', 'Transmisión'));
+
+  if (!transmission) return '';
+  if (transmission.includes('AUTOM')) return 'AUTOMATIC';
+  if (transmission.includes('MANUAL')) return 'MANUAL';
+  return 'OTHER';
+}
+
+function metaDrivetrain(row) {
+  const model = normalize(rowValue(row, 'Modelo'));
+
+  if (/\b4X4\b/.test(model)) return 'FOUR_WD';
+  return '';
 }
 
 async function metaImages(row) {
@@ -1150,20 +1230,38 @@ async function generateMetaCatalog(rows) {
   await mkdir(metaImagesDir, { recursive: true });
 
   const headers = [
-    'id',
+    'vehicle_id',
     'title',
     'description',
+    'url',
+    'make',
+    'model',
+    'year',
+    'mileage.value',
+    'mileage.unit',
+    'image[0].url',
+    'image[1].url',
+    'image[2].url',
+    'image[3].url',
+    'image[4].url',
+    'image[5].url',
+    'image[6].url',
+    'image[7].url',
+    'image[8].url',
+    'image[9].url',
+    'body_style',
+    'state_of_vehicle',
     'availability',
-    'inventory',
     'condition',
     'price',
-    'link',
-    'image_link',
-    'additional_image_link',
-    'brand',
-    'mpn',
-    'color',
-    'product_type',
+    'address',
+    'exterior_color',
+    'fuel_type',
+    'transmission',
+    'drivetrain',
+    'vehicle_type',
+    'dealer_name',
+    'dealer_phone',
     'custom_label_0',
     'custom_label_1',
     'custom_label_2'
@@ -1173,15 +1271,25 @@ async function generateMetaCatalog(rows) {
   const expectedImages = new Set();
   let skippedWithoutPrice = 0;
   let skippedWithoutImage = 0;
+  let skippedWithoutRequiredData = 0;
 
   for (const row of publicRowsSorted(rows)) {
     const id = vehicleId(row);
+    const marca = rowValue(row, 'Marca');
+    const modelo = rowValue(row, 'Modelo');
+    const anio = numericValue(rowValue(row, 'Año', 'Ano'));
+    const mileage = numericValue(rowValue(row, 'Kilometraje'));
     const price = numericValue(
       rowValue(row, 'Cotizacion al día', 'Cotizacion al dia')
     );
 
-    if (!id || !price) {
+    if (!price) {
       skippedWithoutPrice += 1;
+      continue;
+    }
+
+    if (!id || !marca || !modelo || !anio || !mileage) {
+      skippedWithoutRequiredData += 1;
       continue;
     }
 
@@ -1196,25 +1304,31 @@ async function generateMetaCatalog(rows) {
       expectedImages.add(decodeURIComponent(path.basename(pathname)));
     });
 
-    const marca = rowValue(row, 'Marca');
-    const modelo = rowValue(row, 'Modelo');
-    const anio = rowValue(row, 'Año', 'Ano');
     const slug = vehicleSlug(row);
     const values = [
       id,
       `${marca} ${modelo}${anio ? ` ${anio}` : ''}`,
       vehicleDescription(row),
-      metaAvailability(row),
-      metaInventory(row),
-      'used',
-      `${price} ARS`,
       `${SITE_URL}/vehiculos/${slug}/`,
-      images[0],
-      images.slice(1).join(','),
       marca,
-      id,
+      modelo,
+      anio,
+      mileage,
+      'KM',
+      ...Array.from({ length: 10 }, (_, index) => images[index] || ''),
+      metaBodyStyle(row),
+      'USED',
+      metaAvailability(row),
+      'GOOD',
+      `${price} ARS`,
+      JSON.stringify(DEALER_ADDRESS),
       rowValue(row, 'Color'),
-      'Vehículos > Autos usados',
+      metaFuelType(row),
+      metaTransmission(row),
+      metaDrivetrain(row),
+      /JUMPER|PARTNER|FURGON/.test(normalize(modelo)) ? 'COMMERCIAL' : 'CAR_TRUCK',
+      DEALER_NAME,
+      DEALER_PHONE,
       statusLabel(row),
       rowValue(row, 'Combustible'),
       anio
@@ -1237,7 +1351,8 @@ async function generateMetaCatalog(rows) {
   return {
     items: lines.length - 1,
     skippedWithoutPrice,
-    skippedWithoutImage
+    skippedWithoutImage,
+    skippedWithoutRequiredData
   };
 }
 
@@ -1724,10 +1839,15 @@ async function main() {
 
   console.log(`Vehículos públicos pre-renderizados: ${publicRows.length}.`);
   console.log(`Catálogo de Meta: ${metaReport.items} vehículo(s) exportado(s).`);
-  if (metaReport.skippedWithoutPrice || metaReport.skippedWithoutImage) {
+  if (
+    metaReport.skippedWithoutPrice ||
+    metaReport.skippedWithoutImage ||
+    metaReport.skippedWithoutRequiredData
+  ) {
     console.warn(
       `Catálogo de Meta omitió ${metaReport.skippedWithoutPrice} vehículo(s) sin precio ` +
-      `y ${metaReport.skippedWithoutImage} sin imagen local.`
+      `${metaReport.skippedWithoutImage} sin imagen local y ` +
+      `${metaReport.skippedWithoutRequiredData} con datos obligatorios incompletos.`
     );
   }
   console.log(`Sitemap actualizado: ${publicRows.length + 2} URLs.`);
