@@ -19,6 +19,7 @@ const CSV_URL =
 const SITE_URL = 'https://lmpautos.com';
 const DEALER_NAME = 'LMP Autos';
 const DEALER_PHONE = '+54 9 11 3262-7744';
+const META_PIXEL_ID = '1026614216645178';
 const DEALER_ADDRESS = {
   addr1: 'Av. General Enrique Mosconi 799',
   city: 'Lomas del Mirador',
@@ -1356,6 +1357,61 @@ async function generateMetaCatalog(rows) {
   };
 }
 
+function isMetaCatalogRow(row) {
+  return Boolean(
+    vehicleId(row) &&
+    rowValue(row, 'Marca') &&
+    rowValue(row, 'Modelo') &&
+    numericValue(rowValue(row, 'Año', 'Ano')) &&
+    numericValue(rowValue(row, 'Kilometraje')) &&
+    numericValue(rowValue(row, 'Cotizacion al día', 'Cotizacion al dia')) &&
+    localVehicleImages(row).length
+  );
+}
+
+function metaVehicleEventParams(row) {
+  const id = vehicleId(row);
+  const marca = rowValue(row, 'Marca');
+  const modelo = rowValue(row, 'Modelo');
+  const anio = rowValue(row, 'Año', 'Ano');
+  const price = numericValue(rowValue(row, 'Cotizacion al día', 'Cotizacion al dia'));
+
+  return {
+    content_ids: [id],
+    content_type: 'vehicle',
+    content_name: `${marca} ${modelo}${anio ? ` ${anio}` : ''}`,
+    content_category: 'Autos usados',
+    contents: [{ id, quantity: 1 }],
+    value: price,
+    currency: 'ARS'
+  };
+}
+
+function scriptJson(value) {
+  return JSON.stringify(value).replace(/</g, '\\u003c');
+}
+
+function metaPixelMarkup(row) {
+  const viewContent = isMetaCatalogRow(row)
+    ? `\nfbq('track', 'ViewContent', ${scriptJson(metaVehicleEventParams(row))});`
+    : '';
+
+  return `<!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window,document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '${META_PIXEL_ID}');
+  fbq('track', 'PageView');${viewContent}
+  </script>
+  <!-- End Meta Pixel Code -->`;
+}
+
 function vehicleJsonLd(row, url) {
   const marca = rowValue(row, 'Marca');
   const modelo = rowValue(row, 'Modelo');
@@ -1488,6 +1544,10 @@ function vehiclePageHtml(row, generatedAt) {
   const appUrl = `${SITE_URL}/?vehiculo=${encodeURIComponent(slug)}`;
   const title = `${marca} ${modelo}${anio ? ` ${anio}` : ''} usado en Lomas del Mirador | LMP Autos`;
   const description = vehicleDescription(row);
+  const metaCatalogItem = isMetaCatalogRow(row);
+  const metaEventParams = metaCatalogItem
+    ? scriptJson(metaVehicleEventParams(row))
+    : '';
 
   const imageMarkup = image
     ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(`${marca} ${modelo}${anio ? ` ${anio}` : ''}`)}" referrerpolicy="no-referrer">`
@@ -1531,6 +1591,8 @@ ${vehicleJsonLd(row, url)}
   <script type="application/ld+json">
 ${breadcrumbJsonLd(row, url)}
   </script>
+
+  ${metaPixelMarkup(row)}
 
   <style>
     *{box-sizing:border-box}
@@ -1581,6 +1643,7 @@ ${breadcrumbJsonLd(row, url)}
   </style>
 </head>
 <body>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1" alt=""></noscript>
 <header>
   <div class="shell">
     <a class="brand" href="${SITE_URL}/">LMP Autos</a>
@@ -1620,7 +1683,7 @@ ${breadcrumbJsonLd(row, url)}
       ${advance ? `<div class="advance">Anticipo desde <strong>${escapeHtml(advance)}</strong></div>` : ''}
 
       <a class="cta" href="${escapeHtml(appUrl)}">Ver ficha completa y consultar</a>
-      <a class="secondary" href="https://wa.me/5491132627744?text=${encodeURIComponent(`Hola, quiero consultar por ${marca} ${modelo}${anio ? ` ${anio}` : ''}.`)}">Consultar por WhatsApp</a>
+      <a class="secondary" id="vehicleWhatsapp" href="https://wa.me/5491132627744?text=${encodeURIComponent(`Hola, quiero consultar por ${marca} ${modelo}${anio ? ` ${anio}` : ''}.`)}" target="_blank" rel="noopener">Consultar por WhatsApp</a>
     </article>
   </div>
 
@@ -1631,6 +1694,11 @@ ${breadcrumbJsonLd(row, url)}
   LMP Autos · Av. Mosconi 799, Lomas del Mirador · WhatsApp 11 3262-7744
   ${generatedAt ? ` · Stock actualizado ${escapeHtml(new Date(generatedAt).toLocaleDateString('es-AR'))}` : ''}
 </footer>
+${metaCatalogItem ? `<script>
+document.getElementById('vehicleWhatsapp')?.addEventListener('click',function(){
+  if(typeof window.fbq==='function')window.fbq('track','Lead',${metaEventParams});
+});
+</script>` : ''}
 </body>
 </html>`;
 }
