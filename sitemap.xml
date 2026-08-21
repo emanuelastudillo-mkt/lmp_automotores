@@ -36,28 +36,6 @@
     </image:image>
   </url>
   <url>
-    <loc>https://lmpautos.com/vehiculos/peugeot-partner-1-6-hdi-furgon-2020/</loc>
-    <lastmod>2026-08-21</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://lmpautos.com/img/vehiculos/A105.webp?v=41e5de7e84af</image:loc>
-      <image:title>Peugeot Partner 1.6 HDI Furgon 2020</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://lmpautos.com/img/vehiculos/A105-1.webp?v=41e5de7e84af</image:loc>
-      <image:title>Peugeot Partner 1.6 HDI Furgon 2020</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://lmpautos.com/img/vehiculos/A105-2.webp?v=41e5de7e84af</image:loc>
-      <image:title>Peugeot Partner 1.6 HDI Furgon 2020</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://lmpautos.com/img/vehiculos/A105-3.webp?v=41e5de7e84af</image:loc>
-      <image:title>Peugeot Partner 1.6 HDI Furgon 2020</image:title>
-    </image:image>
-  </url>
-  <url>
     <loc>https://lmpautos.com/vehiculos/chevrolet-onix-1-4-plus-joy-2020/</loc>
     <lastmod>2026-08-21</lastmod>
     <changefreq>daily</changefreq>
@@ -441,6 +419,28 @@
     <image:image>
       <image:loc>https://lmpautos.com/img/vehiculos/A120.webp?v=41e5de7e84af</image:loc>
       <image:title>Peugeot 206 1.9 XTD 2006</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lmpautos.com/vehiculos/peugeot-partner-1-6-hdi-furgon-2020/</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://lmpautos.com/img/vehiculos/A105.webp?v=41e5de7e84af</image:loc>
+      <image:title>Peugeot Partner 1.6 HDI Furgon 2020</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://lmpautos.com/img/vehiculos/A105-1.webp?v=41e5de7e84af</image:loc>
+      <image:title>Peugeot Partner 1.6 HDI Furgon 2020</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://lmpautos.com/img/vehiculos/A105-2.webp?v=41e5de7e84af</image:loc>
+      <image:title>Peugeot Partner 1.6 HDI Furgon 2020</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://lmpautos.com/img/vehiculos/A105-3.webp?v=41e5de7e84af</image:loc>
+      <image:title>Peugeot Partner 1.6 HDI Furgon 2020</image:title>
     </image:image>
   </url>
   <url>
