@@ -32,9 +32,11 @@ const imageStatePath = path.join(repoRoot, 'data', 'image-sync.json');
 const indexPath = path.join(repoRoot, 'index.html');
 const sitemapPath = path.join(repoRoot, 'sitemap.xml');
 const robotsPath = path.join(repoRoot, 'robots.txt');
+const metaCatalogPath = path.join(repoRoot, 'meta-catalog.csv');
 const vehiclesDir = path.join(repoRoot, 'vehiculos');
 const imagesDir = path.join(repoRoot, 'img', 'vehiculos');
 const imageManifestPath = path.join(imagesDir, 'manifest.json');
+const metaImagesDir = path.join(repoRoot, 'img', 'meta');
 
 let currentImageManifest = {};
 
@@ -1096,6 +1098,149 @@ function vehicleDescription(row) {
   ].filter(Boolean).join('. ') + '.';
 }
 
+function csvCell(value) {
+  const text = clean(value).replace(/\r?\n/g, ' ');
+  return `"${text.replace(/"/g, '""')}"`;
+}
+
+function metaAvailability(row) {
+  const status = normalize(rowValue(row, 'Estado actual del auto'));
+
+  if (status === 'RESERVADO') return 'out of stock';
+  if (status === 'PREPARANDO') return 'available for order';
+  return 'in stock';
+}
+
+function metaInventory(row) {
+  return metaAvailability(row) === 'out of stock' ? 0 : 1;
+}
+
+async function metaImages(row) {
+  const id = vehicleId(row);
+  const sourceFiles = Array.isArray(currentImageManifest?.[id])
+    ? currentImageManifest[id].slice(0, 10)
+    : [];
+
+  if (!id || !sourceFiles.length) return [];
+
+  const version = clean(currentImageManifest?._version) || '1';
+  const urls = [];
+
+  for (const sourceFile of sourceFiles) {
+    const sourcePath = path.join(imagesDir, sourceFile);
+    if (!existsSync(sourcePath)) continue;
+
+    const targetFile = sourceFile.replace(/\.webp$/i, '.jpg');
+    const targetPath = path.join(metaImagesDir, targetFile);
+    const output = await sharp(sourcePath)
+      .flatten({ background: '#ffffff' })
+      .jpeg({ quality: 90, chromaSubsampling: '4:4:4' })
+      .toBuffer();
+
+    await writeBufferIfChanged(targetPath, output);
+    urls.push(
+      `${SITE_URL}/img/meta/${encodeURIComponent(targetFile)}?v=${encodeURIComponent(version)}`
+    );
+  }
+
+  return urls;
+}
+
+async function generateMetaCatalog(rows) {
+  await mkdir(metaImagesDir, { recursive: true });
+
+  const headers = [
+    'id',
+    'title',
+    'description',
+    'availability',
+    'inventory',
+    'condition',
+    'price',
+    'link',
+    'image_link',
+    'additional_image_link',
+    'brand',
+    'mpn',
+    'color',
+    'product_type',
+    'custom_label_0',
+    'custom_label_1',
+    'custom_label_2'
+  ];
+
+  const lines = [headers.map(csvCell).join(',')];
+  const expectedImages = new Set();
+  let skippedWithoutPrice = 0;
+  let skippedWithoutImage = 0;
+
+  for (const row of publicRowsSorted(rows)) {
+    const id = vehicleId(row);
+    const price = numericValue(
+      rowValue(row, 'Cotizacion al día', 'Cotizacion al dia')
+    );
+
+    if (!id || !price) {
+      skippedWithoutPrice += 1;
+      continue;
+    }
+
+    const images = await metaImages(row);
+    if (!images.length) {
+      skippedWithoutImage += 1;
+      continue;
+    }
+
+    images.forEach(image => {
+      const pathname = new URL(image).pathname;
+      expectedImages.add(decodeURIComponent(path.basename(pathname)));
+    });
+
+    const marca = rowValue(row, 'Marca');
+    const modelo = rowValue(row, 'Modelo');
+    const anio = rowValue(row, 'Año', 'Ano');
+    const slug = vehicleSlug(row);
+    const values = [
+      id,
+      `${marca} ${modelo}${anio ? ` ${anio}` : ''}`,
+      vehicleDescription(row),
+      metaAvailability(row),
+      metaInventory(row),
+      'used',
+      `${price} ARS`,
+      `${SITE_URL}/vehiculos/${slug}/`,
+      images[0],
+      images.slice(1).join(','),
+      marca,
+      id,
+      rowValue(row, 'Color'),
+      'Vehículos > Autos usados',
+      statusLabel(row),
+      rowValue(row, 'Combustible'),
+      anio
+    ];
+
+    lines.push(values.map(csvCell).join(','));
+  }
+
+  for (const file of await readdir(metaImagesDir)) {
+    if (!/\.jpe?g$/i.test(file) || expectedImages.has(file)) continue;
+    await unlink(path.join(metaImagesDir, file));
+  }
+
+  await writeFile(
+    metaCatalogPath,
+    `\uFEFF${lines.join('\n')}\n`,
+    'utf8'
+  );
+
+  return {
+    items: lines.length - 1,
+    skippedWithoutPrice,
+    skippedWithoutImage
+  };
+}
+
 function vehicleJsonLd(row, url) {
   const marca = rowValue(row, 'Marca');
   const modelo = rowValue(row, 'Modelo');
@@ -1543,6 +1688,7 @@ async function main() {
 
   await updateIndexPrerender(rows);
   const publicRows = await generateVehiclePages(rows, generatedAt);
+  const metaReport = await generateMetaCatalog(rows);
 
   await writeFile(
     sitemapPath,
@@ -1577,6 +1723,13 @@ async function main() {
   }
 
   console.log(`Vehículos públicos pre-renderizados: ${publicRows.length}.`);
+  console.log(`Catálogo de Meta: ${metaReport.items} vehículo(s) exportado(s).`);
+  if (metaReport.skippedWithoutPrice || metaReport.skippedWithoutImage) {
+    console.warn(
+      `Catálogo de Meta omitió ${metaReport.skippedWithoutPrice} vehículo(s) sin precio ` +
+      `y ${metaReport.skippedWithoutImage} sin imagen local.`
+    );
+  }
   console.log(`Sitemap actualizado: ${publicRows.length + 2} URLs.`);
   console.log(`Manifest de imágenes: ${clean(currentImageManifest._version) || 'sin versión'}.`);
   console.log(`Hash de stock: ${contentHash.slice(0, 12)}`);
