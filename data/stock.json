@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-21T18:59:06.792Z",
+  "generatedAt": "2026-08-22T01:53:12.455Z",
   "source": "Google Sheets CSV publicado",
   "rowCount": 133,
-  "contentHash": "ebcbd883032c6211031dd73288897934e973b4275b99435429a14de2e7e8528e",
+  "contentHash": "109ed5cc92c0ef03ff4ecef775665ca5da7419602bed3bd58fd75d1d153f3872",
   "rows": [
     {
       "ID": "A005",
@@ -2978,7 +2978,7 @@
       "Cotizacion al día": "$15.000.000",
       "Estado actual del auto": "DISPONIBLE",
       "% de anticipo": "42%",
-      "Ultima publicacion": "25/02/2026",
+      "Ultima publicacion": "21/08/2026",
       "Reel": "si",
       "Fotos": "si",
       "Combustible": "Nafta",
@@ -4062,8 +4062,8 @@
       "Precio publicado Uds": "$2.900",
       "Precio de contado Uds": "$2.900",
       "MAX FINAN": "$0",
-      "Anticipo MINIMO": "$4.600.000",
-      "Cotizacion al día": "$4.600.000",
+      "Anticipo MINIMO": "$4.500.000",
+      "Cotizacion al día": "$4.500.000",
       "Estado actual del auto": "DISPONIBLE",
       "% de anticipo": "100%",
       "Ultima publicacion": "27/07/2026",
@@ -4083,7 +4083,7 @@
       "Seguridad": "44",
       "Calificacion General": "55,6",
       "Destacado": "",
-      "Oportunidad": "17"
+      "Oportunidad": "16"
     },
     {
       "ID": "A121",
@@ -4098,7 +4098,7 @@
       "MAX FINAN": "$0",
       "Anticipo MINIMO": "$7.800.000",
       "Cotizacion al día": "$7.800.000",
-      "Estado actual del auto": "DISPONIBLE",
+      "Estado actual del auto": "RESERVADO",
       "% de anticipo": "100%",
       "Ultima publicacion": "24/07/2026",
       "Reel": "si",
@@ -4494,9 +4494,9 @@
       "Oportunidad": "46"
     },
     {
-      "ID": "$1.499,51",
+      "ID": "$1.499,05",
       "Marca": "Oficial",
-      "Modelo": "$1.532,50",
+      "Modelo": "$1.532,03",
       "Año": "Blue",
       "Kilometraje": "",
       "Color": "",
