@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-22T01:53:12.455Z",
+  "generatedAt": "2026-08-23T07:04:16.028Z",
   "source": "Google Sheets CSV publicado",
   "rowCount": 133,
-  "contentHash": "109ed5cc92c0ef03ff4ecef775665ca5da7419602bed3bd58fd75d1d153f3872",
+  "contentHash": "82d24dd651df55482390db2879af74923f520236fbc1735e88cead2554a528fb",
   "rows": [
     {
       "ID": "A005",
@@ -2701,12 +2701,12 @@
       "Propietario": "Consignación",
       "Precio publicado Uds": "$9.000",
       "Precio de contado Uds": "$9.000",
-      "MAX FINAN": "$5.600.000",
-      "Anticipo MINIMO": "$8.400.000",
+      "MAX FINAN": "$5.000.000",
+      "Anticipo MINIMO": "$9.000.000",
       "Cotizacion al día": "$14.000.000",
       "Estado actual del auto": "DISPONIBLE",
-      "% de anticipo": "60%",
-      "Ultima publicacion": "09/08/2026",
+      "% de anticipo": "64%",
+      "Ultima publicacion": "23/08/2026",
       "Reel": "si",
       "Fotos": "si",
       "Combustible": "Nafta",
