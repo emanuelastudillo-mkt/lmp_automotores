@@ -328,28 +328,6 @@
     </image:image>
   </url>
   <url>
-    <loc>https://lmpautos.com/vehiculos/ford-ecosport-1-6-titanium-2013/</loc>
-    <lastmod>2026-08-26</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://lmpautos.com/img/vehiculos/A082.webp?v=3fc7ab83fa51</image:loc>
-      <image:title>Ford Ecosport 1.6 Titanium 2013</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://lmpautos.com/img/vehiculos/A082-1.webp?v=3fc7ab83fa51</image:loc>
-      <image:title>Ford Ecosport 1.6 Titanium 2013</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://lmpautos.com/img/vehiculos/A082-2.webp?v=3fc7ab83fa51</image:loc>
-      <image:title>Ford Ecosport 1.6 Titanium 2013</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://lmpautos.com/img/vehiculos/A082-3.webp?v=3fc7ab83fa51</image:loc>
-      <image:title>Ford Ecosport 1.6 Titanium 2013</image:title>
-    </image:image>
-  </url>
-  <url>
     <loc>https://lmpautos.com/vehiculos/volkswagen-vento-2-0-tsi-dsg-sportline-2012/</loc>
     <lastmod>2026-08-26</lastmod>
     <changefreq>daily</changefreq>
@@ -392,6 +370,38 @@
     </image:image>
   </url>
   <url>
+    <loc>https://lmpautos.com/vehiculos/fiat-cronos-1-8-precision-2019/</loc>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://lmpautos.com/img/vehiculos/A130.webp?v=3fc7ab83fa51</image:loc>
+      <image:title>Fiat Cronos 1.8 Precision 2019</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lmpautos.com/vehiculos/ford-ecosport-1-6-titanium-2013/</loc>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://lmpautos.com/img/vehiculos/A082.webp?v=3fc7ab83fa51</image:loc>
+      <image:title>Ford Ecosport 1.6 Titanium 2013</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://lmpautos.com/img/vehiculos/A082-1.webp?v=3fc7ab83fa51</image:loc>
+      <image:title>Ford Ecosport 1.6 Titanium 2013</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://lmpautos.com/img/vehiculos/A082-2.webp?v=3fc7ab83fa51</image:loc>
+      <image:title>Ford Ecosport 1.6 Titanium 2013</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://lmpautos.com/img/vehiculos/A082-3.webp?v=3fc7ab83fa51</image:loc>
+      <image:title>Ford Ecosport 1.6 Titanium 2013</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://lmpautos.com/vehiculos/kia-sorento-2-2-hdi-4x4-2010/</loc>
     <lastmod>2026-08-26</lastmod>
     <changefreq>daily</changefreq>
@@ -409,16 +419,6 @@
     <image:image>
       <image:loc>https://lmpautos.com/img/vehiculos/A120.webp?v=3fc7ab83fa51</image:loc>
       <image:title>Peugeot 206 1.9 XTD 2006</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://lmpautos.com/vehiculos/fiat-cronos-1-8-precision-2019/</loc>
-    <lastmod>2026-08-26</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://lmpautos.com/img/vehiculos/A130.webp?v=3fc7ab83fa51</image:loc>
-      <image:title>Fiat Cronos 1.8 Precision 2019</image:title>
     </image:image>
   </url>
 </urlset>
