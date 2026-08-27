@@ -33,6 +33,9 @@ jobs:
       - name: Sincronizar stock, imágenes, SEO y catálogo de Meta
         run: node scripts/actualizar-stock.mjs
 
+      - name: Preservar URLs históricas que ya no estén en la hoja
+        run: node scripts/preserve-sold-vehicle-pages.mjs
+
       - name: Guardar cambios
         shell: bash
         run: |
