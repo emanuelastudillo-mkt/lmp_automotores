@@ -113,6 +113,7 @@ function soldPage({ slug, name, sourceCommit = '' }) {
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>${safeName} vendido | LMP Autos</title>
   <meta name="description" content="El ${safeName} ya fue vendido. Consultá vehículos similares disponibles en LMP Autos, Lomas del Mirador.">
+  <meta name="robots" content="noindex,follow">
   <link rel="canonical" href="${canonical}">
   <meta property="og:type" content="website">
   <meta property="og:title" content="${safeName} · Vendido | LMP Autos">
@@ -182,11 +183,40 @@ function loadManualEntries() {
   }
 }
 
+function ensureGeneratedSoldPageNoindex(file, slug) {
+  if (!fs.existsSync(file)) return false;
+
+  const html = fs.readFileSync(file, 'utf8');
+  const generatedByPreserver =
+    html.includes('<!-- recovered-from:') ||
+    html.includes('<!-- manual-sold-entry -->');
+
+  if (!generatedByPreserver) return false;
+
+  let next = html;
+  if (/<meta\s+name=["']robots["'][^>]*>/i.test(next)) {
+    next = next.replace(
+      /<meta\s+name=["']robots["'][^>]*>/i,
+      '<meta name="robots" content="noindex,follow">'
+    );
+  } else {
+    next = next.replace(
+      /(<meta\s+name=["']description["'][^>]*>)/i,
+      '$1\n  <meta name="robots" content="noindex,follow">'
+    );
+  }
+
+  if (next === html) return false;
+  fs.writeFileSync(file, next, 'utf8');
+  console.log(`Ajustada a noindex: /vehiculos/${slug}/`);
+  return true;
+}
+
 function ensureSoldPage({ slug, name, sourceCommit = '' }) {
   if (!/^[a-z0-9-]+$/.test(slug)) return false;
   const dir = path.join(VEHICLES_DIR, slug);
   const file = path.join(dir, 'index.html');
-  if (fs.existsSync(file)) return false;
+  if (fs.existsSync(file)) return ensureGeneratedSoldPageNoindex(file, slug);
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(file, soldPage({ slug, name, sourceCommit }), 'utf8');
   console.log(`Restaurada como VENDIDO: /vehiculos/${slug}/`);

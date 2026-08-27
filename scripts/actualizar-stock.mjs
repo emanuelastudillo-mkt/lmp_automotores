@@ -39,6 +39,7 @@ const stockPath = path.join(repoRoot, 'data', 'stock.json');
 const imageStatePath = path.join(repoRoot, 'data', 'image-sync.json');
 const indexPath = path.join(repoRoot, 'index.html');
 const sitemapPath = path.join(repoRoot, 'sitemap.xml');
+const soldSitemapPath = path.join(repoRoot, 'sitemap-vendidos.xml');
 const robotsPath = path.join(repoRoot, 'robots.txt');
 const metaCatalogPath = path.join(repoRoot, 'meta-catalog.csv');
 const vehiclesDir = path.join(repoRoot, 'vehiculos');
@@ -209,6 +210,24 @@ function vehicleStatus(row) {
 
 function isSoldVehicle(row) {
   return vehicleStatus(row) === 'VENDIDO';
+}
+
+function isIndexableSoldVehicle(row) {
+  if (!isSoldVehicle(row)) return false;
+
+  const year = rowValue(row, 'Año', 'Ano');
+  const detailCount = [
+    rowValue(row, 'Kilometraje'),
+    rowValue(row, 'Combustible'),
+    rowValue(row, 'Transmision', 'Transmisión'),
+    rowValue(row, 'Color')
+  ].filter(Boolean).length;
+
+  // Una ficha vendida solo se indexa si conserva información suficiente
+  // para responder una búsqueda real del modelo: año válido + al menos
+  // tres datos técnicos adicionales. Las fichas históricas más pobres
+  // siguen respondiendo HTTP 200, pero se marcan noindex.
+  return /^(?:19|20)\d{2}$/.test(year) && detailCount >= 3;
 }
 
 function isPublicVehicle(row) {
@@ -1548,6 +1567,7 @@ function scoreListMarkup(row) {
 
 function vehiclePageHtml(row, generatedAt) {
   const sold = isSoldVehicle(row);
+  const soldIndexable = !sold || isIndexableSoldVehicle(row);
   const marca = rowValue(row, 'Marca');
   const modelo = rowValue(row, 'Modelo');
   const anio = rowValue(row, 'Año', 'Ano');
@@ -1592,7 +1612,7 @@ function vehiclePageHtml(row, generatedAt) {
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>${escapeHtml(title)}</title>
   <meta name="description" content="${escapeHtml(description)}">
-  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="robots" content="${soldIndexable ? 'index,follow,max-image-preview:large' : 'noindex,follow'}">
   <link rel="canonical" href="${escapeHtml(url)}">
   <link rel="alternate" hreflang="es-AR" href="${escapeHtml(url)}">
 
@@ -1771,10 +1791,14 @@ async function generateVehiclePages(rows, generatedAt) {
     );
   }
 
-  return { publicRows, soldRows };
+  return {
+    publicRows,
+    soldRows,
+    indexableSoldRows: soldRows.filter(isIndexableSoldVehicle)
+  };
 }
 
-function sitemapXml(publicRows, soldRows, generatedAt) {
+function sitemapXml(publicRows, generatedAt) {
   const lastmod = generatedAt
     ? new Date(generatedAt).toISOString().slice(0, 10)
     : new Date().toISOString().slice(0, 10);
@@ -1800,24 +1824,40 @@ function sitemapXml(publicRows, soldRows, generatedAt) {
     images: localVehicleImages(row)
   }));
 
-  const soldUrls = soldRows.map(row => ({
-    loc: `${SITE_URL}/vehiculos/${vehicleSlug(row)}/`,
-    changefreq: 'yearly',
-    priority: '0.4',
-    title: `${rowValue(row, 'Marca')} ${rowValue(row, 'Modelo')}${rowValue(row, 'Año', 'Ano') ? ` ${rowValue(row, 'Año', 'Ano')}` : ''} vendido`,
-    images: localVehicleImages(row)
-  }));
-
-  const items = [...staticUrls, ...vehicleUrls, ...soldUrls];
+  const items = [...staticUrls, ...vehicleUrls];
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 ${items.map(item => `  <url>
     <loc>${escapeXml(item.loc)}</loc>
-    <lastmod>${lastmod}</lastmod>
-    <changefreq>${item.changefreq}</changefreq>
-    <priority>${item.priority}</priority>${Array.isArray(item.images) ? item.images.map(image => `
+    <lastmod>${lastmod}</lastmod>${Array.isArray(item.images) ? item.images.map(image => `
+    <image:image>
+      <image:loc>${escapeXml(image)}</image:loc>
+      <image:title>${escapeXml(item.title || 'LMP Autos')}</image:title>
+    </image:image>`).join('') : ''}
+  </url>`).join('\n')}
+</urlset>
+`;
+}
+
+function soldSitemapXml(soldRows, generatedAt) {
+  const lastmod = generatedAt
+    ? new Date(generatedAt).toISOString().slice(0, 10)
+    : new Date().toISOString().slice(0, 10);
+
+  const items = soldRows.map(row => ({
+    loc: `${SITE_URL}/vehiculos/${vehicleSlug(row)}/`,
+    title: `${rowValue(row, 'Marca')} ${rowValue(row, 'Modelo')}${rowValue(row, 'Año', 'Ano') ? ` ${rowValue(row, 'Año', 'Ano')}` : ''} vendido`,
+    images: localVehicleImages(row)
+  }));
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+${items.map(item => `  <url>
+    <loc>${escapeXml(item.loc)}</loc>
+    <lastmod>${lastmod}</lastmod>${Array.isArray(item.images) ? item.images.map(image => `
     <image:image>
       <image:loc>${escapeXml(image)}</image:loc>
       <image:title>${escapeXml(item.title || 'LMP Autos')}</image:title>
@@ -1836,6 +1876,7 @@ Disallow: /*?stock=interno
 Disallow: /metricas.html
 
 Sitemap: ${SITE_URL}/sitemap.xml
+Sitemap: ${SITE_URL}/sitemap-vendidos.xml
 `,
     'utf8'
   );
@@ -1927,12 +1968,18 @@ async function main() {
   const imageReport = await syncImages(rows);
 
   await updateIndexPrerender(rows);
-  const { publicRows, soldRows } = await generateVehiclePages(rows, generatedAt);
+  const { publicRows, soldRows, indexableSoldRows } = await generateVehiclePages(rows, generatedAt);
   const metaReport = await generateMetaCatalog(rows);
 
   await writeFile(
     sitemapPath,
-    sitemapXml(publicRows, soldRows, generatedAt),
+    sitemapXml(publicRows, generatedAt),
+    'utf8'
+  );
+
+  await writeFile(
+    soldSitemapPath,
+    soldSitemapXml(indexableSoldRows, generatedAt),
     'utf8'
   );
 
@@ -1976,7 +2023,9 @@ async function main() {
       `${metaReport.skippedWithoutRequiredData} con datos obligatorios incompletos.`
     );
   }
-  console.log(`Sitemap actualizado: ${publicRows.length + soldRows.length + 2} URLs.`);
+  console.log(`Sitemap principal: ${publicRows.length + 2} URLs.`);
+  console.log(`Sitemap vendidos: ${indexableSoldRows.length} URLs indexables.`);
+  console.log(`Vendidos noindex: ${soldRows.length - indexableSoldRows.length}.`);
   console.log(`Manifest de imágenes: ${clean(currentImageManifest._version) || 'sin versión'}.`);
   console.log(`Hash de stock: ${contentHash.slice(0, 12)}`);
 }

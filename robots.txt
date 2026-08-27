@@ -4,3 +4,4 @@ Disallow: /*?stock=interno
 Disallow: /metricas.html
 
 Sitemap: https://lmpautos.com/sitemap.xml
+Sitemap: https://lmpautos.com/sitemap-vendidos.xml
