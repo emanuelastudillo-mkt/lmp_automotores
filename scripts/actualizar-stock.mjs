@@ -203,8 +203,16 @@ function validateRows(rows) {
   return usableRows;
 }
 
+function vehicleStatus(row) {
+  return normalize(rowValue(row, 'Estado actual del auto'));
+}
+
+function isSoldVehicle(row) {
+  return vehicleStatus(row) === 'VENDIDO';
+}
+
 function isPublicVehicle(row) {
-  const status = normalize(rowValue(row, 'Estado actual del auto'));
+  const status = vehicleStatus(row);
 
   return Boolean(
     rowValue(row, 'Marca') &&
@@ -212,6 +220,14 @@ function isPublicVehicle(row) {
     status &&
     status !== 'VENDIDO' &&
     status !== 'DE BAJA'
+  );
+}
+
+function isVehiclePageRow(row) {
+  return Boolean(
+    rowValue(row, 'Marca') &&
+    rowValue(row, 'Modelo') &&
+    (isPublicVehicle(row) || isSoldVehicle(row))
   );
 }
 
@@ -708,8 +724,9 @@ async function syncImages(rows) {
 
     const previousVehicleState = previousState.vehicles?.[id] || { items: [] };
 
-    if (!isPublicVehicle(row)) {
-      // El original continúa en Drive; se limpian solamente archivos generados por la automatización.
+    if (!isVehiclePageRow(row)) {
+      // Las unidades vendidas conservan su página y sus imágenes para evitar URLs rotas.
+      // Solamente se limpian archivos de filas que no deben tener una ficha pública histórica.
       for (const previous of previousVehicleState.items || []) {
         const filePath = path.join(imagesDir, clean(previous.file));
 
@@ -1359,6 +1376,7 @@ async function generateMetaCatalog(rows) {
 
 function isMetaCatalogRow(row) {
   return Boolean(
+    isPublicVehicle(row) &&
     vehicleId(row) &&
     rowValue(row, 'Marca') &&
     rowValue(row, 'Modelo') &&
@@ -1413,6 +1431,7 @@ function metaPixelMarkup(row) {
 }
 
 function vehicleJsonLd(row, url) {
+  const sold = isSoldVehicle(row);
   const marca = rowValue(row, 'Marca');
   const modelo = rowValue(row, 'Modelo');
   const anio = rowValue(row, 'Año', 'Ano');
@@ -1446,7 +1465,7 @@ function vehicleJsonLd(row, url) {
       : undefined,
     image: images.length ? images : undefined,
     itemCondition: 'https://schema.org/UsedCondition',
-    offers: price
+    offers: !sold && price
       ? {
           '@type': 'Offer',
           url,
@@ -1528,6 +1547,7 @@ function scoreListMarkup(row) {
 }
 
 function vehiclePageHtml(row, generatedAt) {
+  const sold = isSoldVehicle(row);
   const marca = rowValue(row, 'Marca');
   const modelo = rowValue(row, 'Modelo');
   const anio = rowValue(row, 'Año', 'Ano');
@@ -1542,9 +1562,15 @@ function vehiclePageHtml(row, generatedAt) {
   const slug = vehicleSlug(row);
   const url = `${SITE_URL}/vehiculos/${slug}/`;
   const appUrl = `${SITE_URL}/?vehiculo=${encodeURIComponent(slug)}`;
-  const title = `${marca} ${modelo}${anio ? ` ${anio}` : ''} usado en Lomas del Mirador | LMP Autos`;
-  const description = vehicleDescription(row);
-  const metaCatalogItem = isMetaCatalogRow(row);
+  const vehicleName = `${marca} ${modelo}${anio ? ` ${anio}` : ''}`;
+  const title = sold
+    ? `${vehicleName} vendido | LMP Autos`
+    : `${vehicleName} usado en Lomas del Mirador | LMP Autos`;
+  const description = sold
+    ? `El ${vehicleName} ya fue vendido. Consultá vehículos similares disponibles en LMP Autos, Lomas del Mirador.`
+    : vehicleDescription(row);
+  const metaCatalogItem = !sold && isMetaCatalogRow(row);
+  const similarWhatsapp = `https://wa.me/5491132627744?text=${encodeURIComponent(`Hola, vi que el ${vehicleName} ya fue vendido. ¿Tienen alguna unidad similar disponible?`)}`;
   const metaEventParams = metaCatalogItem
     ? scriptJson(metaVehicleEventParams(row))
     : '';
@@ -1616,7 +1642,8 @@ ${breadcrumbJsonLd(row, url)}
     .panel{background:#fff;border:1px solid #ddd;border-radius:22px;padding:24px}
     .make{color:#bb1d23;font-size:12px;font-weight:900;text-transform:uppercase}
     h1{margin:5px 0 12px;font-size:clamp(30px,4vw,48px);line-height:1}
-    .status{display:inline-block;padding:6px 9px;border-radius:999px;background:#111;color:#fff;font-size:11px;font-weight:900}
+    .status{display:inline-block;padding:6px 9px;border-radius:999px;background:#111;color:#fff;font-size:11px;font-weight:900}${sold ? `
+    .status.sold{background:#bb1d23}` : ''}
     .specs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:18px}
     .spec{padding:11px;border-radius:12px;background:#f4f4f1}
     .spec span{display:block;color:#777;font-size:9px;text-transform:uppercase}
@@ -1624,8 +1651,11 @@ ${breadcrumbJsonLd(row, url)}
     .price{margin-top:16px;padding:16px;border-radius:14px;background:#111;color:#fff}
     .price span{display:block;font-size:10px;text-transform:uppercase}
     .price strong{display:block;margin-top:4px;font-size:25px}
-    .advance{margin-top:8px;padding:12px;border-radius:12px;background:#f0e8e8}
-    .cta{display:block;margin-top:16px;padding:14px;border-radius:12px;background:#1fa855;color:#fff;text-align:center;text-decoration:none;font-weight:900}
+    .advance{margin-top:8px;padding:12px;border-radius:12px;background:#f0e8e8}${sold ? `
+    .sold-notice{margin-top:16px;padding:16px;border-radius:14px;background:#fff2f2;border:1px solid #eccaca;color:#5f2024}
+    .sold-notice strong{display:block;margin-bottom:5px;color:#9f1d23}` : ''}
+    .cta{display:block;margin-top:16px;padding:14px;border-radius:12px;background:#1fa855;color:#fff;text-align:center;text-decoration:none;font-weight:900}${sold ? `
+    .cta.sold-cta{background:#bb1d23}` : ''}
     .secondary{display:block;margin-top:8px;padding:12px;border:1px solid #bbb;border-radius:12px;text-align:center;text-decoration:none;font-weight:850}
     .score-block{margin-top:24px;background:#fff;border:1px solid #ddd;border-radius:22px;padding:22px}
     .score-block h2{margin:0 0 10px}
@@ -1669,7 +1699,7 @@ ${breadcrumbJsonLd(row, url)}
     <article class="panel">
       <div class="make">${escapeHtml(marca)}</div>
       <h1>${escapeHtml(modelo)}${anio ? ` ${escapeHtml(anio)}` : ''}</h1>
-      <span class="status">${escapeHtml(statusLabel(row))}</span>
+      <span class="status${sold ? ' sold' : ''}">${sold ? 'VENDIDO' : escapeHtml(statusLabel(row))}</span>
 
       <div class="specs">
         ${anio ? `<div class="spec"><span>Año</span><strong>${escapeHtml(anio)}</strong></div>` : ''}
@@ -1679,11 +1709,13 @@ ${breadcrumbJsonLd(row, url)}
         ${color ? `<div class="spec"><span>Color</span><strong>${escapeHtml(color)}</strong></div>` : ''}
       </div>
 
-      ${price ? `<div class="price"><span>Valor total en pesos</span><strong>${escapeHtml(price)}</strong></div>` : ''}
-      ${advance ? `<div class="advance">Anticipo desde <strong>${escapeHtml(advance)}</strong></div>` : ''}
+      ${!sold && price ? `<div class="price"><span>Valor total en pesos</span><strong>${escapeHtml(price)}</strong></div>` : ''}
+      ${!sold && advance ? `<div class="advance">Anticipo desde <strong>${escapeHtml(advance)}</strong></div>` : ''}
 
-      <a class="cta" href="${escapeHtml(appUrl)}">Ver ficha completa y consultar</a>
-      <a class="secondary" id="vehicleWhatsapp" href="https://wa.me/5491132627744?text=${encodeURIComponent(`Hola, quiero consultar por ${marca} ${modelo}${anio ? ` ${anio}` : ''}.`)}" target="_blank" rel="noopener">Consultar por WhatsApp</a>
+      ${sold ? `<div class="sold-notice"><strong>Esta unidad ya fue vendida.</strong>Conservamos la ficha para que el enlace siga funcionando y puedas consultar alternativas similares.</div>
+      <a class="cta sold-cta" href="${escapeHtml(similarWhatsapp)}" target="_blank" rel="noopener">Consultar uno similar</a>
+      <a class="secondary" href="${SITE_URL}/">Ver vehículos disponibles</a>` : `<a class="cta" href="${escapeHtml(appUrl)}">Ver ficha completa y consultar</a>
+      <a class="secondary" id="vehicleWhatsapp" href="https://wa.me/5491132627744?text=${encodeURIComponent(`Hola, quiero consultar por ${marca} ${modelo}${anio ? ` ${anio}` : ''}.`)}" target="_blank" rel="noopener">Consultar por WhatsApp</a>`}
     </article>
   </div>
 
@@ -1708,8 +1740,25 @@ async function generateVehiclePages(rows, generatedAt) {
   await mkdir(vehiclesDir, { recursive: true });
 
   const publicRows = publicRowsSorted(rows);
+  const publicSlugs = new Set(publicRows.map(vehicleSlug).filter(Boolean));
+  const soldRows = [];
+  const soldSlugs = new Set();
 
-  for (const row of publicRows) {
+  const soldCandidates = rows
+    .filter(isSoldVehicle)
+    .sort((a, b) => {
+      const yearDiff = numericValue(rowValue(b, 'Año', 'Ano')) - numericValue(rowValue(a, 'Año', 'Ano'));
+      return yearDiff || idNumber(b) - idNumber(a);
+    });
+
+  for (const row of soldCandidates) {
+    const slug = vehicleSlug(row);
+    if (!slug || publicSlugs.has(slug) || soldSlugs.has(slug)) continue;
+    soldSlugs.add(slug);
+    soldRows.push(row);
+  }
+
+  for (const row of [...publicRows, ...soldRows]) {
     const slug = vehicleSlug(row);
     if (!slug) continue;
 
@@ -1722,10 +1771,10 @@ async function generateVehiclePages(rows, generatedAt) {
     );
   }
 
-  return publicRows;
+  return { publicRows, soldRows };
 }
 
-function sitemapXml(rows, generatedAt) {
+function sitemapXml(publicRows, soldRows, generatedAt) {
   const lastmod = generatedAt
     ? new Date(generatedAt).toISOString().slice(0, 10)
     : new Date().toISOString().slice(0, 10);
@@ -1743,7 +1792,7 @@ function sitemapXml(rows, generatedAt) {
     }
   ];
 
-  const vehicleUrls = rows.map(row => ({
+  const vehicleUrls = publicRows.map(row => ({
     loc: `${SITE_URL}/vehiculos/${vehicleSlug(row)}/`,
     changefreq: 'daily',
     priority: '0.8',
@@ -1751,7 +1800,15 @@ function sitemapXml(rows, generatedAt) {
     images: localVehicleImages(row)
   }));
 
-  const items = [...staticUrls, ...vehicleUrls];
+  const soldUrls = soldRows.map(row => ({
+    loc: `${SITE_URL}/vehiculos/${vehicleSlug(row)}/`,
+    changefreq: 'yearly',
+    priority: '0.4',
+    title: `${rowValue(row, 'Marca')} ${rowValue(row, 'Modelo')}${rowValue(row, 'Año', 'Ano') ? ` ${rowValue(row, 'Año', 'Ano')}` : ''} vendido`,
+    images: localVehicleImages(row)
+  }));
+
+  const items = [...staticUrls, ...vehicleUrls, ...soldUrls];
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
@@ -1870,12 +1927,12 @@ async function main() {
   const imageReport = await syncImages(rows);
 
   await updateIndexPrerender(rows);
-  const publicRows = await generateVehiclePages(rows, generatedAt);
+  const { publicRows, soldRows } = await generateVehiclePages(rows, generatedAt);
   const metaReport = await generateMetaCatalog(rows);
 
   await writeFile(
     sitemapPath,
-    sitemapXml(publicRows, generatedAt),
+    sitemapXml(publicRows, soldRows, generatedAt),
     'utf8'
   );
 
@@ -1906,6 +1963,7 @@ async function main() {
   }
 
   console.log(`Vehículos públicos pre-renderizados: ${publicRows.length}.`);
+  console.log(`Vehículos vendidos preservados: ${soldRows.length}.`);
   console.log(`Catálogo de Meta: ${metaReport.items} vehículo(s) exportado(s).`);
   if (
     metaReport.skippedWithoutPrice ||
@@ -1918,7 +1976,7 @@ async function main() {
       `${metaReport.skippedWithoutRequiredData} con datos obligatorios incompletos.`
     );
   }
-  console.log(`Sitemap actualizado: ${publicRows.length + 2} URLs.`);
+  console.log(`Sitemap actualizado: ${publicRows.length + soldRows.length + 2} URLs.`);
   console.log(`Manifest de imágenes: ${clean(currentImageManifest._version) || 'sin versión'}.`);
   console.log(`Hash de stock: ${contentHash.slice(0, 12)}`);
 }
