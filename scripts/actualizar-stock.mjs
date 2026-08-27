@@ -986,6 +986,11 @@ function staticRankingCard(row, index, metric = 'general') {
   </article>`;
 }
 
+function isDiscountStatusValue(value) {
+  const status = normalize(value);
+  return ['CON DESCUENTO', 'DESCUENTO', 'EN DESCUENTO', 'PROMO', 'PROMOCION', 'PROMOCIÓN'].includes(status);
+}
+
 function statusLabel(row) {
   const status = normalize(rowValue(row, 'Estado actual del auto'));
 
@@ -1012,19 +1017,21 @@ function staticCard(row) {
   const image = vehicleImage(row);
   const slug = vehicleSlug(row);
   const title = `${marca} ${modelo}${anio ? ` ${anio}` : ''}`;
+  const discounted = isDiscountStatusValue(rowValue(row, 'Estado actual del auto'));
 
   const imageMarkup = image
     ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(`${title} usado en Lomas del Mirador - LMP Autos`)}" loading="lazy" referrerpolicy="no-referrer">`
     : `<div class="photo-empty">Fotos próximamente</div>`;
 
-  return `<article class="vehicle seo-static-card">
+  return `<article class="vehicle seo-static-card${discounted ? ' discount-card' : ''}">
     <div class="photo">
       ${imageMarkup}
-      <div class="badge-stack"><span class="badge">${escapeHtml(statusLabel(row))}</span></div>
+      ${discounted ? '' : `<div class="badge-stack"><span class="badge">${escapeHtml(statusLabel(row))}</span></div>`}
     </div>
     <div class="body">
       <div class="make">${escapeHtml(marca)}</div>
       <h3>${escapeHtml(modelo)}</h3>
+      ${discounted ? '<div class="discount-note">Con descuento</div>' : ''}
       <div class="meta">
         ${anio ? `<span>${escapeHtml(anio)}</span>` : ''}
         ${km ? `<span>${escapeHtml(km)}</span>` : ''}
