@@ -46,6 +46,7 @@ jobs:
             meta-catalog.csv \
             robots.txt \
             sitemap.xml \
+            sitemap-vendidos.xml \
             vehiculos/ \
             img/meta/ \
             img/vehiculos/
