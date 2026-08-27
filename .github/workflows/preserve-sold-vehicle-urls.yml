@@ -1,0 +1,45 @@
+name: Preservar URLs de vehículos vendidos
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'vehiculos/**'
+      - 'data/sold-vehicles.json'
+      - 'scripts/preserve-sold-vehicle-pages.mjs'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: preserve-sold-vehicle-urls
+  cancel-in-progress: true
+
+jobs:
+  preserve:
+    if: ${{ !contains(github.event.head_commit.message || '', '[preserve-sold]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout con historial completo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Restaurar páginas históricas como VENDIDO
+        run: node scripts/preserve-sold-vehicle-pages.mjs
+
+      - name: Guardar páginas restauradas
+        shell: bash
+        run: |
+          if git diff --quiet -- vehiculos; then
+            echo "No hay páginas para restaurar."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add vehiculos
+          git commit -m "Preservar URLs de vehículos vendidos [preserve-sold]"
+          git push
