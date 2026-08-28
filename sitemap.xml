@@ -310,6 +310,26 @@
     </image:image>
   </url>
   <url>
+    <loc>https://lmpautos.com/vehiculos/kia-sorento-2-2-hdi-4x4-2010/</loc>
+    <lastmod>2026-08-28</lastmod>
+    <image:image>
+      <image:loc>https://lmpautos.com/img/vehiculos/A126.webp?v=4b6479816369</image:loc>
+      <image:title>Kia Sorento 2.2 HDI 4x4 2010</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lmpautos.com/vehiculos/peugeot-206-1-9-xtd-2006/</loc>
+    <lastmod>2026-08-28</lastmod>
+    <image:image>
+      <image:loc>https://lmpautos.com/img/vehiculos/A120.webp?v=4b6479816369</image:loc>
+      <image:title>Peugeot 206 1.9 XTD 2006</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lmpautos.com/vehiculos/chevrolet-onix-1-4-ltz-2019/</loc>
+    <lastmod>2026-08-28</lastmod>
+  </url>
+  <url>
     <loc>https://lmpautos.com/vehiculos/fiat-cronos-1-8-precision-2019/</loc>
     <lastmod>2026-08-28</lastmod>
     <image:image>
@@ -355,22 +375,6 @@
     <image:image>
       <image:loc>https://lmpautos.com/img/vehiculos/A082-3.webp?v=4b6479816369</image:loc>
       <image:title>Ford Ecosport 1.6 Titanium 2013</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://lmpautos.com/vehiculos/kia-sorento-2-2-hdi-4x4-2010/</loc>
-    <lastmod>2026-08-28</lastmod>
-    <image:image>
-      <image:loc>https://lmpautos.com/img/vehiculos/A126.webp?v=4b6479816369</image:loc>
-      <image:title>Kia Sorento 2.2 HDI 4x4 2010</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://lmpautos.com/vehiculos/peugeot-206-1-9-xtd-2006/</loc>
-    <lastmod>2026-08-28</lastmod>
-    <image:image>
-      <image:loc>https://lmpautos.com/img/vehiculos/A120.webp?v=4b6479816369</image:loc>
-      <image:title>Peugeot 206 1.9 XTD 2006</image:title>
     </image:image>
   </url>
 </urlset>
