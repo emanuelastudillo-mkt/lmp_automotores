@@ -294,14 +294,6 @@
     </image:image>
   </url>
   <url>
-    <loc>https://lmpautos.com/vehiculos/renault-clio-1-2-pack-plus-2011/</loc>
-    <lastmod>2026-08-31</lastmod>
-    <image:image>
-      <image:loc>https://lmpautos.com/img/vehiculos/A124.webp?v=4b6479816369</image:loc>
-      <image:title>Renault Clio 1.2 Pack Plus 2011</image:title>
-    </image:image>
-  </url>
-  <url>
     <loc>https://lmpautos.com/vehiculos/renault-fluence-1-6-2011/</loc>
     <lastmod>2026-08-31</lastmod>
     <image:image>
@@ -318,15 +310,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://lmpautos.com/vehiculos/peugeot-206-1-9-xtd-2006/</loc>
-    <lastmod>2026-08-31</lastmod>
-    <image:image>
-      <image:loc>https://lmpautos.com/img/vehiculos/A120.webp?v=4b6479816369</image:loc>
-      <image:title>Peugeot 206 1.9 XTD 2006</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://lmpautos.com/vehiculos/chevrolet-onix-1-4-ltz-2019/</loc>
+    <loc>https://lmpautos.com/vehiculos/chevrolet-prisma-1-4-ltz-2019/</loc>
     <lastmod>2026-08-31</lastmod>
   </url>
   <url>
@@ -335,6 +319,14 @@
     <image:image>
       <image:loc>https://lmpautos.com/img/vehiculos/A130.webp?v=4b6479816369</image:loc>
       <image:title>Fiat Cronos 1.8 Precision 2019</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lmpautos.com/vehiculos/renault-sandero-1-6-privilege-2019/</loc>
+    <lastmod>2026-08-31</lastmod>
+    <image:image>
+      <image:loc>https://lmpautos.com/img/vehiculos/A116.webp?v=4b6479816369</image:loc>
+      <image:title>Renault Sandero 1.6 Privilege 2019</image:title>
     </image:image>
   </url>
   <url>

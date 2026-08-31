@@ -38,14 +38,6 @@
     <lastmod>2026-08-31</lastmod>
   </url>
   <url>
-    <loc>https://lmpautos.com/vehiculos/renault-sandero-1-6-privilege-2019/</loc>
-    <lastmod>2026-08-31</lastmod>
-    <image:image>
-      <image:loc>https://lmpautos.com/img/vehiculos/A116.webp?v=4b6479816369</image:loc>
-      <image:title>Renault Sandero 1.6 Privilege 2019 vendido</image:title>
-    </image:image>
-  </url>
-  <url>
     <loc>https://lmpautos.com/vehiculos/volkswagen-polo-1-6-confortline-msi-2019/</loc>
     <lastmod>2026-08-31</lastmod>
   </url>
@@ -298,6 +290,14 @@
     <lastmod>2026-08-31</lastmod>
   </url>
   <url>
+    <loc>https://lmpautos.com/vehiculos/renault-clio-1-2-pack-plus-2011/</loc>
+    <lastmod>2026-08-31</lastmod>
+    <image:image>
+      <image:loc>https://lmpautos.com/img/vehiculos/A124.webp?v=4b6479816369</image:loc>
+      <image:title>Renault Clio 1.2 Pack Plus 2011 vendido</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://lmpautos.com/vehiculos/fiat-siena-1-4-fire-2011/</loc>
     <lastmod>2026-08-31</lastmod>
     <image:image>
@@ -404,6 +404,14 @@
   <url>
     <loc>https://lmpautos.com/vehiculos/chevrolet-zafira-2-0-7-plazas-2008/</loc>
     <lastmod>2026-08-31</lastmod>
+  </url>
+  <url>
+    <loc>https://lmpautos.com/vehiculos/peugeot-206-1-9-xtd-2006/</loc>
+    <lastmod>2026-08-31</lastmod>
+    <image:image>
+      <image:loc>https://lmpautos.com/img/vehiculos/A120.webp?v=4b6479816369</image:loc>
+      <image:title>Peugeot 206 1.9 XTD 2006 vendido</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://lmpautos.com/vehiculos/peugeot-partner-1-4-furgon-2006/</loc>
