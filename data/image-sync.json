@@ -812,7 +812,23 @@
     },
     "A126": {
       "manualCover": true,
-      "items": []
+      "items": [
+        {
+          "file": "A126-1.webp",
+          "source": "drive:1JaKpAYj7pCT7TRquDgh6TQqXx1Xz5nyJ",
+          "logicalOrder": 2
+        },
+        {
+          "file": "A126-2.webp",
+          "source": "drive:1KT4CGgr5q2epPD3dB2r5IwjF7hEluDoa",
+          "logicalOrder": 3
+        },
+        {
+          "file": "A126-3.webp",
+          "source": "drive:12ndekCGvewbkRQ2QMbwfA1hRM5TwmbmK",
+          "logicalOrder": 4
+        }
+      ]
     },
     "A127": {
       "manualCover": true,
