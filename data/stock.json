@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-01T21:06:04.452Z",
+  "generatedAt": "2026-09-02T04:41:27.349Z",
   "source": "Google Sheets CSV publicado",
   "rowCount": 134,
-  "contentHash": "543331eb1fcf094c7ce56ee76f3281507e27f863d583214c7c085204c786abfb",
+  "contentHash": "8d2e29f7a2db2a17312463343793ae9d3705b3543cb259d7ef71b55114bc4692",
   "rows": [
     {
       "ID": "A005",
@@ -3936,7 +3936,7 @@
       "Combustible": "Nafta & GNC",
       "Transmision": "Manual",
       "Fecha de salida o venta": "",
-      "Foto 1": "https://drive.google.com/file/d/1GP_zWZEm0HT0s9z0QskxfOZffN8X32xj/view?usp=sharing",
+      "Foto 1": "https://drive.google.com/file/d/1GYf-acIZC5yrMobfOUAOO66ySI8nQ1Eb/view?usp=sharing",
       "Foto 2": "",
       "Foto 3": "",
       "Foto 4": "",
@@ -4528,9 +4528,9 @@
       "Oportunidad": "54"
     },
     {
-      "ID": "$1.512,71",
+      "ID": "$1.512,73",
       "Marca": "Oficial",
-      "Modelo": "$1.545,99",
+      "Modelo": "$1.546,01",
       "Año": "Blue",
       "Kilometraje": "",
       "Color": "",
