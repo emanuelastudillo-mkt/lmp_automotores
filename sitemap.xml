@@ -342,20 +342,16 @@
     </image:image>
   </url>
   <url>
-    <loc>https://lmpautos.com/vehiculos/fiat-cronos-1-8-precision-2019/</loc>
-    <lastmod>2026-09-02</lastmod>
-    <image:image>
-      <image:loc>https://lmpautos.com/img/vehiculos/A130.webp?v=f9296cb0dfcb</image:loc>
-      <image:title>Fiat Cronos 1.8 Precision 2019</image:title>
-    </image:image>
-  </url>
-  <url>
     <loc>https://lmpautos.com/vehiculos/renault-sandero-1-6-privilege-2019/</loc>
     <lastmod>2026-09-02</lastmod>
     <image:image>
       <image:loc>https://lmpautos.com/img/vehiculos/A116.webp?v=f9296cb0dfcb</image:loc>
       <image:title>Renault Sandero 1.6 Privilege 2019</image:title>
     </image:image>
+  </url>
+  <url>
+    <loc>https://lmpautos.com/vehiculos/fiat-palio-1-4-fire-2015/</loc>
+    <lastmod>2026-09-02</lastmod>
   </url>
   <url>
     <loc>https://lmpautos.com/vehiculos/ford-ecosport-1-6-titanium-2013/</loc>
@@ -376,5 +372,9 @@
       <image:loc>https://lmpautos.com/img/vehiculos/A082-3.webp?v=f9296cb0dfcb</image:loc>
       <image:title>Ford Ecosport 1.6 Titanium 2013</image:title>
     </image:image>
+  </url>
+  <url>
+    <loc>https://lmpautos.com/vehiculos/mercedez-benz-c200-blue-efficiency-at-2011/</loc>
+    <lastmod>2026-09-02</lastmod>
   </url>
 </urlset>
