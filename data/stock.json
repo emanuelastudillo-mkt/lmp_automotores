@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-03T21:05:56.588Z",
+  "generatedAt": "2026-09-04T04:40:04.351Z",
   "source": "Google Sheets CSV publicado",
   "rowCount": 136,
-  "contentHash": "cd4c5bc703310f06c27a498536f09e3560530d411a3eece39375a5f539044b35",
+  "contentHash": "754b8ef3004190f76c576df40aea26dc39d16f043bdbebea873b89e477025de0",
   "rows": [
     {
       "ID": "A005",
@@ -798,8 +798,8 @@
       "Precio publicado Uds": "$9.800",
       "Precio de contado Uds": "",
       "MAX FINAN": "6.100.000",
-      "Anticipo MINIMO": "9.300.000",
-      "Cotizacion al día": "$15.400.000",
+      "Anticipo MINIMO": "9.200.000",
+      "Cotizacion al día": "$15.300.000",
       "Estado actual del auto": "VENDIDO",
       "% de anticipo": "60%",
       "Ultima publicacion": "15/10/2025",
@@ -1409,9 +1409,9 @@
       "Propietario": "Propio",
       "Precio publicado Uds": "$9.800",
       "Precio de contado Uds": "$9.000",
-      "MAX FINAN": "$8.600.000",
+      "MAX FINAN": "$8.500.000",
       "Anticipo MINIMO": "$6.800.000",
-      "Cotizacion al día": "$15.400.000",
+      "Cotizacion al día": "$15.300.000",
       "Estado actual del auto": "VENDIDO",
       "% de anticipo": "44%",
       "Ultima publicacion": "17/12/2025",
@@ -3415,9 +3415,9 @@
       "Propietario": "Consignación",
       "Precio publicado Uds": "$36.000",
       "Precio de contado Uds": "$35.500",
-      "MAX FINAN": "$25.300.000",
+      "MAX FINAN": "$25.200.000",
       "Anticipo MINIMO": "$31.000.000",
-      "Cotizacion al día": "$56.300.000",
+      "Cotizacion al día": "$56.200.000",
       "Estado actual del auto": "DE BAJA",
       "% de anticipo": "55%",
       "Ultima publicacion": "20/04/2026",
@@ -3437,7 +3437,7 @@
       "Seguridad": "94",
       "Calificacion General": "86,2",
       "Destacado": "",
-      "Oportunidad": "131"
+      "Oportunidad": "130"
     },
     {
       "ID": "A103",
@@ -4596,9 +4596,9 @@
       "Oportunidad": "68"
     },
     {
-      "ID": "$1.508,53",
+      "ID": "$1.508,28",
       "Marca": "Oficial",
-      "Modelo": "$1.541,72",
+      "Modelo": "$1.541,46",
       "Año": "Blue",
       "Kilometraje": "",
       "Color": "",
