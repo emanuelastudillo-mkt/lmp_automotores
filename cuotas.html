@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#101010">
+  <meta name="lmp-build" content="lmp-autos-web-v1.36.4-bna-autos">
   <link rel="icon" href="./favicon.ico" sizes="any">
   <link rel="shortcut icon" href="./favicon.ico">
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
@@ -389,6 +390,98 @@
     }
     .summary-item strong{font-size:14px}
 
+
+    .finance-tabs{
+      display:flex;
+      gap:8px;
+      padding:12px;
+      border-bottom:1px solid var(--line);
+      background:#f1f1ee;
+    }
+    .finance-tab{
+      flex:1;
+      min-height:46px;
+      border:1px solid transparent;
+      border-radius:14px;
+      background:transparent;
+      color:#656565;
+      font-size:12px;
+      font-weight:900;
+      cursor:pointer;
+    }
+    .finance-tab.active{
+      background:#fff;
+      color:#171717;
+      border-color:var(--line);
+      box-shadow:0 5px 16px rgba(0,0,0,.06);
+    }
+    .finance-panel{display:none}
+    .finance-panel.active{display:block}
+    .bna-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:18px;
+    }
+    .bna-head h3{margin:0;font-size:20px;letter-spacing:-.03em}
+    .bna-head p{margin:6px 0 0;color:var(--muted);font-size:12px;line-height:1.5}
+    .bna-badge{
+      flex:0 0 auto;
+      padding:8px 11px;
+      border:1px solid #bed6ed;
+      border-radius:999px;
+      background:#edf6ff;
+      color:#0b578e;
+      font-size:10px;
+      font-weight:900;
+      white-space:nowrap;
+    }
+    .bna-form-grid{
+      display:grid;
+      grid-template-columns:minmax(150px,.65fr) minmax(240px,1fr) minmax(220px,.85fr) auto;
+      gap:12px;
+      align-items:end;
+    }
+    .bna-results{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:12px;
+      margin-top:24px;
+    }
+    .bna-result{
+      min-height:168px;
+      padding:20px;
+      border:1px solid #dbe7f1;
+      border-radius:18px;
+      background:linear-gradient(180deg,#fafdff,#f1f7fb);
+    }
+    .bna-result .term{color:#0b689f}
+    .bna-result .installment{font-size:clamp(25px,3.2vw,36px)}
+    .bna-summary{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:8px;
+      margin-top:12px;
+    }
+    .bna-summary .summary-item{
+      padding:13px 14px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:#f5f7f8;
+    }
+    .bna-note{
+      margin-top:14px;
+      padding:12px 14px;
+      border:1px solid #d8e5ef;
+      border-radius:13px;
+      background:#f3f8fc;
+      color:#405666;
+      font-size:10px;
+      line-height:1.55;
+    }
+    .bna-note a{color:#075d96;text-decoration:underline;font-weight:850}
+
     .benefits{padding:48px 0 10px}
     .benefits-head{max-width:700px;margin-bottom:20px}
     .benefits-head h2{
@@ -457,6 +550,10 @@
       .results{grid-template-columns:1fr}
       .result-card{min-height:0}
       .benefits-grid{grid-template-columns:1fr 1fr}
+      .bna-form-grid{grid-template-columns:1fr 1fr}
+      .bna-form-grid .calculate{grid-column:1/-1}
+      .bna-results{grid-template-columns:1fr 1fr}
+      .bna-summary{grid-template-columns:1fr 1fr}
     }
 
     @media(max-width:620px){
@@ -478,6 +575,13 @@
       .calculate{grid-column:auto}
       .summary{grid-template-columns:1fr}
       .benefits{padding-top:38px}
+      .finance-tabs{padding:8px}
+      .finance-tab{font-size:11px;padding:0 8px}
+      .bna-head{flex-direction:column}
+      .bna-form-grid{grid-template-columns:1fr}
+      .bna-form-grid .calculate{grid-column:auto}
+      .bna-results{grid-template-columns:1fr}
+      .bna-summary{grid-template-columns:1fr}
       .benefits-grid{grid-template-columns:1fr}
       .footer-inner{align-items:flex-start;flex-direction:column}
       .footer-links{justify-content:flex-start}
@@ -498,7 +602,7 @@
       <nav aria-label="Navegación principal">
         <a href="/">Inicio</a>
         <a href="/#catalogView">Vehículos</a>
-        <a class="active" href="./cuotas.html">Cuotas</a>
+        <a class="active" href="./cuotas.html">Financiación</a>
       </nav>
     </div>
   </header>
@@ -527,12 +631,12 @@
       <div>
         <span class="eyebrow">Calculadora de financiación</span>
         <h1>Conocé tus cuotas antes de elegir el vehículo.</h1>
-        <p>Seleccioná el año e ingresá el capital que necesitás financiar. La herramienta calcula automáticamente opciones estimadas a 12, 18 y 24 meses.</p>
+        <p>Elegí entre la financiación habitual de LMP Autos y una simulación de Banco Nación +Autos para vehículos elegibles.</p>
       </div>
 
       <aside class="hero-note">
-        <strong>Simulación rápida</strong>
-        <span>Los valores son orientativos y quedan sujetos a evaluación y aprobación crediticia.</span>
+        <strong>Dos alternativas</strong>
+        <span>Compará la financiación habitual y Banco Nación +Autos. Los valores son orientativos y están sujetos a aprobación.</span>
       </aside>
     </div>
   </section>
@@ -540,76 +644,122 @@
   <main>
     <div class="shell calculator-wrap">
       <section class="calculator-card">
-        <div class="calculator-head">
-          <div>
-            <h2>Calculá la financiación</h2>
-            <p>Completá ambos campos para obtener las cuotas estimadas.</p>
-          </div>
-          <span class="source-badge">Producto propio · Enero 2026</span>
+        <div class="finance-tabs" role="tablist" aria-label="Opciones de financiación">
+          <button class="finance-tab active" id="tabLmp" type="button" role="tab" aria-selected="true" aria-controls="panelLmp">Financiación LMP</button>
+          <button class="finance-tab" id="tabBna" type="button" role="tab" aria-selected="false" aria-controls="panelBna">Banco Nación +Autos</button>
         </div>
 
-        <div class="calculator">
-          <div class="form-grid">
+        <div class="finance-panel active" id="panelLmp" role="tabpanel" aria-labelledby="tabLmp">
+          <div class="calculator-head">
             <div>
-              <label for="year">Año del vehículo</label>
-              <select id="year" aria-label="Año del vehículo">
-                <option value="">Seleccionar año</option>
-              </select>
-              <span class="hint">Disponible para modelos 2012 en adelante.</span>
+              <h2>Calculá la financiación LMP</h2>
+              <p>Seleccioná el año e ingresá el capital que necesitás financiar.</p>
             </div>
+            <span class="source-badge">Producto propio · Enero 2026</span>
+          </div>
 
-            <div>
-              <label for="amount">Monto necesario</label>
-              <div class="money-wrap">
-                <span class="money-symbol">$</span>
-                <input
-                  id="amount"
-                  class="money-input"
-                  type="text"
-                  inputmode="numeric"
-                  autocomplete="off"
-                  placeholder="Ej.: 7.500.000"
-                  aria-label="Monto necesario">
+          <div class="calculator">
+            <div class="form-grid">
+              <div>
+                <label for="year">Año del vehículo</label>
+                <select id="year" aria-label="Año del vehículo">
+                  <option value="">Seleccionar año</option>
+                </select>
+                <span class="hint">Disponible para modelos 2012 en adelante.</span>
               </div>
-              <span class="hint">Tabla de referencia: $1.000.000 a $12.500.000.</span>
+
+              <div>
+                <label for="amount">Monto necesario</label>
+                <div class="money-wrap">
+                  <span class="money-symbol">$</span>
+                  <input id="amount" class="money-input" type="text" inputmode="numeric" autocomplete="off" placeholder="Ej.: 7.500.000" aria-label="Monto necesario">
+                </div>
+                <span class="hint">Tabla de referencia: $1.000.000 a $12.500.000.</span>
+              </div>
+
+              <button class="calculate" id="calculate" type="button">Calcular cuotas</button>
             </div>
 
-            <button class="calculate" id="calculate" type="button">Calcular cuotas</button>
-          </div>
+            <div id="status" class="status" role="alert"></div>
 
-          <div id="status" class="status" role="alert"></div>
-
-          <div class="results" aria-live="polite">
-            <article class="result-card empty">
-              <div class="term">12 cuotas</div>
-              <div class="installment" id="q12">—</div>
-              <div class="per-month">por mes</div>
-              <div class="total">Total estimado<strong id="t12">—</strong></div>
-            </article>
-
-            <article class="result-card empty">
-              <div class="term">18 cuotas</div>
-              <div class="installment" id="q18">—</div>
-              <div class="per-month">por mes</div>
-              <div class="total">Total estimado<strong id="t18">—</strong></div>
-            </article>
-
-            <article class="result-card empty">
-              <div class="term">24 cuotas</div>
-              <div class="installment" id="q24">—</div>
-              <div class="per-month">por mes</div>
-              <div class="total">Total estimado<strong id="t24">—</strong></div>
-            </article>
-          </div>
-
-          <div class="summary">
-            <div class="summary-item">
-              <span>Categoría aplicada</span>
-              <strong id="category">Sin calcular</strong>
+            <div class="results" aria-live="polite">
+              <article class="result-card empty"><div class="term">12 cuotas</div><div class="installment" id="q12">—</div><div class="per-month">por mes</div><div class="total">Total estimado<strong id="t12">—</strong></div></article>
+              <article class="result-card empty"><div class="term">18 cuotas</div><div class="installment" id="q18">—</div><div class="per-month">por mes</div><div class="total">Total estimado<strong id="t18">—</strong></div></article>
+              <article class="result-card empty"><div class="term">24 cuotas</div><div class="installment" id="q24">—</div><div class="per-month">por mes</div><div class="total">Total estimado<strong id="t24">—</strong></div></article>
             </div>
-            <div class="summary-item">
-              <span>Capital solicitado</span>
-              <strong id="capital">—</strong>
+
+            <div class="summary">
+              <div class="summary-item"><span>Categoría aplicada</span><strong id="category">Sin calcular</strong></div>
+              <div class="summary-item"><span>Capital solicitado</span><strong id="capital">—</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="finance-panel" id="panelBna" role="tabpanel" aria-labelledby="tabBna" hidden>
+          <div class="calculator-head">
+            <div>
+              <h2>Banco Nación +Autos</h2>
+              <p>Simulación con sistema francés para autos 0 km y usados de hasta 10 años.</p>
+            </div>
+            <span class="bna-badge">Hasta 100% · 72 meses</span>
+          </div>
+
+          <div class="calculator">
+            <div class="bna-head">
+              <div>
+                <h3>Calculá una cuota fija estimada</h3>
+                <p>En 2026 contempla modelos 2016 en adelante. Puede financiar hasta el 100% del valor del vehículo, con un máximo de $100.000.000.</p>
+              </div>
+            </div>
+
+            <div class="bna-form-grid">
+              <div>
+                <label for="bnaYear">Año del vehículo</label>
+                <select id="bnaYear" aria-label="Año del vehículo para Banco Nación">
+                  <option value="">Seleccionar año</option>
+                </select>
+                <span class="hint" id="bnaYearHint">Usados de hasta 10 años.</span>
+              </div>
+
+              <div>
+                <label for="bnaAmount">Valor / monto a financiar</label>
+                <div class="money-wrap">
+                  <span class="money-symbol">$</span>
+                  <input id="bnaAmount" class="money-input" type="text" inputmode="numeric" autocomplete="off" placeholder="Ej.: 20.000.000" aria-label="Monto a financiar con Banco Nación">
+                </div>
+                <span class="hint">Desde $1.000.000 hasta $100.000.000.</span>
+              </div>
+
+              <div>
+                <label for="bnaProfile">Tipo de cliente</label>
+                <select id="bnaProfile" aria-label="Tipo de cliente Banco Nación">
+                  <option value="open">Cartera abierta · TNA 46%</option>
+                  <option value="salary">Haberes BNA · TNA 36%</option>
+                </select>
+                <span class="hint">Tasas vigentes informadas por BNA.</span>
+              </div>
+
+              <button class="calculate" id="bnaCalculate" type="button">Calcular BNA</button>
+            </div>
+
+            <div id="bnaStatus" class="status" role="alert"></div>
+
+            <div class="bna-results" aria-live="polite">
+              <article class="bna-result result-card empty"><div class="term">36 cuotas</div><div class="installment" id="bnaQ36">—</div><div class="per-month">por mes</div><div class="total">Total estimado<strong id="bnaT36">—</strong></div></article>
+              <article class="bna-result result-card empty"><div class="term">48 cuotas</div><div class="installment" id="bnaQ48">—</div><div class="per-month">por mes</div><div class="total">Total estimado<strong id="bnaT48">—</strong></div></article>
+              <article class="bna-result result-card empty"><div class="term">60 cuotas</div><div class="installment" id="bnaQ60">—</div><div class="per-month">por mes</div><div class="total">Total estimado<strong id="bnaT60">—</strong></div></article>
+              <article class="bna-result result-card empty"><div class="term">72 cuotas</div><div class="installment" id="bnaQ72">—</div><div class="per-month">por mes</div><div class="total">Total estimado<strong id="bnaT72">—</strong></div></article>
+            </div>
+
+            <div class="bna-summary">
+              <div class="summary-item"><span>TNA aplicada</span><strong id="bnaRate">46% fija</strong></div>
+              <div class="summary-item"><span>Monto financiado</span><strong id="bnaCapital">—</strong></div>
+              <div class="summary-item"><span>Financiación</span><strong>Hasta 100%</strong></div>
+              <div class="summary-item"><span>Plazo máximo</span><strong>72 meses</strong></div>
+            </div>
+
+            <div class="bna-note">
+              Simulación matemática sobre TNA con sistema francés. No incluye IVA sobre intereses, impuestos de sellos ni otros conceptos que integren el CFT; la cuota final informada por BNA puede variar. Sujeto a evaluación crediticia y condiciones de +Autos BNA. <a href="https://www.bna.com.ar/home/masautos" target="_blank" rel="noopener">Ver condiciones oficiales</a>.
             </div>
           </div>
         </div>
@@ -624,13 +774,13 @@
         <div class="benefits-grid">
           <div class="benefit">
             <div class="benefit-icon">$</div>
-            <strong>Cuotas estimadas</strong>
-            <span>Opciones a 12, 18 y 24 meses según el año.</span>
+            <strong>Dos calculadoras</strong>
+            <span>Compará financiación LMP y Banco Nación +Autos.</span>
           </div>
           <div class="benefit">
             <div class="benefit-icon">DNI</div>
-            <strong>Gestión simple</strong>
-            <span>Consultá alternativas de financiación solo con DNI.</span>
+            <strong>Banco Nación +Autos</strong>
+            <span>Hasta 100% del vehículo y hasta 72 meses para unidades elegibles.</span>
           </div>
           <div class="benefit">
             <div class="benefit-icon">↔</div>
@@ -663,58 +813,74 @@
   </footer>
 
   <script>
-const COEFFICIENTS = {
-      recent: {
-        label: "Año 0 km – 2022",
-        minYear: 2022,
-        values: {12: 141.1865, 18: 112.0183, 24: 97.7338}
-      },
-      middle: {
-        label: "Año 2021 – 2017",
-        minYear: 2017,
-        maxYear: 2021,
-        values: {12: 144.9422, 18: 116.0522, 24: 102.8805}
-      },
-      older: {
-        label: "Año 2016 – 2012",
-        minYear: 2012,
-        maxYear: 2016,
-        values: {12: 147.2213, 18: 118.4918, 24: 105.4913}
-      }
+    const COEFFICIENTS = {
+      recent: { label: "Año 0 km – 2022", minYear: 2022, values: {12: 141.1865, 18: 112.0183, 24: 97.7338} },
+      middle: { label: "Año 2021 – 2017", minYear: 2017, maxYear: 2021, values: {12: 144.9422, 18: 116.0522, 24: 102.8805} },
+      older: { label: "Año 2016 – 2012", minYear: 2012, maxYear: 2016, values: {12: 147.2213, 18: 118.4918, 24: 105.4913} }
     };
 
-    const yearSelect = document.getElementById("year");
-    const amountInput = document.getElementById("amount");
-    const calculateButton = document.getElementById("calculate");
-    const statusBox = document.getElementById("status");
-    const resultCards = [...document.querySelectorAll(".result-card")];
+    const BNA_AUTOS = {
+      minAmount: 1000000,
+      maxAmount: 100000000,
+      maxTerm: 72,
+      maxVehicleAge: 10,
+      rates: { open: 0.46, salary: 0.36 },
+      updated: "04/09/2026"
+    };
 
-    const currentYear = new Date().getFullYear();
-    for (let year = currentYear; year >= 2012; year--) {
-      const option = document.createElement("option");
-      option.value = String(year);
-      option.textContent = year === currentYear ? `${year} / 0 km` : String(year);
-      yearSelect.appendChild(option);
-    }
-
-    const currency = new Intl.NumberFormat("es-AR", {
-      style: "currency",
-      currency: "ARS",
-      maximumFractionDigits: 0
-    });
-
-    const number = new Intl.NumberFormat("es-AR", {
-      maximumFractionDigits: 0
-    });
+    const currency = new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS", maximumFractionDigits: 0 });
+    const number = new Intl.NumberFormat("es-AR", { maximumFractionDigits: 0 });
 
     function parseAmount(value) {
       const digits = String(value).replace(/\D/g, "");
       return digits ? Number(digits) : 0;
     }
 
-    function formatInput() {
-      const amount = parseAmount(amountInput.value);
-      amountInput.value = amount ? number.format(amount) : "";
+    function formatMoneyInput(input) {
+      const amount = parseAmount(input.value);
+      input.value = amount ? number.format(amount) : "";
+    }
+
+    function frenchPayment(capital, annualNominalRate, months) {
+      const principal = Number(capital) || 0;
+      const n = Number(months) || 0;
+      const monthlyRate = (Number(annualNominalRate) || 0) / 12;
+      if (!principal || !n) return 0;
+      if (!monthlyRate) return principal / n;
+      return principal * monthlyRate / (1 - Math.pow(1 + monthlyRate, -n));
+    }
+
+    function setupTabs() {
+      const tabs = [...document.querySelectorAll('.finance-tab')];
+      const panels = [...document.querySelectorAll('.finance-panel')];
+      tabs.forEach(tab => tab.addEventListener('click', () => {
+        const target = tab.id === 'tabBna' ? 'panelBna' : 'panelLmp';
+        tabs.forEach(t => {
+          const active = t === tab;
+          t.classList.toggle('active', active);
+          t.setAttribute('aria-selected', String(active));
+        });
+        panels.forEach(panel => {
+          const active = panel.id === target;
+          panel.classList.toggle('active', active);
+          panel.hidden = !active;
+        });
+      }));
+    }
+
+    // Financiación LMP
+    const yearSelect = document.getElementById("year");
+    const amountInput = document.getElementById("amount");
+    const calculateButton = document.getElementById("calculate");
+    const statusBox = document.getElementById("status");
+    const resultCards = [...document.querySelectorAll("#panelLmp .result-card")];
+    const currentYear = new Date().getFullYear();
+
+    for (let year = currentYear; year >= 2012; year--) {
+      const option = document.createElement("option");
+      option.value = String(year);
+      option.textContent = year === currentYear ? `${year} / 0 km` : String(year);
+      yearSelect.appendChild(option);
     }
 
     function getCategory(year) {
@@ -724,14 +890,14 @@ const COEFFICIENTS = {
       return null;
     }
 
-    function showStatus(message, type) {
-      statusBox.textContent = message;
-      statusBox.className = `status show ${type}`;
+    function showStatus(box, message, type) {
+      box.textContent = message;
+      box.className = `status show ${type}`;
     }
 
-    function clearStatus() {
-      statusBox.textContent = "";
-      statusBox.className = "status";
+    function clearStatus(box) {
+      box.textContent = "";
+      box.className = "status";
     }
 
     function resetResults() {
@@ -745,61 +911,86 @@ const COEFFICIENTS = {
     }
 
     function calculate() {
-      clearStatus();
-
+      clearStatus(statusBox);
       const year = Number(yearSelect.value);
       const amount = parseAmount(amountInput.value);
-
-      if (!year) {
-        resetResults();
-        showStatus("Seleccioná el año del vehículo.", "error");
-        yearSelect.focus();
-        return;
-      }
-
-      if (!amount) {
-        resetResults();
-        showStatus("Ingresá el monto que necesitás financiar.", "error");
-        amountInput.focus();
-        return;
-      }
-
+      if (!year) { resetResults(); showStatus(statusBox, "Seleccioná el año del vehículo.", "error"); yearSelect.focus(); return; }
+      if (!amount) { resetResults(); showStatus(statusBox, "Ingresá el monto que necesitás financiar.", "error"); amountInput.focus(); return; }
       const category = getCategory(year);
-      if (!category) {
-        resetResults();
-        showStatus("La tabla disponible contempla vehículos desde el año 2012.", "error");
-        return;
-      }
-
-      if (amount < 1000000 || amount > 12500000) {
-        showStatus(
-          "El monto ingresado está fuera del rango publicado de $1.000.000 a $12.500.000. El resultado se calcula por proporcionalidad y requiere validación comercial.",
-          "warn"
-        );
-      }
-
+      if (!category) { resetResults(); showStatus(statusBox, "La tabla disponible contempla vehículos desde el año 2012.", "error"); return; }
+      if (amount < 1000000 || amount > 12500000) showStatus(statusBox, "El monto ingresado está fuera del rango publicado de $1.000.000 a $12.500.000. El resultado se calcula por proporcionalidad y requiere validación comercial.", "warn");
       [12,18,24].forEach(term => {
         const installment = Math.round((amount / 1000) * category.values[term]);
-        const total = installment * term;
         document.getElementById(`q${term}`).textContent = currency.format(installment);
-        document.getElementById(`t${term}`).textContent = currency.format(total);
+        document.getElementById(`t${term}`).textContent = currency.format(installment * term);
       });
-
       document.getElementById("category").textContent = category.label;
       document.getElementById("capital").textContent = currency.format(amount);
       resultCards.forEach(card => card.classList.remove("empty"));
     }
 
-    amountInput.addEventListener("input", formatInput);
-    amountInput.addEventListener("keydown", event => {
-      if (event.key === "Enter") calculate();
-    });
-    yearSelect.addEventListener("change", () => {
-      if (amountInput.value) calculate();
-    });
+    amountInput.addEventListener("input", () => formatMoneyInput(amountInput));
+    amountInput.addEventListener("keydown", event => { if (event.key === "Enter") calculate(); });
+    yearSelect.addEventListener("change", () => { if (amountInput.value) calculate(); });
     calculateButton.addEventListener("click", calculate);
 
+    // Banco Nación +Autos
+    const bnaYear = document.getElementById('bnaYear');
+    const bnaAmount = document.getElementById('bnaAmount');
+    const bnaProfile = document.getElementById('bnaProfile');
+    const bnaCalculate = document.getElementById('bnaCalculate');
+    const bnaStatus = document.getElementById('bnaStatus');
+    const bnaCards = [...document.querySelectorAll('#panelBna .bna-result')];
+    const bnaMinYear = currentYear - BNA_AUTOS.maxVehicleAge;
+
+    for (let year = currentYear; year >= bnaMinYear; year--) {
+      const option = document.createElement('option');
+      option.value = String(year);
+      option.textContent = year === currentYear ? `${year} / 0 km` : String(year);
+      bnaYear.appendChild(option);
+    }
+    document.getElementById('bnaYearHint').textContent = `Elegibles: ${bnaMinYear} en adelante (hasta 10 años).`;
+
+    function resetBnaResults() {
+      [36,48,60,72].forEach(term => {
+        document.getElementById(`bnaQ${term}`).textContent = '—';
+        document.getElementById(`bnaT${term}`).textContent = '—';
+      });
+      document.getElementById('bnaCapital').textContent = '—';
+      bnaCards.forEach(card => card.classList.add('empty'));
+    }
+
+    function calculateBna() {
+      clearStatus(bnaStatus);
+      const year = Number(bnaYear.value);
+      const amount = parseAmount(bnaAmount.value);
+      const rate = BNA_AUTOS.rates[bnaProfile.value] || BNA_AUTOS.rates.open;
+
+      if (!year) { resetBnaResults(); showStatus(bnaStatus, 'Seleccioná el año del vehículo.', 'error'); bnaYear.focus(); return; }
+      if (year < bnaMinYear) { resetBnaResults(); showStatus(bnaStatus, `+Autos BNA contempla usados de hasta 10 años. Para ${currentYear}, el modelo debe ser ${bnaMinYear} o posterior.`, 'error'); return; }
+      if (!amount) { resetBnaResults(); showStatus(bnaStatus, 'Ingresá el valor o monto que querés financiar.', 'error'); bnaAmount.focus(); return; }
+      if (amount < BNA_AUTOS.minAmount || amount > BNA_AUTOS.maxAmount) { resetBnaResults(); showStatus(bnaStatus, 'El monto debe estar entre $1.000.000 y $100.000.000 según las condiciones publicadas por BNA.', 'error'); return; }
+
+      [36,48,60,72].forEach(term => {
+        const installment = Math.round(frenchPayment(amount, rate, term));
+        document.getElementById(`bnaQ${term}`).textContent = currency.format(installment);
+        document.getElementById(`bnaT${term}`).textContent = currency.format(installment * term);
+      });
+      document.getElementById('bnaRate').textContent = `${Math.round(rate*100)}% fija`;
+      document.getElementById('bnaCapital').textContent = currency.format(amount);
+      bnaCards.forEach(card => card.classList.remove('empty'));
+      showStatus(bnaStatus, `Simulación BNA +Autos con TNA fija del ${Math.round(rate*100)}%, sistema francés y hasta 72 meses.`, 'warn');
+    }
+
+    bnaAmount.addEventListener('input', () => formatMoneyInput(bnaAmount));
+    bnaAmount.addEventListener('keydown', event => { if (event.key === 'Enter') calculateBna(); });
+    bnaYear.addEventListener('change', () => { if (bnaAmount.value) calculateBna(); });
+    bnaProfile.addEventListener('change', () => { if (bnaYear.value && bnaAmount.value) calculateBna(); else document.getElementById('bnaRate').textContent = `${Math.round((BNA_AUTOS.rates[bnaProfile.value]||BNA_AUTOS.rates.open)*100)}% fija`; });
+    bnaCalculate.addEventListener('click', calculateBna);
+
+    setupTabs();
     resetResults();
+    resetBnaResults();
   </script>
 </body>
 </html>
