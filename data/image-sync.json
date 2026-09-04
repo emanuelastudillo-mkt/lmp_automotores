@@ -704,8 +704,14 @@
       ]
     },
     "A116": {
-      "manualCover": true,
-      "items": []
+      "manualCover": false,
+      "items": [
+        {
+          "file": "A116.webp",
+          "source": "drive:18bVWz6WTxADfb4BL5wtGzwHuGwDOrMmq",
+          "logicalOrder": 1
+        }
+      ]
     },
     "A119": {
       "manualCover": true,
@@ -940,11 +946,31 @@
     },
     "A134": {
       "manualCover": false,
-      "items": []
+      "items": [
+        {
+          "file": "A134.webp",
+          "source": "drive:1Te-CtsDxi4_GuT5lMyHlHd7fD0Pe-JVQ",
+          "logicalOrder": 1
+        }
+      ]
     },
     "A135": {
       "manualCover": false,
       "items": []
+    },
+    "A136": {
+      "manualCover": false,
+      "items": []
+    },
+    "A137": {
+      "manualCover": false,
+      "items": [
+        {
+          "file": "A137.webp",
+          "source": "drive:1q2XeQ7w2EjfEaCL5gwYnGjDVOf2gnHxa",
+          "logicalOrder": 1
+        }
+      ]
     }
   }
 }
