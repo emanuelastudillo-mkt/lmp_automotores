@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#101010">
-  <meta name="lmp-build" content="lmp-autos-web-v1.36.4-bna-autos">
+  <meta name="lmp-build" content="lmp-autos-web-v1.36.5-bna-aproximado">
   <link rel="icon" href="./favicon.ico" sizes="any">
   <link rel="shortcut icon" href="./favicon.ico">
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
@@ -439,13 +439,13 @@
     }
     .bna-form-grid{
       display:grid;
-      grid-template-columns:minmax(150px,.65fr) minmax(240px,1fr) minmax(220px,.85fr) auto;
+      grid-template-columns:minmax(170px,.7fr) minmax(280px,1fr) auto;
       gap:12px;
       align-items:end;
     }
     .bna-results{
       display:grid;
-      grid-template-columns:repeat(4,minmax(0,1fr));
+      grid-template-columns:repeat(3,minmax(0,1fr));
       gap:12px;
       margin-top:24px;
     }
@@ -730,14 +730,6 @@
                 <span class="hint">Desde $1.000.000 hasta $100.000.000.</span>
               </div>
 
-              <div>
-                <label for="bnaProfile">Tipo de cliente</label>
-                <select id="bnaProfile" aria-label="Tipo de cliente Banco Nación">
-                  <option value="open">Cartera abierta · TNA 46%</option>
-                  <option value="salary">Haberes BNA · TNA 36%</option>
-                </select>
-                <span class="hint">Tasas vigentes informadas por BNA.</span>
-              </div>
 
               <button class="calculate" id="bnaCalculate" type="button">Calcular BNA</button>
             </div>
@@ -745,21 +737,23 @@
             <div id="bnaStatus" class="status" role="alert"></div>
 
             <div class="bna-results" aria-live="polite">
-              <article class="bna-result result-card empty"><div class="term">36 cuotas</div><div class="installment" id="bnaQ36">—</div><div class="per-month">por mes</div><div class="total">Total estimado<strong id="bnaT36">—</strong></div></article>
-              <article class="bna-result result-card empty"><div class="term">48 cuotas</div><div class="installment" id="bnaQ48">—</div><div class="per-month">por mes</div><div class="total">Total estimado<strong id="bnaT48">—</strong></div></article>
-              <article class="bna-result result-card empty"><div class="term">60 cuotas</div><div class="installment" id="bnaQ60">—</div><div class="per-month">por mes</div><div class="total">Total estimado<strong id="bnaT60">—</strong></div></article>
-              <article class="bna-result result-card empty"><div class="term">72 cuotas</div><div class="installment" id="bnaQ72">—</div><div class="per-month">por mes</div><div class="total">Total estimado<strong id="bnaT72">—</strong></div></article>
+              <article class="bna-result result-card empty"><div class="term">12 cuotas</div><div class="installment" id="bnaQ12">—</div><div class="per-month">aprox. por mes</div><div class="total">Total estimado<strong id="bnaT12">—</strong></div></article>
+              <article class="bna-result result-card empty"><div class="term">24 cuotas</div><div class="installment" id="bnaQ24">—</div><div class="per-month">aprox. por mes</div><div class="total">Total estimado<strong id="bnaT24">—</strong></div></article>
+              <article class="bna-result result-card empty"><div class="term">36 cuotas</div><div class="installment" id="bnaQ36">—</div><div class="per-month">aprox. por mes</div><div class="total">Total estimado<strong id="bnaT36">—</strong></div></article>
+              <article class="bna-result result-card empty"><div class="term">48 cuotas</div><div class="installment" id="bnaQ48">—</div><div class="per-month">aprox. por mes</div><div class="total">Total estimado<strong id="bnaT48">—</strong></div></article>
+              <article class="bna-result result-card empty"><div class="term">60 cuotas</div><div class="installment" id="bnaQ60">—</div><div class="per-month">aprox. por mes</div><div class="total">Total estimado<strong id="bnaT60">—</strong></div></article>
+              <article class="bna-result result-card empty"><div class="term">72 cuotas</div><div class="installment" id="bnaQ72">—</div><div class="per-month">aprox. por mes</div><div class="total">Total estimado<strong id="bnaT72">—</strong></div></article>
             </div>
 
             <div class="bna-summary">
-              <div class="summary-item"><span>TNA aplicada</span><strong id="bnaRate">46% fija</strong></div>
+              <div class="summary-item"><span>Tipo de cálculo</span><strong>Aproximado</strong></div>
               <div class="summary-item"><span>Monto financiado</span><strong id="bnaCapital">—</strong></div>
               <div class="summary-item"><span>Financiación</span><strong>Hasta 100%</strong></div>
               <div class="summary-item"><span>Plazo máximo</span><strong>72 meses</strong></div>
             </div>
 
             <div class="bna-note">
-              Simulación matemática sobre TNA con sistema francés. No incluye IVA sobre intereses, impuestos de sellos ni otros conceptos que integren el CFT; la cuota final informada por BNA puede variar. Sujeto a evaluación crediticia y condiciones de +Autos BNA. <a href="https://www.bna.com.ar/home/masautos" target="_blank" rel="noopener">Ver condiciones oficiales</a>.
+              Cálculo aproximado y meramente estimativo para orientar la consulta. La cuota final queda sujeta a evaluación crediticia, condiciones vigentes y confirmación directa de Banco Nación. <a href="https://www.bna.com.ar/home/masautos" target="_blank" rel="noopener">Ver condiciones oficiales</a>.
             </div>
           </div>
         </div>
@@ -824,8 +818,9 @@
       maxAmount: 100000000,
       maxTerm: 72,
       maxVehicleAge: 10,
-      rates: { open: 0.46, salary: 0.36 },
-      updated: "04/09/2026"
+      estimateRate: 0.55,
+      terms: [12,24,36,48,60,72],
+      updated: "07/09/2026"
     };
 
     const currency = new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS", maximumFractionDigits: 0 });
@@ -937,7 +932,6 @@
     // Banco Nación +Autos
     const bnaYear = document.getElementById('bnaYear');
     const bnaAmount = document.getElementById('bnaAmount');
-    const bnaProfile = document.getElementById('bnaProfile');
     const bnaCalculate = document.getElementById('bnaCalculate');
     const bnaStatus = document.getElementById('bnaStatus');
     const bnaCards = [...document.querySelectorAll('#panelBna .bna-result')];
@@ -952,7 +946,7 @@
     document.getElementById('bnaYearHint').textContent = `Elegibles: ${bnaMinYear} en adelante (hasta 10 años).`;
 
     function resetBnaResults() {
-      [36,48,60,72].forEach(term => {
+      BNA_AUTOS.terms.forEach(term => {
         document.getElementById(`bnaQ${term}`).textContent = '—';
         document.getElementById(`bnaT${term}`).textContent = '—';
       });
@@ -964,28 +958,26 @@
       clearStatus(bnaStatus);
       const year = Number(bnaYear.value);
       const amount = parseAmount(bnaAmount.value);
-      const rate = BNA_AUTOS.rates[bnaProfile.value] || BNA_AUTOS.rates.open;
+      const rate = BNA_AUTOS.estimateRate;
 
       if (!year) { resetBnaResults(); showStatus(bnaStatus, 'Seleccioná el año del vehículo.', 'error'); bnaYear.focus(); return; }
       if (year < bnaMinYear) { resetBnaResults(); showStatus(bnaStatus, `+Autos BNA contempla usados de hasta 10 años. Para ${currentYear}, el modelo debe ser ${bnaMinYear} o posterior.`, 'error'); return; }
       if (!amount) { resetBnaResults(); showStatus(bnaStatus, 'Ingresá el valor o monto que querés financiar.', 'error'); bnaAmount.focus(); return; }
       if (amount < BNA_AUTOS.minAmount || amount > BNA_AUTOS.maxAmount) { resetBnaResults(); showStatus(bnaStatus, 'El monto debe estar entre $1.000.000 y $100.000.000 según las condiciones publicadas por BNA.', 'error'); return; }
 
-      [36,48,60,72].forEach(term => {
+      BNA_AUTOS.terms.forEach(term => {
         const installment = Math.round(frenchPayment(amount, rate, term));
         document.getElementById(`bnaQ${term}`).textContent = currency.format(installment);
         document.getElementById(`bnaT${term}`).textContent = currency.format(installment * term);
       });
-      document.getElementById('bnaRate').textContent = `${Math.round(rate*100)}% fija`;
       document.getElementById('bnaCapital').textContent = currency.format(amount);
       bnaCards.forEach(card => card.classList.remove('empty'));
-      showStatus(bnaStatus, `Simulación BNA +Autos con TNA fija del ${Math.round(rate*100)}%, sistema francés y hasta 72 meses.`, 'warn');
+      showStatus(bnaStatus, 'Cuotas aproximadas. El resultado es estimativo y queda sujeto a evaluación crediticia, condiciones vigentes y confirmación directa de Banco Nación.', 'warn');
     }
 
     bnaAmount.addEventListener('input', () => formatMoneyInput(bnaAmount));
     bnaAmount.addEventListener('keydown', event => { if (event.key === 'Enter') calculateBna(); });
     bnaYear.addEventListener('change', () => { if (bnaAmount.value) calculateBna(); });
-    bnaProfile.addEventListener('change', () => { if (bnaYear.value && bnaAmount.value) calculateBna(); else document.getElementById('bnaRate').textContent = `${Math.round((BNA_AUTOS.rates[bnaProfile.value]||BNA_AUTOS.rates.open)*100)}% fija`; });
     bnaCalculate.addEventListener('click', calculateBna);
 
     setupTabs();
