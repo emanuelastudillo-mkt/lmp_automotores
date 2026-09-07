@@ -961,16 +961,6 @@
     "A136": {
       "manualCover": false,
       "items": []
-    },
-    "A137": {
-      "manualCover": false,
-      "items": [
-        {
-          "file": "A137.webp",
-          "source": "drive:1q2XeQ7w2EjfEaCL5gwYnGjDVOf2gnHxa",
-          "logicalOrder": 1
-        }
-      ]
     }
   }
 }
