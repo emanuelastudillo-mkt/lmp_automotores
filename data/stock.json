@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-06T20:28:10.157Z",
+  "generatedAt": "2026-09-07T04:49:12.890Z",
   "source": "Google Sheets CSV publicado",
   "rowCount": 138,
-  "contentHash": "49f26a6f4cb1043e96177ef3abbbde97a31d9f7414c16af05706174d154c78d7",
+  "contentHash": "2c895af34d8a4d74538d9aef9ab0096ce856d945a5ab40524f9b3ddf12b813a1",
   "rows": [
     {
       "ID": "A005",
@@ -4664,9 +4664,9 @@
       "Oportunidad": ""
     },
     {
-      "ID": "$1.508,98",
+      "ID": "$1.508,90",
       "Marca": "Oficial",
-      "Modelo": "$1.542,18",
+      "Modelo": "$1.542,10",
       "Año": "Blue",
       "Kilometraje": "",
       "Color": "",
