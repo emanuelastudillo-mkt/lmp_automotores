@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-09T20:59:05.671Z",
+  "generatedAt": "2026-09-10T04:49:48.106Z",
   "source": "Google Sheets CSV publicado",
   "rowCount": 138,
-  "contentHash": "54964d644bbad265a53fc13c87eb2526bd87955125f12101be5e99ff47684b28",
+  "contentHash": "8a8ed627af22483cf789ecb6f7c7e9c753e9b277342974a236d191cb57092c6c",
   "rows": [
     {
       "ID": "A005",
@@ -4608,7 +4608,7 @@
       "MAX FINAN": "",
       "Anticipo MINIMO": "$8.100.000",
       "Cotizacion al día": "$15.400.000",
-      "Estado actual del auto": "PREPARANDO",
+      "Estado actual del auto": "DISPONIBLE",
       "% de anticipo": "52%",
       "Ultima publicacion": "",
       "Reel": "",
@@ -4616,10 +4616,10 @@
       "Combustible": "Nafta",
       "Transmision": "Manual",
       "Fecha de salida o venta": "",
-      "Foto 1": "",
-      "Foto 2": "",
-      "Foto 3": "",
-      "Foto 4": "",
+      "Foto 1": "https://drive.google.com/file/d/1IuV7HTrm34TmhvtmVwEjjKfwn14kqVfw/view?usp=sharing",
+      "Foto 2": "https://drive.google.com/file/d/1ruEXgkEKzE7GwxCwCOvkSiAYoqQNq50B/view?usp=sharing",
+      "Foto 3": "https://drive.google.com/file/d/1tu2G7jibCAD3_IVOvej27o5JlPG6whbx/view?usp=sharing",
+      "Foto 4": "https://drive.google.com/file/d/1DUijY8t7DfPjCrpJi49vAdnujrI878kl/view?usp=sharing",
       "Rendimiento": "68",
       "Confort": "61",
       "Economía": "81",
@@ -4664,9 +4664,9 @@
       "Oportunidad": ""
     },
     {
-      "ID": "$1.513,74",
+      "ID": "$1.513,72",
       "Marca": "Oficial",
-      "Modelo": "$1.547,05",
+      "Modelo": "$1.547,02",
       "Año": "Blue",
       "Kilometraje": "",
       "Color": "",

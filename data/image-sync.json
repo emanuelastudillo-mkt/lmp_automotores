@@ -981,7 +981,28 @@
     },
     "A136": {
       "manualCover": false,
-      "items": []
+      "items": [
+        {
+          "file": "A136.webp",
+          "source": "drive:1IuV7HTrm34TmhvtmVwEjjKfwn14kqVfw",
+          "logicalOrder": 1
+        },
+        {
+          "file": "A136-1.webp",
+          "source": "drive:1ruEXgkEKzE7GwxCwCOvkSiAYoqQNq50B",
+          "logicalOrder": 2
+        },
+        {
+          "file": "A136-2.webp",
+          "source": "drive:1tu2G7jibCAD3_IVOvej27o5JlPG6whbx",
+          "logicalOrder": 3
+        },
+        {
+          "file": "A136-3.webp",
+          "source": "drive:1DUijY8t7DfPjCrpJi49vAdnujrI878kl",
+          "logicalOrder": 4
+        }
+      ]
     }
   }
 }
