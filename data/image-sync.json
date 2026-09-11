@@ -1006,7 +1006,18 @@
     },
     "A138": {
       "manualCover": false,
-      "items": []
+      "items": [
+        {
+          "file": "A138.webp",
+          "source": "drive:1AAnfVCxeUv1gJ0oXmTwCr0O0k9Ag9-N2",
+          "logicalOrder": 1
+        },
+        {
+          "file": "A138-1.webp",
+          "source": "drive:1dxonyQLXsLvTan8zOXs3i_u5jSxjl5fY",
+          "logicalOrder": 2
+        }
+      ]
     }
   }
 }
