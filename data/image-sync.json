@@ -1021,7 +1021,28 @@
     },
     "A139": {
       "manualCover": false,
-      "items": []
+      "items": [
+        {
+          "file": "A139.webp",
+          "source": "drive:1azOBTSnMH9fC141SH8QBHKugpxKHwiEp",
+          "logicalOrder": 1
+        },
+        {
+          "file": "A139-1.webp",
+          "source": "drive:175GB6xtz6n9eXxUezwpHKariq0i8XVHh",
+          "logicalOrder": 2
+        },
+        {
+          "file": "A139-2.webp",
+          "source": "drive:1k8d8_gE4a_otUKKeW4Mlzye27xr8M4rT",
+          "logicalOrder": 3
+        },
+        {
+          "file": "A139-3.webp",
+          "source": "drive:1urAyGUx8S5zserya28sVAB1dHOWwG-6i",
+          "logicalOrder": 4
+        }
+      ]
     }
   }
 }

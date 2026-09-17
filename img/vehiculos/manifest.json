@@ -1,5 +1,5 @@
 {
-  "_version": "83eadbcdb4b3",
+  "_version": "0f4b7f932bb2",
   "A042": [
     "A042.webp",
     "A042-1.webp",
@@ -206,5 +206,11 @@
   "A138": [
     "A138.webp",
     "A138-1.webp"
+  ],
+  "A139": [
+    "A139.webp",
+    "A139-1.webp",
+    "A139-2.webp",
+    "A139-3.webp"
   ]
 }
