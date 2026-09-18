@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-18T04:49:56.016Z",
+  "generatedAt": "2026-09-18T11:22:52.193Z",
   "source": "Google Sheets CSV publicado",
   "rowCount": 140,
-  "contentHash": "4bec38b07e0dbb23a2a683602da0ae0e0ff3356fd7437eeb867801a5cafbe242",
+  "contentHash": "55959f71954a59782539d51506e0e02cc22f1ccb330246b609817f971d1db4dc",
   "rows": [
     {
       "ID": "A005",
@@ -4367,9 +4367,9 @@
       "Propietario": "Consignación",
       "Precio publicado Uds": "$35.000",
       "Precio de contado Uds": "$34.000",
-      "MAX FINAN": "$19.600.000",
+      "MAX FINAN": "$19.700.000",
       "Anticipo MINIMO": "$35.100.000",
-      "Cotizacion al día": "$54.700.000",
+      "Cotizacion al día": "$54.800.000",
       "Estado actual del auto": "DISPONIBLE",
       "% de anticipo": "64%",
       "Ultima publicacion": "20/08/2026",
@@ -4389,7 +4389,7 @@
       "Seguridad": "66",
       "Calificacion General": "74,8",
       "Destacado": "",
-      "Oportunidad": "146"
+      "Oportunidad": "147"
     },
     {
       "ID": "A130",
@@ -4732,9 +4732,9 @@
       "Oportunidad": "57"
     },
     {
-      "ID": "$1.509,97",
+      "ID": "$1.510,03",
       "Marca": "Oficial",
-      "Modelo": "$1.543,19",
+      "Modelo": "$1.543,25",
       "Año": "Blue",
       "Kilometraje": "",
       "Color": "",
