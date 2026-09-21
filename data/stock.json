@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-20T20:53:12.323Z",
+  "generatedAt": "2026-09-21T05:03:21.568Z",
   "source": "Google Sheets CSV publicado",
   "rowCount": 140,
-  "contentHash": "ea2b12718628057c6db8af529b7cb952b5ff7deec9eb6462a07f9f550893e4cd",
+  "contentHash": "a35e198b040af1b182035a11d1b08de242636db95a6d2a0b97d3f566d995952b",
   "rows": [
     {
       "ID": "A005",
@@ -798,8 +798,8 @@
       "Precio publicado Uds": "$9.800",
       "Precio de contado Uds": "",
       "MAX FINAN": "6.100.000",
-      "Anticipo MINIMO": "9.200.000",
-      "Cotizacion al día": "$15.300.000",
+      "Anticipo MINIMO": "9.300.000",
+      "Cotizacion al día": "$15.400.000",
       "Estado actual del auto": "VENDIDO",
       "% de anticipo": "60%",
       "Ultima publicacion": "15/10/2025",
@@ -1409,9 +1409,9 @@
       "Propietario": "Propio",
       "Precio publicado Uds": "$9.800",
       "Precio de contado Uds": "$9.000",
-      "MAX FINAN": "$8.500.000",
+      "MAX FINAN": "$8.600.000",
       "Anticipo MINIMO": "$6.800.000",
-      "Cotizacion al día": "$15.300.000",
+      "Cotizacion al día": "$15.400.000",
       "Estado actual del auto": "VENDIDO",
       "% de anticipo": "44%",
       "Ultima publicacion": "17/12/2025",
@@ -3415,9 +3415,9 @@
       "Propietario": "Consignación",
       "Precio publicado Uds": "$36.000",
       "Precio de contado Uds": "$35.500",
-      "MAX FINAN": "$25.200.000",
+      "MAX FINAN": "$25.300.000",
       "Anticipo MINIMO": "$31.000.000",
-      "Cotizacion al día": "$56.200.000",
+      "Cotizacion al día": "$56.300.000",
       "Estado actual del auto": "DE BAJA",
       "% de anticipo": "55%",
       "Ultima publicacion": "20/04/2026",
@@ -3437,7 +3437,7 @@
       "Seguridad": "94",
       "Calificacion General": "86,2",
       "Destacado": "",
-      "Oportunidad": "130"
+      "Oportunidad": "131"
     },
     {
       "ID": "A103",
@@ -4606,8 +4606,8 @@
       "Precio publicado Uds": "$9.800",
       "Precio de contado Uds": "$9.000",
       "MAX FINAN": "",
-      "Anticipo MINIMO": "$8.000.000",
-      "Cotizacion al día": "$15.300.000",
+      "Anticipo MINIMO": "$8.100.000",
+      "Cotizacion al día": "$15.400.000",
       "Estado actual del auto": "DISPONIBLE",
       "% de anticipo": "52%",
       "Ultima publicacion": "",
@@ -4627,7 +4627,7 @@
       "Seguridad": "59",
       "Calificacion General": "69",
       "Destacado": "",
-      "Oportunidad": "44"
+      "Oportunidad": "45"
     },
     {
       "ID": "A137",
@@ -4732,9 +4732,9 @@
       "Oportunidad": "57"
     },
     {
-      "ID": "$1.507,26",
+      "ID": "$1.508,62",
       "Marca": "Oficial",
-      "Modelo": "$1.540,42",
+      "Modelo": "$1.541,81",
       "Año": "Blue",
       "Kilometraje": "",
       "Color": "",
