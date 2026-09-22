@@ -106,8 +106,25 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '1026614216645178');
-fbq('track', 'PageView');
+  window.LMP_META_PIXEL_ID='1026614216645178';
+  window.LMP_META_MATCH_STORAGE_KEY='lmp_meta_match_v1';
+  window.LMP_META_MATCH_DATA=(()=>{
+    try{
+      const stored=JSON.parse(sessionStorage.getItem(window.LMP_META_MATCH_STORAGE_KEY)||'{}');
+      return ['fn','ln','ph'].reduce((data,key)=>{
+        if(typeof stored[key]==='string' && stored[key].trim())data[key]=stored[key].trim();
+        return data;
+      },{});
+    }catch(_){
+      return {};
+    }
+  })();
+  if(Object.keys(window.LMP_META_MATCH_DATA).length){
+    fbq('init',window.LMP_META_PIXEL_ID,window.LMP_META_MATCH_DATA);
+  }else{
+    fbq('init',window.LMP_META_PIXEL_ID);
+  }
+  fbq('track', 'PageView');
 </script>
 
 <!-- End Meta Pixel Code -->
@@ -383,6 +400,25 @@ fbq('track', 'PageView');
     .modal.open{display:flex}
     .modal-panel{width:min(1240px,100%);max-height:94vh;overflow:auto;background:#fff;border-radius:24px;position:relative}
     .close{position:sticky;float:right;top:14px;margin:14px 14px -60px 0;z-index:5;width:42px;height:42px;border:0;border-radius:50%;background:rgba(0,0,0,.72);color:#fff;font-size:20px;cursor:pointer}
+    .lead-dialog{position:fixed;inset:0;z-index:260;display:none;place-items:center;padding:18px;background:rgba(0,0,0,.78);backdrop-filter:blur(7px)}
+    .lead-dialog.open{display:grid}
+    .lead-dialog-panel{width:min(500px,100%);max-height:calc(100vh - 36px);overflow:auto;position:relative;border-radius:24px;background:#fff;padding:28px;box-shadow:0 24px 80px rgba(0,0,0,.34)}
+    .lead-dialog-close{position:absolute;top:14px;right:14px;width:40px;height:40px;border:0;border-radius:50%;background:#111;color:#fff;font-size:22px;cursor:pointer}
+    .lead-dialog-kicker{display:block;margin-bottom:7px;color:var(--accent);font-size:11px;font-weight:950;letter-spacing:.09em;text-transform:uppercase}
+    .lead-dialog h2{margin:0;padding-right:42px;font-size:clamp(25px,5vw,34px);line-height:1.02;letter-spacing:-.045em}
+    .lead-dialog-vehicle{margin:10px 0 20px;color:#5f5f5f;font-size:14px;line-height:1.45}
+    .lead-form{display:grid;gap:14px}
+    .lead-field{display:grid;gap:7px;font-size:13px;font-weight:900}
+    .lead-field input{width:100%;min-height:48px;border:1px solid #cfcfca;border-radius:13px;background:#fff;padding:12px 14px;color:#171717;font:inherit;outline:none}
+    .lead-field input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(187,29,35,.12)}
+    .lead-consent{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;color:#555;font-size:12px;line-height:1.45}
+    .lead-consent input{width:18px;height:18px;margin:1px 0 0;accent-color:var(--accent)}
+    .lead-privacy{margin:0;color:#777;font-size:11px;line-height:1.45}
+    .lead-form-status{min-height:18px;color:#a0181d;font-size:12px;font-weight:850}
+    .lead-submit{min-height:50px;border:0;border-radius:13px;background:#1fa855;color:#fff;padding:13px 16px;font-weight:950;cursor:pointer}
+    .lead-submit:disabled{cursor:wait;opacity:.65}
+    .lead-honeypot{position:absolute!important;left:-9999px!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important}
+    body.lead-dialog-open{overflow:hidden}
     .detail-top-grid{
       display:grid;
       grid-template-columns:minmax(360px,.88fr) minmax(540px,1.12fr);
@@ -3451,16 +3487,15 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
 <!-- SEO_FEATURED_START -->
 <article class="vehicle seo-static-card">
     <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A098.webp?v=0f4b7f932bb2" alt="Volkswagen Nivus 1.0 TSI 2021 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
+      <img src="https://lmpautos.com/img/vehiculos/A098.webp?v=3fc7ab83fa51" alt="Volkswagen Nivus 1.0 TSI 2021 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
       <div class="badge-stack"><span class="badge">Disponible</span></div>
     </div>
     <div class="body">
       <div class="make">Volkswagen</div>
       <h3>Nivus 1.0 TSI</h3>
-      
       <div class="meta">
         <span>2021</span>
-        <span>110.000 km</span>
+        <span>50.000 km</span>
       </div>
       <div class="price-stack">
         <div class="price-box ars"><div class="price-label">Valor total en pesos</div><div class="price seo-price">$ 34.500.000</div></div>
@@ -3473,13 +3508,12 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
   </article>
 <article class="vehicle seo-static-card">
     <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A075.webp?v=0f4b7f932bb2" alt="Chevrolet Onix 1.4 Plus Joy 2020 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
+      <img src="https://lmpautos.com/img/vehiculos/A075.webp?v=3fc7ab83fa51" alt="Chevrolet Onix 1.4 Plus Joy 2020 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
       <div class="badge-stack"><span class="badge">Disponible</span></div>
     </div>
     <div class="body">
       <div class="make">Chevrolet</div>
       <h3>Onix 1.4 Plus Joy</h3>
-      
       <div class="meta">
         <span>2020</span>
         <span>90.000 km</span>
@@ -3495,35 +3529,12 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
   </article>
 <article class="vehicle seo-static-card">
     <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A133.webp?v=0f4b7f932bb2" alt="Chevrolet Prisma 1.4 LTZ 2019 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Chevrolet</div>
-      <h3>Prisma 1.4 LTZ</h3>
-      
-      <div class="meta">
-        <span>2019</span>
-        <span>77.000 km</span>
-      </div>
-      <div class="price-stack">
-        <div class="price-box ars"><div class="price-label">Valor total en pesos</div><div class="price seo-price">$ 18.100.000</div></div>
-      </div>
-      <div class="advance">Anticipo desde <strong>$ 9.100.000</strong></div>
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/chevrolet-prisma-1-4-ltz-2019/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A129.webp?v=0f4b7f932bb2" alt="Citroen Jumper 435 HDI 2019 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
+      <img src="https://lmpautos.com/img/vehiculos/A129.webp?v=3fc7ab83fa51" alt="Citroen Jumper 435 HDI 2019 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
       <div class="badge-stack"><span class="badge">Disponible</span></div>
     </div>
     <div class="body">
       <div class="make">Citroen</div>
       <h3>Jumper 435 HDI</h3>
-      
       <div class="meta">
         <span>2019</span>
         <span>30.000 km</span>
@@ -3539,45 +3550,64 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
   </article>
 <article class="vehicle seo-static-card">
     <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A116.webp?v=0f4b7f932bb2" alt="Renault Sandero 1.6 Privilege 2019 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Renault</div>
-      <h3>Sandero 1.6 Privilege</h3>
-      
-      <div class="meta">
-        <span>2019</span>
-        <span>101.000 km</span>
-      </div>
-      <div class="price-stack">
-        <div class="price-box ars"><div class="price-label">Valor total en pesos</div><div class="price seo-price">$ 17.300.000</div></div>
-      </div>
-      <div class="advance">Anticipo desde <strong>$ 7.300.000</strong></div>
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/renault-sandero-1-6-privilege-2019/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A128.webp?v=0f4b7f932bb2" alt="Fiat Abarth 595 1.4 Turbo Gran Turismo 2018 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
+      <img src="https://lmpautos.com/img/vehiculos/A128.webp?v=3fc7ab83fa51" alt="Fiat Abarth 595 1.4 Turbo Gran Turismo 2018 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
       <div class="badge-stack"><span class="badge">Disponible</span></div>
     </div>
     <div class="body">
       <div class="make">Fiat</div>
       <h3>Abarth 595 1.4 Turbo Gran Turismo</h3>
-      
       <div class="meta">
         <span>2018</span>
         <span>40.000 km</span>
       </div>
       <div class="price-stack">
-        <div class="price-box ars"><div class="price-label">Valor total en pesos</div><div class="price seo-price">$ 41.600.000</div></div>
+        <div class="price-box ars"><div class="price-label">Valor total en pesos</div><div class="price seo-price">$ 40.000.000</div></div>
       </div>
-      <div class="advance">Anticipo desde <strong>$ 24.200.000</strong></div>
+      <div class="advance">Anticipo desde <strong>$ 23.200.000</strong></div>
       <div class="card-actions">
         <a class="detail-btn" href="./vehiculos/fiat-abarth-595-1-4-turbo-gran-turismo-2018/">Ver vehículo</a>
+      </div>
+    </div>
+  </article>
+<article class="vehicle seo-static-card">
+    <div class="photo">
+      <img src="https://lmpautos.com/img/vehiculos/A132.webp?v=3fc7ab83fa51" alt="Chevrolet Onix 1.4 LT 2017 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
+      <div class="badge-stack"><span class="badge">Disponible</span></div>
+    </div>
+    <div class="body">
+      <div class="make">Chevrolet</div>
+      <h3>Onix 1.4 LT</h3>
+      <div class="meta">
+        <span>2017</span>
+        <span>80.000 km</span>
+      </div>
+      <div class="price-stack">
+        <div class="price-box ars"><div class="price-label">Valor total en pesos</div><div class="price seo-price">$ 15.300.000</div></div>
+      </div>
+      <div class="advance">Anticipo desde <strong>$ 8.500.000</strong></div>
+      <div class="card-actions">
+        <a class="detail-btn" href="./vehiculos/chevrolet-onix-1-4-lt-2017/">Ver vehículo</a>
+      </div>
+    </div>
+  </article>
+<article class="vehicle seo-static-card">
+    <div class="photo">
+      <img src="https://lmpautos.com/img/vehiculos/A125.webp?v=3fc7ab83fa51" alt="Renault Sandero 1.6 Authentique 2017 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
+      <div class="badge-stack"><span class="badge">Disponible</span></div>
+    </div>
+    <div class="body">
+      <div class="make">Renault</div>
+      <h3>Sandero 1.6 Authentique</h3>
+      <div class="meta">
+        <span>2017</span>
+        <span>85.000 km</span>
+      </div>
+      <div class="price-stack">
+        <div class="price-box ars"><div class="price-label">Valor total en pesos</div><div class="price seo-price">$ 15.700.000</div></div>
+      </div>
+      <div class="advance">Anticipo desde <strong>$ 8.200.000</strong></div>
+      <div class="card-actions">
+        <a class="detail-btn" href="./vehiculos/renault-sandero-1-6-authentique-2017/">Ver vehículo</a>
       </div>
     </div>
   </article>
@@ -3613,7 +3643,7 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
 <!-- SEO_RANKING_START -->
 <article class="ranking-card">
     <div class="ranking-position">#1</div>
-    <div class="ranking-photo"><img src="https://lmpautos.com/img/vehiculos/A098.webp?v=0f4b7f932bb2" alt="Volkswagen Nivus 1.0 TSI 2021 usado en Lomas del Mirador" loading="lazy" referrerpolicy="no-referrer"></div>
+    <div class="ranking-photo"><img src="https://lmpautos.com/img/vehiculos/A098.webp?v=3fc7ab83fa51" alt="Volkswagen Nivus 1.0 TSI 2021 usado en Lomas del Mirador" loading="lazy" referrerpolicy="no-referrer"></div>
     <div class="ranking-body">
       <div class="ranking-make">Volkswagen</div>
       <div class="ranking-name">Nivus 1.0 TSI 2021</div>
@@ -3624,7 +3654,7 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
   </article>
 <article class="ranking-card">
     <div class="ranking-position">#2</div>
-    <div class="ranking-photo"><img src="https://lmpautos.com/img/vehiculos/A042.webp?v=0f4b7f932bb2" alt="Chevrolet Cruze 1.4 LT 2017 usado en Lomas del Mirador" loading="lazy" referrerpolicy="no-referrer"></div>
+    <div class="ranking-photo"><img src="https://lmpautos.com/img/vehiculos/A042.webp?v=3fc7ab83fa51" alt="Chevrolet Cruze 1.4 LT 2017 usado en Lomas del Mirador" loading="lazy" referrerpolicy="no-referrer"></div>
     <div class="ranking-body">
       <div class="ranking-make">Chevrolet</div>
       <div class="ranking-name">Cruze 1.4 LT 2017</div>
@@ -3635,13 +3665,13 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
   </article>
 <article class="ranking-card">
     <div class="ranking-position">#3</div>
-    <div class="ranking-photo"><img src="https://lmpautos.com/img/vehiculos/A135.webp?v=0f4b7f932bb2" alt="Mercedez Benz C200 Blue Efficiency AT 2012 usado en Lomas del Mirador" loading="lazy" referrerpolicy="no-referrer"></div>
+    <div class="ranking-photo"><img src="https://lmpautos.com/img/vehiculos/A107.webp?v=3fc7ab83fa51" alt="Volkswagen Vento 2.0 TSI Dsg Sportline 2012 usado en Lomas del Mirador" loading="lazy" referrerpolicy="no-referrer"></div>
     <div class="ranking-body">
-      <div class="ranking-make">Mercedez Benz</div>
-      <div class="ranking-name">C200 Blue Efficiency AT 2012</div>
+      <div class="ranking-make">Volkswagen</div>
+      <div class="ranking-name">Vento 2.0 TSI Dsg Sportline 2012</div>
       <div class="ranking-metric"><span>General</span><strong>79/100</strong></div>
-      <div class="ranking-price">$ 26.700.000</div>
-      <a class="ranking-open" href="./vehiculos/mercedez-benz-c200-blue-efficiency-at-2012/">Ver vehículo</a>
+      <div class="ranking-price">$ 25.900.000</div>
+      <a class="ranking-open" href="./vehiculos/volkswagen-vento-2-0-tsi-dsg-sportline-2012/">Ver vehículo</a>
     </div>
   </article>
 <!-- SEO_RANKING_END -->
@@ -3786,16 +3816,15 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
 <!-- SEO_CATALOG_START -->
 <article class="vehicle seo-static-card">
     <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A098.webp?v=0f4b7f932bb2" alt="Volkswagen Nivus 1.0 TSI 2021 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
+      <img src="https://lmpautos.com/img/vehiculos/A098.webp?v=3fc7ab83fa51" alt="Volkswagen Nivus 1.0 TSI 2021 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
       <div class="badge-stack"><span class="badge">Disponible</span></div>
     </div>
     <div class="body">
       <div class="make">Volkswagen</div>
       <h3>Nivus 1.0 TSI</h3>
-      
       <div class="meta">
         <span>2021</span>
-        <span>110.000 km</span>
+        <span>50.000 km</span>
       </div>
       <div class="price-stack">
         <div class="price-box ars"><div class="price-label">Valor total en pesos</div><div class="price seo-price">$ 34.500.000</div></div>
@@ -3808,13 +3837,12 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
   </article>
 <article class="vehicle seo-static-card">
     <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A075.webp?v=0f4b7f932bb2" alt="Chevrolet Onix 1.4 Plus Joy 2020 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
+      <img src="https://lmpautos.com/img/vehiculos/A075.webp?v=3fc7ab83fa51" alt="Chevrolet Onix 1.4 Plus Joy 2020 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
       <div class="badge-stack"><span class="badge">Disponible</span></div>
     </div>
     <div class="body">
       <div class="make">Chevrolet</div>
       <h3>Onix 1.4 Plus Joy</h3>
-      
       <div class="meta">
         <span>2020</span>
         <span>90.000 km</span>
@@ -3830,35 +3858,12 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
   </article>
 <article class="vehicle seo-static-card">
     <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A133.webp?v=0f4b7f932bb2" alt="Chevrolet Prisma 1.4 LTZ 2019 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Chevrolet</div>
-      <h3>Prisma 1.4 LTZ</h3>
-      
-      <div class="meta">
-        <span>2019</span>
-        <span>77.000 km</span>
-      </div>
-      <div class="price-stack">
-        <div class="price-box ars"><div class="price-label">Valor total en pesos</div><div class="price seo-price">$ 18.100.000</div></div>
-      </div>
-      <div class="advance">Anticipo desde <strong>$ 9.100.000</strong></div>
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/chevrolet-prisma-1-4-ltz-2019/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A129.webp?v=0f4b7f932bb2" alt="Citroen Jumper 435 HDI 2019 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
+      <img src="https://lmpautos.com/img/vehiculos/A129.webp?v=3fc7ab83fa51" alt="Citroen Jumper 435 HDI 2019 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
       <div class="badge-stack"><span class="badge">Disponible</span></div>
     </div>
     <div class="body">
       <div class="make">Citroen</div>
       <h3>Jumper 435 HDI</h3>
-      
       <div class="meta">
         <span>2019</span>
         <span>30.000 km</span>
@@ -3874,43 +3879,20 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
   </article>
 <article class="vehicle seo-static-card">
     <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A116.webp?v=0f4b7f932bb2" alt="Renault Sandero 1.6 Privilege 2019 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Renault</div>
-      <h3>Sandero 1.6 Privilege</h3>
-      
-      <div class="meta">
-        <span>2019</span>
-        <span>101.000 km</span>
-      </div>
-      <div class="price-stack">
-        <div class="price-box ars"><div class="price-label">Valor total en pesos</div><div class="price seo-price">$ 17.300.000</div></div>
-      </div>
-      <div class="advance">Anticipo desde <strong>$ 7.300.000</strong></div>
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/renault-sandero-1-6-privilege-2019/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A128.webp?v=0f4b7f932bb2" alt="Fiat Abarth 595 1.4 Turbo Gran Turismo 2018 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
+      <img src="https://lmpautos.com/img/vehiculos/A128.webp?v=3fc7ab83fa51" alt="Fiat Abarth 595 1.4 Turbo Gran Turismo 2018 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
       <div class="badge-stack"><span class="badge">Disponible</span></div>
     </div>
     <div class="body">
       <div class="make">Fiat</div>
       <h3>Abarth 595 1.4 Turbo Gran Turismo</h3>
-      
       <div class="meta">
         <span>2018</span>
         <span>40.000 km</span>
       </div>
       <div class="price-stack">
-        <div class="price-box ars"><div class="price-label">Valor total en pesos</div><div class="price seo-price">$ 41.600.000</div></div>
+        <div class="price-box ars"><div class="price-label">Valor total en pesos</div><div class="price seo-price">$ 40.000.000</div></div>
       </div>
-      <div class="advance">Anticipo desde <strong>$ 24.200.000</strong></div>
+      <div class="advance">Anticipo desde <strong>$ 23.200.000</strong></div>
       <div class="card-actions">
         <a class="detail-btn" href="./vehiculos/fiat-abarth-595-1-4-turbo-gran-turismo-2018/">Ver vehículo</a>
       </div>
@@ -3918,57 +3900,12 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
   </article>
 <article class="vehicle seo-static-card">
     <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A139.webp?v=0f4b7f932bb2" alt="Renault Duster 1.6 Privilege 2017 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Renault</div>
-      <h3>Duster 1.6 Privilege</h3>
-      
-      <div class="meta">
-        <span>2017</span>
-        <span>60.000 km</span>
-      </div>
-      <div class="price-stack">
-        <div class="price-box ars"><div class="price-label">Valor total en pesos</div><div class="price seo-price">$ 20.400.000</div></div>
-      </div>
-      <div class="advance">Anticipo desde <strong>$ 9.800.000</strong></div>
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/renault-duster-1-6-privilege-2017/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A138.webp?v=0f4b7f932bb2" alt="Renault Logan 1.6 Authentique 2017 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Renault</div>
-      <h3>Logan 1.6 Authentique</h3>
-      
-      <div class="meta">
-        <span>2017</span>
-        <span>260.000 km</span>
-      </div>
-      <div class="price-stack">
-        <div class="price-box ars"><div class="price-label">Valor total en pesos</div><div class="price seo-price">$ 9.100.000</div></div>
-      </div>
-      <div class="advance">Anticipo desde <strong>$ 5.100.000</strong></div>
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/renault-logan-1-6-authentique-2017/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A132.webp?v=0f4b7f932bb2" alt="Chevrolet Onix 1.4 LT 2017 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
+      <img src="https://lmpautos.com/img/vehiculos/A132.webp?v=3fc7ab83fa51" alt="Chevrolet Onix 1.4 LT 2017 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
       <div class="badge-stack"><span class="badge">Disponible</span></div>
     </div>
     <div class="body">
       <div class="make">Chevrolet</div>
       <h3>Onix 1.4 LT</h3>
-      
       <div class="meta">
         <span>2017</span>
         <span>80.000 km</span>
@@ -3984,16 +3921,15 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
   </article>
 <article class="vehicle seo-static-card">
     <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A125.webp?v=0f4b7f932bb2" alt="Renault Sandero 1.6 Authentique 2017 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
+      <img src="https://lmpautos.com/img/vehiculos/A125.webp?v=3fc7ab83fa51" alt="Renault Sandero 1.6 Authentique 2017 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
       <div class="badge-stack"><span class="badge">Disponible</span></div>
     </div>
     <div class="body">
       <div class="make">Renault</div>
       <h3>Sandero 1.6 Authentique</h3>
-      
       <div class="meta">
         <span>2017</span>
-        <span>95.000 km</span>
+        <span>85.000 km</span>
       </div>
       <div class="price-stack">
         <div class="price-box ars"><div class="price-label">Valor total en pesos</div><div class="price seo-price">$ 15.700.000</div></div>
@@ -4006,13 +3942,33 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
   </article>
 <article class="vehicle seo-static-card">
     <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A097.webp?v=0f4b7f932bb2" alt="Toyota Etios 1.5 XLS 2017 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
+      <img src="https://lmpautos.com/img/vehiculos/A122.webp?v=3fc7ab83fa51" alt="Ford Ecosport 1.5 Freestyle 2017 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
+      <div class="badge-stack"><span class="badge">Disponible</span></div>
+    </div>
+    <div class="body">
+      <div class="make">Ford</div>
+      <h3>Ecosport 1.5 Freestyle</h3>
+      <div class="meta">
+        <span>2017</span>
+        <span>70.000 km</span>
+      </div>
+      <div class="price-stack">
+        <div class="price-box ars"><div class="price-label">Valor total en pesos</div><div class="price seo-price">$ 19.600.000</div></div>
+      </div>
+      <div class="advance">Anticipo desde <strong>$ 9.800.000</strong></div>
+      <div class="card-actions">
+        <a class="detail-btn" href="./vehiculos/ford-ecosport-1-5-freestyle-2017/">Ver vehículo</a>
+      </div>
+    </div>
+  </article>
+<article class="vehicle seo-static-card">
+    <div class="photo">
+      <img src="https://lmpautos.com/img/vehiculos/A097.webp?v=3fc7ab83fa51" alt="Toyota Etios 1.5 XLS 2017 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
       <div class="badge-stack"><span class="badge">Disponible</span></div>
     </div>
     <div class="body">
       <div class="make">Toyota</div>
       <h3>Etios 1.5 XLS</h3>
-      
       <div class="meta">
         <span>2017</span>
         <span>119.000 km</span>
@@ -4028,13 +3984,12 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
   </article>
 <article class="vehicle seo-static-card">
     <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A042.webp?v=0f4b7f932bb2" alt="Chevrolet Cruze 1.4 LT 2017 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
+      <img src="https://lmpautos.com/img/vehiculos/A042.webp?v=3fc7ab83fa51" alt="Chevrolet Cruze 1.4 LT 2017 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
       <div class="badge-stack"><span class="badge">Disponible</span></div>
     </div>
     <div class="body">
       <div class="make">Chevrolet</div>
       <h3>Cruze 1.4 LT</h3>
-      
       <div class="meta">
         <span>2017</span>
         <span>80.000 km</span>
@@ -4050,13 +4005,12 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
   </article>
 <article class="vehicle seo-static-card">
     <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A113.webp?v=0f4b7f932bb2" alt="Renault Clio 1.2 Mio Dynamique 2016 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
+      <img src="https://lmpautos.com/img/vehiculos/A113.webp?v=3fc7ab83fa51" alt="Renault Clio 1.2 Mio Dynamique 2016 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
       <div class="badge-stack"><span class="badge">Disponible</span></div>
     </div>
     <div class="body">
       <div class="make">Renault</div>
       <h3>Clio 1.2 Mio Dynamique</h3>
-      
       <div class="meta">
         <span>2016</span>
         <span>98.000 km</span>
@@ -4072,13 +4026,12 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
   </article>
 <article class="vehicle seo-static-card">
     <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A090.webp?v=0f4b7f932bb2" alt="Ford Focus 2.0 SE Plus 2016 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
+      <img src="https://lmpautos.com/img/vehiculos/A090.webp?v=3fc7ab83fa51" alt="Ford Focus 2.0 SE Plus 2016 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
       <div class="badge-stack"><span class="badge">Disponible</span></div>
     </div>
     <div class="body">
       <div class="make">Ford</div>
       <h3>Focus 2.0 SE Plus</h3>
-      
       <div class="meta">
         <span>2016</span>
         <span>91.000 km</span>
@@ -4094,35 +4047,12 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
   </article>
 <article class="vehicle seo-static-card">
     <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A136.webp?v=0f4b7f932bb2" alt="Toyota Etios X 1.5 Sedán 2015 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Toyota</div>
-      <h3>Etios X 1.5 Sedán</h3>
-      
-      <div class="meta">
-        <span>2015</span>
-        <span>120.000 km</span>
-      </div>
-      <div class="price-stack">
-        <div class="price-box ars"><div class="price-label">Valor total en pesos</div><div class="price seo-price">$ 15.400.000</div></div>
-      </div>
-      <div class="advance">Anticipo desde <strong>$ 8.100.000</strong></div>
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/toyota-etios-x-1-5-sedan-2015/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A091.webp?v=0f4b7f932bb2" alt="Chevrolet Tracker 1.8 LT 2015 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
+      <img src="https://lmpautos.com/img/vehiculos/A091.webp?v=3fc7ab83fa51" alt="Chevrolet Tracker 1.8 LT 2015 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
       <div class="badge-stack"><span class="badge">Disponible</span></div>
     </div>
     <div class="body">
       <div class="make">Chevrolet</div>
       <h3>Tracker 1.8 LT</h3>
-      
       <div class="meta">
         <span>2015</span>
         <span>134.000 km</span>
@@ -4138,13 +4068,12 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
   </article>
 <article class="vehicle seo-static-card">
     <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A088.webp?v=0f4b7f932bb2" alt="Peugeot 208 1.5 Active 2015 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
+      <img src="https://lmpautos.com/img/vehiculos/A088.webp?v=3fc7ab83fa51" alt="Peugeot 208 1.5 Active 2015 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
       <div class="badge-stack"><span class="badge">Disponible</span></div>
     </div>
     <div class="body">
       <div class="make">Peugeot</div>
       <h3>208 1.5 Active</h3>
-      
       <div class="meta">
         <span>2015</span>
         <span>92.000 km</span>
@@ -4160,13 +4089,12 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
   </article>
 <article class="vehicle seo-static-card">
     <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A083.webp?v=0f4b7f932bb2" alt="Volkswagen Amarok 2.0 Trendline 4x4 TDI 2015 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
+      <img src="https://lmpautos.com/img/vehiculos/A083.webp?v=3fc7ab83fa51" alt="Volkswagen Amarok 2.0 Trendline 4x4 TDI 2015 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
       <div class="badge-stack"><span class="badge">Disponible</span></div>
     </div>
     <div class="body">
       <div class="make">Volkswagen</div>
       <h3>Amarok 2.0 Trendline 4x4 TDI</h3>
-      
       <div class="meta">
         <span>2015</span>
         <span>200.000 km</span>
@@ -4182,13 +4110,12 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
   </article>
 <article class="vehicle seo-static-card">
     <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A131.webp?v=0f4b7f932bb2" alt="Renault Clio 1.2 Confort Plus 2014 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
+      <img src="https://lmpautos.com/img/vehiculos/A131.webp?v=3fc7ab83fa51" alt="Renault Clio 1.2 Confort Plus 2014 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
       <div class="badge-stack"><span class="badge">Disponible</span></div>
     </div>
     <div class="body">
       <div class="make">Renault</div>
       <h3>Clio 1.2 Confort Plus</h3>
-      
       <div class="meta">
         <span>2014</span>
         <span>116.000 km</span>
@@ -4204,65 +4131,20 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
   </article>
 <article class="vehicle seo-static-card">
     <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A082.webp?v=0f4b7f932bb2" alt="Ford Ecosport 1.6 Titanium 2013 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Ford</div>
-      <h3>Ecosport 1.6 Titanium</h3>
-      
-      <div class="meta">
-        <span>2013</span>
-        <span>123.000 km</span>
-      </div>
-      <div class="price-stack">
-        <div class="price-box ars"><div class="price-label">Valor total en pesos</div><div class="price seo-price">$ 14.200.000</div></div>
-      </div>
-      <div class="advance">Anticipo desde <strong>$ 9.100.000</strong></div>
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/ford-ecosport-1-6-titanium-2013/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A135.webp?v=0f4b7f932bb2" alt="Mercedez Benz C200 Blue Efficiency AT 2012 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
-      <div class="badge-stack"><span class="badge">Disponible</span></div>
-    </div>
-    <div class="body">
-      <div class="make">Mercedez Benz</div>
-      <h3>C200 Blue Efficiency AT</h3>
-      
-      <div class="meta">
-        <span>2012</span>
-        <span>80.000 km</span>
-      </div>
-      <div class="price-stack">
-        <div class="price-box ars"><div class="price-label">Valor total en pesos</div><div class="price seo-price">$ 26.700.000</div></div>
-      </div>
-      <div class="advance">Anticipo desde <strong>$ 19.800.000</strong></div>
-      <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/mercedez-benz-c200-blue-efficiency-at-2012/">Ver vehículo</a>
-      </div>
-    </div>
-  </article>
-<article class="vehicle seo-static-card">
-    <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A107.webp?v=0f4b7f932bb2" alt="Volkswagen Vento 2.0 TSI Dsg Sportline 2012 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
+      <img src="https://lmpautos.com/img/vehiculos/A107.webp?v=3fc7ab83fa51" alt="Volkswagen Vento 2.0 TSI Dsg Sportline 2012 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
       <div class="badge-stack"><span class="badge">Disponible</span></div>
     </div>
     <div class="body">
       <div class="make">Volkswagen</div>
       <h3>Vento 2.0 TSI Dsg Sportline</h3>
-      
       <div class="meta">
         <span>2012</span>
         <span>140.000 km</span>
       </div>
       <div class="price-stack">
-        <div class="price-box ars"><div class="price-label">Valor total en pesos</div><div class="price seo-price">$ 25.100.000</div></div>
+        <div class="price-box ars"><div class="price-label">Valor total en pesos</div><div class="price seo-price">$ 25.900.000</div></div>
       </div>
-      <div class="advance">Anticipo desde <strong>$ 15.100.000</strong></div>
+      <div class="advance">Anticipo desde <strong>$ 15.600.000</strong></div>
       <div class="card-actions">
         <a class="detail-btn" href="./vehiculos/volkswagen-vento-2-0-tsi-dsg-sportline-2012/">Ver vehículo</a>
       </div>
@@ -4270,13 +4152,33 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
   </article>
 <article class="vehicle seo-static-card">
     <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A080.webp?v=0f4b7f932bb2" alt="Renault Fluence 1.6 2011 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
+      <img src="https://lmpautos.com/img/vehiculos/A124.webp?v=3fc7ab83fa51" alt="Renault Clio 1.2 Pack Plus 2011 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
+      <div class="badge-stack"><span class="badge">Disponible</span></div>
+    </div>
+    <div class="body">
+      <div class="make">Renault</div>
+      <h3>Clio 1.2 Pack Plus</h3>
+      <div class="meta">
+        <span>2011</span>
+        <span>149.000 km</span>
+      </div>
+      <div class="price-stack">
+        <div class="price-box ars"><div class="price-label">Valor total en pesos</div><div class="price seo-price">$ 9.300.000</div></div>
+      </div>
+      <div class="advance">Anticipo desde <strong>$ 9.300.000</strong></div>
+      <div class="card-actions">
+        <a class="detail-btn" href="./vehiculos/renault-clio-1-2-pack-plus-2011/">Ver vehículo</a>
+      </div>
+    </div>
+  </article>
+<article class="vehicle seo-static-card">
+    <div class="photo">
+      <img src="https://lmpautos.com/img/vehiculos/A080.webp?v=3fc7ab83fa51" alt="Renault Fluence 1.6 2011 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
       <div class="badge-stack"><span class="badge">Disponible</span></div>
     </div>
     <div class="body">
       <div class="make">Renault</div>
       <h3>Fluence 1.6</h3>
-      
       <div class="meta">
         <span>2011</span>
         <span>140.000 km</span>
@@ -4292,35 +4194,54 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
   </article>
 <article class="vehicle seo-static-card">
     <div class="photo">
-      <div class="photo-empty">Fotos próximamente</div>
-      <div class="badge-stack"><span class="badge">Preparando</span></div>
+      <img src="https://lmpautos.com/img/vehiculos/A130.webp?v=3fc7ab83fa51" alt="Fiat Cronos 1.8 Precision 2019 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
+      <div class="badge-stack"><span class="badge">Reservado</span></div>
     </div>
     <div class="body">
       <div class="make">Fiat</div>
-      <h3>Mobi</h3>
-      
+      <h3>Cronos 1.8 Precision</h3>
       <div class="meta">
-        <span>2017</span>
-        
+        <span>2019</span>
+        <span>33.000 km</span>
       </div>
       <div class="price-stack">
-        
+        <div class="price-box ars"><div class="price-label">Valor total en pesos</div><div class="price seo-price">$ 18.900.000</div></div>
       </div>
-      
+      <div class="advance">Anticipo desde <strong>$ 9.100.000</strong></div>
       <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/fiat-mobi-2017/">Ver vehículo</a>
+        <a class="detail-btn" href="./vehiculos/fiat-cronos-1-8-precision-2019/">Ver vehículo</a>
+      </div>
+    </div>
+  </article>
+<article class="vehicle seo-static-card discount-card">
+    <div class="photo">
+      <img src="https://lmpautos.com/img/vehiculos/A082.webp?v=3fc7ab83fa51" alt="Ford Ecosport 1.6 Titanium 2013 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
+    </div>
+    <div class="body">
+      <div class="make">Ford</div>
+      <h3>Ecosport 1.6 Titanium</h3>
+      <div class="discount-note">Con descuento</div>
+      <div class="meta">
+        <span>2013</span>
+        <span>123.000 km</span>
+      </div>
+      <div class="price-stack">
+        <div class="price-box ars"><div class="price-label">Valor total en pesos</div><div class="price seo-price">$ 14.200.000</div></div>
+      </div>
+      <div class="advance">Anticipo desde <strong>$ 9.100.000</strong></div>
+      <div class="card-actions">
+        <a class="detail-btn" href="./vehiculos/ford-ecosport-1-6-titanium-2013/">Ver vehículo</a>
       </div>
     </div>
   </article>
 <article class="vehicle seo-static-card">
     <div class="photo">
-      <img src="https://lmpautos.com/img/vehiculos/A126.webp?v=0f4b7f932bb2" alt="Kia Sorento 2.2 Crdi 4x4 2010 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
+      <img src="https://lmpautos.com/img/vehiculos/A126.webp?v=3fc7ab83fa51" alt="Kia Sorento 2.2 HDI 4x4 2010 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
       <div class="badge-stack"><span class="badge">Reservado</span></div>
     </div>
     <div class="body">
       <div class="make">Kia</div>
-      <h3>Sorento 2.2 Crdi 4x4</h3>
-      
+      <h3>Sorento 2.2 HDI 4x4</h3>
       <div class="meta">
         <span>2010</span>
         <span>240.000 km</span>
@@ -4330,7 +4251,28 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
       </div>
       <div class="advance">Anticipo desde <strong>$ 15.100.000</strong></div>
       <div class="card-actions">
-        <a class="detail-btn" href="./vehiculos/kia-sorento-2-2-crdi-4x4-2010/">Ver vehículo</a>
+        <a class="detail-btn" href="./vehiculos/kia-sorento-2-2-hdi-4x4-2010/">Ver vehículo</a>
+      </div>
+    </div>
+  </article>
+<article class="vehicle seo-static-card">
+    <div class="photo">
+      <img src="https://lmpautos.com/img/vehiculos/A120.webp?v=3fc7ab83fa51" alt="Peugeot 206 1.9 XTD 2006 usado en Lomas del Mirador - LMP Autos" loading="lazy" referrerpolicy="no-referrer">
+      <div class="badge-stack"><span class="badge">Reservado</span></div>
+    </div>
+    <div class="body">
+      <div class="make">Peugeot</div>
+      <h3>206 1.9 XTD</h3>
+      <div class="meta">
+        <span>2006</span>
+        <span>190.000 km</span>
+      </div>
+      <div class="price-stack">
+        <div class="price-box ars"><div class="price-label">Valor total en pesos</div><div class="price seo-price">$ 4.600.000</div></div>
+      </div>
+      <div class="advance">Anticipo desde <strong>$ 4.600.000</strong></div>
+      <div class="card-actions">
+        <a class="detail-btn" href="./vehiculos/peugeot-206-1-9-xtd-2006/">Ver vehículo</a>
       </div>
     </div>
   </article>
@@ -4491,6 +4433,33 @@ src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
   </div>
 </div>
 
+<div class="lead-dialog" id="leadDialog" aria-hidden="true">
+  <section class="lead-dialog-panel" role="dialog" aria-modal="true" aria-labelledby="leadDialogTitle">
+    <button class="lead-dialog-close" id="leadDialogClose" type="button" aria-label="Cerrar formulario">×</button>
+    <span class="lead-dialog-kicker">Consulta por WhatsApp</span>
+    <h2 id="leadDialogTitle">Dejanos tus datos para continuar</h2>
+    <p class="lead-dialog-vehicle" id="leadDialogVehicle"></p>
+    <form class="lead-form" id="leadForm" novalidate>
+      <label class="lead-field">
+        <span>Nombre y apellido</span>
+        <input id="leadName" name="name" type="text" autocomplete="name" maxlength="80" required placeholder="Ej.: Juan Pérez">
+      </label>
+      <label class="lead-field">
+        <span>Teléfono / WhatsApp</span>
+        <input id="leadPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="24" required placeholder="Ej.: 11 3262-7744">
+      </label>
+      <label class="lead-consent">
+        <input id="leadConsent" name="consent" type="checkbox" required>
+        <span>Acepto que LMP Autos use mi nombre y teléfono para responder esta consulta, registrar el lead y mejorar la medición de anuncios de Meta.</span>
+      </label>
+      <p class="lead-privacy">Tus datos se guardan en el registro privado de LMP Autos. El píxel procesa los identificadores para coincidencia avanzada antes de enviarlos a Meta.</p>
+      <label class="lead-honeypot" aria-hidden="true">Empresa<input id="leadCompany" name="company" type="text" tabindex="-1" autocomplete="off"></label>
+      <div class="lead-form-status" id="leadFormStatus" role="status" aria-live="polite"></div>
+      <button class="lead-submit" id="leadSubmit" type="submit">Continuar a WhatsApp</button>
+    </form>
+  </section>
+</div>
+
 
 <div class="compare-bar" id="compareBar"><span id="compareText">0 vehículos seleccionados</span><div><button class="compare-clear" id="compareClear" type="button">Limpiar</button> <button class="compare-open" id="compareOpen" type="button">Comparar</button></div></div>
 <div class="compare-modal" id="compareModal" aria-hidden="true"><div class="compare-panel"><button class="close" id="compareClose" type="button" aria-label="Cerrar">×</button><h3>Comparar vehículos</h3><div class="compare-grid" id="compareGrid"></div></div></div>
@@ -4564,6 +4533,7 @@ const CONFIG = {
   csvUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR97O_aQlCskpibTlj1UEomToyCeUl8seOUB3DoNihqoXAAfGbO-8DtUj_WG9XZJvYRWJ_PdGcEBKcH/pub?gid=0&single=true&output=csv",
   staticStockUrl: "./data/stock.json",
   eventsApi: "https://script.google.com/macros/s/AKfycbyEQXz7_oQuy6EqJ-ybbnmanl0kKpGeKMfXSedTKVRUOdgYF7smvmcKHDl9WF89NBtQ/exec",
+  leadApi: "https://script.google.com/macros/s/AKfycbyEQXz7_oQuy6EqJ-ybbnmanl0kKpGeKMfXSedTKVRUOdgYF7smvmcKHDl9WF89NBtQ/exec",
   whatsapp: "5491132627744",
   maxFeatured: 6,
   instagramFollowers: 5872,
@@ -4650,6 +4620,10 @@ let internalState=(()=>{
 let budgetSelection=new Set(internalState.selection);
 let pendingBudgetVehicles=[];
 let pendingReservationVehicle=null;
+let pendingLeadContext=null;
+let leadDialogOpenedAt=0;
+let leadReturnFocus=null;
+let lastMetaSearchSignature='';
 let budgetDialogMode='print';
 let internalControlsBound=false;
 let lastStockUpdatedAt=null;
@@ -5011,10 +4985,7 @@ function clearVehicleUrl({replace=true}={}){
   applyHomeSeo();
 }
 function vehicleUrl(v){
-  const url=new URL(window.location.href);
-  url.searchParams.delete('stock');
-  url.searchParams.set('vehiculo',vehicleSlug(v));
-  return url.toString();
+  return vehicleCanonicalUrl(v);
 }
 function isDriveFolderUrl(url){
   const u=clean(url);
@@ -6059,7 +6030,7 @@ function featuredPopupMarkup(v){
 
       <div class="featured-popup-actions">
         <button class="featured-popup-view" type="button" data-featured-view="${escapeAttr(v.id)}">Ver ficha</button>
-        <a class="featured-popup-wa" href="${escapeAttr((CONFIG.whatsapp?`https://wa.me/${CONFIG.whatsapp}`:'https://wa.me/')+'?text='+encodeURIComponent(`Hola, quiero reservar el ${v.marca} ${v.modelo} ${v.anio||''}.`))}" target="_blank" rel="noopener">RESERVALO</a>
+        <button class="featured-popup-wa" type="button">RESERVALO</button>
       </div>
     </div>
   </div>`;
@@ -6087,9 +6058,7 @@ function openFeaturedPopup(v){
   const wa=body.querySelector('.featured-popup-wa');
   if(wa){
     wa.addEventListener('click',()=>{
-      trackEvent(v.id,'whatsapp');
-      emitAnalytics('click_whatsapp',{vehicle_id:v.id,source:'featured_popup'});
-      trackMetaVehicleEvent('Lead',v,{source:'featured_popup'});
+      openLeadDialog(v,{source:'featured_popup',reservation:true});
     });
   }
 }
@@ -6187,7 +6156,198 @@ function vehicleWhatsappMessage(v,{reservation=false,advance=null}={}){
   if(advance)return `Hola, quiero consultar la financiación del ${v.marca} ${v.modelo} ${v.anio||''}. Puedo entregar ${advance}.`;
   return `Hola, quiero más información del ${v.marca} ${v.modelo} ${v.anio||''}.`;
 }
-function openWhatsappMessage(message){const base=CONFIG.whatsapp?`https://wa.me/${CONFIG.whatsapp}`:'https://wa.me/';window.open(`${base}?text=${encodeURIComponent(message)}`,'_blank','noopener')}
+function whatsappUrl(message){
+  const base=CONFIG.whatsapp?`https://wa.me/${CONFIG.whatsapp}`:'https://wa.me/';
+  return `${base}?text=${encodeURIComponent(message)}`;
+}
+function openWhatsappMessage(message){
+  const url=whatsappUrl(message);
+  const opened=window.open(url,'_blank');
+  if(opened)opened.opener=null;
+  else window.location.href=url;
+}
+function normalizeMetaName(value){
+  return clean(value)
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g,'')
+    .toLowerCase()
+    .replace(/[^a-z\s'-]/g,' ')
+    .replace(/\s+/g,' ')
+    .trim();
+}
+function normalizeLeadPhone(value){
+  let digits=clean(value).replace(/\D/g,'');
+  if(digits.startsWith('00'))digits=digits.slice(2);
+  if(digits.startsWith('0'))digits=digits.slice(1);
+  if(/^54\d{10}$/.test(digits))digits=`549${digits.slice(2)}`;
+  else if(/^9\d{10}$/.test(digits))digits=`54${digits}`;
+  else if(/^\d{10}$/.test(digits))digits=`549${digits}`;
+  return digits;
+}
+function metaMatchFromLead(name,phone){
+  const parts=normalizeMetaName(name).split(' ').filter(Boolean);
+  const data={ph:normalizeLeadPhone(phone)};
+  if(parts.length)data.fn=parts[0];
+  if(parts.length>1)data.ln=parts.slice(1).join(' ');
+  return data;
+}
+function refreshMetaAdvancedMatching(data){
+  try{
+    sessionStorage.setItem(window.LMP_META_MATCH_STORAGE_KEY||'lmp_meta_match_v1',JSON.stringify(data));
+  }catch(_){}
+  window.LMP_META_MATCH_DATA=data;
+  try{
+    if(typeof window.fbq==='function' && window.LMP_META_PIXEL_ID){
+      window.fbq('init',window.LMP_META_PIXEL_ID,data);
+    }
+  }catch(_){}
+}
+function createLeadEventId(){
+  if(window.crypto && typeof window.crypto.randomUUID==='function')return window.crypto.randomUUID();
+  return `lead_${Date.now()}_${Math.random().toString(36).slice(2,12)}`;
+}
+function clearLeadIntentFromUrl(){
+  const url=new URL(window.location.href);
+  if(!url.searchParams.has('contacto'))return;
+  url.searchParams.delete('contacto');
+  history.replaceState(history.state||{},'',url);
+}
+function openLeadDialog(v,{source='vehicle_detail',message='',reservation=false}={}){
+  if(!v || !isPublicCatalogVehicle(v))return;
+  const dialog=$('#leadDialog');
+  if(!dialog)return;
+
+  if($('#featuredPopup')?.classList.contains('open'))closeFeaturedPopup();
+  pendingLeadContext={
+    vehicle:v,
+    source,
+    message:message || vehicleWhatsappMessage(v,{reservation})
+  };
+  leadDialogOpenedAt=Date.now();
+  leadReturnFocus=document.activeElement instanceof HTMLElement?document.activeElement:null;
+  $('#leadDialogVehicle').textContent=`${v.marca} ${v.modelo}${v.anio?` ${v.anio}`:''}`;
+  $('#leadFormStatus').textContent='';
+  $('#leadSubmit').disabled=false;
+  $('#leadSubmit').textContent='Continuar a WhatsApp';
+  dialog.classList.add('open');
+  dialog.setAttribute('aria-hidden','false');
+  document.body.classList.add('lead-dialog-open');
+  emitAnalytics('open_lead_form',{vehicle_id:v.id,source});
+  requestAnimationFrame(()=>$('#leadName')?.focus());
+}
+function closeLeadDialog({reset=false}={}){
+  const dialog=$('#leadDialog');
+  if(!dialog)return;
+  dialog.classList.remove('open');
+  dialog.setAttribute('aria-hidden','true');
+  document.body.classList.remove('lead-dialog-open');
+  clearLeadIntentFromUrl();
+  if(reset)$('#leadForm')?.reset();
+  pendingLeadContext=null;
+  const focusTarget=leadReturnFocus;
+  leadReturnFocus=null;
+  if(focusTarget && document.contains(focusTarget))focusTarget.focus();
+}
+function sendLeadToBackend(payload){
+  if(!CONFIG.leadApi)return false;
+  const body=JSON.stringify({action:'lead',...payload});
+
+  try{
+    if(navigator.sendBeacon){
+      const blob=new Blob([body],{type:'text/plain;charset=UTF-8'});
+      if(navigator.sendBeacon(CONFIG.leadApi,blob))return true;
+    }
+  }catch(_){}
+
+  try{
+    fetch(CONFIG.leadApi,{
+      method:'POST',
+      mode:'no-cors',
+      cache:'no-store',
+      credentials:'omit',
+      keepalive:true,
+      headers:{'Content-Type':'text/plain;charset=UTF-8'},
+      body
+    }).catch(()=>{});
+    return true;
+  }catch(_){
+    return false;
+  }
+}
+function trackMetaVehicleLead(v,extra,eventId){
+  if(typeof window.fbq!=='function')return;
+  const params=isMetaCatalogVehicle(v)
+    ? metaVehicleEventParams(v,extra)
+    : {
+        content_name:[clean(v?.marca),clean(v?.modelo),clean(v?.anio)].filter(Boolean).join(' '),
+        content_category:'Autos usados',
+        lead_channel:'whatsapp',
+        ...extra
+      };
+  try{window.fbq('track','Lead',params,{eventID:eventId})}catch(_){}
+}
+function submitLeadForm(event){
+  event.preventDefault();
+  const form=event.currentTarget;
+  const context=pendingLeadContext;
+  const status=$('#leadFormStatus');
+  const submit=$('#leadSubmit');
+
+  if(!context?.vehicle)return;
+  if($('#leadCompany').value){
+    status.textContent='No se pudo procesar la consulta.';
+    return;
+  }
+  if(Date.now()-leadDialogOpenedAt<600){
+    status.textContent='Esperá un instante y volvé a intentar.';
+    return;
+  }
+  if(!form.checkValidity()){
+    form.reportValidity();
+    status.textContent='Completá los datos requeridos.';
+    return;
+  }
+
+  const name=clean($('#leadName').value).replace(/\s+/g,' ');
+  const rawPhone=clean($('#leadPhone').value);
+  const phone=normalizeLeadPhone(rawPhone);
+  if(name.length<2){
+    status.textContent='Ingresá tu nombre.';
+    $('#leadName').focus();
+    return;
+  }
+  if(rawPhone.replace(/\D/g,'').length<10 || phone.length<12 || phone.length>15){
+    status.textContent='Ingresá un teléfono válido con código de área.';
+    $('#leadPhone').focus();
+    return;
+  }
+
+  submit.disabled=true;
+  submit.textContent='Abriendo WhatsApp…';
+  const v=context.vehicle;
+  const eventId=createLeadEventId();
+  const matchData=metaMatchFromLead(name,phone);
+  refreshMetaAdvancedMatching(matchData);
+
+  emitAnalytics('submit_lead',{vehicle_id:v.id,source:context.source,lead_channel:'whatsapp'});
+  trackMetaVehicleLead(v,{source:context.source,lead_channel:'whatsapp'},eventId);
+  trackEvent(v.id,'whatsapp');
+  sendLeadToBackend({
+    event_id:eventId,
+    name,
+    phone,
+    vehicle_id:v.id,
+    vehicle_name:[v.marca,v.modelo,v.anio].filter(Boolean).join(' '),
+    vehicle_url:vehicleCanonicalUrl(v),
+    page_url:window.location.href,
+    source:context.source,
+    consent:true,
+    form_elapsed_ms:Date.now()-leadDialogOpenedAt,
+    submitted_at:new Date().toISOString()
+  });
+  openWhatsappMessage(context.message);
+  closeLeadDialog({reset:true});
+}
 function emitAnalytics(eventName,params={}){
   try{window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:eventName,...params});if(typeof window.fbq==='function')window.fbq('trackCustom',eventName,params)}catch(_){}
 }
@@ -6206,6 +6366,13 @@ function metaVehicleEventParams(v,extra={}){
 }
 function trackMetaVehicleEvent(eventName,v,extra={}){
   if(!isMetaCatalogVehicle(v) || typeof window.fbq!=='function')return;
+  const viewKey=`lmp_meta_view_v1_${clean(v.id)}`;
+  if(eventName==='ViewContent'){
+    try{
+      if(sessionStorage.getItem(viewKey))return;
+      sessionStorage.setItem(viewKey,'1');
+    }catch(_){}
+  }
   try{window.fbq('track',eventName,metaVehicleEventParams(v,extra))}catch(_){}
 }
 function trackMetaCatalogSearch(searchString,list){
@@ -6215,6 +6382,9 @@ function trackMetaCatalogSearch(searchString,list){
     .filter(Boolean))];
 
   if(!clean(searchString) || !ids.length || typeof window.fbq!=='function')return;
+  const signature=`${clean(searchString)}|${ids.join(',')}`;
+  if(signature===lastMetaSearchSignature)return;
+  lastMetaSearchSignature=signature;
 
   try{
     window.fbq('track','Search',{
@@ -6227,7 +6397,19 @@ function trackMetaCatalogSearch(searchString,list){
 }
 async function copyVehicleLink(v,button=null){
   const url=vehicleUrl(v);
+  const title=`${v.marca} ${v.modelo}${v.anio?` ${v.anio}`:''} | LMP Autos`;
+  const text=`Mirá este ${v.marca} ${v.modelo}${v.anio?` ${v.anio}`:''} en LMP Autos.`;
   let copied=false;
+
+  if(navigator.share){
+    try{
+      await navigator.share({title,text,url});
+      emitAnalytics('share_vehicle',{vehicle_id:v.id,method:'native'});
+      return;
+    }catch(error){
+      if(error?.name==='AbortError')return;
+    }
+  }
 
   try{
     if(navigator.clipboard && window.isSecureContext){
@@ -6249,7 +6431,7 @@ async function copyVehicleLink(v,button=null){
   }
 
   if(copied){
-    emitAnalytics('copy_vehicle_link',{vehicle_id:v.id});
+    emitAnalytics('share_vehicle',{vehicle_id:v.id,method:'clipboard'});
 
     if(button){
       const previous=button.textContent;
@@ -6759,9 +6941,7 @@ function renderCards(target,list,{localOnly=false}={}){
   target.querySelectorAll('[data-wa-id]').forEach(button=>button.addEventListener('click',()=>{
     const vehicle=vehicles.find(v=>v.id===button.dataset.waId);
     if(vehicle){
-      emitAnalytics('click_whatsapp',{vehicle_id:vehicle.id,source:'card'});
-      trackMetaVehicleEvent('Lead',vehicle,{source:'card'});
-      openWhatsappMessage(vehicleWhatsappMessage(vehicle));
+      openLeadDialog(vehicle,{source:'card'});
     }
   }));
   target.querySelectorAll('[data-favorite-id]').forEach(button=>button.addEventListener('click',event=>{event.stopPropagation();toggleFavorite(button.dataset.favoriteId)}));
@@ -7117,7 +7297,7 @@ function openVehicle(id,{updateUrl=true,replaceUrl=false}={}){
       <div class="detail-trust"><span>Más de 10 años</span><span>Gestoría propia</span><span>Entrega 24–48 hs</span></div>
       <div class="detail-actions">
         <button class="whatsapp" id="whatsappBtn" type="button">Consultar este vehículo por WhatsApp</button>
-        <div class="detail-extra-actions"><button id="shareVehicleBtn" class="copy-feedback" type="button">Copiar link</button><button id="favoriteVehicleBtn" type="button">${favoriteIds.has(v.id)?'Quitar de favoritos':'Guardar favorito'}</button></div>
+        <div class="detail-extra-actions"><button id="shareVehicleBtn" class="copy-feedback" type="button">Compartir ficha</button><button id="favoriteVehicleBtn" type="button">${favoriteIds.has(v.id)?'Quitar de favoritos':'Guardar favorito'}</button></div>
         <div class="detail-secondary-actions">
           ${v.instagram?`<a class="detail-link" href="${escapeAttr(v.instagram)}" target="_blank" rel="noopener">Ver Reel</a>`:''}
           ${v.carpeta?`<a class="detail-link" href="${escapeAttr(v.carpeta)}" target="_blank" rel="noopener">Ver todas las fotos</a>`:''}
@@ -7126,9 +7306,10 @@ function openVehicle(id,{updateUrl=true,replaceUrl=false}={}){
       <div class="lead-box"><strong>¿Buscás algo similar?</strong><p>Contanos tu presupuesto y el tipo de vehículo que necesitás.</p><button id="similarAlertBtn" type="button">Avisarme por WhatsApp</button></div>
       ${similarMarkup(v)}
     </div>
-    <div class="mobile-sticky-cta"><button class="mobile-sticky-wa" id="mobileStickyWa" type="button">Consultar por WhatsApp</button><button class="mobile-sticky-share copy-feedback" id="mobileStickyShare" type="button">Copiar link</button></div>
+    <div class="mobile-sticky-cta"><button class="mobile-sticky-wa" id="mobileStickyWa" type="button">Consultar por WhatsApp</button><button class="mobile-sticky-share copy-feedback" id="mobileStickyShare" type="button">Compartir</button></div>
   `;
   $('#vehicleModal').classList.add('open');
+  $('#vehicleModal').setAttribute('aria-hidden','false');
   document.body.classList.add('modal-open');
   document.body.style.overflow='hidden';
   $('#whatsappBtn').onclick=()=>contactVehicle(v);
@@ -7137,9 +7318,10 @@ function openVehicle(id,{updateUrl=true,replaceUrl=false}={}){
   $('#mobileStickyShare').onclick=event=>copyVehicleLink(v,event.currentTarget);
   $('#favoriteVehicleBtn').onclick=()=>{toggleFavorite(v.id);$('#favoriteVehicleBtn').textContent=favoriteIds.has(v.id)?'Quitar de favoritos':'Guardar favorito'};
   $('#similarAlertBtn').onclick=()=>{
-    emitAnalytics('click_whatsapp',{vehicle_id:v.id,source:'similar_alert'});
-    trackMetaVehicleEvent('Lead',v,{source:'similar_alert'});
-    openWhatsappMessage(`Hola, quiero que me avisen cuando ingrese un vehículo similar al ${v.marca} ${v.modelo}. Mi presupuesto aproximado es: `);
+    openLeadDialog(v,{
+      source:'similar_alert',
+      message:`Hola, quiero que me avisen cuando ingrese un vehículo similar al ${v.marca} ${v.modelo}. Mi presupuesto aproximado es: `
+    });
   };
   $$('#modalContent [data-similar-id]').forEach(button=>button.onclick=()=>openVehicle(button.dataset.similarId));
   emitAnalytics('view_vehicle',{vehicle_id:v.id,brand:v.marca,model:v.modelo});
@@ -7196,17 +7378,13 @@ function closePhotoLightbox(){
   document.body.classList.remove('lightbox-open');
 }
 function contactVehicle(v){
-  trackEvent(v.id,'whatsapp');
-  const msg=vehicleWhatsappMessage(v);
-  const base=CONFIG.whatsapp?`https://wa.me/${CONFIG.whatsapp}`:'https://wa.me/';
-  emitAnalytics('click_whatsapp',{vehicle_id:v.id,source:'detail'});
-  trackMetaVehicleEvent('Lead',v,{source:'vehicle_detail'});
-  window.open(`${base}?text=${encodeURIComponent(msg)}`,'_blank','noopener');
+  openLeadDialog(v,{source:'vehicle_detail'});
 }
 
 function closeModal({updateUrl=true}={}){
   closePhotoLightbox();
   $('#vehicleModal').classList.remove('open');
+  $('#vehicleModal').setAttribute('aria-hidden','true');
   document.body.classList.remove('modal-open');
   document.body.style.overflow='';
   if(updateUrl && currentVehicleSlugFromUrl())clearVehicleUrl({replace:true});
@@ -8865,6 +9043,9 @@ async function applyStockResult(result,{initial=false,saveCacheResult=false}={})
 
     if(requestedVehicle){
       openVehicle(requestedVehicle.id,{updateUrl:false});
+      if(new URLSearchParams(window.location.search).get('contacto')==='1'){
+        openLeadDialog(requestedVehicle,{source:'seo_vehicle_page'});
+      }
     }else{
       clearVehicleUrl({replace:true});
     }
@@ -9000,6 +9181,9 @@ $('#filterOverlay').onclick=closeFilters;
 $('#applyMobileFilters').onclick=()=>{applyFilters();closeFilters()};
 $('#closeModal').onclick=closeModal;
 $('#vehicleModal').addEventListener('click',e=>{if(e.target===$('#vehicleModal'))closeModal()});
+$('#leadForm').addEventListener('submit',submitLeadForm);
+$('#leadDialogClose').onclick=()=>closeLeadDialog();
+$('#leadDialog').addEventListener('click',event=>{if(event.target===$('#leadDialog'))closeLeadDialog()});
 $('#featuredPopup').addEventListener('click',e=>{if(e.target===$('#featuredPopup'))closeFeaturedPopup()});
 $('#featuredPopupClose').onclick=closeFeaturedPopup;
 $('#lightboxClose').onclick=closePhotoLightbox;
@@ -9027,7 +9211,8 @@ window.addEventListener('popstate',()=>{
 
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){
-    if($('#featuredPopup').classList.contains('open')) closeFeaturedPopup();
+    if($('#leadDialog').classList.contains('open')) closeLeadDialog();
+    else if($('#featuredPopup').classList.contains('open')) closeFeaturedPopup();
     else if($('#photoLightbox').classList.contains('open')) closePhotoLightbox();
     else closeModal();
   }
@@ -9166,7 +9351,7 @@ setTimeout(()=>{
 </script>
 
   <div class="site-version-row">
-    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.36.6</div>
+    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.37</div>
     <span class="site-version" aria-hidden="true">·</span>
     <a class="site-version-link" href="?stock=interno" rel="nofollow">catálogo</a>
   </div>

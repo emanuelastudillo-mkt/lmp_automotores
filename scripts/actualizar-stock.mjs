@@ -39,7 +39,6 @@ const stockPath = path.join(repoRoot, 'data', 'stock.json');
 const imageStatePath = path.join(repoRoot, 'data', 'image-sync.json');
 const indexPath = path.join(repoRoot, 'index.html');
 const sitemapPath = path.join(repoRoot, 'sitemap.xml');
-const soldSitemapPath = path.join(repoRoot, 'sitemap-vendidos.xml');
 const robotsPath = path.join(repoRoot, 'robots.txt');
 const metaCatalogPath = path.join(repoRoot, 'meta-catalog.csv');
 const vehiclesDir = path.join(repoRoot, 'vehiculos');
@@ -204,34 +203,8 @@ function validateRows(rows) {
   return usableRows;
 }
 
-function vehicleStatus(row) {
-  return normalize(rowValue(row, 'Estado actual del auto'));
-}
-
-function isSoldVehicle(row) {
-  return vehicleStatus(row) === 'VENDIDO';
-}
-
-function isIndexableSoldVehicle(row) {
-  if (!isSoldVehicle(row)) return false;
-
-  const year = rowValue(row, 'Año', 'Ano');
-  const detailCount = [
-    rowValue(row, 'Kilometraje'),
-    rowValue(row, 'Combustible'),
-    rowValue(row, 'Transmision', 'Transmisión'),
-    rowValue(row, 'Color')
-  ].filter(Boolean).length;
-
-  // Una ficha vendida solo se indexa si conserva información suficiente
-  // para responder una búsqueda real del modelo: año válido + al menos
-  // tres datos técnicos adicionales. Las fichas históricas más pobres
-  // siguen respondiendo HTTP 200, pero se marcan noindex.
-  return /^(?:19|20)\d{2}$/.test(year) && detailCount >= 3;
-}
-
 function isPublicVehicle(row) {
-  const status = vehicleStatus(row);
+  const status = normalize(rowValue(row, 'Estado actual del auto'));
 
   return Boolean(
     rowValue(row, 'Marca') &&
@@ -239,14 +212,6 @@ function isPublicVehicle(row) {
     status &&
     status !== 'VENDIDO' &&
     status !== 'DE BAJA'
-  );
-}
-
-function isVehiclePageRow(row) {
-  return Boolean(
-    rowValue(row, 'Marca') &&
-    rowValue(row, 'Modelo') &&
-    (isPublicVehicle(row) || isSoldVehicle(row))
   );
 }
 
@@ -743,9 +708,8 @@ async function syncImages(rows) {
 
     const previousVehicleState = previousState.vehicles?.[id] || { items: [] };
 
-    if (!isVehiclePageRow(row)) {
-      // Las unidades vendidas conservan su página y sus imágenes para evitar URLs rotas.
-      // Solamente se limpian archivos de filas que no deben tener una ficha pública histórica.
+    if (!isPublicVehicle(row)) {
+      // El original continúa en Drive; se limpian solamente archivos generados por la automatización.
       for (const previous of previousVehicleState.items || []) {
         const filePath = path.join(imagesDir, clean(previous.file));
 
@@ -986,11 +950,6 @@ function staticRankingCard(row, index, metric = 'general') {
   </article>`;
 }
 
-function isDiscountStatusValue(value) {
-  const status = normalize(value);
-  return ['CON DESCUENTO', 'DESCUENTO', 'EN DESCUENTO', 'PROMO', 'PROMOCION', 'PROMOCIÓN'].includes(status);
-}
-
 function statusLabel(row) {
   const status = normalize(rowValue(row, 'Estado actual del auto'));
 
@@ -1017,21 +976,19 @@ function staticCard(row) {
   const image = vehicleImage(row);
   const slug = vehicleSlug(row);
   const title = `${marca} ${modelo}${anio ? ` ${anio}` : ''}`;
-  const discounted = isDiscountStatusValue(rowValue(row, 'Estado actual del auto'));
 
   const imageMarkup = image
     ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(`${title} usado en Lomas del Mirador - LMP Autos`)}" loading="lazy" referrerpolicy="no-referrer">`
     : `<div class="photo-empty">Fotos próximamente</div>`;
 
-  return `<article class="vehicle seo-static-card${discounted ? ' discount-card' : ''}">
+  return `<article class="vehicle seo-static-card">
     <div class="photo">
       ${imageMarkup}
-      ${discounted ? '' : `<div class="badge-stack"><span class="badge">${escapeHtml(statusLabel(row))}</span></div>`}
+      <div class="badge-stack"><span class="badge">${escapeHtml(statusLabel(row))}</span></div>
     </div>
     <div class="body">
       <div class="make">${escapeHtml(marca)}</div>
       <h3>${escapeHtml(modelo)}</h3>
-      ${discounted ? '<div class="discount-note">Con descuento</div>' : ''}
       <div class="meta">
         ${anio ? `<span>${escapeHtml(anio)}</span>` : ''}
         ${km ? `<span>${escapeHtml(km)}</span>` : ''}
@@ -1402,7 +1359,6 @@ async function generateMetaCatalog(rows) {
 
 function isMetaCatalogRow(row) {
   return Boolean(
-    isPublicVehicle(row) &&
     vehicleId(row) &&
     rowValue(row, 'Marca') &&
     rowValue(row, 'Modelo') &&
@@ -1436,8 +1392,18 @@ function scriptJson(value) {
 }
 
 function metaPixelMarkup(row) {
+  const id = vehicleId(row);
   const viewContent = isMetaCatalogRow(row)
-    ? `\nfbq('track', 'ViewContent', ${scriptJson(metaVehicleEventParams(row))});`
+    ? `
+  try {
+    const viewKey = 'lmp_meta_view_v1_${id}';
+    if (!sessionStorage.getItem(viewKey)) {
+      fbq('track', 'ViewContent', ${scriptJson(metaVehicleEventParams(row))});
+      sessionStorage.setItem(viewKey, '1');
+    }
+  } catch (_) {
+    fbq('track', 'ViewContent', ${scriptJson(metaVehicleEventParams(row))});
+  }`
     : '';
 
   return `<!-- Meta Pixel Code -->
@@ -1450,14 +1416,30 @@ function metaPixelMarkup(row) {
   t.src=v;s=b.getElementsByTagName(e)[0];
   s.parentNode.insertBefore(t,s)}(window,document,'script',
   'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '${META_PIXEL_ID}');
+  window.LMP_META_PIXEL_ID = '${META_PIXEL_ID}';
+  window.LMP_META_MATCH_STORAGE_KEY = 'lmp_meta_match_v1';
+  window.LMP_META_MATCH_DATA = (() => {
+    try {
+      const stored = JSON.parse(sessionStorage.getItem(window.LMP_META_MATCH_STORAGE_KEY) || '{}');
+      return ['fn', 'ln', 'ph'].reduce((data, key) => {
+        if (typeof stored[key] === 'string' && stored[key].trim()) data[key] = stored[key].trim();
+        return data;
+      }, {});
+    } catch (_) {
+      return {};
+    }
+  })();
+  if (Object.keys(window.LMP_META_MATCH_DATA).length) {
+    fbq('init', window.LMP_META_PIXEL_ID, window.LMP_META_MATCH_DATA);
+  } else {
+    fbq('init', window.LMP_META_PIXEL_ID);
+  }
   fbq('track', 'PageView');${viewContent}
   </script>
   <!-- End Meta Pixel Code -->`;
 }
 
 function vehicleJsonLd(row, url) {
-  const sold = isSoldVehicle(row);
   const marca = rowValue(row, 'Marca');
   const modelo = rowValue(row, 'Modelo');
   const anio = rowValue(row, 'Año', 'Ano');
@@ -1491,7 +1473,7 @@ function vehicleJsonLd(row, url) {
       : undefined,
     image: images.length ? images : undefined,
     itemCondition: 'https://schema.org/UsedCondition',
-    offers: !sold && price
+    offers: price
       ? {
           '@type': 'Offer',
           url,
@@ -1573,8 +1555,6 @@ function scoreListMarkup(row) {
 }
 
 function vehiclePageHtml(row, generatedAt) {
-  const sold = isSoldVehicle(row);
-  const soldIndexable = !sold || isIndexableSoldVehicle(row);
   const marca = rowValue(row, 'Marca');
   const modelo = rowValue(row, 'Modelo');
   const anio = rowValue(row, 'Año', 'Ano');
@@ -1589,19 +1569,9 @@ function vehiclePageHtml(row, generatedAt) {
   const slug = vehicleSlug(row);
   const url = `${SITE_URL}/vehiculos/${slug}/`;
   const appUrl = `${SITE_URL}/?vehiculo=${encodeURIComponent(slug)}`;
-  const vehicleName = `${marca} ${modelo}${anio ? ` ${anio}` : ''}`;
-  const title = sold
-    ? `${vehicleName} vendido | LMP Autos`
-    : `${vehicleName} usado en Lomas del Mirador | LMP Autos`;
-  const description = sold
-    ? `El ${vehicleName} ya fue vendido. Consultá vehículos similares disponibles en LMP Autos, Lomas del Mirador.`
-    : vehicleDescription(row);
-  const metaCatalogItem = !sold && isMetaCatalogRow(row);
-  const similarWhatsapp = `https://wa.me/5491132627744?text=${encodeURIComponent(`Hola, vi que el ${vehicleName} ya fue vendido. ¿Tienen alguna unidad similar disponible?`)}`;
-  const metaEventParams = metaCatalogItem
-    ? scriptJson(metaVehicleEventParams(row))
-    : '';
-
+  const appContactUrl = `${appUrl}&contacto=1`;
+  const title = `${marca} ${modelo}${anio ? ` ${anio}` : ''} usado en Lomas del Mirador | LMP Autos`;
+  const description = vehicleDescription(row);
   const imageMarkup = image
     ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(`${marca} ${modelo}${anio ? ` ${anio}` : ''}`)}" referrerpolicy="no-referrer">`
     : `<div class="image-empty">Fotos disponibles en la ficha completa</div>`;
@@ -1619,7 +1589,7 @@ function vehiclePageHtml(row, generatedAt) {
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>${escapeHtml(title)}</title>
   <meta name="description" content="${escapeHtml(description)}">
-  <meta name="robots" content="${soldIndexable ? 'index,follow,max-image-preview:large' : 'noindex,follow'}">
+  <meta name="robots" content="index,follow,max-image-preview:large">
   <link rel="canonical" href="${escapeHtml(url)}">
   <link rel="alternate" hreflang="es-AR" href="${escapeHtml(url)}">
 
@@ -1669,8 +1639,7 @@ ${breadcrumbJsonLd(row, url)}
     .panel{background:#fff;border:1px solid #ddd;border-radius:22px;padding:24px}
     .make{color:#bb1d23;font-size:12px;font-weight:900;text-transform:uppercase}
     h1{margin:5px 0 12px;font-size:clamp(30px,4vw,48px);line-height:1}
-    .status{display:inline-block;padding:6px 9px;border-radius:999px;background:#111;color:#fff;font-size:11px;font-weight:900}${sold ? `
-    .status.sold{background:#bb1d23}` : ''}
+    .status{display:inline-block;padding:6px 9px;border-radius:999px;background:#111;color:#fff;font-size:11px;font-weight:900}
     .specs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:18px}
     .spec{padding:11px;border-radius:12px;background:#f4f4f1}
     .spec span{display:block;color:#777;font-size:9px;text-transform:uppercase}
@@ -1678,12 +1647,9 @@ ${breadcrumbJsonLd(row, url)}
     .price{margin-top:16px;padding:16px;border-radius:14px;background:#111;color:#fff}
     .price span{display:block;font-size:10px;text-transform:uppercase}
     .price strong{display:block;margin-top:4px;font-size:25px}
-    .advance{margin-top:8px;padding:12px;border-radius:12px;background:#f0e8e8}${sold ? `
-    .sold-notice{margin-top:16px;padding:16px;border-radius:14px;background:#fff2f2;border:1px solid #eccaca;color:#5f2024}
-    .sold-notice strong{display:block;margin-bottom:5px;color:#9f1d23}` : ''}
-    .cta{display:block;margin-top:16px;padding:14px;border-radius:12px;background:#1fa855;color:#fff;text-align:center;text-decoration:none;font-weight:900}${sold ? `
-    .cta.sold-cta{background:#bb1d23}` : ''}
-    .secondary{display:block;margin-top:8px;padding:12px;border:1px solid #bbb;border-radius:12px;text-align:center;text-decoration:none;font-weight:850}
+    .advance{margin-top:8px;padding:12px;border-radius:12px;background:#f0e8e8}
+    .cta{display:block;margin-top:16px;padding:14px;border-radius:12px;background:#1fa855;color:#fff;text-align:center;text-decoration:none;font-weight:900}
+    .secondary{display:block;width:100%;margin-top:8px;padding:12px;border:1px solid #bbb;border-radius:12px;background:#fff;color:#171717;text-align:center;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}
     .score-block{margin-top:24px;background:#fff;border:1px solid #ddd;border-radius:22px;padding:22px}
     .score-block h2{margin:0 0 10px}
     .general-score{margin:0 0 10px}
@@ -1726,7 +1692,7 @@ ${breadcrumbJsonLd(row, url)}
     <article class="panel">
       <div class="make">${escapeHtml(marca)}</div>
       <h1>${escapeHtml(modelo)}${anio ? ` ${escapeHtml(anio)}` : ''}</h1>
-      <span class="status${sold ? ' sold' : ''}">${sold ? 'VENDIDO' : escapeHtml(statusLabel(row))}</span>
+      <span class="status">${escapeHtml(statusLabel(row))}</span>
 
       <div class="specs">
         ${anio ? `<div class="spec"><span>Año</span><strong>${escapeHtml(anio)}</strong></div>` : ''}
@@ -1736,13 +1702,12 @@ ${breadcrumbJsonLd(row, url)}
         ${color ? `<div class="spec"><span>Color</span><strong>${escapeHtml(color)}</strong></div>` : ''}
       </div>
 
-      ${!sold && price ? `<div class="price"><span>Valor total en pesos</span><strong>${escapeHtml(price)}</strong></div>` : ''}
-      ${!sold && advance ? `<div class="advance">Anticipo desde <strong>${escapeHtml(advance)}</strong></div>` : ''}
+      ${price ? `<div class="price"><span>Valor total en pesos</span><strong>${escapeHtml(price)}</strong></div>` : ''}
+      ${advance ? `<div class="advance">Anticipo desde <strong>${escapeHtml(advance)}</strong></div>` : ''}
 
-      ${sold ? `<div class="sold-notice"><strong>Esta unidad ya fue vendida.</strong>Conservamos la ficha para que el enlace siga funcionando y puedas consultar alternativas similares.</div>
-      <a class="cta sold-cta" href="${escapeHtml(similarWhatsapp)}" target="_blank" rel="noopener">Consultar uno similar</a>
-      <a class="secondary" href="${SITE_URL}/">Ver vehículos disponibles</a>` : `<a class="cta" href="${escapeHtml(appUrl)}">Ver ficha completa y consultar</a>
-      <a class="secondary" id="vehicleWhatsapp" href="https://wa.me/5491132627744?text=${encodeURIComponent(`Hola, quiero consultar por ${marca} ${modelo}${anio ? ` ${anio}` : ''}.`)}" target="_blank" rel="noopener">Consultar por WhatsApp</a>`}
+      <a class="cta" href="${escapeHtml(appUrl)}">Ver ficha completa</a>
+      <a class="secondary" href="${escapeHtml(appContactUrl)}">Consultar por WhatsApp</a>
+      <button class="secondary" id="shareVehicle" type="button">Compartir ficha</button>
     </article>
   </div>
 
@@ -1753,11 +1718,35 @@ ${breadcrumbJsonLd(row, url)}
   LMP Autos · Av. Mosconi 799, Lomas del Mirador · WhatsApp 11 3262-7744
   ${generatedAt ? ` · Stock actualizado ${escapeHtml(new Date(generatedAt).toLocaleDateString('es-AR'))}` : ''}
 </footer>
-${metaCatalogItem ? `<script>
-document.getElementById('vehicleWhatsapp')?.addEventListener('click',function(){
-  if(typeof window.fbq==='function')window.fbq('track','Lead',${metaEventParams});
+<script>
+document.getElementById('shareVehicle')?.addEventListener('click', async function(){
+  const button = this;
+  const shareData = {
+    title: ${scriptJson(`${marca} ${modelo}${anio ? ` ${anio}` : ''} | LMP Autos`)},
+    text: ${scriptJson(`Mirá este ${marca} ${modelo}${anio ? ` ${anio}` : ''} en LMP Autos.`)},
+    url: ${scriptJson(url)}
+  };
+
+  if (navigator.share) {
+    try {
+      await navigator.share(shareData);
+      if (typeof window.fbq === 'function') window.fbq('trackCustom', 'share_vehicle', { vehicle_id: ${scriptJson(vehicleId(row))}, method: 'native' });
+      return;
+    } catch (error) {
+      if (error && error.name === 'AbortError') return;
+    }
+  }
+
+  try {
+    await navigator.clipboard.writeText(shareData.url);
+    button.textContent = 'Link copiado';
+    if (typeof window.fbq === 'function') window.fbq('trackCustom', 'share_vehicle', { vehicle_id: ${scriptJson(vehicleId(row))}, method: 'clipboard' });
+    setTimeout(() => { button.textContent = 'Compartir ficha'; }, 1800);
+  } catch (_) {
+    window.prompt('Copiá este enlace:', shareData.url);
+  }
 });
-</script>` : ''}
+</script>
 </body>
 </html>`;
 }
@@ -1767,25 +1756,8 @@ async function generateVehiclePages(rows, generatedAt) {
   await mkdir(vehiclesDir, { recursive: true });
 
   const publicRows = publicRowsSorted(rows);
-  const publicSlugs = new Set(publicRows.map(vehicleSlug).filter(Boolean));
-  const soldRows = [];
-  const soldSlugs = new Set();
 
-  const soldCandidates = rows
-    .filter(isSoldVehicle)
-    .sort((a, b) => {
-      const yearDiff = numericValue(rowValue(b, 'Año', 'Ano')) - numericValue(rowValue(a, 'Año', 'Ano'));
-      return yearDiff || idNumber(b) - idNumber(a);
-    });
-
-  for (const row of soldCandidates) {
-    const slug = vehicleSlug(row);
-    if (!slug || publicSlugs.has(slug) || soldSlugs.has(slug)) continue;
-    soldSlugs.add(slug);
-    soldRows.push(row);
-  }
-
-  for (const row of [...publicRows, ...soldRows]) {
+  for (const row of publicRows) {
     const slug = vehicleSlug(row);
     if (!slug) continue;
 
@@ -1798,14 +1770,10 @@ async function generateVehiclePages(rows, generatedAt) {
     );
   }
 
-  return {
-    publicRows,
-    soldRows,
-    indexableSoldRows: soldRows.filter(isIndexableSoldVehicle)
-  };
+  return publicRows;
 }
 
-function sitemapXml(publicRows, generatedAt) {
+function sitemapXml(rows, generatedAt) {
   const lastmod = generatedAt
     ? new Date(generatedAt).toISOString().slice(0, 10)
     : new Date().toISOString().slice(0, 10);
@@ -1823,7 +1791,7 @@ function sitemapXml(publicRows, generatedAt) {
     }
   ];
 
-  const vehicleUrls = publicRows.map(row => ({
+  const vehicleUrls = rows.map(row => ({
     loc: `${SITE_URL}/vehiculos/${vehicleSlug(row)}/`,
     changefreq: 'daily',
     priority: '0.8',
@@ -1838,33 +1806,9 @@ function sitemapXml(publicRows, generatedAt) {
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 ${items.map(item => `  <url>
     <loc>${escapeXml(item.loc)}</loc>
-    <lastmod>${lastmod}</lastmod>${Array.isArray(item.images) ? item.images.map(image => `
-    <image:image>
-      <image:loc>${escapeXml(image)}</image:loc>
-      <image:title>${escapeXml(item.title || 'LMP Autos')}</image:title>
-    </image:image>`).join('') : ''}
-  </url>`).join('\n')}
-</urlset>
-`;
-}
-
-function soldSitemapXml(soldRows, generatedAt) {
-  const lastmod = generatedAt
-    ? new Date(generatedAt).toISOString().slice(0, 10)
-    : new Date().toISOString().slice(0, 10);
-
-  const items = soldRows.map(row => ({
-    loc: `${SITE_URL}/vehiculos/${vehicleSlug(row)}/`,
-    title: `${rowValue(row, 'Marca')} ${rowValue(row, 'Modelo')}${rowValue(row, 'Año', 'Ano') ? ` ${rowValue(row, 'Año', 'Ano')}` : ''} vendido`,
-    images: localVehicleImages(row)
-  }));
-
-  return `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-${items.map(item => `  <url>
-    <loc>${escapeXml(item.loc)}</loc>
-    <lastmod>${lastmod}</lastmod>${Array.isArray(item.images) ? item.images.map(image => `
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>${item.changefreq}</changefreq>
+    <priority>${item.priority}</priority>${Array.isArray(item.images) ? item.images.map(image => `
     <image:image>
       <image:loc>${escapeXml(image)}</image:loc>
       <image:title>${escapeXml(item.title || 'LMP Autos')}</image:title>
@@ -1883,7 +1827,6 @@ Disallow: /*?stock=interno
 Disallow: /metricas.html
 
 Sitemap: ${SITE_URL}/sitemap.xml
-Sitemap: ${SITE_URL}/sitemap-vendidos.xml
 `,
     'utf8'
   );
@@ -1975,18 +1918,12 @@ async function main() {
   const imageReport = await syncImages(rows);
 
   await updateIndexPrerender(rows);
-  const { publicRows, soldRows, indexableSoldRows } = await generateVehiclePages(rows, generatedAt);
+  const publicRows = await generateVehiclePages(rows, generatedAt);
   const metaReport = await generateMetaCatalog(rows);
 
   await writeFile(
     sitemapPath,
     sitemapXml(publicRows, generatedAt),
-    'utf8'
-  );
-
-  await writeFile(
-    soldSitemapPath,
-    soldSitemapXml(indexableSoldRows, generatedAt),
     'utf8'
   );
 
@@ -2017,7 +1954,6 @@ async function main() {
   }
 
   console.log(`Vehículos públicos pre-renderizados: ${publicRows.length}.`);
-  console.log(`Vehículos vendidos preservados: ${soldRows.length}.`);
   console.log(`Catálogo de Meta: ${metaReport.items} vehículo(s) exportado(s).`);
   if (
     metaReport.skippedWithoutPrice ||
@@ -2030,9 +1966,7 @@ async function main() {
       `${metaReport.skippedWithoutRequiredData} con datos obligatorios incompletos.`
     );
   }
-  console.log(`Sitemap principal: ${publicRows.length + 2} URLs.`);
-  console.log(`Sitemap vendidos: ${indexableSoldRows.length} URLs indexables.`);
-  console.log(`Vendidos noindex: ${soldRows.length - indexableSoldRows.length}.`);
+  console.log(`Sitemap actualizado: ${publicRows.length + 2} URLs.`);
   console.log(`Manifest de imágenes: ${clean(currentImageManifest._version) || 'sin versión'}.`);
   console.log(`Hash de stock: ${contentHash.slice(0, 12)}`);
 }
