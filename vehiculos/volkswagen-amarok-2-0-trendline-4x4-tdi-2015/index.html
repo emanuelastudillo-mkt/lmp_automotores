@@ -15,13 +15,13 @@
   <meta property="og:title" content="Volkswagen Amarok 2.0 Trendline 4x4 TDI 2015 usado en Lomas del Mirador | LMP Autos">
   <meta property="og:description" content="Volkswagen Amarok 2.0 Trendline 4x4 TDI 2015 usado en Lomas del Mirador. 200.000 km. Consultá precio, financiación con cuotas fijas y permuta en LMP Autos. Av. Mosconi 799.">
   <meta property="og:url" content="https://lmpautos.com/vehiculos/volkswagen-amarok-2-0-trendline-4x4-tdi-2015/">
-  <meta property="og:image" content="https://lmpautos.com/img/vehiculos/A083.webp?v=0f4b7f932bb2">
+  <meta property="og:image" content="https://lmpautos.com/img/vehiculos/A083.webp?v=55dc782f240d">
   <meta property="og:image:alt" content="Volkswagen Amarok 2.0 Trendline 4x4 TDI 2015 usado en Lomas del Mirador">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Volkswagen Amarok 2.0 Trendline 4x4 TDI 2015 usado en Lomas del Mirador | LMP Autos">
   <meta name="twitter:description" content="Volkswagen Amarok 2.0 Trendline 4x4 TDI 2015 usado en Lomas del Mirador. 200.000 km. Consultá precio, financiación con cuotas fijas y permuta en LMP Autos. Av. Mosconi 799.">
-  <meta name="twitter:image" content="https://lmpautos.com/img/vehiculos/A083.webp?v=0f4b7f932bb2">
+  <meta name="twitter:image" content="https://lmpautos.com/img/vehiculos/A083.webp?v=55dc782f240d">
   <meta name="twitter:image:alt" content="Volkswagen Amarok 2.0 Trendline 4x4 TDI 2015 usado en Lomas del Mirador">
 
   <script type="application/ld+json">
@@ -48,10 +48,10 @@
     "unitCode": "KMT"
   },
   "image": [
-    "https://lmpautos.com/img/vehiculos/A083.webp?v=0f4b7f932bb2",
-    "https://lmpautos.com/img/vehiculos/A083-1.webp?v=0f4b7f932bb2",
-    "https://lmpautos.com/img/vehiculos/A083-2.webp?v=0f4b7f932bb2",
-    "https://lmpautos.com/img/vehiculos/A083-3.webp?v=0f4b7f932bb2"
+    "https://lmpautos.com/img/vehiculos/A083.webp?v=55dc782f240d",
+    "https://lmpautos.com/img/vehiculos/A083-1.webp?v=55dc782f240d",
+    "https://lmpautos.com/img/vehiculos/A083-2.webp?v=55dc782f240d",
+    "https://lmpautos.com/img/vehiculos/A083-3.webp?v=55dc782f240d"
   ],
   "itemCondition": "https://schema.org/UsedCondition",
   "offers": {
@@ -107,9 +107,34 @@
   t.src=v;s=b.getElementsByTagName(e)[0];
   s.parentNode.insertBefore(t,s)}(window,document,'script',
   'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '1026614216645178');
+  window.LMP_META_PIXEL_ID = '1026614216645178';
+  window.LMP_META_MATCH_STORAGE_KEY = 'lmp_meta_match_v1';
+  window.LMP_META_MATCH_DATA = (() => {
+    try {
+      const stored = JSON.parse(sessionStorage.getItem(window.LMP_META_MATCH_STORAGE_KEY) || '{}');
+      return ['fn', 'ln', 'ph'].reduce((data, key) => {
+        if (typeof stored[key] === 'string' && stored[key].trim()) data[key] = stored[key].trim();
+        return data;
+      }, {});
+    } catch (_) {
+      return {};
+    }
+  })();
+  if (Object.keys(window.LMP_META_MATCH_DATA).length) {
+    fbq('init', window.LMP_META_PIXEL_ID, window.LMP_META_MATCH_DATA);
+  } else {
+    fbq('init', window.LMP_META_PIXEL_ID);
+  }
   fbq('track', 'PageView');
-fbq('track', 'ViewContent', {"content_ids":["A083"],"content_type":"vehicle","content_name":"Volkswagen Amarok 2.0 Trendline 4x4 TDI 2015","content_category":"Autos usados","contents":[{"id":"A083","quantity":1}],"value":34500000,"currency":"ARS"});
+  try {
+    const viewKey = 'lmp_meta_view_v1_A083';
+    if (!sessionStorage.getItem(viewKey)) {
+      fbq('track', 'ViewContent', {"content_ids":["A083"],"content_type":"vehicle","content_name":"Volkswagen Amarok 2.0 Trendline 4x4 TDI 2015","content_category":"Autos usados","contents":[{"id":"A083","quantity":1}],"value":34500000,"currency":"ARS"});
+      sessionStorage.setItem(viewKey, '1');
+    }
+  } catch (_) {
+    fbq('track', 'ViewContent', {"content_ids":["A083"],"content_type":"vehicle","content_name":"Volkswagen Amarok 2.0 Trendline 4x4 TDI 2015","content_category":"Autos usados","contents":[{"id":"A083","quantity":1}],"value":34500000,"currency":"ARS"});
+  }
   </script>
   <!-- End Meta Pixel Code -->
 
@@ -145,7 +170,7 @@ fbq('track', 'ViewContent', {"content_ids":["A083"],"content_type":"vehicle","co
     .price strong{display:block;margin-top:4px;font-size:25px}
     .advance{margin-top:8px;padding:12px;border-radius:12px;background:#f0e8e8}
     .cta{display:block;margin-top:16px;padding:14px;border-radius:12px;background:#1fa855;color:#fff;text-align:center;text-decoration:none;font-weight:900}
-    .secondary{display:block;margin-top:8px;padding:12px;border:1px solid #bbb;border-radius:12px;text-align:center;text-decoration:none;font-weight:850}
+    .secondary{display:block;width:100%;margin-top:8px;padding:12px;border:1px solid #bbb;border-radius:12px;background:#fff;color:#171717;text-align:center;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}
     .score-block{margin-top:24px;background:#fff;border:1px solid #ddd;border-radius:22px;padding:22px}
     .score-block h2{margin:0 0 10px}
     .general-score{margin:0 0 10px}
@@ -181,8 +206,8 @@ fbq('track', 'ViewContent', {"content_ids":["A083"],"content_type":"vehicle","co
 
   <div class="vehicle-layout">
     <div>
-      <div class="media"><img src="https://lmpautos.com/img/vehiculos/A083.webp?v=0f4b7f932bb2" alt="Volkswagen Amarok 2.0 Trendline 4x4 TDI 2015" referrerpolicy="no-referrer"></div>
-      <div class="seo-gallery"><img src="https://lmpautos.com/img/vehiculos/A083-1.webp?v=0f4b7f932bb2" alt="Volkswagen Amarok 2.0 Trendline 4x4 TDI foto 2" loading="lazy" referrerpolicy="no-referrer"><img src="https://lmpautos.com/img/vehiculos/A083-2.webp?v=0f4b7f932bb2" alt="Volkswagen Amarok 2.0 Trendline 4x4 TDI foto 3" loading="lazy" referrerpolicy="no-referrer"><img src="https://lmpautos.com/img/vehiculos/A083-3.webp?v=0f4b7f932bb2" alt="Volkswagen Amarok 2.0 Trendline 4x4 TDI foto 4" loading="lazy" referrerpolicy="no-referrer"></div>
+      <div class="media"><img src="https://lmpautos.com/img/vehiculos/A083.webp?v=55dc782f240d" alt="Volkswagen Amarok 2.0 Trendline 4x4 TDI 2015" referrerpolicy="no-referrer"></div>
+      <div class="seo-gallery"><img src="https://lmpautos.com/img/vehiculos/A083-1.webp?v=55dc782f240d" alt="Volkswagen Amarok 2.0 Trendline 4x4 TDI foto 2" loading="lazy" referrerpolicy="no-referrer"><img src="https://lmpautos.com/img/vehiculos/A083-2.webp?v=55dc782f240d" alt="Volkswagen Amarok 2.0 Trendline 4x4 TDI foto 3" loading="lazy" referrerpolicy="no-referrer"><img src="https://lmpautos.com/img/vehiculos/A083-3.webp?v=55dc782f240d" alt="Volkswagen Amarok 2.0 Trendline 4x4 TDI foto 4" loading="lazy" referrerpolicy="no-referrer"></div>
     </div>
 
     <article class="panel">
@@ -201,8 +226,9 @@ fbq('track', 'ViewContent', {"content_ids":["A083"],"content_type":"vehicle","co
       <div class="price"><span>Valor total en pesos</span><strong>$ 34.500.000</strong></div>
       <div class="advance">Anticipo desde <strong>$ 20.700.000</strong></div>
 
-      <a class="cta" href="https://lmpautos.com/?vehiculo=volkswagen-amarok-2-0-trendline-4x4-tdi-2015">Ver ficha completa y consultar</a>
-      <a class="secondary" id="vehicleWhatsapp" href="https://wa.me/5491132627744?text=Hola%2C%20quiero%20consultar%20por%20Volkswagen%20Amarok%202.0%20Trendline%204x4%20TDI%202015." target="_blank" rel="noopener">Consultar por WhatsApp</a>
+      <a class="cta" href="https://lmpautos.com/?vehiculo=volkswagen-amarok-2-0-trendline-4x4-tdi-2015">Ver ficha completa</a>
+      <a class="secondary" href="https://lmpautos.com/?vehiculo=volkswagen-amarok-2-0-trendline-4x4-tdi-2015&amp;contacto=1">Consultar por WhatsApp</a>
+      <button class="secondary" id="shareVehicle" type="button">Compartir ficha</button>
     </article>
   </div>
 
@@ -217,11 +243,35 @@ fbq('track', 'ViewContent', {"content_ids":["A083"],"content_type":"vehicle","co
 
 <footer class="shell">
   LMP Autos · Av. Mosconi 799, Lomas del Mirador · WhatsApp 11 3262-7744
-   · Stock actualizado 21/9/2026
+   · Stock actualizado 22/9/2026
 </footer>
 <script>
-document.getElementById('vehicleWhatsapp')?.addEventListener('click',function(){
-  if(typeof window.fbq==='function')window.fbq('track','Lead',{"content_ids":["A083"],"content_type":"vehicle","content_name":"Volkswagen Amarok 2.0 Trendline 4x4 TDI 2015","content_category":"Autos usados","contents":[{"id":"A083","quantity":1}],"value":34500000,"currency":"ARS"});
+document.getElementById('shareVehicle')?.addEventListener('click', async function(){
+  const button = this;
+  const shareData = {
+    title: "Volkswagen Amarok 2.0 Trendline 4x4 TDI 2015 | LMP Autos",
+    text: "Mirá este Volkswagen Amarok 2.0 Trendline 4x4 TDI 2015 en LMP Autos.",
+    url: "https://lmpautos.com/vehiculos/volkswagen-amarok-2-0-trendline-4x4-tdi-2015/"
+  };
+
+  if (navigator.share) {
+    try {
+      await navigator.share(shareData);
+      if (typeof window.fbq === 'function') window.fbq('trackCustom', 'share_vehicle', { vehicle_id: "A083", method: 'native' });
+      return;
+    } catch (error) {
+      if (error && error.name === 'AbortError') return;
+    }
+  }
+
+  try {
+    await navigator.clipboard.writeText(shareData.url);
+    button.textContent = 'Link copiado';
+    if (typeof window.fbq === 'function') window.fbq('trackCustom', 'share_vehicle', { vehicle_id: "A083", method: 'clipboard' });
+    setTimeout(() => { button.textContent = 'Compartir ficha'; }, 1800);
+  } catch (_) {
+    window.prompt('Copiá este enlace:', shareData.url);
+  }
 });
 </script>
 </body>

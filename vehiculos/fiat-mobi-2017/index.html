@@ -81,7 +81,24 @@
   t.src=v;s=b.getElementsByTagName(e)[0];
   s.parentNode.insertBefore(t,s)}(window,document,'script',
   'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '1026614216645178');
+  window.LMP_META_PIXEL_ID = '1026614216645178';
+  window.LMP_META_MATCH_STORAGE_KEY = 'lmp_meta_match_v1';
+  window.LMP_META_MATCH_DATA = (() => {
+    try {
+      const stored = JSON.parse(sessionStorage.getItem(window.LMP_META_MATCH_STORAGE_KEY) || '{}');
+      return ['fn', 'ln', 'ph'].reduce((data, key) => {
+        if (typeof stored[key] === 'string' && stored[key].trim()) data[key] = stored[key].trim();
+        return data;
+      }, {});
+    } catch (_) {
+      return {};
+    }
+  })();
+  if (Object.keys(window.LMP_META_MATCH_DATA).length) {
+    fbq('init', window.LMP_META_PIXEL_ID, window.LMP_META_MATCH_DATA);
+  } else {
+    fbq('init', window.LMP_META_PIXEL_ID);
+  }
   fbq('track', 'PageView');
   </script>
   <!-- End Meta Pixel Code -->
@@ -118,7 +135,7 @@
     .price strong{display:block;margin-top:4px;font-size:25px}
     .advance{margin-top:8px;padding:12px;border-radius:12px;background:#f0e8e8}
     .cta{display:block;margin-top:16px;padding:14px;border-radius:12px;background:#1fa855;color:#fff;text-align:center;text-decoration:none;font-weight:900}
-    .secondary{display:block;margin-top:8px;padding:12px;border:1px solid #bbb;border-radius:12px;text-align:center;text-decoration:none;font-weight:850}
+    .secondary{display:block;width:100%;margin-top:8px;padding:12px;border:1px solid #bbb;border-radius:12px;background:#fff;color:#171717;text-align:center;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}
     .score-block{margin-top:24px;background:#fff;border:1px solid #ddd;border-radius:22px;padding:22px}
     .score-block h2{margin:0 0 10px}
     .general-score{margin:0 0 10px}
@@ -174,8 +191,9 @@
       
       
 
-      <a class="cta" href="https://lmpautos.com/?vehiculo=fiat-mobi-2017">Ver ficha completa y consultar</a>
-      <a class="secondary" id="vehicleWhatsapp" href="https://wa.me/5491132627744?text=Hola%2C%20quiero%20consultar%20por%20Fiat%20Mobi%202017." target="_blank" rel="noopener">Consultar por WhatsApp</a>
+      <a class="cta" href="https://lmpautos.com/?vehiculo=fiat-mobi-2017">Ver ficha completa</a>
+      <a class="secondary" href="https://lmpautos.com/?vehiculo=fiat-mobi-2017&amp;contacto=1">Consultar por WhatsApp</a>
+      <button class="secondary" id="shareVehicle" type="button">Compartir ficha</button>
     </article>
   </div>
 
@@ -184,8 +202,36 @@
 
 <footer class="shell">
   LMP Autos · Av. Mosconi 799, Lomas del Mirador · WhatsApp 11 3262-7744
-   · Stock actualizado 21/9/2026
+   · Stock actualizado 22/9/2026
 </footer>
+<script>
+document.getElementById('shareVehicle')?.addEventListener('click', async function(){
+  const button = this;
+  const shareData = {
+    title: "Fiat Mobi 2017 | LMP Autos",
+    text: "Mirá este Fiat Mobi 2017 en LMP Autos.",
+    url: "https://lmpautos.com/vehiculos/fiat-mobi-2017/"
+  };
 
+  if (navigator.share) {
+    try {
+      await navigator.share(shareData);
+      if (typeof window.fbq === 'function') window.fbq('trackCustom', 'share_vehicle', { vehicle_id: "A140", method: 'native' });
+      return;
+    } catch (error) {
+      if (error && error.name === 'AbortError') return;
+    }
+  }
+
+  try {
+    await navigator.clipboard.writeText(shareData.url);
+    button.textContent = 'Link copiado';
+    if (typeof window.fbq === 'function') window.fbq('trackCustom', 'share_vehicle', { vehicle_id: "A140", method: 'clipboard' });
+    setTimeout(() => { button.textContent = 'Compartir ficha'; }, 1800);
+  } catch (_) {
+    window.prompt('Copiá este enlace:', shareData.url);
+  }
+});
+</script>
 </body>
 </html>
