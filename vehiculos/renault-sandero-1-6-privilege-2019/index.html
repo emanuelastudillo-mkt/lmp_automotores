@@ -94,19 +94,17 @@
 }
   </script>
 
-  <!-- Meta Pixel Code -->
+  <!-- Meta Pixel: se carga solamente con consentimiento de medición -->
   <script>
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window,document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
   window.LMP_META_PIXEL_ID = '1026614216645178';
   window.LMP_META_MATCH_STORAGE_KEY = 'lmp_meta_match_v1';
-  window.LMP_META_MATCH_DATA = (() => {
+  window.LMP_PRIVACY_STORAGE_KEY = 'lmp_privacy_consent_v1';
+  window.LMP_META_MATCH_DATA = {};
+  window.LMP_META_ALLOWED = false;
+  window.LMP_META_READY = false;
+  window.LMP_STATIC_VIEW_ID = "A116";
+  window.LMP_STATIC_VIEW_PARAMS = {"content_ids":["A116"],"content_type":"vehicle","content_name":"Renault Sandero 1.6 Privilege 2019","content_category":"Autos usados","contents":[{"id":"A116","quantity":1}],"value":17300000,"currency":"ARS"};
+  window.lmpReadMetaMatchData = function() {
     try {
       const stored = JSON.parse(sessionStorage.getItem(window.LMP_META_MATCH_STORAGE_KEY) || '{}');
       return ['fn', 'ln', 'ph'].reduce((data, key) => {
@@ -116,24 +114,43 @@
     } catch (_) {
       return {};
     }
-  })();
-  if (Object.keys(window.LMP_META_MATCH_DATA).length) {
-    fbq('init', window.LMP_META_PIXEL_ID, window.LMP_META_MATCH_DATA);
-  } else {
-    fbq('init', window.LMP_META_PIXEL_ID);
-  }
-  fbq('track', 'PageView');
-  try {
-    const viewKey = 'lmp_meta_view_v1_A116';
-    if (!sessionStorage.getItem(viewKey)) {
-      fbq('track', 'ViewContent', {"content_ids":["A116"],"content_type":"vehicle","content_name":"Renault Sandero 1.6 Privilege 2019","content_category":"Autos usados","contents":[{"id":"A116","quantity":1}],"value":17300000,"currency":"ARS"});
+  };
+  window.lmpTrackStaticView = function() {
+    if (!window.LMP_META_ALLOWED || !window.LMP_META_READY || !window.LMP_STATIC_VIEW_PARAMS || typeof window.fbq !== 'function') return;
+    try {
+      const viewKey = 'lmp_meta_view_v1_' + window.LMP_STATIC_VIEW_ID;
+      if (sessionStorage.getItem(viewKey)) return;
       sessionStorage.setItem(viewKey, '1');
+    } catch (_) {}
+    window.fbq('track', 'ViewContent', window.LMP_STATIC_VIEW_PARAMS);
+  };
+  window.lmpLoadMetaPixel = function() {
+    window.LMP_META_ALLOWED = true;
+    if (window.LMP_META_READY) return true;
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window,document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    window.LMP_META_MATCH_DATA = window.lmpReadMetaMatchData();
+    if (Object.keys(window.LMP_META_MATCH_DATA).length) {
+      fbq('init', window.LMP_META_PIXEL_ID, window.LMP_META_MATCH_DATA);
+    } else {
+      fbq('init', window.LMP_META_PIXEL_ID);
     }
-  } catch (_) {
-    fbq('track', 'ViewContent', {"content_ids":["A116"],"content_type":"vehicle","content_name":"Renault Sandero 1.6 Privilege 2019","content_category":"Autos usados","contents":[{"id":"A116","quantity":1}],"value":17300000,"currency":"ARS"});
-  }
+    fbq('track', 'PageView');
+    window.LMP_META_READY = true;
+    window.lmpTrackStaticView();
+    return true;
+  };
+  try {
+    if (localStorage.getItem(window.LMP_PRIVACY_STORAGE_KEY) === 'granted') window.lmpLoadMetaPixel();
+  } catch (_) {}
   </script>
-  <!-- End Meta Pixel Code -->
+  <!-- End Meta Pixel -->
 
   <style>
     *{box-sizing:border-box}
@@ -175,6 +192,16 @@
     .scores div{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid #eee}
     .scores dt,.scores dd{margin:0}
     footer{padding:24px 0;color:#666;font-size:12px}
+    footer a,footer button{border:0;background:none;padding:0;color:#444;font:inherit;text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+    .privacy-banner{position:fixed;z-index:50;right:18px;bottom:18px;width:min(470px,calc(100% - 36px));display:none;border-radius:20px;background:#111;color:#fff;padding:20px;box-shadow:0 24px 70px rgba(0,0,0,.4)}
+    .privacy-banner.open{display:block}
+    .privacy-banner strong{display:block;margin-bottom:7px;font-size:18px}
+    .privacy-banner p{margin:0;color:#d0d0d0;font-size:13px;line-height:1.5}
+    .privacy-banner a{color:#fff;font-weight:850}
+    .privacy-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}
+    .privacy-actions button{min-height:42px;border-radius:11px;padding:10px 14px;font:inherit;font-weight:900;cursor:pointer}
+    .privacy-accept{border:0;background:#1fa855;color:#fff}
+    .privacy-essential{border:1px solid #777;background:transparent;color:#fff}
     @media(max-width:760px){
       .vehicle-layout{grid-template-columns:1fr}
       .media,.media img,.image-empty{min-height:300px}
@@ -184,7 +211,6 @@
   </style>
 </head>
 <body>
-<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1" alt=""></noscript>
 <header>
   <div class="shell">
     <a class="brand" href="https://lmpautos.com/">LMP Autos</a>
@@ -238,11 +264,44 @@
   </section>
 </main>
 
+<aside class="privacy-banner" id="privacyBanner" role="dialog" aria-live="polite" aria-label="Preferencias de privacidad">
+  <strong>Tu privacidad, bajo tu control</strong>
+  <p>Con tu permiso cargamos el píxel de Meta para medir visitas y mejorar anuncios. Podés rechazarlo sin perder funciones. <a href="https://lmpautos.com/privacidad.html">Más información</a>.</p>
+  <div class="privacy-actions">
+    <button class="privacy-accept" id="privacyAccept" type="button">Aceptar medición</button>
+    <button class="privacy-essential" id="privacyEssential" type="button">Solo necesarias</button>
+  </div>
+</aside>
+
 <footer class="shell">
   LMP Autos · Av. Mosconi 799, Lomas del Mirador · WhatsApp 11 3262-7744
    · Stock actualizado 22/9/2026
+  · <a href="https://lmpautos.com/privacidad.html">Privacidad</a>
+  · <button id="privacyPreferences" type="button">Preferencias de privacidad</button>
 </footer>
 <script>
+(function(){
+  const key=window.LMP_PRIVACY_STORAGE_KEY||'lmp_privacy_consent_v1';
+  const banner=document.getElementById('privacyBanner');
+  const hide=()=>banner?.classList.remove('open');
+  const choose=choice=>{
+    try{localStorage.setItem(key,choice)}catch(_){}
+    window.LMP_META_ALLOWED=choice==='granted';
+    if(choice==='granted')window.lmpLoadMetaPixel?.();
+    if(choice==='denied'){
+      try{sessionStorage.removeItem(window.LMP_META_MATCH_STORAGE_KEY||'lmp_meta_match_v1')}catch(_){}
+      window.LMP_META_MATCH_DATA={};
+    }
+    hide();
+  };
+  document.getElementById('privacyAccept')?.addEventListener('click',()=>choose('granted'));
+  document.getElementById('privacyEssential')?.addEventListener('click',()=>choose('denied'));
+  document.getElementById('privacyPreferences')?.addEventListener('click',()=>banner?.classList.add('open'));
+  let stored='';
+  try{stored=localStorage.getItem(key)||''}catch(_){}
+  if(!stored)banner?.classList.add('open');
+})();
+
 document.getElementById('shareVehicle')?.addEventListener('click', async function(){
   const button = this;
   const shareData = {
@@ -254,7 +313,7 @@ document.getElementById('shareVehicle')?.addEventListener('click', async functio
   if (navigator.share) {
     try {
       await navigator.share(shareData);
-      if (typeof window.fbq === 'function') window.fbq('trackCustom', 'share_vehicle', { vehicle_id: "A116", method: 'native' });
+      if (window.LMP_META_ALLOWED && typeof window.fbq === 'function') window.fbq('trackCustom', 'share_vehicle', { vehicle_id: "A116", method: 'native' });
       return;
     } catch (error) {
       if (error && error.name === 'AbortError') return;
@@ -264,7 +323,7 @@ document.getElementById('shareVehicle')?.addEventListener('click', async functio
   try {
     await navigator.clipboard.writeText(shareData.url);
     button.textContent = 'Link copiado';
-    if (typeof window.fbq === 'function') window.fbq('trackCustom', 'share_vehicle', { vehicle_id: "A116", method: 'clipboard' });
+    if (window.LMP_META_ALLOWED && typeof window.fbq === 'function') window.fbq('trackCustom', 'share_vehicle', { vehicle_id: "A116", method: 'clipboard' });
     setTimeout(() => { button.textContent = 'Compartir ficha'; }, 1800);
   } catch (_) {
     window.prompt('Copiá este enlace:', shareData.url);
