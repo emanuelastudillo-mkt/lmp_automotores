@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-24T21:34:18.985Z",
+  "generatedAt": "2026-09-25T05:03:11.922Z",
   "source": "Google Sheets CSV publicado",
   "rowCount": 142,
-  "contentHash": "25f1d4bc4f83be8d7e540746898b91ee58a2e4afdf1f25c5ecee39fdd8457846",
+  "contentHash": "b522b6d8f29399db68e88ca64b81125a70b4f8cc93a1c28aff4a8861700cf40e",
   "rows": [
     {
       "ID": "A005",
@@ -4480,10 +4480,10 @@
       "Combustible": "Nafta",
       "Transmision": "Manual",
       "Fecha de salida o venta": "",
-      "Foto 1": "https://drive.google.com/file/d/11leListH8pn2wuRKbsEBwp98-XdrwI7p/view?usp=sharing",
-      "Foto 2": "https://drive.google.com/file/d/1Gmg48f0g6iEj_LUhxQxoGlgkmalhdUdC/view?usp=sharing",
-      "Foto 3": "https://drive.google.com/file/d/1f2FjVpUFAEQFHHmg5V5fkzV0iJxYh6yo/view?usp=sharing",
-      "Foto 4": "https://drive.google.com/file/d/1UgI-F8XhuT4GP2ajTLBiyCayZcp3M4Yp/view?usp=sharing",
+      "Foto 1": "https://drive.google.com/file/d/10sefmlokGWe4nzoXrmjr3_YauoQqALNn/view?usp=sharing",
+      "Foto 2": "https://drive.google.com/file/d/1DrOvJrCaQQEB-4hyAEZirdkFLc1_YSDE/view?usp=sharing",
+      "Foto 3": "https://drive.google.com/file/d/11rTQ_x0dkKw75QHYE5K2ZKZ2wfuI3rJL/view?usp=sharing",
+      "Foto 4": "https://drive.google.com/file/d/1wkIvHVRs5kyNy1pFMEKn-SjkYHwoFCAK/view?usp=sharing",
       "Rendimiento": "68",
       "Confort": "64",
       "Economía": "79",
@@ -4752,7 +4752,7 @@
       "Combustible": "Nafta",
       "Transmision": "Manual",
       "Fecha de salida o venta": "",
-      "Foto 1": "",
+      "Foto 1": "https://drive.google.com/file/d/117xBlZYx5j5wgCLgTLV1mzF132we0dyk/view?usp=sharing",
       "Foto 2": "",
       "Foto 3": "",
       "Foto 4": "",
@@ -4800,9 +4800,9 @@
       "Oportunidad": ""
     },
     {
-      "ID": "$1.519,93",
+      "ID": "$1.519,87",
       "Marca": "Oficial",
-      "Modelo": "$1.553,37",
+      "Modelo": "$1.553,31",
       "Año": "Blue",
       "Kilometraje": "",
       "Color": "",
