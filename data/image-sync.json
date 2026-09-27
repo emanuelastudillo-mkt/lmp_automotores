@@ -421,7 +421,13 @@
     },
     "A140": {
       "manualCover": false,
-      "items": []
+      "items": [
+        {
+          "file": "A140.webp",
+          "source": "drive:117xBlZYx5j5wgCLgTLV1mzF132we0dyk",
+          "logicalOrder": 1
+        }
+      ]
     }
   }
 }
