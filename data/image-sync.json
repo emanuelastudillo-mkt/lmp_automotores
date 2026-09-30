@@ -407,6 +407,26 @@
     "A141": {
       "manualCover": false,
       "items": []
+    },
+    "A142": {
+      "manualCover": false,
+      "items": [
+        {
+          "file": "A142.webp",
+          "source": "drive:1dWoKmm3wSHvQcshKK3ugdKc-_T36b53Y",
+          "logicalOrder": 1
+        }
+      ]
+    },
+    "A143": {
+      "manualCover": false,
+      "items": [
+        {
+          "file": "A143.webp",
+          "source": "drive:1FrwHk3c3yIG2G4uQO6Y-fjTWEe8npkGN",
+          "logicalOrder": 1
+        }
+      ]
     }
   }
 }
