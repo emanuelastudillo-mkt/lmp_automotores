@@ -1,3 +1,79 @@
+# Tu vida sobre ruedas — v0.44
+
+Base: v0.43. Se agregan **31 logros**: los 3 objetivos iniciales y 28 adicionales.
+
+## Uso y guardado
+
+- Botón **🏆 Logros** disponible desde el inicio, durante la partida y al finalizar.
+- Cada logro tiene nombre, condición, barra de progreso y estado.
+- Los logros nuevos muestran un aviso. Se registra la fecha real, el jugador y el año del juego.
+- El dinero es efectivo disponible en USD del juego; no suma el valor de autos activos ni guardados.
+- El garaje simultáneo suma el vehículo activo y los conservados en colección. No cuenta autos ya vendidos ni el historial de compras.
+- Los logros de colección final sólo se evalúan al terminar una trayectoria. El último vehículo activo se incorpora automáticamente a la colección antes del conteo.
+- El progreso conserva la mejor marca de una trayectoria; no suma cifras de partidas distintas. Alcanzar una meta superior también desbloquea las inferiores de esa serie.
+- Reactivar un vehículo guardado no suma otra adquisición. Las compras y las herencias sí cuentan.
+- Los logros desbloqueados permanecen aunque vendas autos, gastes dinero, termines, reinicies o empieces otra trayectoria.
+- Guardado local separado de la partida: `lmp_car_life_achievements_v1`. Se conserva la clave de partida previa, `lmp_car_life_v02`, para compatibilidad.
+- El registro pertenece al navegador y al sitio/origen usado. No se sincroniza entre dispositivos y se pierde si se borran los datos del sitio.
+- Las partidas anteriores en curso siguen funcionando; al cargarlas se reconocen sus condiciones actuales y el historial disponible. No es posible recuperar picos antiguos de dinero ni partidas finalizadas antes de la actualización que el juego no había registrado.
+- Si el almacenamiento falla, el panel lo informa. Un registro ilegible se conserva sin sobrescribirlo.
+
+## Instalar la actualización
+
+El ZIP incremental contiene exactamente estos archivos:
+
+- `juego/index.html`
+- `juego/logros.js`
+- `juego/logros-ui.js`
+- `juego/logros.css`
+- `README-JUEGO.md`
+
+Copiar o extraer conservando estas rutas en la raíz de la web donde ya existe la carpeta `juego`. Reemplazar `juego/index.html` y agregar los tres archivos nuevos de logros. Mantener el catálogo, los eventos y las imágenes existentes. Actualizar en el mismo dominio conserva el guardado local del navegador. La v0.43 original permanece intacta.
+
+## Los 31 logros
+
+| Nº | Nombre | Condición |
+| --- | --- | --- |
+| 1 | Colchón de seguridad | Tener USD 20.000 de dinero disponible. No cuenta el valor de los autos. |
+| 2 | Ahorrista sobre ruedas | Tener USD 50.000 de dinero disponible. No cuenta el valor de los autos. |
+| 3 | Los primeros cien mil | Tener USD 100.000 de dinero disponible. No cuenta el valor de los autos. |
+| 4 | Capital en marcha | Tener USD 150.000 de dinero disponible. No cuenta el valor de los autos. |
+| 5 | Caja fuerte | Tener USD 200.000 de dinero disponible. No cuenta el valor de los autos. |
+| 6 | Fortuna en ascenso | Tener USD 300.000 de dinero disponible. No cuenta el valor de los autos. |
+| 7 | Medio millón de razones | Tener USD 500.000 de dinero disponible. No cuenta el valor de los autos. |
+| 8 | Club del millón | Tener USD 1.000.000 de dinero disponible. No cuenta el valor de los autos. |
+| 9 | Sueño italiano | Ser dueño de una Ferrari, activa o guardada en la colección. |
+| 10 | Garaje de colección | Tener 10 autos simultáneamente durante la trayectoria, contando el activo y los guardados. |
+| 11 | Trío al cierre | Finalizar una trayectoria conservando 3 autos. Incluye el último auto activo. |
+| 12 | Quinteto de colección | Finalizar una trayectoria conservando 5 autos. Incluye el último auto activo. |
+| 13 | Diez llaves para el recuerdo | Finalizar una trayectoria conservando 10 autos. Incluye el último auto activo. |
+| 14 | Museo privado | Finalizar una trayectoria conservando 20 autos. Incluye el último auto activo. |
+| 15 | Imperio del garaje | Finalizar una trayectoria conservando 30 autos. Incluye el último auto activo. |
+| 16 | Mi primera llave | Adquirir 1 auto en una trayectoria, por compra o herencia. Reactivar un auto guardado no suma. |
+| 17 | Probador de caminos | Adquirir 3 autos en una trayectoria, por compra o herencia. Reactivar un auto guardado no suma. |
+| 18 | Cinco historias | Adquirir 5 autos en una trayectoria, por compra o herencia. Reactivar un auto guardado no suma. |
+| 19 | Buscador de novedades | Adquirir 10 autos en una trayectoria, por compra o herencia. Reactivar un auto guardado no suma. |
+| 20 | Veinte oportunidades | Adquirir 20 autos en una trayectoria, por compra o herencia. Reactivar un auto guardado no suma. |
+| 21 | Sin casarse con una marca | Tener autos de 3 marcas diferentes al mismo tiempo. |
+| 22 | Pasaporte automotor | Tener autos de 5 marcas diferentes al mismo tiempo. |
+| 23 | Al volante de mi destino | Tomar 25 decisiones en una trayectoria. |
+| 24 | Cincuenta decisiones | Tomar 50 decisiones en una trayectoria. |
+| 25 | Toda una vida de elecciones | Tomar 100 decisiones en una trayectoria. |
+| 26 | Una década sobre ruedas | Recorrer 10 años desde el inicio de una trayectoria. |
+| 27 | Treinta años de ruta | Recorrer 30 años desde el inicio de una trayectoria. |
+| 28 | Primera vitrina | Ganar 1 premio de exhibición en una trayectoria. |
+| 29 | Estrella de las exhibiciones | Ganar 3 premios de exhibición en una trayectoria. |
+| 30 | Una llave con historia | Recibir una herencia de vehículo, aunque decidas venderlo. |
+| 31 | Una vida sobre ruedas | Completar una trayectoria hasta su año final. |
+
+## Verificación
+
+Se verificaron los 31 umbrales exactos, sus límites inferiores, las metas finales, la permanencia entre partidas y recargas, las reactivaciones, la propiedad de Ferrari, la recuperación de partidas v0.43 y fallos de almacenamiento mediante 13 comprobaciones automatizadas.
+
+Se revisó el panel en el navegador en escritorio y con viewport móvil de 390 × 844, sin desborde horizontal. Se comprobó el desbloqueo real del primer auto y su conservación al recargar.
+
+---
+
 # Tu vida sobre ruedas — v0.43
 
 Base: v0.42.

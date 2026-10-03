@@ -1319,6 +1319,7 @@ button:disabled .ui-icon{
 }
 
 </style>
+<link rel="stylesheet" href="./logros.css">
 </head>
 <body>
 
@@ -1366,7 +1367,10 @@ button:disabled .ui-icon{
 <header>
   <div class="shell topbar">
     <div class="brand">LMP · Tu vida sobre ruedas</div>
-    <div class="version">prototipo privado · v0.43</div>
+    <div class="topbar-actions">
+      <button class="ghost achievements-button" id="openAchievements" type="button">🏆 Logros 0/31</button>
+      <div class="version">prototipo privado · v0.44</div>
+    </div>
   </div>
 </header>
 
@@ -1462,6 +1466,22 @@ button:disabled .ui-icon{
   </div>
 </div>
 
+<dialog class="achievements-dialog" id="achievementsDialog" aria-labelledby="achievementsTitle">
+  <div class="achievements-box">
+    <div class="achievements-header">
+      <h2 id="achievementsTitle">Tus logros</h2>
+      <button class="ghost" id="closeAchievements" type="button" aria-label="Cerrar logros">Cerrar</button>
+    </div>
+    <p class="achievements-intro">Cada logro tiene nombre y una meta. El progreso muestra tu mejor marca en una trayectoria; las metas de colección final se evalúan cuando termina. Los logros desbloqueados se conservan al jugar otra vez.</p>
+    <p class="achievements-intro">Se guardan en este navegador y sitio. Borrar los datos del navegador elimina los logros.</p>
+    <p class="achievements-summary" id="achievementsSummary"></p>
+    <p class="achievements-warning" id="achievementsWarning" role="status" hidden>No se pudo leer o guardar el registro local de logros. Los cambios de esta sesión podrían perderse al cerrar la página.</p>
+    <div class="achievements-grid" id="achievementsList"></div>
+  </div>
+</dialog>
+<div class="achievement-toast" id="achievementToast" role="status" aria-live="polite" aria-atomic="true" hidden></div>
+<script src="./logros.js"></script>
+<script src="./logros-ui.js"></script>
 <script>
 const MAX_END_YEAR=2031;
 function careerEndYear(){ return state?.endYear||2026; }
@@ -2382,6 +2402,7 @@ function advanceYears(years){
       if(Math.random()<.22)state.car.performance=clamp(state.car.performance-1,0,100);
       exhibitionIncome+=maybeAwardExhibition(state.year+i+1);
     }
+    checkAchievements(false,state.year+i+1);
   }
 
   state.money=Math.round(state.money);
@@ -4309,6 +4330,7 @@ function careerStory(){
 
 function finish(){
   updateCurrentCarLegacy();
+  checkAchievements();
 
   // El último auto activo también forma parte del patrimonio final.
   // Lo guardamos automáticamente antes de calcular la colección.
@@ -4321,6 +4343,7 @@ function finish(){
   if(state.car){
     storeActiveCarInCollection('fin de partida',false);
   }
+  checkAchievements(true);
 
   screen('resultScreen');
   const liquid=state.money;
@@ -4387,6 +4410,7 @@ function finish(){
   localStorage.removeItem(SAVE_KEY);
 }
 function persist(){
+  checkAchievements();
   localStorage.setItem(SAVE_KEY,JSON.stringify(state));
 }
 function reset(){
@@ -4461,6 +4485,7 @@ $('#marketModal').addEventListener('click',event=>{
       if(item.maxStars===undefined)item.maxStars=1;
       if(item.maxFlames===undefined)item.maxFlames=0;
     });
+    checkAchievements();
     if(state?.car||state?.player)renderGame();
   }
 })().catch(error=>{
