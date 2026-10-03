@@ -1,3 +1,86 @@
+# Tu vida sobre ruedas — v0.45
+
+Base: v0.44. Esta actualización corrige los 15 problemas documentados en la revisión del juego y mantiene los 31 logros. La pintura de vehículos queda para una etapa posterior.
+
+## Instalar el incremental
+
+Extraer el ZIP en la raíz de la web, donde ya está la carpeta juego, conservando las rutas internas. Reemplazar los archivos incluidos y mantener el resto de la web. Después, recargar el navegador con Ctrl + F5.
+
+El paquete contiene ocho archivos:
+
+- juego/index.html
+- juego/guardado.js
+- juego/partida.js
+- juego/correcciones.css
+- juego/logros.js
+- juego/logros-ui.js
+- juego/logros.css
+- README-JUEGO.md
+
+Se incluyen los tres archivos de logros de v0.44, sin cambios, para que la actualización también pueda aplicarse sobre v0.43. Requiere el catálogo, los eventos y las imágenes de la instalación existente. No cambia las fotos, los nombres ni la numeración de sus archivos. No incluye las 130 fotos; usa las que ya están instaladas.
+
+Las carpetas originales v0.43 y v0.44 se conservaron. El código completo de esta versión quedó en LMP-Autos-Juego-v0.45. Este paquete no publica la web automáticamente.
+
+## Problemas corregidos
+
+| Referencia de la revisión | Corrección |
+| --- | --- |
+| E01 | Las piezas y flags del vehículo se conservan al guardarlo y reactivarlo. |
+| E02 | Un evento pendiente queda vinculado a su unidad: no se aplica al auto elegido después de un intercambio. Los eventos críticos bloquean cambios hasta resolverlos. |
+| E03 | Compras, herencias y ventas actualizan el historial de la unidad correcta, incluso con dos ejemplares del mismo modelo. |
+| E04 | Reactivar un auto guardado no suma una adquisición nueva a estadísticas ni a la evaluación de logros. |
+| E05 | Un choque se contabiliza una vez, también al vender el vehículo como chatarra. Recargar no vuelve a sumarlo. |
+| E06 | Un motor fundido deja el vehículo fuera de servicio. No genera ingresos por fans o exhibiciones ni participa en carreras de colección; necesita reconstrucción para volver a circular. Guardarlo no repara el motor. |
+| E07 | La apreciación de colección usa el año del ejemplar, en lugar del primer año del modelo del catálogo. |
+| E08 | Los saltos de varios años calculan cada ciclo con el año y la antigüedad correspondientes. |
+| E09 | Los eventos históricos y el corralito se presentan aunque el jugador esté sin auto. Las opciones de reparación no actúan sobre un vehículo inexistente. |
+| E10 | Un evento histórico del año de inicio se resuelve antes de avanzar el tiempo. |
+| E11 | Ventas, premios y otros cobros se incluyen en las entradas de dinero registradas. Este acumulado es distinto del efectivo disponible para logros. |
+| E12 | El guardado mantiene una copia anterior válida; ante un registro principal corrupto intenta recuperarla y conserva el registro dañado. |
+| E13 | Los fallos de acceso o de espacio del almacenamiento muestran un aviso y permiten seguir jugando en memoria. No producen una excepción sin controlar. |
+| E14 | Recargar antes de elegir el primer auto vuelve a la selección inicial. Los resultados finales también quedan guardados y pueden reconstruirse al recargar. |
+| E15 | Reset y Logros comparten una fila del encabezado móvil sin superponerse. |
+
+## Guardado, respaldo y recuperación
+
+- La clave de partida sigue siendo lmp_car_life_v02. La copia anterior usa lmp_car_life_v02_backup. El archivo dañado preservado usa lmp_car_life_v02_invalid.
+- Exportar partida descarga un JSON del estado actual. Guardalo antes de cambiar de navegador o dispositivo, y especialmente si aparece un aviso de que el guardado local falló.
+- Importar partida valida el archivo antes de reemplazar la partida. Si hay una partida activa, pide confirmar su reemplazo. Conserva el dinero, los autos, el mercado y los daños pendientes del archivo válido.
+- Si el registro está dañado, aparece Descargar registro dañado para conservarlo y buscar una recuperación posterior. Una copia dañada no equivale a una partida jugable.
+- El respaldo es el guardado válido inmediatamente anterior; no es un historial completo ni una sincronización en la nube. Si el navegador rechaza también la escritura del respaldo, éste puede ser más antiguo. Exportar permite conservar una copia independiente.
+- Los resultados finales permanecen hasta empezar otra trayectoria o usar Reset. Reset borra la partida y su respaldo del navegador; conserva los logros ya desbloqueados.
+- Los logros mantienen su clave separada lmp_car_life_achievements_v1. La exportación/importación de partida no transporta el registro de logros entre navegadores; los logros del navegador de destino se conservan y se evalúan las condiciones de la partida importada.
+- Instalar en el mismo sitio y navegador conserva el guardado local. Un dominio, puerto o navegador diferente tiene otro almacenamiento.
+
+## Compatibilidad y límites de la recuperación
+
+Las partidas previas reciben identificadores de unidad y campos faltantes al cargarse. Los registros de reactivación antiguos dejan de contar como adquisiciones nuevas. Se conserva la información disponible; no se inventan piezas, ingresos ni condiciones que la versión anterior perdió o no registró.
+
+Un total histórico de ingresos de una partida previa puede seguir siendo incompleto por cobros omitidos antes de v0.45. Los cobros nuevos se contabilizan correctamente. Las piezas ya perdidas al guardar un auto en versiones previas tampoco pueden reconstruirse con certeza. Los logros anteriormente desbloqueados se conservan, incluso si provinieron de una estadística incorrecta; no se revocan premios existentes.
+
+Un motor que ya falló y cuyo evento se resolvió antes de esta actualización puede no tener un indicador suficiente para reconstruir retrospectivamente su estado. Las fallas nuevas y las fallas todavía pendientes quedan controladas. La migración de historiales viejos depende de los vínculos presentes: cuando falta información para distinguir dos unidades del mismo modelo, se conserva lo disponible sin afirmar una reconstrucción exacta.
+
+## Verificaciones de esta entrega
+
+- 20 comprobaciones de regresión dirigidas a los errores, identidad de unidades, fallos de almacenamiento y fases guardadas.
+- 659 opciones genéricas y 29 ramas aleatorias del resolutor genérico, sin errores numéricos ni transiciones incompletas. Las tres ramas de semáforo usan el resolutor específico de carreras.
+- 29 rutas de acciones especiales verificadas.
+- 120 trayectorias simuladas completas, con los 13 tipos de eventos especiales y 142 eventos diferentes, sin errores de ejecución.
+- 2.950 selecciones iniciales: 59 años de inicio × 50 selecciones; siempre hubo una opción pagable.
+- Catálogo de 130 autos y 342 eventos sin advertencias de integridad. Catálogo y eventos idénticos a v0.44.
+- Prueba real en navegador: migración de partida v0.44, panel de logros, exportación JSON, importación, decisión y recarga con el resultado conservado.
+- Encabezado móvil comprobado a 320, 360, 390 y 580 px: sin superposición entre Logros y Reset ni desbordamiento horizontal de página.
+- Las pruebas visuales locales usan la imagen de reserva, porque el código incremental no incluye las fotos de la instalación web.
+- Contenido del ZIP comparado byte por byte con los archivos de entrega; versiones previas preservadas.
+
+Las simulaciones verifican funcionamiento; no demuestran que todos los logros sean igual de fáciles de conseguir ni sustituyen el ajuste futuro de dificultad.
+
+---
+
+## Historial de versiones anteriores
+
+Las instrucciones de instalación que aparecen debajo pertenecen a las versiones indicadas. Para esta entrega usar las instrucciones de v0.45 de arriba.
+
 # Tu vida sobre ruedas — v0.44
 
 Base: v0.43. Se agregan **31 logros**: los 3 objetivos iniciales y 28 adicionales.

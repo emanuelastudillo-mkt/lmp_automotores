@@ -1,0 +1,14 @@
+.save-warning{margin:12px auto;padding:12px 16px;border:1px solid var(--amber);border-radius:12px;color:var(--amber);background:#211c12;font-size:13px;line-height:1.5;max-width:1100px}
+.save-warning[hidden]{display:none}
+.backup-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.topbar-actions{flex-wrap:nowrap}
+@media(max-width:600px){
+  header{height:auto;min-height:64px}
+  .topbar{padding-right:0;height:auto;min-height:64px;gap:8px}
+  .topbar-actions{display:flex;flex-direction:row;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end;max-width:65%}
+  .topbar-actions .version{width:100%;text-align:right}
+  #emergencyReset{position:static!important;padding:7px 9px!important;font-size:10px!important;box-shadow:none!important}
+  .achievements-button{font-size:11px;padding:7px 9px}
+  .topbar .brand{flex:1;min-width:0}
+}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation-duration:.001ms!important;transition-duration:.001ms!important}}

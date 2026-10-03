@@ -1320,6 +1320,7 @@ button:disabled .ui-icon{
 
 </style>
 <link rel="stylesheet" href="./logros.css">
+<link rel="stylesheet" href="./correcciones.css">
 </head>
 <body>
 
@@ -1369,7 +1370,8 @@ button:disabled .ui-icon{
     <div class="brand">LMP · Tu vida sobre ruedas</div>
     <div class="topbar-actions">
       <button class="ghost achievements-button" id="openAchievements" type="button">🏆 Logros 0/31</button>
-      <div class="version">prototipo privado · v0.44</div>
+      <button id="emergencyReset" class="ghost" type="button">Reset</button>
+      <div class="version">prototipo privado · v0.45</div>
     </div>
   </div>
 </header>
@@ -1382,6 +1384,8 @@ button:disabled .ui-icon{
   </div>
 </div>
 
+<div class="shell backup-actions"><button class="ghost" id="exportGame" type="button">Exportar partida</button><button class="ghost" id="importGame" type="button">Importar partida</button><button class="ghost" id="exportDamaged" type="button" hidden>Descargar registro dañado</button><input id="importGameFile" type="file" accept=".json,application/json" hidden></div>
+<div class="shell save-warning" id="saveWarning" role="status" aria-live="polite" hidden></div>
 <main class="shell">
   <section class="screen active" id="startScreen">
     <div class="hero">
@@ -1443,10 +1447,7 @@ button:disabled .ui-icon{
   </section>
 </main>
 
-<button id="emergencyReset" class="ghost" type="button"
-  style="position:fixed;right:14px;bottom:14px;z-index:9999;background:#1b1b1f;border:1px solid #555;box-shadow:0 8px 28px rgba(0,0,0,.35)">
-  Reset
-</button>
+
 
 <div class="market-modal" id="marketModal">
   <div class="market-box">
@@ -1480,12 +1481,15 @@ button:disabled .ui-icon{
   </div>
 </dialog>
 <div class="achievement-toast" id="achievementToast" role="status" aria-live="polite" aria-atomic="true" hidden></div>
+<script src="./guardado.js"></script>
+<script src="./partida.js"></script>
 <script src="./logros.js"></script>
 <script src="./logros-ui.js"></script>
 <script>
 const MAX_END_YEAR=2031;
 function careerEndYear(){ return state?.endYear||2026; }
 const SAVE_KEY='lmp_car_life_v02';
+const gameStore=LMPGameStorage.create({getItem:k=>localStorage.getItem(k),setItem:(k,v)=>localStorage.setItem(k,v),removeItem:k=>localStorage.removeItem(k)},SAVE_KEY);
 let CARS=[];
 let EVENTS=[];
 let state=null;
@@ -1658,6 +1662,7 @@ function collectionItem(uid){
   return (state.collection||[]).find(item=>item.uid===uid);
 }
 function ensureCollectionIds(){
+  ensureVehicleLinks();
   for(const item of state.collection||[]){
     if(!item.uid)item.uid=`${item.id}-${item.collectedYear||state.year}-${Math.random().toString(36).slice(2,8)}`;
     const car=carById(item.id);
@@ -1676,19 +1681,24 @@ function collectionSaleValue(item){
 }
 function storeActiveCarInCollection(reason='colección',logEvent=true){
   if(!state.car)return null;
+  ensureVehicleLinks();
   updateCurrentCarLegacy();
 
   const car=currentCar();
   if(!car)return null;
 
-  const history=state.history.at(-1);
+  const history=currentHistory();
   const value=vehicleValue();
   const status=carStatus();
   const flames=fanFlamesFromCount(state.car.fans||0);
-  const collectionUid=`${car.id}-${state.year}-${Math.random().toString(36).slice(2,8)}`;
+  suspendVehicleEvent();
+  const collectionUid=state.car.uid;
 
   const item={
     uid:collectionUid,
+    flags:{...state.flags},
+    operable:state.car.operable!==false,
+    pendingVehicleEvent:state.car.pendingVehicleEvent||null,
     id:car.id,
     brand:car.marca,
     model:car.modelo,
@@ -1741,6 +1751,9 @@ function activeCarFromCollectionItem(item){
 
   const active={
     id:item.id,
+    uid:item.uid,
+    flags:{...(item.flags||{})},
+    operable:item.operable!==false,
     modelYear:item.modelYear??car.desde,
     purchaseType:item.purchaseType||'colección',
     condition:item.condition??88,
@@ -1790,28 +1803,16 @@ function useCollectionCar(uid){
 
   state.collection=(state.collection||[]).filter(entry=>entry.uid!==uid);
 
-  const oldHistory=[...state.history].reverse().find(h=>h.collectionUid===uid);
+  const oldHistory=unitHistory(uid);
   if(oldHistory){
     oldHistory.collectionReactivatedYear=state.year;
   }
 
   state.car=activeCarFromCollectionItem(item);
   state.saleOffer=null;
-  state.flags={};
-
-  state.history.push({
-    id:item.id,
-    brand:item.brand,
-    model:item.model,
-    modelYear:state.car.modelYear,
-    purchaseType:'reactivado desde colección',
-    boughtYear:state.year,
-    boughtFor:0,
-    maxStars:item.stars||1,
-    maxFlames:item.flames||0,
-    reactivatedFromCollection:true,
-    previousCollectionUid:uid
-  });
+  state.flags=state.car.flags;
+  state.pendingEvent=item.pendingVehicleEvent?{...item.pendingVehicleEvent,unitUid:item.uid}:null;
+  state.nextEventYear=state.year;
 
   state.events.unshift({
     year:state.year,
@@ -1830,11 +1831,9 @@ function sellCollectionCar(uid,amount=null,reason='venta desde colección',silen
   const item=collectionItem(uid);
   if(!item)return;
   const price=amount??collectionSaleValue(item);
-  state.money+=price;
+  creditIncome(price);
   state.collection=(state.collection||[]).filter(entry=>entry.uid!==uid);
-  const reversedHistory=[...state.history].reverse();
-  const history=reversedHistory.find(h=>h.collectionUid===uid)
-    || reversedHistory.find(h=>h.id===item.id && h.collected && !h.collectionSoldYear && !h.collectionReactivatedYear);
+  const history=unitHistory(uid);
   if(history){
     history.collectionSoldYear=state.year;
     history.collectionSoldFor=price;
@@ -1895,7 +1894,7 @@ function bindCollectionButtons(){
 function collectionAnnualGrowth(item,year){
   const car=carById(item.id);
   if(!car)return .02;
-  const age=Math.max(0,year-car.desde);
+  const age=Math.max(0,year-(item.modelYear??car.desde));
   const classic=(car.potencialClasico||50)/100;
   const ageBoost=age>=30?.025:age>=20?.015:.006;
   return .012+classic*.022+ageBoost;
@@ -2002,7 +2001,7 @@ function monthlyExpense(){
   return Math.max(5,Math.round(base*conditionPenalty*originalityPenalty*performancePenalty*temporary));
 }
 function fanMonthlyIncome(){
-  if(!state.car)return 0;
+  if(!state.car || state.car.operable===false)return 0;
   const flames=fanFlamesFromCount(state.car.fans||0);
   if(flames<=0)return 0;
 
@@ -2030,7 +2029,7 @@ function exhibitionReward(){
   return 10000;
 }
 function maybeAwardExhibition(year){
-  if(!state.car)return 0;
+  if(!state.car || state.car.operable===false)return 0;
   const stars=carStatus().stars||0;
   const flames=fanFlamesFromCount(state.car.fans||0);
   if(stars<5 || flames<3)return 0;
@@ -2095,8 +2094,10 @@ function flameIcons(flames){
   return `<span class="rating-icons flames">${Array.from({length:clamp(Math.round(flames||0),0,3)},()=>uiIcon('flame')).join('')}</span>`;
 }
 function updateCurrentCarLegacy(){
-  if(!state.car || !state.history.length)return;
-  const history=state.history.at(-1);
+  if(!state.car || !acquiredCount())return;
+  ensureVehicleLinks();
+  const history=currentHistory();
+  if(!history)return;
   const status=carStatus();
   const flames=fanFlamesFromCount(state.car.fans||0);
   history.maxStars=Math.max(history.maxStars||1,status.stars||1);
@@ -2134,7 +2135,8 @@ function divorcePending(){
   return pending?.special==='divorce';
 }
 function vehicleActionsLocked(){
-  return divorcePending() || !!state?.pendingResult;
+  const event=eventById(state?.pendingEvent?.id);
+  return !!state?.pendingResult || !!(event&&(isTrajectoryEvent(event)||event.forced||['divorce','engine','crash','hail','inheritance_father','inheritance_inlaw','collection_fame','collection_race','collection_offer'].includes(event.special))); 
 }
 function currentSaleOffer(){
   if(!state.car)return null;
@@ -2192,7 +2194,7 @@ function renderStats(target){
     <div class="stat"><span>${uiIcon('calendar')}Año</span><strong>${animatedValue(`${prefix}-year`,state.year,state.year,{showDelta:false})}</strong></div>
     <div class="stat"><span>${uiIcon('wallet')}Dinero</span><strong>${animatedValue(`${prefix}-money`,state.money,moneyDisplay(state.money))}</strong></div>
     <div class="stat"><span>${uiIcon('flame')}Fans</span><strong>${animatedValue(`${prefix}-fans`,state.fans||0,fanDisplay)}</strong></div>
-    <div class="stat"><span>${uiIcon('car')}Autos</span><strong>${animatedValue(`${prefix}-cars`,state.history.length,state.history.length)}</strong></div>
+    <div class="stat"><span>${uiIcon('car')}Autos</span><strong>${animatedValue(`${prefix}-cars`,acquiredCount(),acquiredCount())}</strong></div>
     <div class="stat highlight"><span>${uiIcon('gauge')}Valor de tu auto</span><strong>${state.car?animatedValue(`${prefix}-carvalue`,currentValue,money(currentValue)):'—'}</strong></div>
     <div class="stat"><span>${uiIcon('wrench')}Gasto mensual</span><strong>${state.car?animatedValue(`${prefix}-expense`,monthlyExpense(),money(monthlyExpense()),{invert:true}):'—'}</strong></div>`;
 }
@@ -2217,6 +2219,8 @@ function carCard(car,first=false){
 function beginCareer(name,year,pace='fast'){
   state={
     player:clean(name)||'Conductor',
+    phase:'starter',
+    incomeTrackingVersion:2,
     startYear:year,
     year,
     pace,
@@ -2266,7 +2270,7 @@ function renderStarter(){
 }
 function buyCar(id,first=false,unit=null){
   const next=CARS.find(car=>car.id===id);
-  if(!next)return;
+  if(!next || (!first&&vehicleActionsLocked()))return;
   const price=unit?.price??marketPrice(next,state.year);
 
   const power=state.money;
@@ -2281,6 +2285,9 @@ function buyCar(id,first=false,unit=null){
   state.money-=price;
   state.car={
     id,
+    uid:unitUid(),
+    operable:true,
+    flags:{},
     modelYear:unit?.modelYear??next.desde,
     purchaseType:unit?.type??(first?'inicio':'usado'),
     condition:unit?.condition??88,
@@ -2296,8 +2303,10 @@ function buyCar(id,first=false,unit=null){
     purchaseYear:state.year
   };
   state.saleOffer=null;
-  state.flags={};
+  state.flags=state.car.flags;
+  state.phase='playing';
   state.history.push({
+    unitUid:state.car.uid,
     id,
     brand:next.marca,
     model:next.modelo,
@@ -2386,12 +2395,13 @@ function advanceYears(years){
   let exhibitionIncome=0;
 
   for(let i=0;i<years;i++){
+    state.year=fromYear+i+1;
     const annualIncome=rand(300,700);
     income+=annualIncome;
 
     const yearlyCost=monthlyExpense()*12;
     const yearlyFanIncome=fanMonthlyIncome()*12;
-    const collectionCost=ageCollectionOneYear(state.year+i+1);
+    const collectionCost=ageCollectionOneYear(state.year);
     running+=yearlyCost+collectionCost;
     fanIncome+=yearlyFanIncome;
 
@@ -2400,15 +2410,15 @@ function advanceYears(years){
     if(state.car){
       state.car.condition=clamp(state.car.condition-rand(1,3),0,100);
       if(Math.random()<.22)state.car.performance=clamp(state.car.performance-1,0,100);
-      exhibitionIncome+=maybeAwardExhibition(state.year+i+1);
+      exhibitionIncome+=maybeAwardExhibition(state.year);
     }
-    checkAchievements(false,state.year+i+1);
+    checkAchievements(false,state.year);
   }
 
   state.money=Math.round(state.money);
   state.totalIncome+=income+fanIncome;
   state.totalRunningCosts+=running;
-  state.year+=years;
+  state.year=fromYear+years;
   queueYearAnimation(fromYear,state.year);
 
   const popularityText=fanIncome>0
@@ -2481,7 +2491,7 @@ function renderGarage(){
         <div class="cost-line fan-income-line"><span>${fanMonthlyIncome()>0?'Fans piden fotos y encuentros':'Ingresos por fans'}</span><strong>${fanMonthlyIncome()>0?`+${money(fanMonthlyIncome())}/mes`:'—'}</strong></div>
         ${(state.illegalRaceCount||0)>0?`<div class="cost-line career-progress-line"><span>Experiencia en picadas</span><strong>${raceSkillLabel()}</strong></div>`:''}
         ${(state.friendMechanicUses||0)>0?`<div class="cost-line career-progress-line"><span>Mecánico amigo</span><strong>${friendMechanicLabel()}</strong></div>`:''}
-        ${carStatus().stars>=5 && fanFlamesFromCount(state.car.fans||0)>=3
+        ${state.car.operable!==false && carStatus().stars>=5 && fanFlamesFromCount(state.car.fans||0)>=3
           ? `<div class="cost-line exhibition-income-line"><span>Exhibiciones</span><strong>Premios USD 2.000 · 3.000 · 10.000</strong></div>`
           : ''}
         <div class="cost-line garage-secondary"><span>Reparaciones hechas</span><strong>${state.car.repairs}</strong></div>
@@ -2719,6 +2729,7 @@ function eventById(id){
   return EVENTS.find(event=>event.id===id);
 }
 function applyForced(event){
+  if(!state.car)return '';
   if(!event.forced||state.pendingEvent.forcedApplied)return '';
 
   const forced=event.forced;
@@ -2767,6 +2778,7 @@ function choicePreview(choice){
   return parts.join(' · ')||'Sin impacto económico inmediato';
 }
 function canAffordChoice(choice){
+  if(!state.car&&(choice.costType==='repair'||choice.costPctVehicle))return false;
   const cost=choiceCost(choice);
   return cost===0 || state.money>=cost;
 }
@@ -2838,7 +2850,7 @@ function resolveStreetRace(event){
   if(win){
     const prize=Math.max(120,Math.round(before*(.02+Math.random()*.035)*multiplier));
     const fans=rand(6,14)+Math.min(18,state.raceSkill||0);
-    state.money+=prize;
+    creditIncome(prize);
     state.car.fans=(state.car.fans||0)+fans;
     state.fans=(state.fans||0)+fans;
     state.car.performance=clamp(state.car.performance+rand(1,3),0,100);
@@ -2871,7 +2883,7 @@ function resolveIllegalRace(event){
   if(win){
     const prize=Math.max(180,Math.round(before*(.06+Math.random()*.08)*racePrizeMultiplier()));
     const cousinBonus=Math.random()<.38 ? Math.max(50,Math.round(prize*(.18+Math.random()*.32))) : 0;
-    state.money+=prize+cousinBonus;
+    creditIncome(prize+cousinBonus);
     state.car.condition=clamp(state.car.condition-rand(1,5),0,100);
     state.car.performance=clamp(state.car.performance+rand(0,2),0,100);
 
@@ -2929,7 +2941,9 @@ function renderPendingEvent(){
     <h2>${event.title}</h2>
     ${forcedText?`<div class="forced-banner"><strong>Ya ocurrió:</strong><span>${forcedText}</span></div>`:''}
     <p>${event.text}</p>
-    <div class="choices">${event.choices.map(genericChoiceMarkup).join('')}${friendRepairMarkup(event)}${hardshipChoicesMarkup(event)}</div>`;
+    ${!state.car?'<p>Sin vehículo: sólo se aplican efectos económicos y de trayectoria.</p>':''}
+    <div class="choices">${event.choices.map(genericChoiceMarkup).join('')}${state.car?friendRepairMarkup(event)+hardshipChoicesMarkup(event):specialButton('✅','Continuar sin vehículo','Registrás este hito de tu trayectoria.','historical-skip')}</div>`;
+  if(!state.car)$('#historical-skip').onclick=()=>completeEvent(event,'Viviste este hito histórico sin un vehículo activo.','📜');
 
   document.querySelectorAll('[data-choice]').forEach(button=>{
     if(!button.disabled)button.onclick=()=>resolveChoice(event,event.choices[Number(button.dataset.choice)]);
@@ -3014,12 +3028,14 @@ function resolveInheritance(event,source,keep=true){
   else state.careerFlags.inlawInheritance=true;
 
   state.inheritanceCount=(state.inheritanceCount||0)+1;
+  const inheritedUid=unitUid();
 
   if(!keep){
     const sale=Math.max(200,Math.round(unit.value*(.82+Math.random()*.14)));
-    state.money+=sale;
+    creditIncome(sale);
     state.history.push({
       id:unit.id,
+      unitUid:inheritedUid,
       brand:unit.brand,
       model:unit.model,
       modelYear:unit.modelYear,
@@ -3037,12 +3053,14 @@ function resolveInheritance(event,source,keep=true){
     return;
   }
 
-  const uid=`inheritance-${source}-${unit.id}-${state.year}-${Math.random().toString(36).slice(2,7)}`;
+  const uid=inheritedUid;
   const stars=inheritedStars(unit);
 
   state.collection=state.collection||[];
   state.collection.push({
     uid,
+    flags:{},
+    operable:true,
     id:unit.id,
     brand:unit.brand,
     model:unit.model,
@@ -3069,6 +3087,7 @@ function resolveInheritance(event,source,keep=true){
   });
 
   state.history.push({
+    unitUid:uid,
     id:unit.id,
     brand:unit.brand,
     model:unit.model,
@@ -3230,7 +3249,7 @@ function renderSpecialEvent(event,car,forcedText){
   if(['collection_fame','collection_race','collection_offer'].includes(event.special)){
     ensureCollectionIds();
     if(!state.pendingEvent.collectionUid){
-      const pool=state.collection||[];
+      const pool=(state.collection||[]).filter(item=>event.special!=='collection_race'||item.operable!==false);
       const picked=pool[rand(0,pool.length-1)];
       state.pendingEvent.collectionUid=picked?.uid;
       if(event.special==='collection_offer'){
@@ -3276,6 +3295,7 @@ function renderSpecialEvent(event,car,forcedText){
           ${specialButton('🚫','No arriesgarlo','El auto vuelve al garage.','collection-race-no')}
         </div>`;
       $('#collection-race-go').onclick=()=>{
+        if(item.operable===false)return;
         registerRaceAttempt();
         const win=Math.random()<raceWinChance(item.performance??50,item.condition??80);
         if(win){
@@ -3284,7 +3304,7 @@ function renderSpecialEvent(event,car,forcedText){
           item.fans=(item.fans||0)+gained;
           item.flames=fanFlamesFromCount(item.fans);
           state.fans=(state.fans||0)+gained;
-          state.money+=prize;
+          creditIncome(prize);
           item.condition=Math.max(0,(item.condition??90)-rand(0,2));
           completeEvent(event,`Ganaste la picada con ${item.brand} ${item.model}. Cobraste ${money(prize)} y sumaste ${gained} seguidores.`,'🏁');
         }else{
@@ -3364,6 +3384,7 @@ function renderSpecialEvent(event,car,forcedText){
   }
 
   if(event.special==='crash'){
+    registerCrash(event);
     const mechanicalReason=state.pendingEvent?.mechanicalCrash
       ? (state.pendingEvent.crashReason||'una falla mecánica asociada al desgaste')
       : '';
@@ -3398,6 +3419,7 @@ function renderSpecialEvent(event,car,forcedText){
   }
 
   if(event.special==='engine'){
+    state.car.operable=false;
     if(!state.pendingEvent.forcedApplied){
       state.car.condition=clamp(state.car.condition-24,0,100);
       state.car.performance=clamp(state.car.performance-22,0,100);
@@ -3461,7 +3483,7 @@ function renderSpecialEvent(event,car,forcedText){
     };
     $('#divorce-car').onclick=()=>{
       state.divorceCount=(state.divorceCount||0)+1;
-      const history=state.history.at(-1);
+      const history=currentHistory();
       if(history){
         history.soldYear=state.year;
         history.soldFor=0;
@@ -3585,11 +3607,13 @@ function applyMoneyAndEffects(choice,actualCost=0){
     state.car.investedValue+=Math.round(actualCost*(choice.valueShare??.35));
   }else{
     const pctIncome=choice.moneyPctVehicle?Math.round(vehicleValue()*choice.moneyPctVehicle):0;
-    state.money+=(choice.money||0)+pctIncome;
-    state.car.investedValue+=Math.max(0,choice.valueAdd||0);
-    if((choice.valueAdd||0)<0)state.car.valueDamage+=Math.abs(choice.valueAdd);
+    creditIncome(choice.money||0);
+    creditIncome(pctIncome);
+    if(state.car)state.car.investedValue+=Math.max(0,choice.valueAdd||0);
+    if(state.car&&(choice.valueAdd||0)<0)state.car.valueDamage+=Math.abs(choice.valueAdd);
   }
 
+  if(!state.car)return;
   state.car.condition=clamp(state.car.condition+(choice.condition||0),0,100);
   state.car.originality=clamp(state.car.originality+(choice.originality||0),0,100);
   state.car.performance=clamp(state.car.performance+(choice.performance||0),0,100);
@@ -3617,7 +3641,7 @@ function resolveChoice(event,choice){
     return;
   }
   if(event.id==='seguro_choque_decision'){
-    state.crashCount=(state.crashCount||0)+1;
+    registerCrash(event);
   }
 
   const actualCost=(choice.costType==='repair'||choice.costPctVehicle)?choiceCost(choice):0;
@@ -3633,8 +3657,9 @@ function resolveChoice(event,choice){
       acc+=outcome.chance||0;
       if(roll<=acc){selected=outcome;break;}
     }
-    if(selected.money)state.money+=selected.money;
-    if(selected.moneyPctVehicle)state.money+=Math.round(vehicleValue()*selected.moneyPctVehicle);
+    if(selected.money)creditIncome(selected.money);
+    if(selected.moneyPctVehicle)creditIncome(Math.round(vehicleValue()*selected.moneyPctVehicle));
+    if(state.car){
     state.car.condition=clamp(state.car.condition+(selected.condition||0),0,100);
     state.car.originality=clamp(state.car.originality+(selected.originality||0),0,100);
     state.car.performance=clamp(state.car.performance+(selected.performance||0),0,100);
@@ -3644,9 +3669,10 @@ function resolveChoice(event,choice){
       state.car.fans=(state.car.fans||0)+selected.fanGain;
       state.fans=(state.fans||0)+selected.fanGain;
     }
+    }
     if(selected.setFlag){state.flags=state.flags||{};state.flags[selected.setFlag]=true;}
     text=selected.note||text;
-  }else if(Math.random()<(choice.risk||0)){
+  }else if(state.car && Math.random()<(choice.risk||0)){
     const extra=repairCost(rand(380,1150));
     state.money-=extra;
     state.car.repairs++;
@@ -3659,6 +3685,7 @@ function resolveChoice(event,choice){
 }
 function resolveFriendRepair(event,cost,effects=null){
   if(state.money<cost)return;
+  if(event?.special==='engine')state.car.operable=true;
 
   const before=vehicleValue();
   const failureChance=friendFailureChance();
@@ -3724,8 +3751,8 @@ function sellCurrentCarOffer(){
   if(!state.car || vehicleActionsLocked())return;
   const offer=currentSaleOffer();
   const car=currentCar();
-  const history=state.history.at(-1);
-  state.money+=offer.amount;
+  const history=currentHistory();
+  creditIncome(offer.amount);
   history.soldYear=state.year;
   history.soldFor=offer.amount;
   history.saleReason='venta voluntaria';
@@ -3740,6 +3767,7 @@ function sellCurrentCarOffer(){
 }
 function resolveDynamicRepair(event,cost,effects,risk=0){
   if(state.money<cost)return;
+  if(event?.special==='engine')state.car.operable=true;
   state.money-=cost;
   state.car.repairs++;
   state.car.investedValue+=Math.round(cost*(effects.valueShare??.6));
@@ -3771,7 +3799,7 @@ function completeEvent(event,text,icon='🎲'){
     state.careerFlags[`seen_${event.id}`]=true;
   }
   if(event?.special==='crash'){
-    state.crashCount=(state.crashCount||0)+1;
+    registerCrash(event);
     if(state.pendingEvent?.mechanicalCrash && state.pendingEvent?.crashReason && !text.includes(state.pendingEvent.crashReason)){
       text=`El choque ocurrió por ${state.pendingEvent.crashReason}. ${text}`;
     }
@@ -3821,8 +3849,8 @@ function finishSpecial(event,text){
 }
 function sellAndForceMarket(amount,reason,event){
   const car=currentCar();
-  state.money+=amount;
-  const history=state.history.at(-1);
+  creditIncome(amount);
+  const history=currentHistory();
   history.soldYear=state.year;
   history.soldFor=amount;
   history.saleReason=reason;
@@ -3838,9 +3866,10 @@ function sellAndForceMarket(amount,reason,event){
   openMarket(true);
 }
 function scrapAndForceMarket(amount,event,reason){
+  registerCrash(event);
   const car=currentCar();
-  state.money+=amount;
-  const history=state.history.at(-1);
+  creditIncome(amount);
+  const history=currentHistory();
   history.soldYear=state.year;
   history.soldFor=amount;
   history.saleReason='chatarra';
@@ -3915,6 +3944,7 @@ function repairStaleState(){
     state.nextEventYear=Math.min(careerEndYear(),state.year+nextGap());
   }
   ensureCollectionIds();
+  bindPendingUnit();
 }
 function renderGame(){
   repairStaleState();
@@ -3933,8 +3963,13 @@ function renderGame(){
     return;
   }
 
+  if(!state.pendingEvent){
+    const due=trajectoryEventNow();
+    if(due)state.pendingEvent={id:due.id,forcedApplied:false};
+  }
+  if(!state.pendingEvent&&state.car?.operable===false){renderBrokenVehicle();return;}
   const noCarPending=state.pendingEvent ? eventById(state.pendingEvent.id) : null;
-  if(!state.car && noCarPending?.collectionOnly){
+  if(!state.car && (noCarPending?.collectionOnly||isTrajectoryEvent(noCarPending))){
     renderStats($('#gameStats'));
     renderGarage();
     renderPendingEvent();
@@ -4191,7 +4226,8 @@ function renderMarketView(){
   });
 }
 function waitWithoutCar(){
-  if(state.car||state.year>=careerEndYear())return;
+  if(state.car||state.year>=careerEndYear()||vehicleActionsLocked())return;
+  if(trajectoryEventNow()){renderGame();return;}
   const fromYear=state.year;
 
   const income=rand(300,700);
@@ -4207,6 +4243,7 @@ function waitWithoutCar(){
     text:`Pasó 1 año sin auto de uso. Ingresaste ${money(income)}, la colección costó ${money(collectionCost)} y ahora tenés ${money(state.money)}.`
   });
   state.pendingEvent=null;
+  if(trajectoryEventNow()){persist();closeMarket();renderGame();return;}
   if((state.collection||[]).length && maybeChooseCollectionEvent()){
     closeMarket();
     renderGame();
@@ -4238,7 +4275,7 @@ function openMarket(force=false){
     };
   });
 
-  const canWait=!state.car && state.year<careerEndYear();
+  const canWait=!state.car && state.year<careerEndYear()&&!vehicleActionsLocked();
   const waitBox=$('#marketWait');
   const waitButton=$('#waitOneYear');
   const waitText=$('#marketWaitText');
@@ -4259,7 +4296,7 @@ function closeMarket(){
 }
 function careerStory(){
   const years=Math.max(0,careerEndYear()-state.startYear);
-  const cars=state.history.length;
+  const cars=acquiredCount();
   const divorces=state.divorceCount||0;
   const crashes=state.crashCount||0;
   const races=state.illegalRaceCount||0;
@@ -4334,11 +4371,12 @@ function finish(){
 
   // El último auto activo también forma parte del patrimonio final.
   // Lo guardamos automáticamente antes de calcular la colección.
-  const finalCar=currentCar();
-  const finalCarName=finalCar?`${finalCar.marca} ${finalCar.modelo}`:'—';
-  const finalCarValue=finalCar?vehicleValue():0;
-  const finalCarOriginality=state.car?.originality??0;
-  const finalCarAge=finalCar?vehicleAge():0;
+  const finalCar=currentCar()||carById(state.finalSnapshot?.id);
+  if(!state.finalSnapshot)state.finalSnapshot={id:state.car?.id||null,name:finalCar?`${finalCar.marca} ${finalCar.modelo}`:'—',value:state.car?vehicleValue():0,originality:state.car?.originality??0,age:state.car?vehicleAge():0};
+  const finalCarName=state.finalSnapshot.name;
+  const finalCarValue=state.finalSnapshot.value;
+  const finalCarOriginality=state.finalSnapshot.originality;
+  const finalCarAge=state.finalSnapshot.age;
 
   if(state.car){
     storeActiveCarInCollection('fin de partida',false);
@@ -4351,8 +4389,8 @@ function finish(){
   const theoretical=state.money+collectionValueTotal;
 
   let title='Coleccionista accidental';
-  if(state.history.length>=7)title='Cambiador serial';
-  if(state.history.length<=2)title='Fiel hasta el final';
+  if(acquiredCount()>=7)title='Cambiador serial';
+  if(acquiredCount()<=2)title='Fiel hasta el final';
   if((state.collection||[]).length>=6)title='Curador de un garage serio';
   if((state.inheritanceCount||0)>0 && (state.collection||[]).length>=3)title='Guardián del legado';
   if((state.friendMechanicUses||0)>=8)title='Socio honorario del taller';
@@ -4363,14 +4401,14 @@ function finish(){
 
   $('#resultTitle').textContent=title;
   if($('#resultEndLabel'))$('#resultEndLabel').textContent=`${careerEndYear()} · fin de trayectoria`;
-  $('#resultCopy').textContent=`${state.player}, tu historia llegó hasta ${careerEndYear()} después de ${state.decisions} decisiones, ${state.history.length} autos y ${Math.max(0,careerEndYear()-state.startYear)} años de trayectoria.`;
+  $('#resultCopy').textContent=`${state.player}, tu historia llegó hasta ${careerEndYear()} después de ${state.decisions} decisiones, ${acquiredCount()} autos y ${Math.max(0,careerEndYear()-state.startYear)} años de trayectoria.`;
 
   $('#resultCard').innerHTML=`
     <div class="stats">
       <div class="stat"><span>Dinero final</span><strong>${moneyDisplay(liquid)}</strong></div>
       <div class="stat highlight"><span>Último auto</span><strong>${finalCar?`${finalCarName} · ${money(finalCarValue)}`:'—'}</strong></div>
       <div class="stat"><span>Valor teórico total</span><strong>${moneyDisplay(theoretical)}</strong></div>
-      <div class="stat"><span>Ingresos acumulados</span><strong>${money(state.totalIncome)}</strong></div>
+      <div class="stat"><span>Entradas de dinero registradas</span><strong>${money(state.totalIncome)}</strong></div>
       <div class="stat"><span>Gastos de uso</span><strong>${money(state.totalRunningCosts)}</strong></div>
       <div class="stat"><span>Popularidad máxima</span><strong>${flameIcons(fanFlamesFromCount(state.fans||0))||'—'}</strong></div>
       <div class="stat"><span>Divorcios</span><strong>${state.divorceCount||0}</strong></div>
@@ -4401,20 +4439,24 @@ function finish(){
       </div>`;
     }).join(''):'<div class="history-item"><span>No conservaste vehículos en colección.</span><strong>—</strong></div>'}</div>
     <h3 style="margin:18px 0 7px">Tu garaje histórico</h3>
-    <div class="history">${state.history.map(item=>`
+    <div class="history">${state.history.filter(item=>!item.reactivatedFromCollection).map(item=>`
       <div class="history-item">
         <span>${item.brand} ${item.model}<br><small>${starIcons(item.maxStars||1)} · ${flameIcons(item.maxFlames||0)||'—'}</small></span>
         <strong>${item.boughtYear}${item.soldYear?` → ${item.soldYear}`:` → ${careerEndYear()}`}</strong>
       </div>`).join('')}</div>`;
 
-  localStorage.removeItem(SAVE_KEY);
+  state.phase='finished';
+  persist();
 }
 function persist(){
+  if(!state)return;
+  ensureVehicleLinks();bindPendingUnit();
   checkAchievements();
-  localStorage.setItem(SAVE_KEY,JSON.stringify(state));
+  gameStore.save(state);showSaveWarning();
 }
 function reset(){
-  localStorage.removeItem(SAVE_KEY);
+  if(!gameStore.clear()){showSaveWarning();return;}
+  showSaveWarning();
   state=null;
   pendingYearAnimation=null;
   const market=$('#marketModal');
@@ -4427,7 +4469,7 @@ function reset(){
   screen('startScreen');
 }
 function hardReset(){
-  localStorage.removeItem(SAVE_KEY);
+  if(!gameStore.clear()){showSaveWarning();return;}
   location.reload();
 }
 
@@ -4445,13 +4487,8 @@ $('#marketModal').addEventListener('click',event=>{
   if(event.target===$('#marketModal'))closeMarket();
 });
 
-(async function init(){
-  populateYears();
-  await loadData();
-
-  const saved=localStorage.getItem(SAVE_KEY);
-  if(saved){
-    state=JSON.parse(saved);
+function restoreCareer(saved){
+  state=saved;
     if(state && state.pendingResult===undefined)state.pendingResult=null;
     if(state && state.pace===undefined)state.pace='fast';
     if(state && state.fans===undefined)state.fans=0;
@@ -4478,34 +4515,54 @@ $('#marketModal').addEventListener('click',event=>{
     if(state && !Array.isArray(state.previousUsedMarketIds))state.previousUsedMarketIds=[];
     // Campo viejo: ya no se usa porque el mercado rota por turno y no sólo por año.
     if(state && state.marketStockYear!==undefined)delete state.marketStockYear;
+    repairStaleState();
     ensureCollectionIds();
+    for(const [key,value] of Object.entries({condition:88,originality:92,performance:50,repairs:0,investedValue:0,valueDamage:0,expenseModifier:0})){if(state.car&&state.car[key]===undefined)state.car[key]=value;}
+    if(!state.phase)state.phase=!state.car&&!acquiredCount()&&!state.collection.length?'starter':'playing';
     if(state?.car && state.car.fans===undefined)state.car.fans=0;
     if(state?.car && state.car.fanStatusLevel===undefined)state.car.fanStatusLevel=0;
     if(state?.history)state.history.forEach(item=>{
       if(item.maxStars===undefined)item.maxStars=1;
       if(item.maxFlames===undefined)item.maxFlames=0;
     });
-    checkAchievements();
-    if(state?.car||state?.player)renderGame();
-  }
-})().catch(error=>{
-  console.error(error);
-  document.querySelectorAll('.screen').forEach(el=>el.classList.remove('active'));
-  const start=$('#startScreen');
-  if(start){
-    start.classList.add('active');
-    start.innerHTML=`
-      <div class="hero">
-        <div class="hero-copy">
-          <span class="eyebrow">Error de recuperación</span>
-          <h1>No se pudo iniciar el juego.</h1>
-          <p>${clean(error?.message)||'Ocurrió un error inesperado.'}</p>
-          <button class="primary" id="errorReset" type="button">Reiniciar partida</button>
-        </div>
-      </div>`;
-    $('#errorReset').onclick=hardReset;
-  }
-});
+
+  checkAchievements();
+  if(state.phase==='starter')renderStarter();else renderGame();
+  showSaveWarning();
+}
+(async function init(){
+  populateYears();
+  await loadData();
+
+  const saved=gameStore.read();
+  if(saved)restoreCareer(saved);
+  else if(gameStore.damaged())renderRecovery('El guardado no se pudo leer. Podés descargar el registro e importar una copia válida.');
+  showSaveWarning();
+
+})().catch(error=>{console.error(error);renderRecovery(clean(error?.message)||'No se pudo cargar el juego.');});
+function renderRecovery(message){
+  screen('startScreen');
+  $('#startScreen').innerHTML=`<div class="hero"><div><span class="eyebrow">Recuperación</span><h1>No se pudo recuperar la partida.</h1><p>${escapeText(message)}</p><p>Usá Exportar partida o Importar partida. También podés volver a intentar cargar los datos.</p><button class="primary" id="retryLoad" type="button">Volver a intentar</button></div></div>`;
+  $('#retryLoad').onclick=()=>location.reload();
+}
+$('#exportGame').onclick=exportGame;
+$('#exportDamaged').onclick=()=>{if(gameStore.damaged())downloadSave(gameStore.damaged(),'LMP-registro-danado.json');};
+$('#importGame').onclick=()=>$('#importGameFile').click();
+$('#importGameFile').onchange=async event=>{
+  const file=event.target.files?.[0];if(!file)return;
+  try{
+    const raw=await file.text();
+    if(!LMPGameStorage.valid(JSON.parse(raw)))throw Error('El archivo no contiene una partida válida.');
+    if(state&&!confirm('¿Reemplazar la partida actual por la del archivo? Los logros desbloqueados se conservan.'))return;
+    if(!CARS.length)await loadData();
+    const imported=sanitizeImportedState(JSON.parse(raw));
+    restoreCareer(gameStore.importRaw(JSON.stringify(imported)));persist();
+    $('#exportDamaged').hidden=!gameStore.damaged();
+  }catch(error){showSaveWarning(clean(error?.message)||'No se pudo importar la partida.');}
+  finally{event.target.value='';}
+};
+$('#exportDamaged').hidden=!gameStore.damaged();
+
 </script>
 </body>
 </html>
