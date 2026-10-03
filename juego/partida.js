@@ -47,11 +47,14 @@ function trajectoryEventNow(){
   if(state.year===2001&&!state.careerFlags?.corralito_ocurrido)return EVENTS.find(e=>e.special==='corralito');
   return historicalEventForCurrentYear();
 }
+function vehicleEventMatches(event,car=currentCar()){
+  return !event.vehicleId||event.vehicleId===car?.id||event.vehicleId===car?.modeloBaseId;
+}
 function bindPendingUnit(){
   const event=eventById(state.pendingEvent?.id);
   if(event&&!event.collectionOnly&&!isTrajectoryEvent(event)&&state.car){
     if(state.pendingEvent.unitUid&&state.pendingEvent.unitUid!==state.car.uid){state.pendingEvent=null;return;}
-    if(event.vehicleId&&event.vehicleId!==state.car.id){state.pendingEvent=null;return;}
+    if(!vehicleEventMatches(event)){state.pendingEvent=null;return;}
     state.pendingEvent.unitUid=state.car.uid;
   }
 }

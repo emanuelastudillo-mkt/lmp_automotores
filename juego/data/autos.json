@@ -2665,5 +2665,2856 @@
     "eventoCanonico": "El PT Cruiser destaca por su diseño retro y personalidad única. No es el más eficiente, pero sí uno de los modelos más particulares para una colección distinta.",
     "gastoMensualBaseUSD": 20,
     "imageBase": "130-Chrysler PT Cruiser"
+  },
+  {
+    "id": "rolls-royce-silver-cloud-iii-1962",
+    "marca": "Rolls-Royce",
+    "modelo": "Silver Cloud III",
+    "desde": 1962,
+    "hasta": 1962,
+    "precioBaseUSD": 42000,
+    "segmento": "Lujo",
+    "confiabilidad": 65,
+    "economia": 15,
+    "potencialClasico": 99,
+    "tags": [
+      "lujo",
+      "colección",
+      "clásico",
+      "sedán",
+      "británico"
+    ],
+    "eventoCanonico": "Rolls-Royce Silver Cloud III: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 60,
+    "imageBase": "131-Rolls-Royce Silver Cloud III 1962",
+    "imageExt": "png",
+    "color": "Negro",
+    "coloresAlternativos": [
+      "Plata",
+      "Bordó"
+    ],
+    "anioModeloBase": 1962
+  },
+  {
+    "id": "rolls-royce-silver-shadow-1965",
+    "marca": "Rolls-Royce",
+    "modelo": "Silver Shadow",
+    "desde": 1965,
+    "hasta": 1965,
+    "precioBaseUSD": 30000,
+    "segmento": "Lujo",
+    "confiabilidad": 65,
+    "economia": 16,
+    "potencialClasico": 97,
+    "tags": [
+      "lujo",
+      "colección",
+      "clásico",
+      "sedán",
+      "británico"
+    ],
+    "eventoCanonico": "Rolls-Royce Silver Shadow: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 56,
+    "imageBase": "132-Rolls-Royce Silver Shadow 1965",
+    "imageExt": "png",
+    "color": "Plata",
+    "coloresAlternativos": [
+      "Bordó",
+      "Azul oscuro"
+    ],
+    "anioModeloBase": 1965
+  },
+  {
+    "id": "rolls-royce-corniche-convertible-1971",
+    "marca": "Rolls-Royce",
+    "modelo": "Corniche Convertible",
+    "desde": 1971,
+    "hasta": 1971,
+    "precioBaseUSD": 52000,
+    "segmento": "Gran turismo",
+    "confiabilidad": 64,
+    "economia": 14,
+    "potencialClasico": 98,
+    "tags": [
+      "lujo",
+      "colección",
+      "clásico",
+      "deportivo",
+      "británico"
+    ],
+    "eventoCanonico": "Rolls-Royce Corniche Convertible: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 66,
+    "imageBase": "133-Rolls-Royce Corniche Convertible 1971",
+    "imageExt": "png",
+    "color": "Bordó",
+    "coloresAlternativos": [
+      "Azul oscuro",
+      "Crema"
+    ],
+    "anioModeloBase": 1971
+  },
+  {
+    "id": "rolls-royce-silver-spirit-1980",
+    "marca": "Rolls-Royce",
+    "modelo": "Silver Spirit",
+    "desde": 1980,
+    "hasta": 1980,
+    "precioBaseUSD": 34000,
+    "segmento": "Lujo",
+    "confiabilidad": 68,
+    "economia": 18,
+    "potencialClasico": 94,
+    "tags": [
+      "lujo",
+      "colección",
+      "clásico",
+      "sedán",
+      "británico"
+    ],
+    "eventoCanonico": "Rolls-Royce Silver Spirit: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 55,
+    "imageBase": "134-Rolls-Royce Silver Spirit 1980",
+    "imageExt": "png",
+    "color": "Azul oscuro",
+    "coloresAlternativos": [
+      "Crema",
+      "Blanco"
+    ],
+    "anioModeloBase": 1980
+  },
+  {
+    "id": "rolls-royce-ghost-i-2010",
+    "marca": "Rolls-Royce",
+    "modelo": "Ghost I",
+    "desde": 2010,
+    "hasta": 2010,
+    "precioBaseUSD": 98000,
+    "segmento": "Lujo",
+    "confiabilidad": 73,
+    "economia": 17,
+    "potencialClasico": 92,
+    "tags": [
+      "lujo",
+      "colección",
+      "sedán",
+      "británico"
+    ],
+    "eventoCanonico": "Rolls-Royce Ghost I: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 76,
+    "imageBase": "135-Rolls-Royce Ghost I 2010",
+    "imageExt": "png",
+    "color": "Crema",
+    "coloresAlternativos": [
+      "Blanco",
+      "Negro"
+    ],
+    "anioModeloBase": 2010
+  },
+  {
+    "id": "rolls-royce-wraith-2013",
+    "marca": "Rolls-Royce",
+    "modelo": "Wraith",
+    "desde": 2013,
+    "hasta": 2013,
+    "precioBaseUSD": 125000,
+    "segmento": "Gran turismo",
+    "confiabilidad": 72,
+    "economia": 15,
+    "potencialClasico": 94,
+    "tags": [
+      "lujo",
+      "colección",
+      "deportivo",
+      "británico"
+    ],
+    "eventoCanonico": "Rolls-Royce Wraith: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 85,
+    "imageBase": "136-Rolls-Royce Wraith 2013",
+    "imageExt": "png",
+    "color": "Blanco",
+    "coloresAlternativos": [
+      "Negro",
+      "Plata"
+    ],
+    "anioModeloBase": 2013
+  },
+  {
+    "id": "rolls-royce-dawn-2016",
+    "marca": "Rolls-Royce",
+    "modelo": "Dawn",
+    "desde": 2016,
+    "hasta": 2016,
+    "precioBaseUSD": 135000,
+    "segmento": "Gran turismo",
+    "confiabilidad": 72,
+    "economia": 15,
+    "potencialClasico": 95,
+    "tags": [
+      "lujo",
+      "colección",
+      "deportivo",
+      "británico"
+    ],
+    "eventoCanonico": "Rolls-Royce Dawn: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 88,
+    "imageBase": "137-Rolls-Royce Dawn 2016",
+    "imageExt": "png",
+    "color": "Negro",
+    "coloresAlternativos": [
+      "Plata",
+      "Bordó"
+    ],
+    "anioModeloBase": 2016
+  },
+  {
+    "id": "rolls-royce-cullinan-2018",
+    "marca": "Rolls-Royce",
+    "modelo": "Cullinan",
+    "desde": 2018,
+    "hasta": 2018,
+    "precioBaseUSD": 150000,
+    "segmento": "SUV de lujo",
+    "confiabilidad": 74,
+    "economia": 12,
+    "potencialClasico": 90,
+    "tags": [
+      "lujo",
+      "colección",
+      "suv",
+      "británico"
+    ],
+    "eventoCanonico": "Rolls-Royce Cullinan: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 92,
+    "imageBase": "138-Rolls-Royce Cullinan 2018",
+    "imageExt": "png",
+    "color": "Plata",
+    "coloresAlternativos": [
+      "Bordó",
+      "Azul oscuro"
+    ],
+    "anioModeloBase": 2018
+  },
+  {
+    "id": "ferrari-308-gtb-1975",
+    "marca": "Ferrari",
+    "modelo": "308 GTB",
+    "desde": 1975,
+    "hasta": 1975,
+    "precioBaseUSD": 48000,
+    "segmento": "Deportivo",
+    "confiabilidad": 65,
+    "economia": 25,
+    "potencialClasico": 97,
+    "tags": [
+      "lujo",
+      "colección",
+      "clásico",
+      "deportivo",
+      "italiano"
+    ],
+    "eventoCanonico": "Ferrari 308 GTB: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 50,
+    "imageBase": "139-Ferrari 308 GTB 1975",
+    "imageExt": "png",
+    "color": "Rojo",
+    "coloresAlternativos": [
+      "Amarillo",
+      "Negro"
+    ],
+    "anioModeloBase": 1975
+  },
+  {
+    "id": "ferrari-testarossa-1984",
+    "marca": "Ferrari",
+    "modelo": "Testarossa",
+    "desde": 1984,
+    "hasta": 1984,
+    "precioBaseUSD": 78000,
+    "segmento": "Superdeportivo",
+    "confiabilidad": 60,
+    "economia": 14,
+    "potencialClasico": 99,
+    "tags": [
+      "lujo",
+      "colección",
+      "clásico",
+      "deportivo",
+      "superdeportivo",
+      "italiano"
+    ],
+    "eventoCanonico": "Ferrari Testarossa: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 65,
+    "imageBase": "140-Ferrari Testarossa 1984",
+    "imageExt": "png",
+    "color": "Amarillo",
+    "coloresAlternativos": [
+      "Negro",
+      "Blanco"
+    ],
+    "anioModeloBase": 1984
+  },
+  {
+    "id": "ferrari-348-tb-1989",
+    "marca": "Ferrari",
+    "modelo": "348 TB",
+    "desde": 1989,
+    "hasta": 1989,
+    "precioBaseUSD": 62000,
+    "segmento": "Deportivo",
+    "confiabilidad": 64,
+    "economia": 20,
+    "potencialClasico": 94,
+    "tags": [
+      "lujo",
+      "colección",
+      "youngtimer",
+      "deportivo",
+      "italiano"
+    ],
+    "eventoCanonico": "Ferrari 348 TB: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 54,
+    "imageBase": "141-Ferrari 348 TB 1989",
+    "imageExt": "png",
+    "color": "Negro",
+    "coloresAlternativos": [
+      "Blanco",
+      "Azul"
+    ],
+    "anioModeloBase": 1989
+  },
+  {
+    "id": "ferrari-f355-berlinetta-1994",
+    "marca": "Ferrari",
+    "modelo": "F355 Berlinetta",
+    "desde": 1994,
+    "hasta": 1994,
+    "precioBaseUSD": 74000,
+    "segmento": "Deportivo",
+    "confiabilidad": 65,
+    "economia": 22,
+    "potencialClasico": 96,
+    "tags": [
+      "lujo",
+      "colección",
+      "youngtimer",
+      "deportivo",
+      "italiano"
+    ],
+    "eventoCanonico": "Ferrari F355 Berlinetta: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 58,
+    "imageBase": "142-Ferrari F355 Berlinetta 1994",
+    "imageExt": "png",
+    "color": "Blanco",
+    "coloresAlternativos": [
+      "Azul",
+      "Rojo"
+    ],
+    "anioModeloBase": 1994
+  },
+  {
+    "id": "ferrari-360-modena-1999",
+    "marca": "Ferrari",
+    "modelo": "360 Modena",
+    "desde": 1999,
+    "hasta": 1999,
+    "precioBaseUSD": 86000,
+    "segmento": "Deportivo",
+    "confiabilidad": 69,
+    "economia": 24,
+    "potencialClasico": 94,
+    "tags": [
+      "lujo",
+      "colección",
+      "youngtimer",
+      "deportivo",
+      "italiano"
+    ],
+    "eventoCanonico": "Ferrari 360 Modena: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 61,
+    "imageBase": "143-Ferrari 360 Modena 1999",
+    "imageExt": "png",
+    "color": "Azul",
+    "coloresAlternativos": [
+      "Rojo",
+      "Amarillo"
+    ],
+    "anioModeloBase": 1999
+  },
+  {
+    "id": "ferrari-f430-2004",
+    "marca": "Ferrari",
+    "modelo": "F430",
+    "desde": 2004,
+    "hasta": 2004,
+    "precioBaseUSD": 98000,
+    "segmento": "Deportivo",
+    "confiabilidad": 71,
+    "economia": 23,
+    "potencialClasico": 94,
+    "tags": [
+      "lujo",
+      "colección",
+      "youngtimer",
+      "deportivo",
+      "italiano"
+    ],
+    "eventoCanonico": "Ferrari F430: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 66,
+    "imageBase": "144-Ferrari F430 2004",
+    "imageExt": "png",
+    "color": "Rojo",
+    "coloresAlternativos": [
+      "Amarillo",
+      "Negro"
+    ],
+    "anioModeloBase": 2004
+  },
+  {
+    "id": "ferrari-458-italia-2009",
+    "marca": "Ferrari",
+    "modelo": "458 Italia",
+    "desde": 2009,
+    "hasta": 2009,
+    "precioBaseUSD": 115000,
+    "segmento": "Superdeportivo",
+    "confiabilidad": 75,
+    "economia": 25,
+    "potencialClasico": 96,
+    "tags": [
+      "lujo",
+      "colección",
+      "deportivo",
+      "superdeportivo",
+      "italiano"
+    ],
+    "eventoCanonico": "Ferrari 458 Italia: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 73,
+    "imageBase": "145-Ferrari 458 Italia 2009",
+    "imageExt": "png",
+    "color": "Amarillo",
+    "coloresAlternativos": [
+      "Negro",
+      "Blanco"
+    ],
+    "anioModeloBase": 2009
+  },
+  {
+    "id": "ferrari-488-gtb-2015",
+    "marca": "Ferrari",
+    "modelo": "488 GTB",
+    "desde": 2015,
+    "hasta": 2015,
+    "precioBaseUSD": 132000,
+    "segmento": "Superdeportivo",
+    "confiabilidad": 76,
+    "economia": 24,
+    "potencialClasico": 95,
+    "tags": [
+      "lujo",
+      "colección",
+      "deportivo",
+      "superdeportivo",
+      "italiano",
+      "turbo"
+    ],
+    "eventoCanonico": "Ferrari 488 GTB: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 80,
+    "imageBase": "146-Ferrari 488 GTB 2015",
+    "imageExt": "png",
+    "color": "Negro",
+    "coloresAlternativos": [
+      "Blanco",
+      "Azul"
+    ],
+    "anioModeloBase": 2015
+  },
+  {
+    "id": "lamborghini-miura-p400-1966",
+    "marca": "Lamborghini",
+    "modelo": "Miura P400",
+    "desde": 1966,
+    "hasta": 1966,
+    "precioBaseUSD": 92000,
+    "segmento": "Superdeportivo",
+    "confiabilidad": 54,
+    "economia": 13,
+    "potencialClasico": 100,
+    "tags": [
+      "lujo",
+      "colección",
+      "clásico",
+      "deportivo",
+      "superdeportivo",
+      "italiano"
+    ],
+    "eventoCanonico": "Lamborghini Miura P400: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 68,
+    "imageBase": "147-Lamborghini Miura P400 1966",
+    "imageExt": "png",
+    "color": "Amarillo",
+    "coloresAlternativos": [
+      "Naranja",
+      "Verde"
+    ],
+    "anioModeloBase": 1966
+  },
+  {
+    "id": "lamborghini-countach-lp400-1974",
+    "marca": "Lamborghini",
+    "modelo": "Countach LP400",
+    "desde": 1974,
+    "hasta": 1974,
+    "precioBaseUSD": 105000,
+    "segmento": "Superdeportivo",
+    "confiabilidad": 52,
+    "economia": 11,
+    "potencialClasico": 100,
+    "tags": [
+      "lujo",
+      "colección",
+      "clásico",
+      "deportivo",
+      "superdeportivo",
+      "italiano"
+    ],
+    "eventoCanonico": "Lamborghini Countach LP400: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 75,
+    "imageBase": "148-Lamborghini Countach LP400 1974",
+    "imageExt": "png",
+    "color": "Naranja",
+    "coloresAlternativos": [
+      "Verde",
+      "Negro"
+    ],
+    "anioModeloBase": 1974
+  },
+  {
+    "id": "lamborghini-diablo-vt-1993",
+    "marca": "Lamborghini",
+    "modelo": "Diablo VT",
+    "desde": 1993,
+    "hasta": 1993,
+    "precioBaseUSD": 96000,
+    "segmento": "Superdeportivo",
+    "confiabilidad": 58,
+    "economia": 12,
+    "potencialClasico": 98,
+    "tags": [
+      "lujo",
+      "colección",
+      "youngtimer",
+      "deportivo",
+      "superdeportivo",
+      "italiano"
+    ],
+    "eventoCanonico": "Lamborghini Diablo VT: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 71,
+    "imageBase": "149-Lamborghini Diablo VT 1993",
+    "imageExt": "png",
+    "color": "Verde",
+    "coloresAlternativos": [
+      "Negro",
+      "Blanco"
+    ],
+    "anioModeloBase": 1993
+  },
+  {
+    "id": "lamborghini-murcielago-2001",
+    "marca": "Lamborghini",
+    "modelo": "Murciélago",
+    "desde": 2001,
+    "hasta": 2001,
+    "precioBaseUSD": 108000,
+    "segmento": "Superdeportivo",
+    "confiabilidad": 62,
+    "economia": 13,
+    "potencialClasico": 96,
+    "tags": [
+      "lujo",
+      "colección",
+      "youngtimer",
+      "deportivo",
+      "superdeportivo",
+      "italiano"
+    ],
+    "eventoCanonico": "Lamborghini Murciélago: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 76,
+    "imageBase": "150-Lamborghini Murciélago 2001",
+    "imageExt": "png",
+    "color": "Negro",
+    "coloresAlternativos": [
+      "Blanco",
+      "Rojo"
+    ],
+    "anioModeloBase": 2001
+  },
+  {
+    "id": "lamborghini-gallardo-2003",
+    "marca": "Lamborghini",
+    "modelo": "Gallardo",
+    "desde": 2003,
+    "hasta": 2003,
+    "precioBaseUSD": 79000,
+    "segmento": "Superdeportivo",
+    "confiabilidad": 70,
+    "economia": 20,
+    "potencialClasico": 93,
+    "tags": [
+      "lujo",
+      "colección",
+      "youngtimer",
+      "deportivo",
+      "superdeportivo",
+      "italiano"
+    ],
+    "eventoCanonico": "Lamborghini Gallardo: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 62,
+    "imageBase": "151-Lamborghini Gallardo 2003",
+    "imageExt": "png",
+    "color": "Blanco",
+    "coloresAlternativos": [
+      "Rojo",
+      "Amarillo"
+    ],
+    "anioModeloBase": 2003
+  },
+  {
+    "id": "lamborghini-aventador-lp700-4-2011",
+    "marca": "Lamborghini",
+    "modelo": "Aventador LP700-4",
+    "desde": 2011,
+    "hasta": 2011,
+    "precioBaseUSD": 142000,
+    "segmento": "Superdeportivo",
+    "confiabilidad": 68,
+    "economia": 13,
+    "potencialClasico": 96,
+    "tags": [
+      "lujo",
+      "colección",
+      "deportivo",
+      "superdeportivo",
+      "italiano"
+    ],
+    "eventoCanonico": "Lamborghini Aventador LP700-4: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 85,
+    "imageBase": "152-Lamborghini Aventador LP700-4 2011",
+    "imageExt": "png",
+    "color": "Rojo",
+    "coloresAlternativos": [
+      "Amarillo",
+      "Naranja"
+    ],
+    "anioModeloBase": 2011
+  },
+  {
+    "id": "lamborghini-huracan-lp610-4-2014",
+    "marca": "Lamborghini",
+    "modelo": "Huracán LP610-4",
+    "desde": 2014,
+    "hasta": 2014,
+    "precioBaseUSD": 115000,
+    "segmento": "Superdeportivo",
+    "confiabilidad": 76,
+    "economia": 23,
+    "potencialClasico": 94,
+    "tags": [
+      "lujo",
+      "colección",
+      "deportivo",
+      "superdeportivo",
+      "italiano"
+    ],
+    "eventoCanonico": "Lamborghini Huracán LP610-4: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 76,
+    "imageBase": "153-Lamborghini Huracán LP610-4 2014",
+    "imageExt": "png",
+    "color": "Amarillo",
+    "coloresAlternativos": [
+      "Naranja",
+      "Verde"
+    ],
+    "anioModeloBase": 2014
+  },
+  {
+    "id": "lamborghini-urus-2018",
+    "marca": "Lamborghini",
+    "modelo": "Urus",
+    "desde": 2018,
+    "hasta": 2018,
+    "precioBaseUSD": 128000,
+    "segmento": "SUV de lujo",
+    "confiabilidad": 78,
+    "economia": 20,
+    "potencialClasico": 88,
+    "tags": [
+      "lujo",
+      "colección",
+      "suv",
+      "italiano"
+    ],
+    "eventoCanonico": "Lamborghini Urus: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 78,
+    "imageBase": "154-Lamborghini Urus 2018",
+    "imageExt": "png",
+    "color": "Naranja",
+    "coloresAlternativos": [
+      "Verde",
+      "Negro"
+    ],
+    "anioModeloBase": 2018
+  },
+  {
+    "id": "mercedes-benz-280-se-w108-1968",
+    "marca": "Mercedes-Benz",
+    "modelo": "280 SE W108",
+    "desde": 1968,
+    "hasta": 1968,
+    "precioBaseUSD": 18000,
+    "segmento": "Sedán",
+    "confiabilidad": 82,
+    "economia": 38,
+    "potencialClasico": 94,
+    "tags": [
+      "lujo",
+      "colección",
+      "clásico",
+      "sedán",
+      "alemán"
+    ],
+    "eventoCanonico": "Mercedes-Benz 280 SE W108: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 34,
+    "imageBase": "155-Mercedes-Benz 280 SE W108 1968",
+    "imageExt": "png",
+    "color": "Plata",
+    "coloresAlternativos": [
+      "Negro",
+      "Azul oscuro"
+    ],
+    "anioModeloBase": 1968
+  },
+  {
+    "id": "mercedes-benz-350-sl-r107-1971",
+    "marca": "Mercedes-Benz",
+    "modelo": "350 SL R107",
+    "desde": 1971,
+    "hasta": 1971,
+    "precioBaseUSD": 27000,
+    "segmento": "Gran turismo",
+    "confiabilidad": 79,
+    "economia": 28,
+    "potencialClasico": 96,
+    "tags": [
+      "lujo",
+      "colección",
+      "clásico",
+      "deportivo",
+      "alemán"
+    ],
+    "eventoCanonico": "Mercedes-Benz 350 SL R107: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 39,
+    "imageBase": "156-Mercedes-Benz 350 SL R107 1971",
+    "imageExt": "png",
+    "color": "Negro",
+    "coloresAlternativos": [
+      "Azul oscuro",
+      "Bordó"
+    ],
+    "anioModeloBase": 1971
+  },
+  {
+    "id": "mercedes-benz-230-e-w123-1980",
+    "marca": "Mercedes-Benz",
+    "modelo": "230 E W123",
+    "desde": 1980,
+    "hasta": 1980,
+    "precioBaseUSD": 14000,
+    "segmento": "Sedán",
+    "confiabilidad": 88,
+    "economia": 49,
+    "potencialClasico": 91,
+    "tags": [
+      "lujo",
+      "colección",
+      "clásico",
+      "sedán",
+      "alemán"
+    ],
+    "eventoCanonico": "Mercedes-Benz 230 E W123: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 29,
+    "imageBase": "157-Mercedes-Benz 230 E W123 1980",
+    "imageExt": "png",
+    "color": "Azul oscuro",
+    "coloresAlternativos": [
+      "Bordó",
+      "Blanco"
+    ],
+    "anioModeloBase": 1980
+  },
+  {
+    "id": "mercedes-benz-500-sec-c126-1981",
+    "marca": "Mercedes-Benz",
+    "modelo": "500 SEC C126",
+    "desde": 1981,
+    "hasta": 1981,
+    "precioBaseUSD": 31000,
+    "segmento": "Gran turismo",
+    "confiabilidad": 83,
+    "economia": 29,
+    "potencialClasico": 95,
+    "tags": [
+      "lujo",
+      "colección",
+      "clásico",
+      "deportivo",
+      "alemán"
+    ],
+    "eventoCanonico": "Mercedes-Benz 500 SEC C126: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 40,
+    "imageBase": "158-Mercedes-Benz 500 SEC C126 1981",
+    "imageExt": "png",
+    "color": "Bordó",
+    "coloresAlternativos": [
+      "Blanco",
+      "Plata"
+    ],
+    "anioModeloBase": 1981
+  },
+  {
+    "id": "mercedes-benz-c180-w202-1993",
+    "marca": "Mercedes-Benz",
+    "modelo": "C180 W202",
+    "desde": 1993,
+    "hasta": 1993,
+    "precioBaseUSD": 15000,
+    "segmento": "Sedán",
+    "confiabilidad": 87,
+    "economia": 56,
+    "potencialClasico": 83,
+    "tags": [
+      "lujo",
+      "colección",
+      "youngtimer",
+      "sedán",
+      "alemán"
+    ],
+    "eventoCanonico": "Mercedes-Benz C180 W202: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 28,
+    "imageBase": "159-Mercedes-Benz C180 W202 1993",
+    "imageExt": "png",
+    "color": "Blanco",
+    "coloresAlternativos": [
+      "Plata",
+      "Negro"
+    ],
+    "anioModeloBase": 1993
+  },
+  {
+    "id": "mercedes-benz-g320-w463-1994",
+    "marca": "Mercedes-Benz",
+    "modelo": "G320 W463",
+    "desde": 1994,
+    "hasta": 1994,
+    "precioBaseUSD": 32000,
+    "segmento": "Todoterreno",
+    "confiabilidad": 84,
+    "economia": 27,
+    "potencialClasico": 91,
+    "tags": [
+      "lujo",
+      "colección",
+      "youngtimer",
+      "suv",
+      "alemán"
+    ],
+    "eventoCanonico": "Mercedes-Benz G320 W463: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 39,
+    "imageBase": "160-Mercedes-Benz G320 W463 1994",
+    "imageExt": "png",
+    "color": "Plata",
+    "coloresAlternativos": [
+      "Negro",
+      "Azul oscuro"
+    ],
+    "anioModeloBase": 1994
+  },
+  {
+    "id": "mercedes-benz-slk-230-kompressor-r170-2000",
+    "marca": "Mercedes-Benz",
+    "modelo": "SLK 230 Kompressor R170",
+    "desde": 2000,
+    "hasta": 2000,
+    "precioBaseUSD": 22000,
+    "segmento": "Deportivo",
+    "confiabilidad": 81,
+    "economia": 40,
+    "potencialClasico": 88,
+    "tags": [
+      "lujo",
+      "colección",
+      "youngtimer",
+      "deportivo",
+      "alemán"
+    ],
+    "eventoCanonico": "Mercedes-Benz SLK 230 Kompressor R170: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 35,
+    "imageBase": "161-Mercedes-Benz SLK 230 Kompressor R170 2000",
+    "imageExt": "png",
+    "color": "Negro",
+    "coloresAlternativos": [
+      "Azul oscuro",
+      "Bordó"
+    ],
+    "anioModeloBase": 2000
+  },
+  {
+    "id": "mercedes-benz-amg-gt-coupe-2015",
+    "marca": "Mercedes-Benz",
+    "modelo": "AMG GT Coupé",
+    "desde": 2015,
+    "hasta": 2015,
+    "precioBaseUSD": 86000,
+    "segmento": "Gran turismo",
+    "confiabilidad": 80,
+    "economia": 27,
+    "potencialClasico": 93,
+    "tags": [
+      "lujo",
+      "colección",
+      "deportivo",
+      "alemán"
+    ],
+    "eventoCanonico": "Mercedes-Benz AMG GT Coupé: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 63,
+    "imageBase": "162-Mercedes-Benz AMG GT Coupé 2015",
+    "imageExt": "png",
+    "color": "Azul oscuro",
+    "coloresAlternativos": [
+      "Bordó",
+      "Blanco"
+    ],
+    "anioModeloBase": 2015
+  },
+  {
+    "id": "porsche-356-b-1960",
+    "marca": "Porsche",
+    "modelo": "356 B",
+    "desde": 1960,
+    "hasta": 1960,
+    "precioBaseUSD": 52000,
+    "segmento": "Deportivo",
+    "confiabilidad": 75,
+    "economia": 42,
+    "potencialClasico": 100,
+    "tags": [
+      "lujo",
+      "colección",
+      "clásico",
+      "deportivo",
+      "alemán",
+      "motor-trasero"
+    ],
+    "eventoCanonico": "Porsche 356 B: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 40,
+    "imageBase": "163-Porsche 356 B 1960",
+    "imageExt": "png",
+    "color": "Rojo",
+    "coloresAlternativos": [
+      "Plata",
+      "Amarillo"
+    ],
+    "anioModeloBase": 1960
+  },
+  {
+    "id": "porsche-911-turbo-930-1975",
+    "marca": "Porsche",
+    "modelo": "911 Turbo 930",
+    "desde": 1975,
+    "hasta": 1975,
+    "precioBaseUSD": 76000,
+    "segmento": "Deportivo",
+    "confiabilidad": 73,
+    "economia": 23,
+    "potencialClasico": 100,
+    "tags": [
+      "lujo",
+      "colección",
+      "clásico",
+      "deportivo",
+      "alemán",
+      "turbo",
+      "motor-trasero"
+    ],
+    "eventoCanonico": "Porsche 911 Turbo 930: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 56,
+    "imageBase": "164-Porsche 911 Turbo 930 1975",
+    "imageExt": "png",
+    "color": "Plata",
+    "coloresAlternativos": [
+      "Amarillo",
+      "Blanco"
+    ],
+    "anioModeloBase": 1975
+  },
+  {
+    "id": "porsche-928-1978",
+    "marca": "Porsche",
+    "modelo": "928",
+    "desde": 1978,
+    "hasta": 1978,
+    "precioBaseUSD": 32000,
+    "segmento": "Gran turismo",
+    "confiabilidad": 75,
+    "economia": 28,
+    "potencialClasico": 93,
+    "tags": [
+      "lujo",
+      "colección",
+      "clásico",
+      "deportivo",
+      "alemán"
+    ],
+    "eventoCanonico": "Porsche 928: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 39,
+    "imageBase": "165-Porsche 928 1978",
+    "imageExt": "png",
+    "color": "Amarillo",
+    "coloresAlternativos": [
+      "Blanco",
+      "Azul oscuro"
+    ],
+    "anioModeloBase": 1978
+  },
+  {
+    "id": "porsche-944-1982",
+    "marca": "Porsche",
+    "modelo": "944",
+    "desde": 1982,
+    "hasta": 1982,
+    "precioBaseUSD": 23000,
+    "segmento": "Deportivo",
+    "confiabilidad": 80,
+    "economia": 39,
+    "potencialClasico": 92,
+    "tags": [
+      "lujo",
+      "colección",
+      "clásico",
+      "deportivo",
+      "alemán"
+    ],
+    "eventoCanonico": "Porsche 944: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 31,
+    "imageBase": "166-Porsche 944 1982",
+    "imageExt": "png",
+    "color": "Blanco",
+    "coloresAlternativos": [
+      "Azul oscuro",
+      "Rojo"
+    ],
+    "anioModeloBase": 1982
+  },
+  {
+    "id": "porsche-boxster-986-1997",
+    "marca": "Porsche",
+    "modelo": "Boxster 986",
+    "desde": 1997,
+    "hasta": 1997,
+    "precioBaseUSD": 28000,
+    "segmento": "Deportivo",
+    "confiabilidad": 82,
+    "economia": 43,
+    "potencialClasico": 89,
+    "tags": [
+      "lujo",
+      "colección",
+      "youngtimer",
+      "deportivo",
+      "alemán"
+    ],
+    "eventoCanonico": "Porsche Boxster 986: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 34,
+    "imageBase": "167-Porsche Boxster 986 1997",
+    "imageExt": "png",
+    "color": "Azul oscuro",
+    "coloresAlternativos": [
+      "Rojo",
+      "Plata"
+    ],
+    "anioModeloBase": 1997
+  },
+  {
+    "id": "porsche-911-carrera-996-1998",
+    "marca": "Porsche",
+    "modelo": "911 Carrera 996",
+    "desde": 1998,
+    "hasta": 1998,
+    "precioBaseUSD": 39000,
+    "segmento": "Deportivo",
+    "confiabilidad": 80,
+    "economia": 35,
+    "potencialClasico": 92,
+    "tags": [
+      "lujo",
+      "colección",
+      "youngtimer",
+      "deportivo",
+      "alemán",
+      "motor-trasero"
+    ],
+    "eventoCanonico": "Porsche 911 Carrera 996: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 40,
+    "imageBase": "168-Porsche 911 Carrera 996 1998",
+    "imageExt": "png",
+    "color": "Rojo",
+    "coloresAlternativos": [
+      "Plata",
+      "Amarillo"
+    ],
+    "anioModeloBase": 1998
+  },
+  {
+    "id": "porsche-cayenne-955-2003",
+    "marca": "Porsche",
+    "modelo": "Cayenne 955",
+    "desde": 2003,
+    "hasta": 2003,
+    "precioBaseUSD": 35000,
+    "segmento": "SUV de lujo",
+    "confiabilidad": 77,
+    "economia": 25,
+    "potencialClasico": 83,
+    "tags": [
+      "lujo",
+      "colección",
+      "youngtimer",
+      "suv",
+      "alemán"
+    ],
+    "eventoCanonico": "Porsche Cayenne 955: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 38,
+    "imageBase": "169-Porsche Cayenne 955 2003",
+    "imageExt": "png",
+    "color": "Plata",
+    "coloresAlternativos": [
+      "Amarillo",
+      "Blanco"
+    ],
+    "anioModeloBase": 2003
+  },
+  {
+    "id": "porsche-cayman-987-2006",
+    "marca": "Porsche",
+    "modelo": "Cayman 987",
+    "desde": 2006,
+    "hasta": 2006,
+    "precioBaseUSD": 41000,
+    "segmento": "Deportivo",
+    "confiabilidad": 85,
+    "economia": 42,
+    "potencialClasico": 91,
+    "tags": [
+      "lujo",
+      "colección",
+      "youngtimer",
+      "deportivo",
+      "alemán"
+    ],
+    "eventoCanonico": "Porsche Cayman 987: conservar la originalidad y realizar mantenimiento especializado protege el valor de colección. Las reparaciones y el uso exigente requieren un presupuesto acorde a este vehículo.",
+    "gastoMensualBaseUSD": 36,
+    "imageBase": "170-Porsche Cayman 987 2006",
+    "imageExt": "png",
+    "color": "Amarillo",
+    "coloresAlternativos": [
+      "Blanco",
+      "Azul oscuro"
+    ],
+    "anioModeloBase": 2006
+  },
+  {
+    "id": "fiat-147-1983",
+    "marca": "Fiat",
+    "modelo": "147",
+    "desde": 1983,
+    "hasta": 1983,
+    "precioBaseUSD": 2400,
+    "segmento": "Compacto",
+    "confiabilidad": 84,
+    "economia": 73,
+    "potencialClasico": 93,
+    "tags": [
+      "youngtimer",
+      "economico",
+      "compacto"
+    ],
+    "eventoCanonico": "Barato, simple y fácil de modificar: herramienta diaria o proyecto interminable.",
+    "gastoMensualBaseUSD": 11,
+    "imageBase": "171-Fiat 147 1983",
+    "modeloBaseId": "fiat-147",
+    "imageExt": "png",
+    "color": "Bordó",
+    "coloresAlternativos": [
+      "Beige",
+      "Blanco"
+    ],
+    "anioModeloBase": 1982
+  },
+  {
+    "id": "fiat-147-1986",
+    "marca": "Fiat",
+    "modelo": "147",
+    "desde": 1986,
+    "hasta": 1986,
+    "precioBaseUSD": 2500,
+    "segmento": "Compacto",
+    "confiabilidad": 84,
+    "economia": 73,
+    "potencialClasico": 93,
+    "tags": [
+      "youngtimer",
+      "economico",
+      "compacto"
+    ],
+    "eventoCanonico": "Barato, simple y fácil de modificar: herramienta diaria o proyecto interminable.",
+    "gastoMensualBaseUSD": 11,
+    "imageBase": "172-Fiat 147 1986",
+    "modeloBaseId": "fiat-147",
+    "imageExt": "png",
+    "color": "Beige",
+    "coloresAlternativos": [
+      "Blanco",
+      "Rojo"
+    ],
+    "anioModeloBase": 1982
+  },
+  {
+    "id": "fiat-147-1989",
+    "marca": "Fiat",
+    "modelo": "147",
+    "desde": 1989,
+    "hasta": 1989,
+    "precioBaseUSD": 2700,
+    "segmento": "Compacto",
+    "confiabilidad": 84,
+    "economia": 73,
+    "potencialClasico": 93,
+    "tags": [
+      "youngtimer",
+      "economico",
+      "compacto"
+    ],
+    "eventoCanonico": "Barato, simple y fácil de modificar: herramienta diaria o proyecto interminable.",
+    "gastoMensualBaseUSD": 11,
+    "imageBase": "173-Fiat 147 1989",
+    "modeloBaseId": "fiat-147",
+    "imageExt": "png",
+    "color": "Blanco",
+    "coloresAlternativos": [
+      "Rojo",
+      "Azul"
+    ],
+    "anioModeloBase": 1982
+  },
+  {
+    "id": "fiat-147-1992",
+    "marca": "Fiat",
+    "modelo": "147",
+    "desde": 1992,
+    "hasta": 1992,
+    "precioBaseUSD": 2800,
+    "segmento": "Compacto",
+    "confiabilidad": 84,
+    "economia": 73,
+    "potencialClasico": 93,
+    "tags": [
+      "youngtimer",
+      "economico",
+      "compacto"
+    ],
+    "eventoCanonico": "Barato, simple y fácil de modificar: herramienta diaria o proyecto interminable.",
+    "gastoMensualBaseUSD": 11,
+    "imageBase": "174-Fiat 147 1992",
+    "modeloBaseId": "fiat-147",
+    "imageExt": "png",
+    "color": "Rojo",
+    "coloresAlternativos": [
+      "Azul",
+      "Gris plata"
+    ],
+    "anioModeloBase": 1982
+  },
+  {
+    "id": "fiat-147-1995",
+    "marca": "Fiat",
+    "modelo": "147",
+    "desde": 1995,
+    "hasta": 1995,
+    "precioBaseUSD": 3000,
+    "segmento": "Compacto",
+    "confiabilidad": 84,
+    "economia": 73,
+    "potencialClasico": 93,
+    "tags": [
+      "youngtimer",
+      "economico",
+      "compacto"
+    ],
+    "eventoCanonico": "Barato, simple y fácil de modificar: herramienta diaria o proyecto interminable.",
+    "gastoMensualBaseUSD": 11,
+    "imageBase": "175-Fiat 147 1995",
+    "modeloBaseId": "fiat-147",
+    "imageExt": "png",
+    "color": "Azul",
+    "coloresAlternativos": [
+      "Gris plata",
+      "Bordó"
+    ],
+    "anioModeloBase": 1982
+  },
+  {
+    "id": "fiat-147-1997",
+    "marca": "Fiat",
+    "modelo": "147",
+    "desde": 1997,
+    "hasta": 1997,
+    "precioBaseUSD": 3100,
+    "segmento": "Compacto",
+    "confiabilidad": 84,
+    "economia": 73,
+    "potencialClasico": 93,
+    "tags": [
+      "youngtimer",
+      "economico",
+      "compacto"
+    ],
+    "eventoCanonico": "Barato, simple y fácil de modificar: herramienta diaria o proyecto interminable.",
+    "gastoMensualBaseUSD": 11,
+    "imageBase": "176-Fiat 147 1997",
+    "modeloBaseId": "fiat-147",
+    "imageExt": "png",
+    "color": "Gris plata",
+    "coloresAlternativos": [
+      "Bordó",
+      "Beige"
+    ],
+    "anioModeloBase": 1982
+  },
+  {
+    "id": "fiat-duna-1988",
+    "marca": "Fiat",
+    "modelo": "Duna",
+    "desde": 1988,
+    "hasta": 1988,
+    "precioBaseUSD": 3000,
+    "segmento": "Sedán",
+    "confiabilidad": 91,
+    "economia": 58,
+    "potencialClasico": 87,
+    "tags": [
+      "youngtimer",
+      "economico",
+      "diesel-opcional"
+    ],
+    "eventoCanonico": "Su bajo costo ayuda a ahorrar; la decisión difícil es cuándo vender antes de que el desgaste supere el valor.",
+    "gastoMensualBaseUSD": 13,
+    "imageBase": "177-Fiat Duna 1988",
+    "modeloBaseId": "fiat-duna",
+    "imageExt": "png",
+    "color": "Bordó",
+    "coloresAlternativos": [
+      "Beige",
+      "Blanco"
+    ],
+    "anioModeloBase": 1987
+  },
+  {
+    "id": "fiat-duna-1991",
+    "marca": "Fiat",
+    "modelo": "Duna",
+    "desde": 1991,
+    "hasta": 1991,
+    "precioBaseUSD": 3300,
+    "segmento": "Sedán",
+    "confiabilidad": 91,
+    "economia": 58,
+    "potencialClasico": 87,
+    "tags": [
+      "youngtimer",
+      "economico",
+      "diesel-opcional"
+    ],
+    "eventoCanonico": "Su bajo costo ayuda a ahorrar; la decisión difícil es cuándo vender antes de que el desgaste supere el valor.",
+    "gastoMensualBaseUSD": 13,
+    "imageBase": "178-Fiat Duna 1991",
+    "modeloBaseId": "fiat-duna",
+    "imageExt": "png",
+    "color": "Beige",
+    "coloresAlternativos": [
+      "Blanco",
+      "Rojo"
+    ],
+    "anioModeloBase": 1987
+  },
+  {
+    "id": "fiat-duna-1994",
+    "marca": "Fiat",
+    "modelo": "Duna",
+    "desde": 1994,
+    "hasta": 1994,
+    "precioBaseUSD": 3500,
+    "segmento": "Sedán",
+    "confiabilidad": 91,
+    "economia": 58,
+    "potencialClasico": 87,
+    "tags": [
+      "youngtimer",
+      "economico",
+      "diesel-opcional"
+    ],
+    "eventoCanonico": "Su bajo costo ayuda a ahorrar; la decisión difícil es cuándo vender antes de que el desgaste supere el valor.",
+    "gastoMensualBaseUSD": 13,
+    "imageBase": "179-Fiat Duna 1994",
+    "modeloBaseId": "fiat-duna",
+    "imageExt": "png",
+    "color": "Blanco",
+    "coloresAlternativos": [
+      "Rojo",
+      "Azul"
+    ],
+    "anioModeloBase": 1987
+  },
+  {
+    "id": "fiat-duna-1997",
+    "marca": "Fiat",
+    "modelo": "Duna",
+    "desde": 1997,
+    "hasta": 1997,
+    "precioBaseUSD": 3800,
+    "segmento": "Sedán",
+    "confiabilidad": 91,
+    "economia": 58,
+    "potencialClasico": 87,
+    "tags": [
+      "youngtimer",
+      "economico",
+      "diesel-opcional"
+    ],
+    "eventoCanonico": "Su bajo costo ayuda a ahorrar; la decisión difícil es cuándo vender antes de que el desgaste supere el valor.",
+    "gastoMensualBaseUSD": 13,
+    "imageBase": "180-Fiat Duna 1997",
+    "modeloBaseId": "fiat-duna",
+    "imageExt": "png",
+    "color": "Rojo",
+    "coloresAlternativos": [
+      "Azul",
+      "Gris plata"
+    ],
+    "anioModeloBase": 1987
+  },
+  {
+    "id": "fiat-duna-2000",
+    "marca": "Fiat",
+    "modelo": "Duna",
+    "desde": 2000,
+    "hasta": 2000,
+    "precioBaseUSD": 4100,
+    "segmento": "Sedán",
+    "confiabilidad": 91,
+    "economia": 58,
+    "potencialClasico": 87,
+    "tags": [
+      "youngtimer",
+      "economico",
+      "diesel-opcional"
+    ],
+    "eventoCanonico": "Su bajo costo ayuda a ahorrar; la decisión difícil es cuándo vender antes de que el desgaste supere el valor.",
+    "gastoMensualBaseUSD": 13,
+    "imageBase": "181-Fiat Duna 2000",
+    "modeloBaseId": "fiat-duna",
+    "imageExt": "png",
+    "color": "Azul",
+    "coloresAlternativos": [
+      "Gris plata",
+      "Bordó"
+    ],
+    "anioModeloBase": 1987
+  },
+  {
+    "id": "vw-gol-g1-1992",
+    "marca": "Volkswagen",
+    "modelo": "Gol G1",
+    "desde": 1992,
+    "hasta": 1992,
+    "precioBaseUSD": 4300,
+    "segmento": "Hatchback",
+    "confiabilidad": 79,
+    "economia": 87,
+    "potencialClasico": 78,
+    "tags": [
+      "youngtimer",
+      "economico",
+      "tuning"
+    ],
+    "eventoCanonico": "Candidato típico a modificaciones: cada cambio suma personalidad y puede quitar originalidad.",
+    "gastoMensualBaseUSD": 13,
+    "imageBase": "182-Volkswagen Gol G1 1992",
+    "modeloBaseId": "vw-gol-g1",
+    "imageExt": "png",
+    "color": "Gris plata",
+    "coloresAlternativos": [
+      "Bordó",
+      "Beige"
+    ],
+    "anioModeloBase": 1991
+  },
+  {
+    "id": "vw-gol-g1-1994",
+    "marca": "Volkswagen",
+    "modelo": "Gol G1",
+    "desde": 1994,
+    "hasta": 1994,
+    "precioBaseUSD": 4600,
+    "segmento": "Hatchback",
+    "confiabilidad": 79,
+    "economia": 87,
+    "potencialClasico": 78,
+    "tags": [
+      "youngtimer",
+      "economico",
+      "tuning"
+    ],
+    "eventoCanonico": "Candidato típico a modificaciones: cada cambio suma personalidad y puede quitar originalidad.",
+    "gastoMensualBaseUSD": 13,
+    "imageBase": "183-Volkswagen Gol G1 1994",
+    "modeloBaseId": "vw-gol-g1",
+    "imageExt": "png",
+    "color": "Bordó",
+    "coloresAlternativos": [
+      "Beige",
+      "Blanco"
+    ],
+    "anioModeloBase": 1991
+  },
+  {
+    "id": "vw-gol-g2-1997",
+    "marca": "Volkswagen",
+    "modelo": "Gol G2",
+    "desde": 1997,
+    "hasta": 1997,
+    "precioBaseUSD": 4900,
+    "segmento": "Hatchback",
+    "confiabilidad": 92,
+    "economia": 89,
+    "potencialClasico": 87,
+    "tags": [
+      "popular",
+      "economico",
+      "tuning"
+    ],
+    "eventoCanonico": "La cultura de modificaciones aparece fuerte: cada cambio puede afectar la reventa.",
+    "gastoMensualBaseUSD": 10,
+    "imageBase": "184-Volkswagen Gol G2 1997",
+    "modeloBaseId": "vw-gol-g2",
+    "imageExt": "png",
+    "color": "Beige",
+    "coloresAlternativos": [
+      "Blanco",
+      "Rojo"
+    ],
+    "anioModeloBase": 1995
+  },
+  {
+    "id": "vw-gol-g2-2001",
+    "marca": "Volkswagen",
+    "modelo": "Gol G2",
+    "desde": 2001,
+    "hasta": 2001,
+    "precioBaseUSD": 5500,
+    "segmento": "Hatchback",
+    "confiabilidad": 92,
+    "economia": 89,
+    "potencialClasico": 87,
+    "tags": [
+      "popular",
+      "economico",
+      "tuning"
+    ],
+    "eventoCanonico": "La cultura de modificaciones aparece fuerte: cada cambio puede afectar la reventa.",
+    "gastoMensualBaseUSD": 10,
+    "imageBase": "185-Volkswagen Gol G2 2001",
+    "modeloBaseId": "vw-gol-g2",
+    "imageExt": "png",
+    "color": "Blanco",
+    "coloresAlternativos": [
+      "Rojo",
+      "Azul"
+    ],
+    "anioModeloBase": 1995
+  },
+  {
+    "id": "vw-gol-power-2006",
+    "marca": "Volkswagen",
+    "modelo": "Gol Power",
+    "desde": 2006,
+    "hasta": 2006,
+    "precioBaseUSD": 6200,
+    "segmento": "Hatchback",
+    "confiabilidad": 77,
+    "economia": 74,
+    "potencialClasico": 74,
+    "tags": [
+      "economico",
+      "tuning",
+      "popular"
+    ],
+    "eventoCanonico": "Barato de mantener y fácil de modificar: no todo lo que gastás vuelve en la reventa.",
+    "gastoMensualBaseUSD": 13,
+    "imageBase": "186-Volkswagen Gol Power 2006",
+    "modeloBaseId": "vw-gol-power",
+    "imageExt": "png",
+    "color": "Rojo",
+    "coloresAlternativos": [
+      "Azul",
+      "Gris plata"
+    ],
+    "anioModeloBase": 2003
+  },
+  {
+    "id": "vw-gol-trend-2012",
+    "marca": "Volkswagen",
+    "modelo": "Gol Trend",
+    "desde": 2012,
+    "hasta": 2012,
+    "precioBaseUSD": 8900,
+    "segmento": "Hatchback",
+    "confiabilidad": 80,
+    "economia": 61,
+    "potencialClasico": 73,
+    "tags": [
+      "economico",
+      "popular",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Fácil de vender y sostener: un buen historial vale más que modificaciones estéticas.",
+    "gastoMensualBaseUSD": 13,
+    "imageBase": "187-Volkswagen Gol Trend 2012",
+    "modeloBaseId": "vw-gol-trend",
+    "imageExt": "png",
+    "color": "Azul",
+    "coloresAlternativos": [
+      "Gris plata",
+      "Bordó"
+    ],
+    "anioModeloBase": 2008
+  },
+  {
+    "id": "fiat-uno-1991",
+    "marca": "Fiat",
+    "modelo": "Uno",
+    "desde": 1991,
+    "hasta": 1991,
+    "precioBaseUSD": 3400,
+    "segmento": "Hatchback",
+    "confiabilidad": 69,
+    "economia": 70,
+    "potencialClasico": 61,
+    "tags": [
+      "youngtimer",
+      "economico",
+      "hatch"
+    ],
+    "eventoCanonico": "Puede durar muchísimo: mantenerlo simple suele ser rentable, pero el tuning barato tienta.",
+    "gastoMensualBaseUSD": 14,
+    "imageBase": "188-Fiat Uno 1991",
+    "modeloBaseId": "fiat-uno",
+    "imageExt": "png",
+    "color": "Gris plata",
+    "coloresAlternativos": [
+      "Bordó",
+      "Beige"
+    ],
+    "anioModeloBase": 1989
+  },
+  {
+    "id": "fiat-uno-1995",
+    "marca": "Fiat",
+    "modelo": "Uno",
+    "desde": 1995,
+    "hasta": 1995,
+    "precioBaseUSD": 3700,
+    "segmento": "Hatchback",
+    "confiabilidad": 69,
+    "economia": 70,
+    "potencialClasico": 61,
+    "tags": [
+      "youngtimer",
+      "economico",
+      "hatch"
+    ],
+    "eventoCanonico": "Puede durar muchísimo: mantenerlo simple suele ser rentable, pero el tuning barato tienta.",
+    "gastoMensualBaseUSD": 14,
+    "imageBase": "189-Fiat Uno 1995",
+    "modeloBaseId": "fiat-uno",
+    "imageExt": "png",
+    "color": "Bordó",
+    "coloresAlternativos": [
+      "Beige",
+      "Blanco"
+    ],
+    "anioModeloBase": 1989
+  },
+  {
+    "id": "fiat-uno-2000",
+    "marca": "Fiat",
+    "modelo": "Uno",
+    "desde": 2000,
+    "hasta": 2000,
+    "precioBaseUSD": 4100,
+    "segmento": "Hatchback",
+    "confiabilidad": 69,
+    "economia": 70,
+    "potencialClasico": 61,
+    "tags": [
+      "youngtimer",
+      "economico",
+      "hatch"
+    ],
+    "eventoCanonico": "Puede durar muchísimo: mantenerlo simple suele ser rentable, pero el tuning barato tienta.",
+    "gastoMensualBaseUSD": 14,
+    "imageBase": "190-Fiat Uno 2000",
+    "modeloBaseId": "fiat-uno",
+    "imageExt": "png",
+    "color": "Beige",
+    "coloresAlternativos": [
+      "Blanco",
+      "Rojo"
+    ],
+    "anioModeloBase": 1989
+  },
+  {
+    "id": "fiat-uno-2006",
+    "marca": "Fiat",
+    "modelo": "Uno",
+    "desde": 2006,
+    "hasta": 2006,
+    "precioBaseUSD": 4500,
+    "segmento": "Hatchback",
+    "confiabilidad": 69,
+    "economia": 70,
+    "potencialClasico": 61,
+    "tags": [
+      "youngtimer",
+      "economico",
+      "hatch"
+    ],
+    "eventoCanonico": "Puede durar muchísimo: mantenerlo simple suele ser rentable, pero el tuning barato tienta.",
+    "gastoMensualBaseUSD": 14,
+    "imageBase": "191-Fiat Uno 2006",
+    "modeloBaseId": "fiat-uno",
+    "imageExt": "png",
+    "color": "Blanco",
+    "coloresAlternativos": [
+      "Rojo",
+      "Azul"
+    ],
+    "anioModeloBase": 1989
+  },
+  {
+    "id": "fiat-uno-2012",
+    "marca": "Fiat",
+    "modelo": "Uno",
+    "desde": 2012,
+    "hasta": 2012,
+    "precioBaseUSD": 4900,
+    "segmento": "Hatchback",
+    "confiabilidad": 69,
+    "economia": 70,
+    "potencialClasico": 61,
+    "tags": [
+      "youngtimer",
+      "economico",
+      "hatch"
+    ],
+    "eventoCanonico": "Puede durar muchísimo: mantenerlo simple suele ser rentable, pero el tuning barato tienta.",
+    "gastoMensualBaseUSD": 14,
+    "imageBase": "192-Fiat Uno 2012",
+    "modeloBaseId": "fiat-uno",
+    "imageExt": "png",
+    "color": "Rojo",
+    "coloresAlternativos": [
+      "Azul",
+      "Gris plata"
+    ],
+    "anioModeloBase": 1989
+  },
+  {
+    "id": "peugeot-504-1971",
+    "marca": "Peugeot",
+    "modelo": "504",
+    "desde": 1971,
+    "hasta": 1971,
+    "precioBaseUSD": 4200,
+    "segmento": "Sedán",
+    "confiabilidad": 74,
+    "economia": 63,
+    "potencialClasico": 62,
+    "tags": [
+      "clasico",
+      "robusto",
+      "familiar"
+    ],
+    "eventoCanonico": "Puede durar décadas; una unidad bien cuidada vale más que una reparación improvisada.",
+    "gastoMensualBaseUSD": 17,
+    "imageBase": "193-Peugeot 504 1971",
+    "modeloBaseId": "peugeot-504",
+    "imageExt": "png",
+    "color": "Azul",
+    "coloresAlternativos": [
+      "Gris plata",
+      "Bordó"
+    ],
+    "anioModeloBase": 1969
+  },
+  {
+    "id": "peugeot-504-1977",
+    "marca": "Peugeot",
+    "modelo": "504",
+    "desde": 1977,
+    "hasta": 1977,
+    "precioBaseUSD": 4500,
+    "segmento": "Sedán",
+    "confiabilidad": 74,
+    "economia": 63,
+    "potencialClasico": 62,
+    "tags": [
+      "clasico",
+      "robusto",
+      "familiar"
+    ],
+    "eventoCanonico": "Puede durar décadas; una unidad bien cuidada vale más que una reparación improvisada.",
+    "gastoMensualBaseUSD": 17,
+    "imageBase": "194-Peugeot 504 1977",
+    "modeloBaseId": "peugeot-504",
+    "imageExt": "png",
+    "color": "Gris plata",
+    "coloresAlternativos": [
+      "Bordó",
+      "Beige"
+    ],
+    "anioModeloBase": 1969
+  },
+  {
+    "id": "peugeot-504-1983",
+    "marca": "Peugeot",
+    "modelo": "504",
+    "desde": 1983,
+    "hasta": 1983,
+    "precioBaseUSD": 4700,
+    "segmento": "Sedán",
+    "confiabilidad": 74,
+    "economia": 63,
+    "potencialClasico": 62,
+    "tags": [
+      "clasico",
+      "robusto",
+      "familiar"
+    ],
+    "eventoCanonico": "Puede durar décadas; una unidad bien cuidada vale más que una reparación improvisada.",
+    "gastoMensualBaseUSD": 17,
+    "imageBase": "195-Peugeot 504 1983",
+    "modeloBaseId": "peugeot-504",
+    "imageExt": "png",
+    "color": "Bordó",
+    "coloresAlternativos": [
+      "Beige",
+      "Blanco"
+    ],
+    "anioModeloBase": 1969
+  },
+  {
+    "id": "peugeot-504-1990",
+    "marca": "Peugeot",
+    "modelo": "504",
+    "desde": 1990,
+    "hasta": 1990,
+    "precioBaseUSD": 5100,
+    "segmento": "Sedán",
+    "confiabilidad": 74,
+    "economia": 63,
+    "potencialClasico": 62,
+    "tags": [
+      "clasico",
+      "robusto",
+      "familiar"
+    ],
+    "eventoCanonico": "Puede durar décadas; una unidad bien cuidada vale más que una reparación improvisada.",
+    "gastoMensualBaseUSD": 17,
+    "imageBase": "196-Peugeot 504 1990",
+    "modeloBaseId": "peugeot-504",
+    "imageExt": "png",
+    "color": "Beige",
+    "coloresAlternativos": [
+      "Blanco",
+      "Rojo"
+    ],
+    "anioModeloBase": 1969
+  },
+  {
+    "id": "peugeot-504-1997",
+    "marca": "Peugeot",
+    "modelo": "504",
+    "desde": 1997,
+    "hasta": 1997,
+    "precioBaseUSD": 5400,
+    "segmento": "Sedán",
+    "confiabilidad": 74,
+    "economia": 63,
+    "potencialClasico": 62,
+    "tags": [
+      "clasico",
+      "robusto",
+      "familiar"
+    ],
+    "eventoCanonico": "Puede durar décadas; una unidad bien cuidada vale más que una reparación improvisada.",
+    "gastoMensualBaseUSD": 17,
+    "imageBase": "197-Peugeot 504 1997",
+    "modeloBaseId": "peugeot-504",
+    "imageExt": "png",
+    "color": "Blanco",
+    "coloresAlternativos": [
+      "Rojo",
+      "Azul"
+    ],
+    "anioModeloBase": 1969
+  },
+  {
+    "id": "peugeot-505-1982",
+    "marca": "Peugeot",
+    "modelo": "505",
+    "desde": 1982,
+    "hasta": 1982,
+    "precioBaseUSD": 5300,
+    "segmento": "Sedán",
+    "confiabilidad": 92,
+    "economia": 90,
+    "potencialClasico": 55,
+    "tags": [
+      "youngtimer",
+      "robusto",
+      "traccion-trasera"
+    ],
+    "eventoCanonico": "Viaja bien y envejece con dignidad; restaurar interiores puede costar más que la mecánica.",
+    "gastoMensualBaseUSD": 14,
+    "imageBase": "198-Peugeot 505 1982",
+    "modeloBaseId": "peugeot-505",
+    "imageExt": "png",
+    "color": "Rojo",
+    "coloresAlternativos": [
+      "Azul",
+      "Gris plata"
+    ],
+    "anioModeloBase": 1981
+  },
+  {
+    "id": "peugeot-505-1986",
+    "marca": "Peugeot",
+    "modelo": "505",
+    "desde": 1986,
+    "hasta": 1986,
+    "precioBaseUSD": 5800,
+    "segmento": "Sedán",
+    "confiabilidad": 92,
+    "economia": 90,
+    "potencialClasico": 55,
+    "tags": [
+      "youngtimer",
+      "robusto",
+      "traccion-trasera"
+    ],
+    "eventoCanonico": "Viaja bien y envejece con dignidad; restaurar interiores puede costar más que la mecánica.",
+    "gastoMensualBaseUSD": 14,
+    "imageBase": "199-Peugeot 505 1986",
+    "modeloBaseId": "peugeot-505",
+    "imageExt": "png",
+    "color": "Azul",
+    "coloresAlternativos": [
+      "Gris plata",
+      "Bordó"
+    ],
+    "anioModeloBase": 1981
+  },
+  {
+    "id": "peugeot-505-1990",
+    "marca": "Peugeot",
+    "modelo": "505",
+    "desde": 1990,
+    "hasta": 1990,
+    "precioBaseUSD": 6400,
+    "segmento": "Sedán",
+    "confiabilidad": 92,
+    "economia": 90,
+    "potencialClasico": 55,
+    "tags": [
+      "youngtimer",
+      "robusto",
+      "traccion-trasera"
+    ],
+    "eventoCanonico": "Viaja bien y envejece con dignidad; restaurar interiores puede costar más que la mecánica.",
+    "gastoMensualBaseUSD": 14,
+    "imageBase": "200-Peugeot 505 1990",
+    "modeloBaseId": "peugeot-505",
+    "imageExt": "png",
+    "color": "Gris plata",
+    "coloresAlternativos": [
+      "Bordó",
+      "Beige"
+    ],
+    "anioModeloBase": 1981
+  },
+  {
+    "id": "peugeot-505-1994",
+    "marca": "Peugeot",
+    "modelo": "505",
+    "desde": 1994,
+    "hasta": 1994,
+    "precioBaseUSD": 6800,
+    "segmento": "Sedán",
+    "confiabilidad": 92,
+    "economia": 90,
+    "potencialClasico": 55,
+    "tags": [
+      "youngtimer",
+      "robusto",
+      "traccion-trasera"
+    ],
+    "eventoCanonico": "Viaja bien y envejece con dignidad; restaurar interiores puede costar más que la mecánica.",
+    "gastoMensualBaseUSD": 14,
+    "imageBase": "201-Peugeot 505 1994",
+    "modeloBaseId": "peugeot-505",
+    "imageExt": "png",
+    "color": "Bordó",
+    "coloresAlternativos": [
+      "Beige",
+      "Blanco"
+    ],
+    "anioModeloBase": 1981
+  },
+  {
+    "id": "peugeot-206-2000",
+    "marca": "Peugeot",
+    "modelo": "206",
+    "desde": 2000,
+    "hasta": 2000,
+    "precioBaseUSD": 6200,
+    "segmento": "Hatchback",
+    "confiabilidad": 91,
+    "economia": 80,
+    "potencialClasico": 89,
+    "tags": [
+      "compacto",
+      "tuning",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Estética y agilidad lo vuelven popular; suspensión y electrónica necesitan cuidado.",
+    "gastoMensualBaseUSD": 11,
+    "imageBase": "202-Peugeot 206 2000",
+    "modeloBaseId": "peugeot-206",
+    "imageExt": "png",
+    "color": "Beige",
+    "coloresAlternativos": [
+      "Blanco",
+      "Rojo"
+    ],
+    "anioModeloBase": 1999
+  },
+  {
+    "id": "peugeot-206-2003",
+    "marca": "Peugeot",
+    "modelo": "206",
+    "desde": 2003,
+    "hasta": 2003,
+    "precioBaseUSD": 6700,
+    "segmento": "Hatchback",
+    "confiabilidad": 91,
+    "economia": 80,
+    "potencialClasico": 89,
+    "tags": [
+      "compacto",
+      "tuning",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Estética y agilidad lo vuelven popular; suspensión y electrónica necesitan cuidado.",
+    "gastoMensualBaseUSD": 11,
+    "imageBase": "203-Peugeot 206 2003",
+    "modeloBaseId": "peugeot-206",
+    "imageExt": "png",
+    "color": "Blanco",
+    "coloresAlternativos": [
+      "Rojo",
+      "Azul"
+    ],
+    "anioModeloBase": 1999
+  },
+  {
+    "id": "peugeot-206-2006",
+    "marca": "Peugeot",
+    "modelo": "206",
+    "desde": 2006,
+    "hasta": 2006,
+    "precioBaseUSD": 7200,
+    "segmento": "Hatchback",
+    "confiabilidad": 91,
+    "economia": 80,
+    "potencialClasico": 89,
+    "tags": [
+      "compacto",
+      "tuning",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Estética y agilidad lo vuelven popular; suspensión y electrónica necesitan cuidado.",
+    "gastoMensualBaseUSD": 11,
+    "imageBase": "204-Peugeot 206 2006",
+    "modeloBaseId": "peugeot-206",
+    "imageExt": "png",
+    "color": "Rojo",
+    "coloresAlternativos": [
+      "Azul",
+      "Gris plata"
+    ],
+    "anioModeloBase": 1999
+  },
+  {
+    "id": "peugeot-206-2009",
+    "marca": "Peugeot",
+    "modelo": "206",
+    "desde": 2009,
+    "hasta": 2009,
+    "precioBaseUSD": 7800,
+    "segmento": "Hatchback",
+    "confiabilidad": 91,
+    "economia": 80,
+    "potencialClasico": 89,
+    "tags": [
+      "compacto",
+      "tuning",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Estética y agilidad lo vuelven popular; suspensión y electrónica necesitan cuidado.",
+    "gastoMensualBaseUSD": 11,
+    "imageBase": "205-Peugeot 206 2009",
+    "modeloBaseId": "peugeot-206",
+    "imageExt": "png",
+    "color": "Azul",
+    "coloresAlternativos": [
+      "Gris plata",
+      "Bordó"
+    ],
+    "anioModeloBase": 1999
+  },
+  {
+    "id": "peugeot-206-2012",
+    "marca": "Peugeot",
+    "modelo": "206",
+    "desde": 2012,
+    "hasta": 2012,
+    "precioBaseUSD": 8300,
+    "segmento": "Hatchback",
+    "confiabilidad": 91,
+    "economia": 80,
+    "potencialClasico": 89,
+    "tags": [
+      "compacto",
+      "tuning",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Estética y agilidad lo vuelven popular; suspensión y electrónica necesitan cuidado.",
+    "gastoMensualBaseUSD": 11,
+    "imageBase": "206-Peugeot 206 2012",
+    "modeloBaseId": "peugeot-206",
+    "imageExt": "png",
+    "color": "Gris plata",
+    "coloresAlternativos": [
+      "Bordó",
+      "Beige"
+    ],
+    "anioModeloBase": 1999
+  },
+  {
+    "id": "renault-12-1975",
+    "marca": "Renault",
+    "modelo": "12",
+    "desde": 1975,
+    "hasta": 1975,
+    "precioBaseUSD": 3700,
+    "segmento": "Sedán",
+    "confiabilidad": 88,
+    "economia": 82,
+    "potencialClasico": 86,
+    "tags": [
+      "argentina",
+      "sedán",
+      "clásico",
+      "popular",
+      "familiar"
+    ],
+    "eventoCanonico": "El Renault 12 destaca por simpleza y resistencia. Encontrar uno sano, original y sin modificaciones improvisadas puede volverlo cada vez más interesante.",
+    "gastoMensualBaseUSD": 16,
+    "imageBase": "207-Renault 12 1975",
+    "modeloBaseId": "renault-12",
+    "imageExt": "png",
+    "color": "Bordó",
+    "coloresAlternativos": [
+      "Beige",
+      "Blanco"
+    ],
+    "anioModeloBase": 1971
+  },
+  {
+    "id": "renault-12-1982",
+    "marca": "Renault",
+    "modelo": "12",
+    "desde": 1982,
+    "hasta": 1982,
+    "precioBaseUSD": 4100,
+    "segmento": "Sedán",
+    "confiabilidad": 88,
+    "economia": 82,
+    "potencialClasico": 86,
+    "tags": [
+      "argentina",
+      "sedán",
+      "clásico",
+      "popular",
+      "familiar"
+    ],
+    "eventoCanonico": "El Renault 12 destaca por simpleza y resistencia. Encontrar uno sano, original y sin modificaciones improvisadas puede volverlo cada vez más interesante.",
+    "gastoMensualBaseUSD": 16,
+    "imageBase": "208-Renault 12 1982",
+    "modeloBaseId": "renault-12",
+    "imageExt": "png",
+    "color": "Beige",
+    "coloresAlternativos": [
+      "Blanco",
+      "Rojo"
+    ],
+    "anioModeloBase": 1971
+  },
+  {
+    "id": "renault-12-1992",
+    "marca": "Renault",
+    "modelo": "12",
+    "desde": 1992,
+    "hasta": 1992,
+    "precioBaseUSD": 4700,
+    "segmento": "Sedán",
+    "confiabilidad": 88,
+    "economia": 82,
+    "potencialClasico": 86,
+    "tags": [
+      "argentina",
+      "sedán",
+      "clásico",
+      "popular",
+      "familiar"
+    ],
+    "eventoCanonico": "El Renault 12 destaca por simpleza y resistencia. Encontrar uno sano, original y sin modificaciones improvisadas puede volverlo cada vez más interesante.",
+    "gastoMensualBaseUSD": 16,
+    "imageBase": "209-Renault 12 1992",
+    "modeloBaseId": "renault-12",
+    "imageExt": "png",
+    "color": "Blanco",
+    "coloresAlternativos": [
+      "Rojo",
+      "Azul"
+    ],
+    "anioModeloBase": 1971
+  },
+  {
+    "id": "renault-9-1989",
+    "marca": "Renault",
+    "modelo": "9",
+    "desde": 1989,
+    "hasta": 1989,
+    "precioBaseUSD": 3800,
+    "segmento": "Sedán",
+    "confiabilidad": 68,
+    "economia": 68,
+    "potencialClasico": 72,
+    "tags": [
+      "youngtimer",
+      "economico",
+      "carburador"
+    ],
+    "eventoCanonico": "Buen auto de uso diario: ahorrar hoy en mantenimiento puede salir caro más adelante.",
+    "gastoMensualBaseUSD": 16,
+    "imageBase": "210-Renault 9 1989",
+    "modeloBaseId": "renault-9",
+    "imageExt": "png",
+    "color": "Rojo",
+    "coloresAlternativos": [
+      "Azul",
+      "Gris plata"
+    ],
+    "anioModeloBase": 1987
+  },
+  {
+    "id": "renault-9-1996",
+    "marca": "Renault",
+    "modelo": "9",
+    "desde": 1996,
+    "hasta": 1996,
+    "precioBaseUSD": 4500,
+    "segmento": "Sedán",
+    "confiabilidad": 68,
+    "economia": 68,
+    "potencialClasico": 72,
+    "tags": [
+      "youngtimer",
+      "economico",
+      "carburador"
+    ],
+    "eventoCanonico": "Buen auto de uso diario: ahorrar hoy en mantenimiento puede salir caro más adelante.",
+    "gastoMensualBaseUSD": 16,
+    "imageBase": "211-Renault 9 1996",
+    "modeloBaseId": "renault-9",
+    "imageExt": "png",
+    "color": "Azul",
+    "coloresAlternativos": [
+      "Gris plata",
+      "Bordó"
+    ],
+    "anioModeloBase": 1987
+  },
+  {
+    "id": "renault-clio-i-1995",
+    "marca": "Renault",
+    "modelo": "Clio I",
+    "desde": 1995,
+    "hasta": 1995,
+    "precioBaseUSD": 5000,
+    "segmento": "Hatchback",
+    "confiabilidad": 81,
+    "economia": 63,
+    "potencialClasico": 57,
+    "tags": [
+      "youngtimer",
+      "economico",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Compacto y ágil: los años premian las unidades cuidadas y castigan reparaciones improvisadas.",
+    "gastoMensualBaseUSD": 13,
+    "imageBase": "212-Renault Clio I 1995",
+    "modeloBaseId": "renault-clio-i",
+    "imageExt": "png",
+    "color": "Gris plata",
+    "coloresAlternativos": [
+      "Bordó",
+      "Beige"
+    ],
+    "anioModeloBase": 1994
+  },
+  {
+    "id": "renault-clio-ii-2004",
+    "marca": "Renault",
+    "modelo": "Clio II",
+    "desde": 2004,
+    "hasta": 2004,
+    "precioBaseUSD": 6200,
+    "segmento": "Hatchback",
+    "confiabilidad": 75,
+    "economia": 92,
+    "potencialClasico": 80,
+    "tags": [
+      "economico",
+      "popular",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Barato de usar y vender: el dilema es cuánto invertir antes de cambiarlo.",
+    "gastoMensualBaseUSD": 13,
+    "imageBase": "213-Renault Clio II 2004",
+    "modeloBaseId": "renault-clio-ii",
+    "imageExt": "png",
+    "color": "Bordó",
+    "coloresAlternativos": [
+      "Beige",
+      "Blanco"
+    ],
+    "anioModeloBase": 2000
+  },
+  {
+    "id": "renault-clio-ii-2012",
+    "marca": "Renault",
+    "modelo": "Clio II",
+    "desde": 2012,
+    "hasta": 2012,
+    "precioBaseUSD": 7200,
+    "segmento": "Hatchback",
+    "confiabilidad": 75,
+    "economia": 92,
+    "potencialClasico": 80,
+    "tags": [
+      "economico",
+      "popular",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Barato de usar y vender: el dilema es cuánto invertir antes de cambiarlo.",
+    "gastoMensualBaseUSD": 13,
+    "imageBase": "214-Renault Clio II 2012",
+    "modeloBaseId": "renault-clio-ii",
+    "imageExt": "png",
+    "color": "Beige",
+    "coloresAlternativos": [
+      "Blanco",
+      "Rojo"
+    ],
+    "anioModeloBase": 2000
+  },
+  {
+    "id": "ford-falcon-1970",
+    "marca": "Ford",
+    "modelo": "Falcon",
+    "desde": 1970,
+    "hasta": 1970,
+    "precioBaseUSD": 3700,
+    "segmento": "Sedán",
+    "confiabilidad": 86,
+    "economia": 92,
+    "potencialClasico": 95,
+    "tags": [
+      "clasico",
+      "sedan-grande",
+      "carburador"
+    ],
+    "eventoCanonico": "Mecánica simple y enorme cultura de preparación: conservarlo original o modificarlo cambia su valor futuro.",
+    "gastoMensualBaseUSD": 15,
+    "imageBase": "215-Ford Falcon 1970",
+    "modeloBaseId": "ford-falcon",
+    "imageExt": "png",
+    "color": "Blanco",
+    "coloresAlternativos": [
+      "Rojo",
+      "Azul"
+    ],
+    "anioModeloBase": 1962
+  },
+  {
+    "id": "ford-falcon-1982",
+    "marca": "Ford",
+    "modelo": "Falcon",
+    "desde": 1982,
+    "hasta": 1982,
+    "precioBaseUSD": 4100,
+    "segmento": "Sedán",
+    "confiabilidad": 86,
+    "economia": 92,
+    "potencialClasico": 95,
+    "tags": [
+      "clasico",
+      "sedan-grande",
+      "carburador"
+    ],
+    "eventoCanonico": "Mecánica simple y enorme cultura de preparación: conservarlo original o modificarlo cambia su valor futuro.",
+    "gastoMensualBaseUSD": 15,
+    "imageBase": "216-Ford Falcon 1982",
+    "modeloBaseId": "ford-falcon",
+    "imageExt": "png",
+    "color": "Rojo",
+    "coloresAlternativos": [
+      "Azul",
+      "Gris plata"
+    ],
+    "anioModeloBase": 1962
+  },
+  {
+    "id": "ford-falcon-1990",
+    "marca": "Ford",
+    "modelo": "Falcon",
+    "desde": 1990,
+    "hasta": 1990,
+    "precioBaseUSD": 4500,
+    "segmento": "Sedán",
+    "confiabilidad": 86,
+    "economia": 92,
+    "potencialClasico": 95,
+    "tags": [
+      "clasico",
+      "sedan-grande",
+      "carburador"
+    ],
+    "eventoCanonico": "Mecánica simple y enorme cultura de preparación: conservarlo original o modificarlo cambia su valor futuro.",
+    "gastoMensualBaseUSD": 15,
+    "imageBase": "217-Ford Falcon 1990",
+    "modeloBaseId": "ford-falcon",
+    "imageExt": "png",
+    "color": "Azul",
+    "coloresAlternativos": [
+      "Gris plata",
+      "Bordó"
+    ],
+    "anioModeloBase": 1962
+  },
+  {
+    "id": "ford-escort-1990",
+    "marca": "Ford",
+    "modelo": "Escort",
+    "desde": 1990,
+    "hasta": 1990,
+    "precioBaseUSD": 4200,
+    "segmento": "Compacto",
+    "confiabilidad": 77,
+    "economia": 87,
+    "potencialClasico": 74,
+    "tags": [
+      "youngtimer",
+      "familiar",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Se presta al uso intensivo: la confiabilidad depende del mantenimiento acumulado.",
+    "gastoMensualBaseUSD": 13,
+    "imageBase": "218-Ford Escort 1990",
+    "modeloBaseId": "ford-escort",
+    "imageExt": "png",
+    "color": "Gris plata",
+    "coloresAlternativos": [
+      "Bordó",
+      "Beige"
+    ],
+    "anioModeloBase": 1988
+  },
+  {
+    "id": "ford-escort-1997",
+    "marca": "Ford",
+    "modelo": "Escort",
+    "desde": 1997,
+    "hasta": 1997,
+    "precioBaseUSD": 4700,
+    "segmento": "Compacto",
+    "confiabilidad": 77,
+    "economia": 87,
+    "potencialClasico": 74,
+    "tags": [
+      "youngtimer",
+      "familiar",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Se presta al uso intensivo: la confiabilidad depende del mantenimiento acumulado.",
+    "gastoMensualBaseUSD": 13,
+    "imageBase": "219-Ford Escort 1997",
+    "modeloBaseId": "ford-escort",
+    "imageExt": "png",
+    "color": "Bordó",
+    "coloresAlternativos": [
+      "Beige",
+      "Blanco"
+    ],
+    "anioModeloBase": 1988
+  },
+  {
+    "id": "ford-escort-2003",
+    "marca": "Ford",
+    "modelo": "Escort",
+    "desde": 2003,
+    "hasta": 2003,
+    "precioBaseUSD": 5400,
+    "segmento": "Compacto",
+    "confiabilidad": 77,
+    "economia": 87,
+    "potencialClasico": 74,
+    "tags": [
+      "youngtimer",
+      "familiar",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Se presta al uso intensivo: la confiabilidad depende del mantenimiento acumulado.",
+    "gastoMensualBaseUSD": 13,
+    "imageBase": "220-Ford Escort 2003",
+    "modeloBaseId": "ford-escort",
+    "imageExt": "png",
+    "color": "Beige",
+    "coloresAlternativos": [
+      "Blanco",
+      "Rojo"
+    ],
+    "anioModeloBase": 1988
+  },
+  {
+    "id": "chevrolet-corsa-1997",
+    "marca": "Chevrolet",
+    "modelo": "Corsa",
+    "desde": 1997,
+    "hasta": 1997,
+    "precioBaseUSD": 4200,
+    "segmento": "Hatchback",
+    "confiabilidad": 82,
+    "economia": 64,
+    "potencialClasico": 94,
+    "tags": [
+      "popular",
+      "economico",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Simple y rendidor: posponer mantenimiento puede transformar pequeños problemas en una reparación grande.",
+    "gastoMensualBaseUSD": 11,
+    "imageBase": "221-Chevrolet Corsa 1997",
+    "modeloBaseId": "chevrolet-corsa",
+    "imageExt": "png",
+    "color": "Blanco",
+    "coloresAlternativos": [
+      "Rojo",
+      "Azul"
+    ],
+    "anioModeloBase": 1994
+  },
+  {
+    "id": "chevrolet-corsa-2005",
+    "marca": "Chevrolet",
+    "modelo": "Corsa",
+    "desde": 2005,
+    "hasta": 2005,
+    "precioBaseUSD": 4900,
+    "segmento": "Hatchback",
+    "confiabilidad": 82,
+    "economia": 64,
+    "potencialClasico": 94,
+    "tags": [
+      "popular",
+      "economico",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Simple y rendidor: posponer mantenimiento puede transformar pequeños problemas en una reparación grande.",
+    "gastoMensualBaseUSD": 11,
+    "imageBase": "222-Chevrolet Corsa 2005",
+    "modeloBaseId": "chevrolet-corsa",
+    "imageExt": "png",
+    "color": "Rojo",
+    "coloresAlternativos": [
+      "Azul",
+      "Gris plata"
+    ],
+    "anioModeloBase": 1994
+  },
+  {
+    "id": "chevrolet-corsa-2012",
+    "marca": "Chevrolet",
+    "modelo": "Corsa",
+    "desde": 2012,
+    "hasta": 2012,
+    "precioBaseUSD": 5500,
+    "segmento": "Hatchback",
+    "confiabilidad": 82,
+    "economia": 64,
+    "potencialClasico": 94,
+    "tags": [
+      "popular",
+      "economico",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Simple y rendidor: posponer mantenimiento puede transformar pequeños problemas en una reparación grande.",
+    "gastoMensualBaseUSD": 11,
+    "imageBase": "223-Chevrolet Corsa 2012",
+    "modeloBaseId": "chevrolet-corsa",
+    "imageExt": "png",
+    "color": "Azul",
+    "coloresAlternativos": [
+      "Gris plata",
+      "Bordó"
+    ],
+    "anioModeloBase": 1994
+  },
+  {
+    "id": "fiat-palio-1999",
+    "marca": "Fiat",
+    "modelo": "Palio",
+    "desde": 1999,
+    "hasta": 1999,
+    "precioBaseUSD": 5000,
+    "segmento": "Hatchback",
+    "confiabilidad": 79,
+    "economia": 91,
+    "potencialClasico": 51,
+    "tags": [
+      "popular",
+      "economico",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Versátil y fácil de mantener: el uso intensivo castiga interior y suspensión.",
+    "gastoMensualBaseUSD": 12,
+    "imageBase": "224-Fiat Palio 1999",
+    "modeloBaseId": "fiat-palio",
+    "imageExt": "png",
+    "color": "Gris plata",
+    "coloresAlternativos": [
+      "Bordó",
+      "Beige"
+    ],
+    "anioModeloBase": 1997
+  },
+  {
+    "id": "fiat-palio-2008",
+    "marca": "Fiat",
+    "modelo": "Palio",
+    "desde": 2008,
+    "hasta": 2008,
+    "precioBaseUSD": 5800,
+    "segmento": "Hatchback",
+    "confiabilidad": 79,
+    "economia": 91,
+    "potencialClasico": 51,
+    "tags": [
+      "popular",
+      "economico",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Versátil y fácil de mantener: el uso intensivo castiga interior y suspensión.",
+    "gastoMensualBaseUSD": 12,
+    "imageBase": "225-Fiat Palio 2008",
+    "modeloBaseId": "fiat-palio",
+    "imageExt": "png",
+    "color": "Bordó",
+    "coloresAlternativos": [
+      "Beige",
+      "Blanco"
+    ],
+    "anioModeloBase": 1997
+  },
+  {
+    "id": "fiat-siena-2001",
+    "marca": "Fiat",
+    "modelo": "Siena",
+    "desde": 2001,
+    "hasta": 2001,
+    "precioBaseUSD": 5400,
+    "segmento": "Sedán",
+    "confiabilidad": 82,
+    "economia": 83,
+    "potencialClasico": 70,
+    "tags": [
+      "familiar",
+      "economico",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Baúl y bajo costo lo vuelven práctico; mantenerlo sano permite usarlo muchos años.",
+    "gastoMensualBaseUSD": 14,
+    "imageBase": "226-Fiat Siena 2001",
+    "modeloBaseId": "fiat-siena",
+    "imageExt": "png",
+    "color": "Beige",
+    "coloresAlternativos": [
+      "Blanco",
+      "Rojo"
+    ],
+    "anioModeloBase": 1997
+  },
+  {
+    "id": "fiat-siena-2010",
+    "marca": "Fiat",
+    "modelo": "Siena",
+    "desde": 2010,
+    "hasta": 2010,
+    "precioBaseUSD": 6300,
+    "segmento": "Sedán",
+    "confiabilidad": 82,
+    "economia": 83,
+    "potencialClasico": 70,
+    "tags": [
+      "familiar",
+      "economico",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Baúl y bajo costo lo vuelven práctico; mantenerlo sano permite usarlo muchos años.",
+    "gastoMensualBaseUSD": 14,
+    "imageBase": "227-Fiat Siena 2010",
+    "modeloBaseId": "fiat-siena",
+    "imageExt": "png",
+    "color": "Blanco",
+    "coloresAlternativos": [
+      "Rojo",
+      "Azul"
+    ],
+    "anioModeloBase": 1997
+  },
+  {
+    "id": "toyota-corolla-e110-2000",
+    "marca": "Toyota",
+    "modelo": "Corolla E110",
+    "desde": 2000,
+    "hasta": 2000,
+    "precioBaseUSD": 8500,
+    "segmento": "Sedán",
+    "confiabilidad": 92,
+    "economia": 82,
+    "potencialClasico": 58,
+    "tags": [
+      "japones",
+      "confiable",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Su fortaleza es durar; un historial ordenado puede sostener valor mejor que autos más llamativos.",
+    "gastoMensualBaseUSD": 14,
+    "imageBase": "228-Toyota Corolla E110 2000",
+    "modeloBaseId": "toyota-corolla-e110",
+    "imageExt": "png",
+    "color": "Rojo",
+    "coloresAlternativos": [
+      "Azul",
+      "Gris plata"
+    ],
+    "anioModeloBase": 1998
+  },
+  {
+    "id": "toyota-corolla-e120-2006",
+    "marca": "Toyota",
+    "modelo": "Corolla E120",
+    "desde": 2006,
+    "hasta": 2006,
+    "precioBaseUSD": 11300,
+    "segmento": "Sedán",
+    "confiabilidad": 84,
+    "economia": 76,
+    "potencialClasico": 95,
+    "tags": [
+      "japones",
+      "confiable",
+      "inyeccion"
+    ],
+    "eventoCanonico": "La confiabilidad premia el mantenimiento constante; venderlo muy temprano puede ser un error.",
+    "gastoMensualBaseUSD": 16,
+    "imageBase": "229-Toyota Corolla E120 2006",
+    "modeloBaseId": "toyota-corolla-e120",
+    "imageExt": "png",
+    "color": "Azul",
+    "coloresAlternativos": [
+      "Gris plata",
+      "Bordó"
+    ],
+    "anioModeloBase": 2002
+  },
+  {
+    "id": "toyota-corolla-e140-2012",
+    "marca": "Toyota",
+    "modelo": "Corolla E140",
+    "desde": 2012,
+    "hasta": 2012,
+    "precioBaseUSD": 13200,
+    "segmento": "Sedán",
+    "confiabilidad": 81,
+    "economia": 88,
+    "potencialClasico": 73,
+    "tags": [
+      "japones",
+      "confiable",
+      "inyeccion"
+    ],
+    "eventoCanonico": "Es difícil justificar venderlo por problemas si está bien mantenido; el riesgo es aburrirse y cambiar antes de tiempo.",
+    "gastoMensualBaseUSD": 17,
+    "imageBase": "230-Toyota Corolla E140 2012",
+    "modeloBaseId": "toyota-corolla-e140",
+    "imageExt": "png",
+    "color": "Gris plata",
+    "coloresAlternativos": [
+      "Bordó",
+      "Beige"
+    ],
+    "anioModeloBase": 2008
   }
 ]

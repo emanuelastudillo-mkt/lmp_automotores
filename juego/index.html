@@ -1371,7 +1371,7 @@ button:disabled .ui-icon{
     <div class="topbar-actions">
       <button class="ghost achievements-button" id="openAchievements" type="button">🏆 Logros 0/31</button>
       <button id="emergencyReset" class="ghost" type="button">Reset</button>
-      <div class="version">prototipo privado · v0.45</div>
+      <div class="version">prototipo privado · v0.46</div>
     </div>
   </div>
 </header>
@@ -1625,11 +1625,12 @@ function carById(id){
 function imageBaseFor(car){
   return car?.imageBase||`${Math.max(1,CARS.findIndex(item=>item.id===car?.id)+1)}-${car?.marca||''} ${car?.modelo||''}`.trim();
 }
-function carImageSrc(car,ext='jpg'){
+function carImageSrc(car,ext=car?.imageExt||'jpg'){
   return `./imagenes/${encodeURIComponent(imageBaseFor(car))}.${ext}`;
 }
 function tryCarImage(img){
-  const exts=['jpg','jpeg','png','webp'];
+  const firstExt=carById(img.dataset.carId)?.imageExt||'jpg';
+  const exts=[firstExt,...['jpg','jpeg','png','webp'].filter(ext=>ext!==firstExt)];
   const step=Number(img.dataset.try||0)+1;
   if(step<exts.length){
     img.dataset.try=step;
@@ -2467,7 +2468,7 @@ function renderGarage(){
     <div class="garage-card">
       <div class="garage-art" style="aspect-ratio:1/1;height:auto;overflow:hidden">${carImageMarkup(car)}</div>
       <div class="garage-info">
-        <span class="make">${car.marca}</span>
+        <span class="make">${car.marca} · ${state.car.modelYear??car.desde}</span>
         <h3>${car.modelo}</h3>
 
         <div class="canonical garage-status" style="margin:10px 0 14px">
@@ -2544,7 +2545,7 @@ function eligibleEvents(){
     }
     if(event.collectionOnly)return (state.collection||[]).length>0;
 
-    if(event.vehicleId && event.vehicleId!==car?.id)return false;
+    if(!vehicleEventMatches(event,car))return false;
     if(event.exclusiveVehicleEvent && state.careerFlags?.[`seen_${event.id}`])return false;
 
     if(event.special==='inheritance_father'){
