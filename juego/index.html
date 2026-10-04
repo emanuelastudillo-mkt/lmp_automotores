@@ -135,24 +135,6 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
 .result-card{margin-top:25px;text-align:left;padding:22px;border:1px solid var(--line);border-radius:21px;background:#171719}
 .history{display:grid;gap:7px;margin-top:14px}
 .history-item{display:flex;justify-content:space-between;gap:15px;padding:9px 0;border-bottom:1px solid var(--line);font-size:11px}
-@media(max-width:860px){
-  .hero{grid-template-columns:1fr;min-height:auto}
-  .event-wrap{grid-template-columns:1fr}
-  .car-grid,.market-list{grid-template-columns:repeat(2,1fr)}
-  .stats{grid-template-columns:repeat(3,1fr)}
-}
-@media(max-width:580px){
-  .shell{width:min(100% - 20px,1100px)}
-  main{padding-top:18px}
-  h1{font-size:54px}
-  .stats{grid-template-columns:repeat(2,1fr)}
-  .car-grid,.market-list{grid-template-columns:1fr}
-  .choices{grid-template-columns:1fr}
-  .choice{min-height:94px}
-  .event-card h2{font-size:27px}
-  .timeline,.garage{padding:14px}
-}
-
 .choice:disabled{opacity:.38;cursor:not-allowed;transform:none!important;border-color:var(--line)!important;background:#18181b!important}
 .choice.risk{border-color:rgba(233,185,73,.5);background:#211d13}
 .choice.negative{border-color:rgba(204,36,43,.35);background:#211416}
@@ -188,7 +170,6 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
 }
 .debt-money{color:#ff4d4f!important;font-weight:800}
 
-/* v0.26 — mobile-first gameplay */
 .collection-drawer{
   margin-top:12px;
   border-radius:11px;
@@ -221,401 +202,6 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
 .collection-row-info button{width:100%;margin-top:7px}
 .garage-actions{display:grid;gap:8px;margin-top:12px}
 .garage-actions button{width:100%;margin:0!important}
-
-@media(max-width:580px){
-  html,body{min-height:100%;overscroll-behavior:none}
-  body{font-size:13px}
-  header{height:44px}
-  .shell{width:calc(100% - 12px)}
-  .topbar{min-height:44px;height:44px;padding-right:58px}
-  .topbar .brand{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .topbar .version{font-size:7px;white-space:nowrap}
-  main{padding:6px 0 max(8px,env(safe-area-inset-bottom))}
-  #emergencyReset{
-    top:7px!important;
-    right:7px!important;
-    bottom:auto!important;
-    padding:7px 9px!important;
-    font-size:9px!important;
-    z-index:10020!important;
-  }
-
-  /* Start */
-  .hero{display:block;min-height:auto}
-  .hero>div:first-child{padding:10px 4px 14px}
-  .hero h1{font-size:40px;line-height:.92;margin:9px 0 12px}
-  .hero-copy{font-size:13px;line-height:1.45}
-  .private-note{font-size:9px;margin-top:10px;padding:8px}
-  .start-panel{padding:14px;border-radius:17px}
-  .start-panel h2{font-size:18px;margin-bottom:12px}
-  .field{margin-bottom:9px}
-  .field input,.field select{padding:11px 12px}
-  .primary{min-height:44px}
-
-  /* Career choice */
-  #starterScreen.active,#resultScreen.active{max-height:calc(100dvh - 52px);overflow:auto}
-  .head-row{position:sticky;top:0;z-index:4;background:var(--bg);padding:6px 0}
-  #starterTitle{font-size:20px;margin:4px 0}
-  #starterSubtitle{font-size:10px;margin:2px 0 5px}
-  .car-grid{
-    display:grid;
-    grid-auto-flow:column;
-    grid-auto-columns:min(82vw,310px);
-    grid-template-columns:none;
-    gap:9px;
-    overflow-x:auto;
-    overscroll-behavior-x:contain;
-    scroll-snap-type:x mandatory;
-    padding-bottom:8px;
-  }
-  .car-card{scroll-snap-align:start;min-height:0}
-  .car-body{padding:12px}
-  .car-body h3{font-size:18px}
-  .car-price{font-size:18px}
-
-  /* Main gameplay is one viewport */
-  #gameScreen.active{
-    height:calc(100dvh - 52px - env(safe-area-inset-bottom));
-    display:flex;
-    flex-direction:column;
-    overflow:hidden;
-  }
-  #gameScreen>.stats{
-    flex:0 0 auto;
-    display:grid;
-    grid-template-columns:repeat(6,minmax(0,1fr));
-    gap:3px;
-    margin:0 0 5px;
-  }
-  #gameScreen .stat{
-    min-width:0;
-    padding:5px 3px;
-    border-radius:8px;
-    text-align:center;
-  }
-  #gameScreen .stat span{
-    font-size:6px;
-    letter-spacing:0;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-  }
-  #gameScreen .stat strong{
-    font-size:9px;
-    margin-top:2px;
-    white-space:nowrap;
-  }
-  #gameScreen .event-wrap{
-    flex:1 1 auto;
-    min-height:0;
-    display:flex;
-    flex-direction:column;
-    gap:5px;
-  }
-
-  /* Compact current vehicle */
-  #gameScreen .garage{
-    flex:0 0 auto;
-    padding:5px;
-    border-radius:13px;
-    max-height:142px;
-    overflow:visible;
-  }
-  #gameScreen .garage-card{
-    display:grid;
-    grid-template-columns:82px minmax(0,1fr);
-    border-radius:11px;
-    overflow:visible;
-  }
-  #gameScreen .garage-art{
-    width:82px;
-    height:82px!important;
-    aspect-ratio:1/1!important;
-    border-radius:10px 0 0 10px;
-  }
-  #gameScreen .garage-info{
-    min-width:0;
-    padding:7px 8px;
-    display:grid;
-    grid-template-columns:1fr;
-    align-content:start;
-  }
-  #gameScreen .garage-info>.make{font-size:7px}
-  #gameScreen .garage-info>h3{
-    font-size:15px;
-    line-height:1;
-    margin:2px 0 4px;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-  }
-  #gameScreen .garage-status{
-    margin:0 0 5px!important;
-    padding:4px 6px;
-    font-size:8px;
-    line-height:1.2;
-  }
-  #gameScreen .garage-secondary{display:none}
-  #gameScreen .meters{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:4px;
-    margin:0 0 5px;
-  }
-  #gameScreen .meter-row{
-    display:grid;
-    grid-template-columns:1fr 18px;
-    gap:2px;
-    font-size:6px;
-  }
-  #gameScreen .meter-row .meter{
-    grid-column:1/3;
-    grid-row:2;
-    height:4px;
-  }
-  #gameScreen .meter-row strong{text-align:right;font-size:7px}
-  #gameScreen .garage-actions{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:4px;
-    margin:0;
-  }
-  #gameScreen .garage-actions button{
-    min-width:0;
-    min-height:27px;
-    padding:5px 4px!important;
-    border-radius:7px;
-    font-size:0!important;
-    line-height:1;
-  }
-  #gameScreen .garage-actions button:after{
-    content:attr(data-mobile-label);
-    font-size:7px;
-    font-weight:900;
-  }
-
-  /* Collection opens above gameplay instead of pushing it down */
-  #gameScreen .collection-drawer{
-    position:absolute;
-    right:7px;
-    top:90px;
-    margin:0;
-    z-index:25;
-    background:#f3f3ef;
-    box-shadow:0 10px 35px rgba(0,0,0,.45);
-    max-width:calc(100vw - 110px);
-  }
-  #gameScreen .collection-drawer:not([open]){
-    max-width:190px;
-  }
-  #gameScreen .collection-drawer:not([open]) summary{
-    padding:5px 7px;
-    font-size:7px;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-  }
-  #gameScreen .collection-drawer[open]{
-    position:fixed;
-    inset:48px 6px max(6px,env(safe-area-inset-bottom)) 6px;
-    max-width:none;
-    overflow:auto;
-    z-index:10010;
-    border:1px solid #ddd;
-  }
-  #gameScreen .collection-drawer[open] summary{
-    position:sticky;
-    top:0;
-    z-index:2;
-    background:#f3f3ef;
-    padding:13px;
-    font-size:12px;
-  }
-  #gameScreen .collection-drawer[open] .collection-drawer-body{padding:0 10px 12px}
-  #gameScreen .collection-row{grid-template-columns:76px 1fr}
-  #gameScreen .collection-thumb{width:76px}
-
-  /* Event owns remaining space */
-  #gameScreen .timeline{
-    flex:1 1 auto;
-    min-height:0;
-    padding:6px;
-    border-radius:13px;
-    display:flex;
-    flex-direction:column;
-    overflow:hidden;
-  }
-  #gameScreen .timeline-top{
-    flex:0 0 auto;
-    margin:0 0 5px;
-    min-height:25px;
-  }
-  #gameScreen .timeline-top .eyebrow{display:none}
-  #gameScreen #playerLabel{font-size:8px;color:var(--muted)}
-  #gameScreen .year-pill{font-size:9px;padding:5px 7px}
-  #gameScreen .event-card{
-    flex:1 1 auto;
-    min-height:0;
-    overflow-y:auto;
-    overscroll-behavior:contain;
-    padding:10px;
-    padding-bottom:0;
-    border-radius:12px;
-    display:flex;
-    flex-direction:column;
-  }
-  #gameScreen .event-icon{
-    width:35px;
-    height:35px;
-    border-radius:10px;
-    font-size:19px;
-    margin-bottom:6px;
-  }
-  #gameScreen .event-card .eyebrow{font-size:7px}
-  #gameScreen .event-card h2{
-    font-size:20px;
-    line-height:1;
-    margin:3px 0 6px;
-  }
-  #gameScreen .event-card p{
-    font-size:10px;
-    line-height:1.35;
-    margin-bottom:8px;
-  }
-  #gameScreen .forced-banner{
-    margin-bottom:7px;
-    padding:7px;
-    font-size:8px;
-    line-height:1.3;
-  }
-  #gameScreen .choices{
-    position:sticky;
-    bottom:0;
-    z-index:8;
-    margin-top:auto;
-    padding:7px 0 max(7px,env(safe-area-inset-bottom));
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:5px;
-    background:linear-gradient(to bottom,rgba(16,16,18,.72),#101012 16px);
-    box-shadow:0 -8px 18px rgba(16,16,18,.72);
-  }
-  #gameScreen .choice{
-    min-height:58px;
-    padding:7px 8px;
-    border-radius:9px;
-    display:grid;
-    grid-template-columns:24px 1fr;
-    grid-template-rows:auto auto;
-    column-gap:6px;
-    align-content:center;
-  }
-  #gameScreen .choice:hover{transform:none}
-  #gameScreen .choice-icon{
-    grid-row:1/3;
-    align-self:center;
-    font-size:18px;
-    margin:0;
-  }
-  #gameScreen .choice strong{font-size:8px;line-height:1.15}
-  #gameScreen .choice small{
-    margin-top:2px;
-    font-size:6.5px;
-    line-height:1.2;
-  }
-  #gameScreen .log{display:none}
-
-  /* Market becomes a full-screen mobile browser */
-  .market-modal{padding:0;overflow:hidden;background:#0b0b0d}
-  .market-box{
-    width:100%;
-    height:100dvh;
-    margin:0;
-    padding:8px 7px max(8px,env(safe-area-inset-bottom));
-    border:0;
-    border-radius:0;
-    display:flex;
-    flex-direction:column;
-    overflow:hidden;
-  }
-  .market-top{
-    flex:0 0 auto;
-    position:relative;
-    margin:0 0 7px;
-    padding:5px 1px 7px;
-    border-bottom:1px solid var(--line);
-  }
-  .market-top h2{font-size:15px!important}
-  .market-list{
-    flex:1 1 auto;
-    min-height:0;
-    display:grid;
-    grid-template-columns:1fr;
-    align-content:start;
-    gap:5px;
-    overflow-y:auto;
-    overscroll-behavior:contain;
-    padding-bottom:5px;
-  }
-  .market-item{
-    min-height:91px;
-    display:grid;
-    grid-template-columns:80px minmax(0,1fr) 74px;
-    grid-template-areas:
-      "img make action"
-      "img title action"
-      "img meta action"
-      "img price action";
-    column-gap:8px;
-    row-gap:1px;
-    padding:6px;
-    border-radius:10px;
-    align-items:center;
-  }
-  .market-thumb{grid-area:img;width:80px;height:80px;margin:0}
-  .market-thumb .vehicle-image-square{height:80px}
-  .market-item>.make{grid-area:make;font-size:7px}
-  .market-item>h4{grid-area:title;font-size:12px;margin:0}
-  .market-item>p{grid-area:meta;font-size:6.5px;line-height:1.2}
-  .market-item>strong{grid-area:price;font-size:11px;margin:0}
-  .market-item>button{
-    grid-area:action;
-    height:100%;
-    min-height:68px;
-    padding:5px;
-    font-size:8px;
-  }
-  .market-wait{
-    flex:0 0 auto;
-    margin-top:6px;
-    padding:7px;
-    border-radius:9px;
-    gap:7px;
-  }
-  .market-wait p{font-size:7px;line-height:1.25}
-  .market-wait strong{font-size:8px}
-  .market-wait button{padding:8px 9px;font-size:8px}
-
-  /* Final screen */
-  .result{margin:8px auto 30px}
-  .result h2{font-size:38px}
-  .result-card{margin-top:12px;padding:12px;border-radius:14px}
-  .history-item{font-size:9px;gap:7px}
-
-  /* Touch targets */
-  button,select,input{touch-action:manipulation}
-}
-
-@media(max-width:390px){
-  #gameScreen .stat span{font-size:5.5px}
-  #gameScreen .stat strong{font-size:8px}
-  #gameScreen .garage{max-height:136px}
-  #gameScreen .garage-card{grid-template-columns:74px minmax(0,1fr)}
-  #gameScreen .garage-art{width:74px;height:74px!important}
-  #gameScreen .event-card h2{font-size:18px}
-  #gameScreen .choice{min-height:54px;padding:6px}
-  #gameScreen .choice small{font-size:6px}
-}
-
 
 .market-tabs{
   display:flex;
@@ -662,215 +248,6 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
   border-radius:14px;
   color:var(--muted);
 }
-@media(max-width:580px){
-  .market-tabs{
-    flex:0 0 auto;
-    margin-bottom:6px;
-    gap:4px;
-    padding:3px;
-    border-radius:9px;
-  }
-  .market-tab{
-    min-height:34px;
-    padding:6px 8px;
-    font-size:9px;
-  }
-  .market-item>p .market-metrics{
-    margin-top:3px;
-    gap:2px;
-  }
-  .market-metrics span{
-    padding:2px 3px;
-    font-size:5.5px;
-  }
-}
-
-
-.fan-income-line strong{color:#1f7a43}
-.exhibition-income-line strong{color:#9b6a08}
-@media(max-width:580px){
-  #gameScreen .fan-income-line,
-  #gameScreen .exhibition-income-line,
-  #gameScreen .career-progress-line{
-    display:flex;
-    margin-top:3px;
-    padding:3px 0;
-    font-size:6.5px;
-    line-height:1.1;
-  }
-  #gameScreen .fan-income-line span,
-  #gameScreen .exhibition-income-line span,
-  #gameScreen .career-progress-line span{
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-  }
-  #gameScreen .fan-income-line strong,
-  #gameScreen .exhibition-income-line strong,
-  #gameScreen .career-progress-line strong{
-    white-space:nowrap;
-    font-size:6.5px;
-  }
-  #gameScreen .garage{
-    max-height:158px;
-  }
-}
-
-
-.collection-actions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:6px;
-  margin-top:7px;
-}
-.collection-actions button{
-  width:100%;
-  margin:0!important;
-  padding:8px 7px;
-}
-@media(max-width:580px){
-  .collection-actions{gap:5px}
-  .collection-actions button{
-    min-height:36px;
-    font-size:8px;
-  }
-}
-
-
-/* v0.38 — mercado mobile: 3 por fila / hasta 6 visibles */
-@media(max-width:580px){
-  .market-list{
-    flex:1 1 auto;
-    min-height:0;
-    grid-template-columns:repeat(3,minmax(0,1fr));
-    grid-template-rows:repeat(2,minmax(0,1fr));
-    gap:5px;
-    overflow:hidden;
-    align-content:stretch;
-    padding-bottom:0;
-  }
-
-  .market-item{
-    min-width:0;
-    min-height:0;
-    height:100%;
-    display:flex;
-    flex-direction:column;
-    align-items:stretch;
-    padding:5px;
-    border-radius:9px;
-    gap:2px;
-    overflow:hidden;
-  }
-
-  .market-thumb{
-    flex:1 1 auto;
-    width:100%;
-    min-height:54px;
-    max-height:92px;
-    height:auto;
-    margin:0 auto 1px;
-    display:grid;
-    place-items:center;
-  }
-  .market-thumb .vehicle-image-square{
-    width:100%;
-    height:100%;
-    max-height:92px;
-    aspect-ratio:1/1;
-  }
-  .market-thumb .vehicle-image-square img{
-    object-fit:contain;
-  }
-
-  .market-item>.make{
-    flex:0 0 auto;
-    font-size:5.5px;
-    line-height:1;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-  }
-
-  .market-item>h4{
-    flex:0 0 auto;
-    min-height:18px;
-    margin:0;
-    font-size:8.5px;
-    line-height:1.05;
-    display:-webkit-box;
-    -webkit-box-orient:vertical;
-    -webkit-line-clamp:2;
-    overflow:hidden;
-  }
-
-  .market-item>p{
-    flex:0 0 auto;
-    margin:0;
-    font-size:5.5px;
-    line-height:1.05;
-    max-height:31px;
-    overflow:hidden;
-  }
-
-  .market-item>p .market-metrics{
-    display:grid;
-    grid-template-columns:repeat(3,minmax(0,1fr));
-    gap:1px;
-    margin-top:2px;
-  }
-  .market-metrics span{
-    min-width:0;
-    padding:2px 1px;
-    border-radius:4px;
-    font-size:4.6px;
-    line-height:1;
-    text-align:center;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:clip;
-  }
-
-  .market-item>strong{
-    flex:0 0 auto;
-    margin:2px 0 1px;
-    font-size:8.5px;
-    line-height:1;
-    white-space:nowrap;
-  }
-
-  .market-item>button{
-    flex:0 0 28px;
-    width:100%;
-    min-height:28px;
-    height:28px;
-    margin-top:auto;
-    padding:3px 2px;
-    border-radius:6px;
-    font-size:7px;
-    line-height:1;
-  }
-}
-
-@media(max-width:360px){
-  .market-box{
-    padding-left:5px;
-    padding-right:5px;
-  }
-  .market-list{gap:3px}
-  .market-item{padding:4px}
-  .market-thumb{
-    min-height:48px;
-    max-height:78px;
-  }
-  .market-thumb .vehicle-image-square{max-height:78px}
-  .market-item>h4{font-size:7.5px;min-height:16px}
-  .market-item>strong{font-size:7.5px}
-  .market-item>p{font-size:5px}
-  .market-metrics span{font-size:4.2px}
-}
-
-
 /* v0.39 — SVG UI system */
 .lmp-svg-sprite{pointer-events:none}
 .ui-icon{
@@ -923,203 +300,6 @@ h1{font-size:clamp(46px,8vw,90px);line-height:.88;letter-spacing:-.065em;margin:
   height:25px;
   color:#f0f0f2;
 }
-
-/* Value-change motion */
-.animated-value{
-  position:relative;
-  display:inline-flex;
-  align-items:center;
-  gap:4px;
-  max-width:100%;
-}
-.animated-value-main{display:inline-flex;align-items:center;gap:2px;min-width:0}
-.animated-value.changed-up .animated-value-main{
-  animation:valueUpFlash .72s cubic-bezier(.2,.8,.2,1) both;
-}
-.animated-value.changed-down .animated-value-main{
-  animation:valueDownFlash .72s cubic-bezier(.2,.8,.2,1) both;
-}
-.value-delta{
-  position:absolute;
-  right:0;
-  top:-15px;
-  z-index:12;
-  display:inline-flex;
-  align-items:center;
-  gap:2px;
-  padding:2px 4px;
-  border-radius:999px;
-  font-size:7px;
-  line-height:1;
-  font-weight:950;
-  white-space:nowrap;
-  pointer-events:none;
-  animation:deltaFloat 1.25s ease-out forwards;
-}
-.value-delta .ui-icon{width:8px;height:8px}
-.delta-up{color:#2ba96a}
-.delta-down{color:#e25b61}
-.value-delta.delta-up{background:rgba(43,169,106,.13)}
-.value-delta.delta-down{background:rgba(226,91,97,.13)}
-@keyframes valueUpFlash{
-  0%{transform:translateY(5px) scale(.94);filter:brightness(1)}
-  38%{transform:translateY(-1px) scale(1.06);filter:brightness(1.35);color:#2ba96a}
-  100%{transform:none;filter:none}
-}
-@keyframes valueDownFlash{
-  0%{transform:translateY(-4px) scale(1.03);filter:brightness(1)}
-  38%{transform:translateY(2px) scale(.96);filter:brightness(1.25);color:#e25b61}
-  100%{transform:none;filter:none}
-}
-@keyframes deltaFloat{
-  0%{opacity:0;transform:translateY(5px) scale(.88)}
-  18%{opacity:1;transform:translateY(0) scale(1)}
-  72%{opacity:1}
-  100%{opacity:0;transform:translateY(-12px) scale(.96)}
-}
-.meter b.meter-animate{
-  animation:meterValueChange .62s cubic-bezier(.2,.8,.2,1) both;
-}
-@keyframes meterValueChange{
-  from{width:var(--from)}
-  to{width:var(--to)}
-}
-.meter-row.delta-up strong{animation:valueUpFlash .72s ease both}
-.meter-row.delta-down strong{animation:valueDownFlash .72s ease both}
-
-/* Mobile garage/event separation */
-@media(max-width:580px){
-  #gameScreen .event-wrap{
-    gap:6px;
-  }
-  #gameScreen .garage{
-    position:relative;
-    flex:0 0 auto;
-    max-height:none;
-    overflow:visible;
-    padding:5px;
-    z-index:3;
-  }
-  #gameScreen .garage-card{
-    grid-template-columns:74px minmax(0,1fr);
-    min-height:108px;
-    overflow:hidden;
-  }
-  #gameScreen .garage-art{
-    width:74px;
-    height:74px!important;
-  }
-  #gameScreen .garage-info{
-    padding:5px 6px 6px;
-  }
-  #gameScreen .garage-status{
-    margin-bottom:3px!important;
-  }
-  #gameScreen .meters{
-    margin-bottom:4px;
-  }
-  #gameScreen .garage-actions{
-    position:relative;
-    z-index:4;
-    margin-top:2px;
-  }
-  #gameScreen .garage-actions button{
-    min-height:30px;
-    height:30px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    gap:1px;
-    overflow:hidden;
-  }
-  #gameScreen .garage-actions button .action-icon{
-    width:13px;
-    height:13px;
-    font-size:13px;
-  }
-  #gameScreen .garage-actions button>span{
-    display:none;
-  }
-  #gameScreen .garage-actions button:after{
-    line-height:1;
-  }
-
-  /* These lines are useful on desktop, but duplicate information or
-     consume critical vertical space on mobile. */
-  #gameScreen .fan-income-line,
-  #gameScreen .career-progress-line,
-  #gameScreen .exhibition-income-line{
-    display:none!important;
-  }
-
-  #gameScreen .timeline{
-    position:relative;
-    z-index:1;
-    flex:1 1 0;
-    min-height:0;
-    margin:0;
-  }
-
-  /* Closed collection shortcut stays inside the garage instead of
-     floating over the event panel. */
-  #gameScreen .collection-drawer:not([open]){
-    top:5px;
-    right:5px;
-    max-width:130px;
-    z-index:5;
-    box-shadow:none;
-    border:1px solid #ddd;
-  }
-  #gameScreen .collection-drawer:not([open]) summary{
-    max-width:130px;
-    padding:4px 6px;
-    font-size:6px;
-  }
-
-  .stat>span{
-    justify-content:center;
-    gap:2px;
-  }
-  .stat>span>.ui-icon{
-    width:7px;
-    height:7px;
-    font-size:7px;
-  }
-  .value-delta{
-    top:-10px;
-    right:-2px;
-    font-size:5px;
-    padding:1px 2px;
-  }
-  .value-delta .ui-icon{width:6px;height:6px}
-  #gameScreen .event-icon .ui-icon{width:20px;height:20px}
-  #gameScreen .choice-icon .ui-icon{width:18px;height:18px}
-  #gameScreen .choice-icon{font-size:0!important}
-
-  .market-item>button{
-    gap:2px;
-  }
-  .market-item>button .ui-icon{
-    width:9px;
-    height:9px;
-  }
-}
-
-@media(max-width:390px){
-  #gameScreen .garage{
-    max-height:none;
-  }
-  #gameScreen .garage-card{
-    grid-template-columns:68px minmax(0,1fr);
-    min-height:104px;
-  }
-  #gameScreen .garage-art{
-    width:68px;
-    height:68px!important;
-  }
-}
-
 
 /* v0.40 — semantic SVG color system */
 :root{
@@ -1286,41 +466,10 @@ button:disabled .ui-icon{
   filter:none!important;
 }
 
-/* Small mobile correction: preserve visual distinction at reduced size */
-@media(max-width:580px){
-  .rating-icons{gap:1px}
-  .rating-icons.flames .ui-icon,
-  .rating-icons.stars .ui-icon{
-    filter:none;
-  }
-}
-
-
-/* v0.43 — avoid duplicate primary information */
-.value-box.single{
-  grid-template-columns:1fr;
-}
-.timeline-top .year-pill{
-  display:none;
-}
-
-
-.market-wait button:disabled{
-  opacity:.34;
-  cursor:not-allowed;
-  background:#2b2b2f;
-  color:#85858b;
-}
-@media(max-width:580px){
-  .market-wait{
-    display:grid!important;
-    grid-template-columns:minmax(0,1fr) auto;
-  }
-}
-
 </style>
 <link rel="stylesheet" href="./logros.css">
 <link rel="stylesheet" href="./correcciones.css">
+<link rel="stylesheet" href="./interfaz.css">
 </head>
 <body>
 
@@ -1371,7 +520,7 @@ button:disabled .ui-icon{
     <div class="topbar-actions">
       <button class="ghost achievements-button" id="openAchievements" type="button">🏆 Logros 0/31</button>
       <button id="emergencyReset" class="ghost" type="button">Reset</button>
-      <div class="version">prototipo privado · v0.46</div>
+      <div class="version">prototipo privado · v0.47</div>
     </div>
   </div>
 </header>
@@ -1379,6 +528,7 @@ button:disabled .ui-icon{
 <div class="year-transition" id="yearTransition" aria-hidden="true">
   <div class="year-transition-box">
     <div class="year-transition-label">El tiempo pasa</div>
+<button class="ghost" id="skipYearAnimation" type="button">Continuar ahora</button>
     <div class="year-transition-year" id="yearTransitionValue">1960</div>
     <div class="year-transition-line"><b id="yearTransitionProgress"></b></div>
   </div>
@@ -1386,7 +536,9 @@ button:disabled .ui-icon{
 
 <div class="shell backup-actions"><button class="ghost" id="exportGame" type="button">Exportar partida</button><button class="ghost" id="importGame" type="button">Importar partida</button><button class="ghost" id="exportDamaged" type="button" hidden>Descargar registro dañado</button><input id="importGameFile" type="file" accept=".json,application/json" hidden></div>
 <div class="shell save-warning" id="saveWarning" role="status" aria-live="polite" hidden></div>
+<nav id="careerNav" class="career-nav" aria-label="Secciones de tu trayectoria"></nav>
 <main class="shell">
+<section class="screen" id="reviewScreen"><div id="careerView"></div></section>
   <section class="screen active" id="startScreen">
     <div class="hero">
       <div>
@@ -1430,6 +582,7 @@ button:disabled .ui-icon{
           <div><span class="eyebrow">Trayectoria</span><div id="playerLabel"></div></div>
           <span class="year-pill" id="yearPill"></span>
         </div>
+        <div id="activeVehiclePreview" class="active-vehicle-preview"></div>
         <div class="event-card" id="eventCard"></div>
         <div class="log" id="eventLog"></div>
       </section>
@@ -1482,6 +635,7 @@ button:disabled .ui-icon{
 </dialog>
 <div class="achievement-toast" id="achievementToast" role="status" aria-live="polite" aria-atomic="true" hidden></div>
 <script src="./guardado.js"></script>
+<script src="./legado.js"></script>
 <script src="./partida.js"></script>
 <script src="./logros.js"></script>
 <script src="./logros-ui.js"></script>
@@ -1593,7 +747,7 @@ function animatedMeter(label,value,key){
 function screen(id){
   document.querySelectorAll('.screen').forEach(el=>el.classList.remove('active'));
   $('#'+id).classList.add('active');
-  window.scrollTo({top:0,behavior:'smooth'});
+  window.scrollTo({top:0,behavior:'auto'});
 }
 function populateYears(){
   const select=$('#startYear');
@@ -1625,11 +779,11 @@ function carById(id){
 function imageBaseFor(car){
   return car?.imageBase||`${Math.max(1,CARS.findIndex(item=>item.id===car?.id)+1)}-${car?.marca||''} ${car?.modelo||''}`.trim();
 }
-function carImageSrc(car,ext=car?.imageExt||'jpg'){
+function carImageSrc(car,ext=car?.imageExt||'png'){
   return `./imagenes/${encodeURIComponent(imageBaseFor(car))}.${ext}`;
 }
 function tryCarImage(img){
-  const firstExt=carById(img.dataset.carId)?.imageExt||'jpg';
+  const firstExt=carById(img.dataset.carId)?.imageExt||'png';
   const exts=[firstExt,...['jpg','jpeg','png','webp'].filter(ext=>ext!==firstExt)];
   const step=Number(img.dataset.try||0)+1;
   if(step<exts.length){
@@ -1737,6 +891,7 @@ function storeActiveCarInCollection(reason='colección',logEvent=true){
   if(logEvent){
     state.events.unshift({
       year:state.year,
+      kind:'store',unitUid:collectionUid,
       text:`Guardaste ${car.marca} ${car.modelo} en tu colección con un valor estimado de ${money(value)}.`
     });
   }
@@ -1817,6 +972,7 @@ function useCollectionCar(uid){
 
   state.events.unshift({
     year:state.year,
+    kind:'reactivate',unitUid:item.uid,
     text:hadCurrent
       ? `Guardaste ${previous.marca} ${previous.modelo} y volviste a usar ${item.brand} ${item.model} de tu colección.`
       : `Volviste a usar ${item.brand} ${item.model} de tu colección.`
@@ -1838,8 +994,9 @@ function sellCollectionCar(uid,amount=null,reason='venta desde colección',silen
   if(history){
     history.collectionSoldYear=state.year;
     history.collectionSoldFor=price;
+    history.saleReason=reason;
   }
-  state.events.unshift({year:state.year,text:`Vendiste ${item.brand} ${item.model} de tu colección por ${money(price)}.`});
+  state.events.unshift({year:state.year,kind:'sale',unitUid:uid,text:`Vendiste ${item.brand} ${item.model} de tu colección por ${money(price)}.`});
   persist();
   if(!silent)renderGame();
 }
@@ -1860,7 +1017,7 @@ function collectionPanelMarkup(){
         return `<div class="collection-row">
           <div class="collection-thumb">${carImageMarkup(car)}</div>
           <div class="collection-row-info">
-            <strong>${item.brand} ${item.model}</strong><br>
+            <strong>${item.brand} ${item.model} · ${item.modelYear??'año sin registrar'}</strong><br>
             <small>Valor estimado ${money(collectionValue(item))} · Estado ${Math.round(item.condition??0)} · ${starIcons(item.stars||1)} ${flameIcons(item.flames||0)||''}</small>
             <div class="collection-actions">
               <button class="car-select" data-use-collection="${item.uid}" ${vehicleActionsLocked()?'disabled':''}>${uiIcon('car')}<span>${state.car?'Usar / intercambiar':'Usar este auto'}</span></button>
@@ -2118,6 +1275,7 @@ function updateCarFans(){
     state.car.fanStatusLevel=status.stars;
     state.events.unshift({
       year:state.year,
+      unitUid:state.car.uid,
       text:`Tu auto llegó a ${starIcons(status.stars)} "${status.name}". Sumó seguidores y ahora tiene ${flameIcons(fanFlamesFromCount(state.car.fans))||'sin fueguitos'} de popularidad.`
     });
   }
@@ -2325,6 +1483,7 @@ function buyCar(id,first=false,unit=null){
       : '';
   state.events.unshift({
     year:state.year,
+    kind:'purchase',unitUid:state.car.uid,
     text:storedCurrent
       ? `Guardaste ${storedCurrent.marca} ${storedCurrent.modelo} en tu colección y compraste ${next.marca} ${next.modelo}${purchaseLabel?` ${purchaseLabel}`:''} por ${money(price)}.`
       : `Compraste ${next.marca} ${next.modelo}${purchaseLabel?` ${purchaseLabel}`:''} por ${money(price)}.`
@@ -2357,35 +1516,20 @@ let pendingYearAnimation=null;
 function queueYearAnimation(from,to){
   if(to>from)pendingYearAnimation={from,to};
 }
+let yearAnimationTimer=null;
+function stopYearAnimation(){
+  clearTimeout(yearAnimationTimer);yearAnimationTimer=null;
+  const overlay=$('#yearTransition');overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');
+}
 function playYearAnimation(){
   if(!pendingYearAnimation)return;
-  const {from,to}=pendingYearAnimation;
-  pendingYearAnimation=null;
-  const overlay=$('#yearTransition');
-  const value=$('#yearTransitionValue');
-  const progress=$('#yearTransitionProgress');
-  const years=[];
-  for(let y=from+1;y<=to;y++)years.push(y);
-  if(!years.length)return;
-  overlay.classList.add('open');
-  overlay.setAttribute('aria-hidden','false');
-  let i=0;
-  value.textContent=years[0];
-  progress.style.width=`${100/years.length}%`;
-  const tick=()=>{
-    i++;
-    if(i>=years.length){
-      setTimeout(()=>{overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');progress.style.width='0'},650);
-      return;
-    }
-    value.style.animation='none';
-    void value.offsetWidth;
-    value.style.animation='yearPulse .7s ease both';
-    value.textContent=years[i];
-    progress.style.width=`${((i+1)/years.length)*100}%`;
-    setTimeout(tick,760);
-  };
-  setTimeout(tick,760);
+  const {from,to}=pendingYearAnimation;pendingYearAnimation=null;stopYearAnimation();
+  if(to<=from||window.matchMedia?.('(prefers-reduced-motion: reduce)').matches)return;
+  $('#yearTransitionValue').textContent=`${from} → ${to}`;
+  $('#yearTransitionProgress').style.width='100%';
+  $('#yearTransition').classList.add('open');$('#yearTransition').setAttribute('aria-hidden','false');
+  $('#skipYearAnimation').onclick=stopYearAnimation;
+  yearAnimationTimer=setTimeout(stopYearAnimation,1100);
 }
 function advanceYears(years){
   const fromYear=state.year;
@@ -2458,6 +1602,7 @@ function noVehicleMarkup(){
 }
 function renderGarage(){
   const car=currentCar();
+  $('#activeVehiclePreview').innerHTML=car&&state.car?`<div class="preview-photo">${carImageMarkup(car)}</div><div><span class="eyebrow">Tu vehículo en uso · ${state.car.modelYear??car.desde}</span><strong>${car.marca} ${car.modelo}</strong><small>Podés consultar su ficha en Garaje.</small></div>`:'';
   if(!car||!state.car){
     $('#garagePanel').innerHTML=noVehicleMarkup();
     bindCollectionButtons();
@@ -3030,6 +2175,7 @@ function resolveInheritance(event,source,keep=true){
 
   state.inheritanceCount=(state.inheritanceCount||0)+1;
   const inheritedUid=unitUid();
+  if(state.pendingEvent)state.pendingEvent.resolvedUnitUid=inheritedUid;
 
   if(!keep){
     const sale=Math.max(200,Math.round(unit.value*(.82+Math.random()*.14)));
@@ -3757,7 +2903,7 @@ function sellCurrentCarOffer(){
   history.soldYear=state.year;
   history.soldFor=offer.amount;
   history.saleReason='venta voluntaria';
-  state.events.unshift({year:state.year,text:`Vendiste ${car.marca} ${car.modelo} por ${money(offer.amount)}. ${offer.mood}.`});
+  state.events.unshift({year:state.year,kind:'sale',unitUid:state.car?.uid||null,text:`Vendiste ${car.marca} ${car.modelo} por ${money(offer.amount)}. ${offer.mood}.`});
   updateCurrentCarLegacy();
   state.car=null;
   state.saleOffer=null;
@@ -3805,7 +2951,7 @@ function completeEvent(event,text,icon='🎲'){
       text=`El choque ocurrió por ${state.pendingEvent.crashReason}. ${text}`;
     }
   }
-  state.events.unshift({year:state.year,eventId:event.id,text});
+  state.events.unshift({year:state.year,unitUid:state.pendingEvent?.resolvedUnitUid||state.pendingEvent?.collectionUid||state.pendingEvent?.unitUid||state.car?.uid||null,eventId:event.id,text});
   state.decisions++;
   state.pendingEvent=null;
   state.pendingResult={
@@ -3855,7 +3001,7 @@ function sellAndForceMarket(amount,reason,event){
   history.soldYear=state.year;
   history.soldFor=amount;
   history.saleReason=reason;
-  state.events.unshift({year:state.year,eventId:event.id,text:`Vendiste ${car.marca} ${car.modelo} por ${money(amount)} (${reason}).`});
+  state.events.unshift({year:state.year,unitUid:state.pendingEvent?.resolvedUnitUid||state.pendingEvent?.collectionUid||state.pendingEvent?.unitUid||state.car?.uid||null,eventId:event.id,text:`Vendiste ${car.marca} ${car.modelo} por ${money(amount)} (${reason}).`});
   updateCurrentCarLegacy();
   state.car=null;
   state.saleOffer=null;
@@ -3874,7 +3020,7 @@ function scrapAndForceMarket(amount,event,reason){
   history.soldYear=state.year;
   history.soldFor=amount;
   history.saleReason='chatarra';
-  state.events.unshift({year:state.year,eventId:event.id,text:`${reason} Lo vendiste como chatarra por ${money(amount)}.`});
+  state.events.unshift({year:state.year,unitUid:state.pendingEvent?.resolvedUnitUid||state.pendingEvent?.collectionUid||state.pendingEvent?.unitUid||state.car?.uid||null,eventId:event.id,text:`${reason} Lo vendiste como chatarra por ${money(amount)}.`});
   updateCurrentCarLegacy();
   state.car=null;
   state.saleOffer=null;
@@ -4373,7 +3519,7 @@ function finish(){
   // El último auto activo también forma parte del patrimonio final.
   // Lo guardamos automáticamente antes de calcular la colección.
   const finalCar=currentCar()||carById(state.finalSnapshot?.id);
-  if(!state.finalSnapshot)state.finalSnapshot={id:state.car?.id||null,name:finalCar?`${finalCar.marca} ${finalCar.modelo}`:'—',value:state.car?vehicleValue():0,originality:state.car?.originality??0,age:state.car?vehicleAge():0};
+  if(!state.finalSnapshot)state.finalSnapshot={uid:state.car?.uid||null,modelYear:state.car?.modelYear??null,id:state.car?.id||null,name:finalCar?`${finalCar.marca} ${finalCar.modelo}`:'—',value:state.car?vehicleValue():0,originality:state.car?.originality??0,age:state.car?vehicleAge():0};
   const finalCarName=state.finalSnapshot.name;
   const finalCarValue=state.finalSnapshot.value;
   const finalCarOriginality=state.finalSnapshot.originality;
@@ -4385,73 +3531,15 @@ function finish(){
   checkAchievements(true);
 
   screen('resultScreen');
-  const liquid=state.money;
-  const collectionValueTotal=collectionTotalValue();
-  const theoretical=state.money+collectionValueTotal;
-
-  let title='Coleccionista accidental';
-  if(acquiredCount()>=7)title='Cambiador serial';
-  if(acquiredCount()<=2)title='Fiel hasta el final';
-  if((state.collection||[]).length>=6)title='Curador de un garage serio';
-  if((state.inheritanceCount||0)>0 && (state.collection||[]).length>=3)title='Guardián del legado';
-  if((state.friendMechanicUses||0)>=8)title='Socio honorario del taller';
-  if((state.exhibitionWins||0)>=2)title='Figura de las exhibiciones';
-  if(state.money>50000)title='Magnate del garage';
-  if((state.raceSkill||0)>=10 && (state.illegalRaceCount||0)>=10)title='Leyenda de la noche';
-  if(finalCar && finalCarOriginality>90 && finalCarAge>35 && (state.raceSkill||0)<10)title='Purista';
-
-  $('#resultTitle').textContent=title;
-  if($('#resultEndLabel'))$('#resultEndLabel').textContent=`${careerEndYear()} · fin de trayectoria`;
-  $('#resultCopy').textContent=`${state.player}, tu historia llegó hasta ${careerEndYear()} después de ${state.decisions} decisiones, ${acquiredCount()} autos y ${Math.max(0,careerEndYear()-state.startYear)} años de trayectoria.`;
-
-  $('#resultCard').innerHTML=`
-    <div class="stats">
-      <div class="stat"><span>Dinero final</span><strong>${moneyDisplay(liquid)}</strong></div>
-      <div class="stat highlight"><span>Último auto</span><strong>${finalCar?`${finalCarName} · ${money(finalCarValue)}`:'—'}</strong></div>
-      <div class="stat"><span>Valor teórico total</span><strong>${moneyDisplay(theoretical)}</strong></div>
-      <div class="stat"><span>Entradas de dinero registradas</span><strong>${money(state.totalIncome)}</strong></div>
-      <div class="stat"><span>Gastos de uso</span><strong>${money(state.totalRunningCosts)}</strong></div>
-      <div class="stat"><span>Popularidad máxima</span><strong>${flameIcons(fanFlamesFromCount(state.fans||0))||'—'}</strong></div>
-      <div class="stat"><span>Divorcios</span><strong>${state.divorceCount||0}</strong></div>
-      <div class="stat"><span>Choques</span><strong>${state.crashCount||0}</strong></div>
-      <div class="stat"><span>Picadas ilegales</span><strong>${state.illegalRaceCount||0} · ${raceSkillLabel()}</strong></div>
-      <div class="stat"><span>Mecánico amigo</span><strong>${state.friendMechanicUses||0} usos · ${friendMechanicLabel()}</strong></div>
-      <div class="stat"><span>Granizadas</span><strong>${state.hailCount||0}</strong></div>
-      <div class="stat"><span>Herencias</span><strong>${state.inheritanceCount||0}</strong></div>
-      <div class="stat"><span>Eventos exclusivos</span><strong>${Object.keys(state.careerFlags||{}).filter(key=>key.startsWith('seen_ex_')).length}</strong></div>
-      <div class="stat"><span>Historia argentina</span><strong>${Object.keys(state.careerFlags||{}).filter(key=>key.startsWith('historical_')).length + (state.careerFlags?.corralito_ocurrido?1:0)}</strong></div>
-      <div class="stat"><span>Hitos automotores</span><strong>${EVENTS.filter(event=>event.historicalAutomotive && state.careerFlags?.[`historical_${event.id}`]).length}</strong></div>
-      <div class="stat"><span>Premios de exhibición</span><strong>${state.exhibitionWins||0} · ${money(state.exhibitionIncome||0)}</strong></div>
-      <div class="stat highlight"><span>Vehículos en colección</span><strong>${(state.collection||[]).length}</strong></div>
-      <div class="stat"><span>Valor de colección</span><strong>${money(collectionValueTotal)}</strong></div>
-    </div>
-    <div class="canonical" style="margin-top:18px">
-      <strong>Tu historia</strong><br>${careerStory()}
-    </div>
-    <h3 style="margin:18px 0 7px">Tu colección final</h3>
-    <div class="history">${(state.collection||[]).length?(state.collection||[]).map(item=>{
-      const c=carById(item.id);
-      return `<div class="history-item" style="align-items:center">
-        <span style="display:flex;gap:12px;align-items:center">
-          <span style="width:78px;flex:0 0 78px;display:block">${carImageMarkup(c)}</span>
-          <span>${item.brand} ${item.model}<br><small>${starIcons(item.stars||1)} · ${flameIcons(item.flames||0)||'—'} · guardado desde ${item.collectedYear}</small></span>
-        </span>
-        <strong>${money(collectionValue(item))}</strong>
-      </div>`;
-    }).join(''):'<div class="history-item"><span>No conservaste vehículos en colección.</span><strong>—</strong></div>'}</div>
-    <h3 style="margin:18px 0 7px">Tu garaje histórico</h3>
-    <div class="history">${state.history.filter(item=>!item.reactivatedFromCollection).map(item=>`
-      <div class="history-item">
-        <span>${item.brand} ${item.model}<br><small>${starIcons(item.maxStars||1)} · ${flameIcons(item.maxFlames||0)||'—'}</small></span>
-        <strong>${item.boughtYear}${item.soldYear?` → ${item.soldYear}`:` → ${careerEndYear()}`}</strong>
-      </div>`).join('')}</div>`;
-
+  $('#resultTitle').textContent='Tu legado sobre ruedas';
+  $('#resultEndLabel').textContent=`${careerEndYear()} · fin de trayectoria`;
   state.phase='finished';
   persist();
 }
 function persist(){
   if(!state)return;
   ensureVehicleLinks();bindPendingUnit();
+  if(!state.careerId)state.careerId=unitUid();
   checkAchievements();
   gameStore.save(state);showSaveWarning();
 }
@@ -4459,7 +3547,7 @@ function reset(){
   if(!gameStore.clear()){showSaveWarning();return;}
   showSaveWarning();
   state=null;
-  pendingYearAnimation=null;
+  pendingYearAnimation=null;stopYearAnimation();
   const market=$('#marketModal');
   if(market)market.classList.remove('open');
   const overlay=$('#yearTransition');
@@ -4565,5 +3653,8 @@ $('#importGameFile').onchange=async event=>{
 $('#exportDamaged').hidden=!gameStore.damaged();
 
 </script>
+<dialog id="vehicleDialog" class="vehicle-dialog" aria-labelledby="vehicleTitle"><div class="dialog-bar"><button class="ghost" id="closeVehicle" type="button">Cerrar</button></div><div id="vehicleDetail"></div></dialog>
+<input id="importMemoryFile" type="file" accept=".json,application/json" hidden>
+<script src="./interfaz.js"></script>
 </body>
 </html>

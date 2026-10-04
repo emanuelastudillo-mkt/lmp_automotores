@@ -109,7 +109,7 @@ function renderBrokenVehicle(){
     state.car.condition=clamp(state.car.condition+22,0,100);state.car.performance=clamp(state.car.performance+20,0,100);
     state.car.originality=clamp(state.car.originality-2,0,100);state.car.operable=true;
     state.decisions++;state.pendingResult={year:state.year,title:'Motor reconstruido',text:`Reconstruiste el motor por ${money(cost)}. El auto volvió a circular.`,icon:'🔩'};
-    state.events.unshift({year:state.year,text:state.pendingResult.text});state.nextEventYear=Math.min(careerEndYear(),state.year+nextGap());persist();renderGame();
+    state.events.unshift({year:state.year,unitUid:state.car.uid,text:state.pendingResult.text});state.nextEventYear=Math.min(careerEndYear(),state.year+nextGap());persist();renderGame();
   };
   persist();closeMarket();hydrateSvgIcons($('#eventCard'));
 }
