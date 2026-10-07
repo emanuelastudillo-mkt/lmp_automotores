@@ -10866,5 +10866,1193 @@
         "note": "La nueva fiebre te acercó a otros fanáticos y, en vez de modificar de más, empezaste a valorar mejor la identidad de tu auto."
       }
     ]
+  },
+  {
+    "id": "ex_dodge-gtx-v8_tecnico",
+    "icon": "🔧",
+    "title": "Dodge GTX V8: mantenimiento con criterio",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "dodge-gtx-v8",
+    "exclusiveVehicleEvent": true,
+    "text": "Revisar refrigeración, carburación y encendido del V8. Un taller propone una revisión completa; una solución rápida cuesta menos, pero deja desgaste pendiente.",
+    "choices": [
+      {
+        "icon": "🛠️",
+        "label": "Revisar refrigeración, carburación y encendido del V8",
+        "costType": "repair",
+        "repairBase": 280,
+        "condition": 7,
+        "originality": 2,
+        "performance": 3,
+        "valueShare": 0.6,
+        "risk": 0.03,
+        "note": "La revisión dejó el vehículo más sano y parejo."
+      },
+      {
+        "icon": "🩹",
+        "label": "Resolver solo lo urgente",
+        "costType": "repair",
+        "repairBase": 110,
+        "condition": 2,
+        "originality": -2,
+        "performance": 0,
+        "valueShare": 0.2,
+        "risk": 0.18,
+        "note": "El vehículo volvió a funcionar, pero todavía hay trabajos pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_dodge-gtx-v8_identidad",
+    "icon": "✨",
+    "title": "Dodge GTX V8: conservar su identidad",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "dodge-gtx-v8",
+    "exclusiveVehicleEvent": true,
+    "text": "Conservar los cromados, el techo vinílico y los detalles originales. Aparecen piezas y un trabajo de terminación adecuados para tu versión; podés invertir o conservar el dinero.",
+    "choices": [
+      {
+        "icon": "📦",
+        "label": "Recuperar los detalles correctos",
+        "costPctVehicle": 0.04,
+        "condition": 3,
+        "originality": 8,
+        "valueShare": 0.8,
+        "fanGain": 3,
+        "risk": 0.01,
+        "note": "El vehículo recuperó detalles propios de su época y versión."
+      },
+      {
+        "icon": "💰",
+        "label": "Conservar el dinero",
+        "note": "No gastaste; los detalles de conservación quedan pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_dodge-polara-rt_tecnico",
+    "icon": "🔧",
+    "title": "Dodge Polara RT: mantenimiento con criterio",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "dodge-polara-rt",
+    "exclusiveVehicleEvent": true,
+    "text": "Afinar el seis cilindros y revisar el tren delantero. Un taller propone una revisión completa; una solución rápida cuesta menos, pero deja desgaste pendiente.",
+    "choices": [
+      {
+        "icon": "🛠️",
+        "label": "Afinar el seis cilindros y revisar el tren delantero",
+        "costType": "repair",
+        "repairBase": 280,
+        "condition": 7,
+        "originality": 2,
+        "performance": 3,
+        "valueShare": 0.6,
+        "risk": 0.03,
+        "note": "La revisión dejó el vehículo más sano y parejo."
+      },
+      {
+        "icon": "🩹",
+        "label": "Resolver solo lo urgente",
+        "costType": "repair",
+        "repairBase": 110,
+        "condition": 2,
+        "originality": -2,
+        "performance": 0,
+        "valueShare": 0.2,
+        "risk": 0.18,
+        "note": "El vehículo volvió a funcionar, pero todavía hay trabajos pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_dodge-polara-rt_identidad",
+    "icon": "✨",
+    "title": "Dodge Polara RT: conservar su identidad",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "dodge-polara-rt",
+    "exclusiveVehicleEvent": true,
+    "text": "Recuperar los detalles y emblemas específicos de la RT. Aparecen piezas y un trabajo de terminación adecuados para tu versión; podés invertir o conservar el dinero.",
+    "choices": [
+      {
+        "icon": "📦",
+        "label": "Recuperar los detalles correctos",
+        "costPctVehicle": 0.04,
+        "condition": 3,
+        "originality": 8,
+        "valueShare": 0.8,
+        "fanGain": 3,
+        "risk": 0.01,
+        "note": "El vehículo recuperó detalles propios de su época y versión."
+      },
+      {
+        "icon": "💰",
+        "label": "Conservar el dinero",
+        "note": "No gastaste; los detalles de conservación quedan pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_renault-11_tecnico",
+    "icon": "🔧",
+    "title": "Renault 11 TXE: mantenimiento con criterio",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "renault-11",
+    "exclusiveVehicleEvent": true,
+    "text": "Revisar refrigeración, encendido y alimentación según la versión. Un taller propone una revisión completa; una solución rápida cuesta menos, pero deja desgaste pendiente.",
+    "choices": [
+      {
+        "icon": "🛠️",
+        "label": "Revisar refrigeración, encendido y alimentación según la versión",
+        "costType": "repair",
+        "repairBase": 280,
+        "condition": 7,
+        "originality": 2,
+        "performance": 3,
+        "valueShare": 0.6,
+        "risk": 0.03,
+        "note": "La revisión dejó el vehículo más sano y parejo."
+      },
+      {
+        "icon": "🩹",
+        "label": "Resolver solo lo urgente",
+        "costType": "repair",
+        "repairBase": 110,
+        "condition": 2,
+        "originality": -2,
+        "performance": 0,
+        "valueShare": 0.2,
+        "risk": 0.18,
+        "note": "El vehículo volvió a funcionar, pero todavía hay trabajos pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_renault-11_identidad",
+    "icon": "✨",
+    "title": "Renault 11 TXE: conservar su identidad",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "renault-11",
+    "exclusiveVehicleEvent": true,
+    "text": "Cuidar el interior y los detalles de una versión cada vez menos común. Aparecen piezas y un trabajo de terminación adecuados para tu versión; podés invertir o conservar el dinero.",
+    "choices": [
+      {
+        "icon": "📦",
+        "label": "Recuperar los detalles correctos",
+        "costPctVehicle": 0.04,
+        "condition": 3,
+        "originality": 8,
+        "valueShare": 0.8,
+        "fanGain": 3,
+        "risk": 0.01,
+        "note": "El vehículo recuperó detalles propios de su época y versión."
+      },
+      {
+        "icon": "💰",
+        "label": "Conservar el dinero",
+        "note": "No gastaste; los detalles de conservación quedan pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_citroen-3cv_tecnico",
+    "icon": "🔧",
+    "title": "Citroën 3CV: mantenimiento con criterio",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "citroen-3cv",
+    "exclusiveVehicleEvent": true,
+    "text": "Revisar encendido, frenos y fuelles de la suspensión. Un taller propone una revisión completa; una solución rápida cuesta menos, pero deja desgaste pendiente.",
+    "choices": [
+      {
+        "icon": "🛠️",
+        "label": "Revisar encendido, frenos y fuelles de la suspensión",
+        "costType": "repair",
+        "repairBase": 280,
+        "condition": 7,
+        "originality": 2,
+        "performance": 3,
+        "valueShare": 0.6,
+        "risk": 0.03,
+        "note": "La revisión dejó el vehículo más sano y parejo."
+      },
+      {
+        "icon": "🩹",
+        "label": "Resolver solo lo urgente",
+        "costType": "repair",
+        "repairBase": 110,
+        "condition": 2,
+        "originality": -2,
+        "performance": 0,
+        "valueShare": 0.2,
+        "risk": 0.18,
+        "note": "El vehículo volvió a funcionar, pero todavía hay trabajos pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_citroen-3cv_identidad",
+    "icon": "✨",
+    "title": "Citroën 3CV: conservar su identidad",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "citroen-3cv",
+    "exclusiveVehicleEvent": true,
+    "text": "Preservar capota, tapizados y piezas de la carrocería. Aparecen piezas y un trabajo de terminación adecuados para tu versión; podés invertir o conservar el dinero.",
+    "choices": [
+      {
+        "icon": "📦",
+        "label": "Recuperar los detalles correctos",
+        "costPctVehicle": 0.04,
+        "condition": 3,
+        "originality": 8,
+        "valueShare": 0.8,
+        "fanGain": 3,
+        "risk": 0.01,
+        "note": "El vehículo recuperó detalles propios de su época y versión."
+      },
+      {
+        "icon": "💰",
+        "label": "Conservar el dinero",
+        "note": "No gastaste; los detalles de conservación quedan pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_renault-6_tecnico",
+    "icon": "🔧",
+    "title": "Renault 6 GTL: mantenimiento con criterio",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "renault-6",
+    "exclusiveVehicleEvent": true,
+    "text": "Revisar refrigeración y transmisión antes de un viaje. Un taller propone una revisión completa; una solución rápida cuesta menos, pero deja desgaste pendiente.",
+    "choices": [
+      {
+        "icon": "🛠️",
+        "label": "Revisar refrigeración y transmisión antes de un viaje",
+        "costType": "repair",
+        "repairBase": 280,
+        "condition": 7,
+        "originality": 2,
+        "performance": 3,
+        "valueShare": 0.6,
+        "risk": 0.03,
+        "note": "La revisión dejó el vehículo más sano y parejo."
+      },
+      {
+        "icon": "🩹",
+        "label": "Resolver solo lo urgente",
+        "costType": "repair",
+        "repairBase": 110,
+        "condition": 2,
+        "originality": -2,
+        "performance": 0,
+        "valueShare": 0.2,
+        "risk": 0.18,
+        "note": "El vehículo volvió a funcionar, pero todavía hay trabajos pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_renault-6_identidad",
+    "icon": "✨",
+    "title": "Renault 6 GTL: conservar su identidad",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "renault-6",
+    "exclusiveVehicleEvent": true,
+    "text": "Conservar la practicidad y el interior familiar original. Aparecen piezas y un trabajo de terminación adecuados para tu versión; podés invertir o conservar el dinero.",
+    "choices": [
+      {
+        "icon": "📦",
+        "label": "Recuperar los detalles correctos",
+        "costPctVehicle": 0.04,
+        "condition": 3,
+        "originality": 8,
+        "valueShare": 0.8,
+        "fanGain": 3,
+        "risk": 0.01,
+        "note": "El vehículo recuperó detalles propios de su época y versión."
+      },
+      {
+        "icon": "💰",
+        "label": "Conservar el dinero",
+        "note": "No gastaste; los detalles de conservación quedan pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_volkswagen-senda_tecnico",
+    "icon": "🔧",
+    "title": "Volkswagen Senda: mantenimiento con criterio",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "volkswagen-senda",
+    "exclusiveVehicleEvent": true,
+    "text": "Revisar carburación, distribución y frenos. Un taller propone una revisión completa; una solución rápida cuesta menos, pero deja desgaste pendiente.",
+    "choices": [
+      {
+        "icon": "🛠️",
+        "label": "Revisar carburación, distribución y frenos",
+        "costType": "repair",
+        "repairBase": 280,
+        "condition": 7,
+        "originality": 2,
+        "performance": 3,
+        "valueShare": 0.6,
+        "risk": 0.03,
+        "note": "La revisión dejó el vehículo más sano y parejo."
+      },
+      {
+        "icon": "🩹",
+        "label": "Resolver solo lo urgente",
+        "costType": "repair",
+        "repairBase": 110,
+        "condition": 2,
+        "originality": -2,
+        "performance": 0,
+        "valueShare": 0.2,
+        "risk": 0.18,
+        "note": "El vehículo volvió a funcionar, pero todavía hay trabajos pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_volkswagen-senda_identidad",
+    "icon": "✨",
+    "title": "Volkswagen Senda: conservar su identidad",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "volkswagen-senda",
+    "exclusiveVehicleEvent": true,
+    "text": "Recuperar el habitáculo de un familiar de uso diario. Aparecen piezas y un trabajo de terminación adecuados para tu versión; podés invertir o conservar el dinero.",
+    "choices": [
+      {
+        "icon": "📦",
+        "label": "Recuperar los detalles correctos",
+        "costPctVehicle": 0.04,
+        "condition": 3,
+        "originality": 8,
+        "valueShare": 0.8,
+        "fanGain": 3,
+        "risk": 0.01,
+        "note": "El vehículo recuperó detalles propios de su época y versión."
+      },
+      {
+        "icon": "💰",
+        "label": "Conservar el dinero",
+        "note": "No gastaste; los detalles de conservación quedan pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_volkswagen-1500_tecnico",
+    "icon": "🔧",
+    "title": "Volkswagen 1500: mantenimiento con criterio",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "volkswagen-1500",
+    "exclusiveVehicleEvent": true,
+    "text": "Revisar encendido, carburación y transmisión trasera. Un taller propone una revisión completa; una solución rápida cuesta menos, pero deja desgaste pendiente.",
+    "choices": [
+      {
+        "icon": "🛠️",
+        "label": "Revisar encendido, carburación y transmisión trasera",
+        "costType": "repair",
+        "repairBase": 280,
+        "condition": 7,
+        "originality": 2,
+        "performance": 3,
+        "valueShare": 0.6,
+        "risk": 0.03,
+        "note": "La revisión dejó el vehículo más sano y parejo."
+      },
+      {
+        "icon": "🩹",
+        "label": "Resolver solo lo urgente",
+        "costType": "repair",
+        "repairBase": 110,
+        "condition": 2,
+        "originality": -2,
+        "performance": 0,
+        "valueShare": 0.2,
+        "risk": 0.18,
+        "note": "El vehículo volvió a funcionar, pero todavía hay trabajos pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_volkswagen-1500_identidad",
+    "icon": "✨",
+    "title": "Volkswagen 1500: conservar su identidad",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "volkswagen-1500",
+    "exclusiveVehicleEvent": true,
+    "text": "Conservar los detalles de su etapa Volkswagen. Aparecen piezas y un trabajo de terminación adecuados para tu versión; podés invertir o conservar el dinero.",
+    "choices": [
+      {
+        "icon": "📦",
+        "label": "Recuperar los detalles correctos",
+        "costPctVehicle": 0.04,
+        "condition": 3,
+        "originality": 8,
+        "valueShare": 0.8,
+        "fanGain": 3,
+        "risk": 0.01,
+        "note": "El vehículo recuperó detalles propios de su época y versión."
+      },
+      {
+        "icon": "💰",
+        "label": "Conservar el dinero",
+        "note": "No gastaste; los detalles de conservación quedan pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_fiat-regatta_tecnico",
+    "icon": "🔧",
+    "title": "Fiat Regatta SC: mantenimiento con criterio",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "fiat-regatta",
+    "exclusiveVehicleEvent": true,
+    "text": "Revisar distribución, refrigeración y alimentación. Un taller propone una revisión completa; una solución rápida cuesta menos, pero deja desgaste pendiente.",
+    "choices": [
+      {
+        "icon": "🛠️",
+        "label": "Revisar distribución, refrigeración y alimentación",
+        "costType": "repair",
+        "repairBase": 280,
+        "condition": 7,
+        "originality": 2,
+        "performance": 3,
+        "valueShare": 0.6,
+        "risk": 0.03,
+        "note": "La revisión dejó el vehículo más sano y parejo."
+      },
+      {
+        "icon": "🩹",
+        "label": "Resolver solo lo urgente",
+        "costType": "repair",
+        "repairBase": 110,
+        "condition": 2,
+        "originality": -2,
+        "performance": 0,
+        "valueShare": 0.2,
+        "risk": 0.18,
+        "note": "El vehículo volvió a funcionar, pero todavía hay trabajos pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_fiat-regatta_identidad",
+    "icon": "✨",
+    "title": "Fiat Regatta SC: conservar su identidad",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "fiat-regatta",
+    "exclusiveVehicleEvent": true,
+    "text": "Recuperar tapizados, tablero y accesorios de época. Aparecen piezas y un trabajo de terminación adecuados para tu versión; podés invertir o conservar el dinero.",
+    "choices": [
+      {
+        "icon": "📦",
+        "label": "Recuperar los detalles correctos",
+        "costPctVehicle": 0.04,
+        "condition": 3,
+        "originality": 8,
+        "valueShare": 0.8,
+        "fanGain": 3,
+        "risk": 0.01,
+        "note": "El vehículo recuperó detalles propios de su época y versión."
+      },
+      {
+        "icon": "💰",
+        "label": "Conservar el dinero",
+        "note": "No gastaste; los detalles de conservación quedan pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_fiat-133_tecnico",
+    "icon": "🔧",
+    "title": "Fiat 133: mantenimiento con criterio",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "fiat-133",
+    "exclusiveVehicleEvent": true,
+    "text": "Revisar refrigeración, encendido y alimentación del motor trasero. Un taller propone una revisión completa; una solución rápida cuesta menos, pero deja desgaste pendiente.",
+    "choices": [
+      {
+        "icon": "🛠️",
+        "label": "Revisar refrigeración, encendido y alimentación del motor trasero",
+        "costType": "repair",
+        "repairBase": 280,
+        "condition": 7,
+        "originality": 2,
+        "performance": 3,
+        "valueShare": 0.6,
+        "risk": 0.03,
+        "note": "La revisión dejó el vehículo más sano y parejo."
+      },
+      {
+        "icon": "🩹",
+        "label": "Resolver solo lo urgente",
+        "costType": "repair",
+        "repairBase": 110,
+        "condition": 2,
+        "originality": -2,
+        "performance": 0,
+        "valueShare": 0.2,
+        "risk": 0.18,
+        "note": "El vehículo volvió a funcionar, pero todavía hay trabajos pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_fiat-133_identidad",
+    "icon": "✨",
+    "title": "Fiat 133: conservar su identidad",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "fiat-133",
+    "exclusiveVehicleEvent": true,
+    "text": "Preservar los pequeños detalles de una carrocería poco común. Aparecen piezas y un trabajo de terminación adecuados para tu versión; podés invertir o conservar el dinero.",
+    "choices": [
+      {
+        "icon": "📦",
+        "label": "Recuperar los detalles correctos",
+        "costPctVehicle": 0.04,
+        "condition": 3,
+        "originality": 8,
+        "valueShare": 0.8,
+        "fanGain": 3,
+        "risk": 0.01,
+        "note": "El vehículo recuperó detalles propios de su época y versión."
+      },
+      {
+        "icon": "💰",
+        "label": "Conservar el dinero",
+        "note": "No gastaste; los detalles de conservación quedan pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_dodge-coronado_tecnico",
+    "icon": "🔧",
+    "title": "Dodge Coronado: mantenimiento con criterio",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "dodge-coronado",
+    "exclusiveVehicleEvent": true,
+    "text": "Revisar el seis cilindros, la caja y la refrigeración. Un taller propone una revisión completa; una solución rápida cuesta menos, pero deja desgaste pendiente.",
+    "choices": [
+      {
+        "icon": "🛠️",
+        "label": "Revisar el seis cilindros, la caja y la refrigeración",
+        "costType": "repair",
+        "repairBase": 280,
+        "condition": 7,
+        "originality": 2,
+        "performance": 3,
+        "valueShare": 0.6,
+        "risk": 0.03,
+        "note": "La revisión dejó el vehículo más sano y parejo."
+      },
+      {
+        "icon": "🩹",
+        "label": "Resolver solo lo urgente",
+        "costType": "repair",
+        "repairBase": 110,
+        "condition": 2,
+        "originality": -2,
+        "performance": 0,
+        "valueShare": 0.2,
+        "risk": 0.18,
+        "note": "El vehículo volvió a funcionar, pero todavía hay trabajos pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_dodge-coronado_identidad",
+    "icon": "✨",
+    "title": "Dodge Coronado: conservar su identidad",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "dodge-coronado",
+    "exclusiveVehicleEvent": true,
+    "text": "Conservar el techo vinílico y el interior de lujo. Aparecen piezas y un trabajo de terminación adecuados para tu versión; podés invertir o conservar el dinero.",
+    "choices": [
+      {
+        "icon": "📦",
+        "label": "Recuperar los detalles correctos",
+        "costPctVehicle": 0.04,
+        "condition": 3,
+        "originality": 8,
+        "valueShare": 0.8,
+        "fanGain": 3,
+        "risk": 0.01,
+        "note": "El vehículo recuperó detalles propios de su época y versión."
+      },
+      {
+        "icon": "💰",
+        "label": "Conservar el dinero",
+        "note": "No gastaste; los detalles de conservación quedan pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_ford-sierra-xr4_tecnico",
+    "icon": "🔧",
+    "title": "Ford Sierra XR4: mantenimiento con criterio",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "ford-sierra-xr4",
+    "exclusiveVehicleEvent": true,
+    "text": "Revisar suspensión, refrigeración y puesta a punto del 2.3. Un taller propone una revisión completa; una solución rápida cuesta menos, pero deja desgaste pendiente.",
+    "choices": [
+      {
+        "icon": "🛠️",
+        "label": "Revisar suspensión, refrigeración y puesta a punto del 2.3",
+        "costType": "repair",
+        "repairBase": 280,
+        "condition": 7,
+        "originality": 2,
+        "performance": 3,
+        "valueShare": 0.6,
+        "risk": 0.03,
+        "note": "La revisión dejó el vehículo más sano y parejo."
+      },
+      {
+        "icon": "🩹",
+        "label": "Resolver solo lo urgente",
+        "costType": "repair",
+        "repairBase": 110,
+        "condition": 2,
+        "originality": -2,
+        "performance": 0,
+        "valueShare": 0.2,
+        "risk": 0.18,
+        "note": "El vehículo volvió a funcionar, pero todavía hay trabajos pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_ford-sierra-xr4_identidad",
+    "icon": "✨",
+    "title": "Ford Sierra XR4: conservar su identidad",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "ford-sierra-xr4",
+    "exclusiveVehicleEvent": true,
+    "text": "Preservar llantas y doble alerón específicos de la XR4. Aparecen piezas y un trabajo de terminación adecuados para tu versión; podés invertir o conservar el dinero.",
+    "choices": [
+      {
+        "icon": "📦",
+        "label": "Recuperar los detalles correctos",
+        "costPctVehicle": 0.04,
+        "condition": 3,
+        "originality": 8,
+        "valueShare": 0.8,
+        "fanGain": 3,
+        "risk": 0.01,
+        "note": "El vehículo recuperó detalles propios de su época y versión."
+      },
+      {
+        "icon": "💰",
+        "label": "Conservar el dinero",
+        "note": "No gastaste; los detalles de conservación quedan pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_ford-taunus-gt-sp_tecnico",
+    "icon": "🔧",
+    "title": "Ford Taunus GT SP5: mantenimiento con criterio",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "ford-taunus-gt-sp",
+    "exclusiveVehicleEvent": true,
+    "text": "Revisar puesta a punto del 2.3 y transmisión de la versión deportiva. Un taller propone una revisión completa; una solución rápida cuesta menos, pero deja desgaste pendiente.",
+    "choices": [
+      {
+        "icon": "🛠️",
+        "label": "Revisar puesta a punto del 2.3 y transmisión de la versión deportiva",
+        "costType": "repair",
+        "repairBase": 280,
+        "condition": 7,
+        "originality": 2,
+        "performance": 3,
+        "valueShare": 0.6,
+        "risk": 0.03,
+        "note": "La revisión dejó el vehículo más sano y parejo."
+      },
+      {
+        "icon": "🩹",
+        "label": "Resolver solo lo urgente",
+        "costType": "repair",
+        "repairBase": 110,
+        "condition": 2,
+        "originality": -2,
+        "performance": 0,
+        "valueShare": 0.2,
+        "risk": 0.18,
+        "note": "El vehículo volvió a funcionar, pero todavía hay trabajos pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_ford-taunus-gt-sp_identidad",
+    "icon": "✨",
+    "title": "Ford Taunus GT SP5: conservar su identidad",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "ford-taunus-gt-sp",
+    "exclusiveVehicleEvent": true,
+    "text": "Recuperar llantas, franjas y detalles de la cupé nacional. Aparecen piezas y un trabajo de terminación adecuados para tu versión; podés invertir o conservar el dinero.",
+    "choices": [
+      {
+        "icon": "📦",
+        "label": "Recuperar los detalles correctos",
+        "costPctVehicle": 0.04,
+        "condition": 3,
+        "originality": 8,
+        "valueShare": 0.8,
+        "fanGain": 3,
+        "risk": 0.01,
+        "note": "El vehículo recuperó detalles propios de su época y versión."
+      },
+      {
+        "icon": "💰",
+        "label": "Conservar el dinero",
+        "note": "No gastaste; los detalles de conservación quedan pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_fiat-128-iava_tecnico",
+    "icon": "🔧",
+    "title": "Fiat 128 IAVA Europa: mantenimiento con criterio",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "fiat-128-iava",
+    "exclusiveVehicleEvent": true,
+    "text": "Afinar carburación y encendido respetando la preparación IAVA. Un taller propone una revisión completa; una solución rápida cuesta menos, pero deja desgaste pendiente.",
+    "choices": [
+      {
+        "icon": "🛠️",
+        "label": "Afinar carburación y encendido respetando la preparación IAVA",
+        "costType": "repair",
+        "repairBase": 280,
+        "condition": 7,
+        "originality": 2,
+        "performance": 3,
+        "valueShare": 0.6,
+        "risk": 0.03,
+        "note": "La revisión dejó el vehículo más sano y parejo."
+      },
+      {
+        "icon": "🩹",
+        "label": "Resolver solo lo urgente",
+        "costType": "repair",
+        "repairBase": 110,
+        "condition": 2,
+        "originality": -2,
+        "performance": 0,
+        "valueShare": 0.2,
+        "risk": 0.18,
+        "note": "El vehículo volvió a funcionar, pero todavía hay trabajos pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_fiat-128-iava_identidad",
+    "icon": "✨",
+    "title": "Fiat 128 IAVA Europa: conservar su identidad",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "fiat-128-iava",
+    "exclusiveVehicleEvent": true,
+    "text": "Recuperar las franjas, llantas e interior de la versión IAVA. Aparecen piezas y un trabajo de terminación adecuados para tu versión; podés invertir o conservar el dinero.",
+    "choices": [
+      {
+        "icon": "📦",
+        "label": "Recuperar los detalles correctos",
+        "costPctVehicle": 0.04,
+        "condition": 3,
+        "originality": 8,
+        "valueShare": 0.8,
+        "fanGain": 3,
+        "risk": 0.01,
+        "note": "El vehículo recuperó detalles propios de su época y versión."
+      },
+      {
+        "icon": "💰",
+        "label": "Conservar el dinero",
+        "note": "No gastaste; los detalles de conservación quedan pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_peugeot-405-mi16_tecnico",
+    "icon": "🔧",
+    "title": "Peugeot 405 Mi16: mantenimiento con criterio",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "peugeot-405-mi16",
+    "exclusiveVehicleEvent": true,
+    "text": "Revisar distribución, refrigeración e inyección del 16 válvulas. Un taller propone una revisión completa; una solución rápida cuesta menos, pero deja desgaste pendiente.",
+    "choices": [
+      {
+        "icon": "🛠️",
+        "label": "Revisar distribución, refrigeración e inyección del 16 válvulas",
+        "costType": "repair",
+        "repairBase": 280,
+        "condition": 7,
+        "originality": 2,
+        "performance": 3,
+        "valueShare": 0.6,
+        "risk": 0.03,
+        "note": "La revisión dejó el vehículo más sano y parejo."
+      },
+      {
+        "icon": "🩹",
+        "label": "Resolver solo lo urgente",
+        "costType": "repair",
+        "repairBase": 110,
+        "condition": 2,
+        "originality": -2,
+        "performance": 0,
+        "valueShare": 0.2,
+        "risk": 0.18,
+        "note": "El vehículo volvió a funcionar, pero todavía hay trabajos pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_peugeot-405-mi16_identidad",
+    "icon": "✨",
+    "title": "Peugeot 405 Mi16: conservar su identidad",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "peugeot-405-mi16",
+    "exclusiveVehicleEvent": true,
+    "text": "Conservar llantas, butacas y detalles específicos del Mi16. Aparecen piezas y un trabajo de terminación adecuados para tu versión; podés invertir o conservar el dinero.",
+    "choices": [
+      {
+        "icon": "📦",
+        "label": "Recuperar los detalles correctos",
+        "costPctVehicle": 0.04,
+        "condition": 3,
+        "originality": 8,
+        "valueShare": 0.8,
+        "fanGain": 3,
+        "risk": 0.01,
+        "note": "El vehículo recuperó detalles propios de su época y versión."
+      },
+      {
+        "icon": "💰",
+        "label": "Conservar el dinero",
+        "note": "No gastaste; los detalles de conservación quedan pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_ford-f100_tecnico",
+    "icon": "🔧",
+    "title": "Ford F-100 1985: mantenimiento con criterio",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "ford-f100",
+    "exclusiveVehicleEvent": true,
+    "text": "Revisar frenos, dirección y transmisión antes de cargarla. Un taller propone una revisión completa; una solución rápida cuesta menos, pero deja desgaste pendiente.",
+    "choices": [
+      {
+        "icon": "🛠️",
+        "label": "Revisar frenos, dirección y transmisión antes de cargarla",
+        "costType": "repair",
+        "repairBase": 360,
+        "condition": 7,
+        "originality": 2,
+        "performance": 3,
+        "valueShare": 0.6,
+        "risk": 0.03,
+        "note": "La revisión dejó el vehículo más sano y parejo."
+      },
+      {
+        "icon": "🩹",
+        "label": "Resolver solo lo urgente",
+        "costType": "repair",
+        "repairBase": 110,
+        "condition": 2,
+        "originality": -2,
+        "performance": 0,
+        "valueShare": 0.2,
+        "risk": 0.18,
+        "note": "El vehículo volvió a funcionar, pero todavía hay trabajos pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_ford-f100_identidad",
+    "icon": "✨",
+    "title": "Ford F-100 1985: conservar su identidad",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "ford-f100",
+    "exclusiveVehicleEvent": true,
+    "text": "Conservar la caja y los detalles de una camioneta de trabajo. Aparecen piezas y un trabajo de terminación adecuados para tu versión; podés invertir o conservar el dinero.",
+    "choices": [
+      {
+        "icon": "📦",
+        "label": "Recuperar los detalles correctos",
+        "costPctVehicle": 0.04,
+        "condition": 3,
+        "originality": 8,
+        "valueShare": 0.8,
+        "fanGain": 3,
+        "risk": 0.01,
+        "note": "El vehículo recuperó detalles propios de su época y versión."
+      },
+      {
+        "icon": "💰",
+        "label": "Conservar el dinero",
+        "note": "No gastaste; los detalles de conservación quedan pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_ford-ranger_tecnico",
+    "icon": "🔧",
+    "title": "Ford Ranger XLT 2023: mantenimiento con criterio",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "ford-ranger",
+    "exclusiveVehicleEvent": true,
+    "text": "Revisar alimentación diésel, transmisión y sistema de tracción. Un taller propone una revisión completa; una solución rápida cuesta menos, pero deja desgaste pendiente.",
+    "choices": [
+      {
+        "icon": "🛠️",
+        "label": "Revisar alimentación diésel, transmisión y sistema de tracción",
+        "costType": "repair",
+        "repairBase": 360,
+        "condition": 7,
+        "originality": 2,
+        "performance": 3,
+        "valueShare": 0.6,
+        "risk": 0.03,
+        "note": "La revisión dejó el vehículo más sano y parejo."
+      },
+      {
+        "icon": "🩹",
+        "label": "Resolver solo lo urgente",
+        "costType": "repair",
+        "repairBase": 110,
+        "condition": 2,
+        "originality": -2,
+        "performance": 0,
+        "valueShare": 0.2,
+        "risk": 0.18,
+        "note": "El vehículo volvió a funcionar, pero todavía hay trabajos pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_ford-ranger_identidad",
+    "icon": "✨",
+    "title": "Ford Ranger XLT 2023: conservar su identidad",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "ford-ranger",
+    "exclusiveVehicleEvent": true,
+    "text": "Cuidar caja, chasis e interior después del trabajo. Aparecen piezas y un trabajo de terminación adecuados para tu versión; podés invertir o conservar el dinero.",
+    "choices": [
+      {
+        "icon": "📦",
+        "label": "Recuperar los detalles correctos",
+        "costPctVehicle": 0.04,
+        "condition": 3,
+        "originality": 8,
+        "valueShare": 0.8,
+        "fanGain": 3,
+        "risk": 0.01,
+        "note": "El vehículo recuperó detalles propios de su época y versión."
+      },
+      {
+        "icon": "💰",
+        "label": "Conservar el dinero",
+        "note": "No gastaste; los detalles de conservación quedan pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_ika-estanciera_tecnico",
+    "icon": "🔧",
+    "title": "IKA Estanciera 1967: mantenimiento con criterio",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "ika-estanciera",
+    "exclusiveVehicleEvent": true,
+    "text": "Revisar frenos, dirección y el seis cilindros de la época. Un taller propone una revisión completa; una solución rápida cuesta menos, pero deja desgaste pendiente.",
+    "choices": [
+      {
+        "icon": "🛠️",
+        "label": "Revisar frenos, dirección y el seis cilindros de la época",
+        "costType": "repair",
+        "repairBase": 360,
+        "condition": 7,
+        "originality": 2,
+        "performance": 3,
+        "valueShare": 0.6,
+        "risk": 0.03,
+        "note": "La revisión dejó el vehículo más sano y parejo."
+      },
+      {
+        "icon": "🩹",
+        "label": "Resolver solo lo urgente",
+        "costType": "repair",
+        "repairBase": 110,
+        "condition": 2,
+        "originality": -2,
+        "performance": 0,
+        "valueShare": 0.2,
+        "risk": 0.18,
+        "note": "El vehículo volvió a funcionar, pero todavía hay trabajos pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_ika-estanciera_identidad",
+    "icon": "✨",
+    "title": "IKA Estanciera 1967: conservar su identidad",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "ika-estanciera",
+    "exclusiveVehicleEvent": true,
+    "text": "Preservar la carrocería y los detalles rurales originales. Aparecen piezas y un trabajo de terminación adecuados para tu versión; podés invertir o conservar el dinero.",
+    "choices": [
+      {
+        "icon": "📦",
+        "label": "Recuperar los detalles correctos",
+        "costPctVehicle": 0.04,
+        "condition": 3,
+        "originality": 8,
+        "valueShare": 0.8,
+        "fanGain": 3,
+        "risk": 0.01,
+        "note": "El vehículo recuperó detalles propios de su época y versión."
+      },
+      {
+        "icon": "💰",
+        "label": "Conservar el dinero",
+        "note": "No gastaste; los detalles de conservación quedan pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_renault-trafic_tecnico",
+    "icon": "🔧",
+    "title": "Renault Trafic Furgón: mantenimiento con criterio",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "renault-trafic",
+    "exclusiveVehicleEvent": true,
+    "text": "Revisar refrigeración, frenos y transmisión antes de salir a repartir. Un taller propone una revisión completa; una solución rápida cuesta menos, pero deja desgaste pendiente.",
+    "choices": [
+      {
+        "icon": "🛠️",
+        "label": "Revisar refrigeración, frenos y transmisión antes de salir a repartir",
+        "costType": "repair",
+        "repairBase": 360,
+        "condition": 7,
+        "originality": 2,
+        "performance": 3,
+        "valueShare": 0.6,
+        "risk": 0.03,
+        "note": "La revisión dejó el vehículo más sano y parejo."
+      },
+      {
+        "icon": "🩹",
+        "label": "Resolver solo lo urgente",
+        "costType": "repair",
+        "repairBase": 110,
+        "condition": 2,
+        "originality": -2,
+        "performance": 0,
+        "valueShare": 0.2,
+        "risk": 0.18,
+        "note": "El vehículo volvió a funcionar, pero todavía hay trabajos pendientes."
+      }
+    ]
+  },
+  {
+    "id": "ex_renault-trafic_identidad",
+    "icon": "✨",
+    "title": "Renault Trafic Furgón: conservar su identidad",
+    "tags": [
+      "*"
+    ],
+    "vehicleId": "renault-trafic",
+    "exclusiveVehicleEvent": true,
+    "text": "Cuidar piso de carga, puertas y protección contra el desgaste. Aparecen piezas y un trabajo de terminación adecuados para tu versión; podés invertir o conservar el dinero.",
+    "choices": [
+      {
+        "icon": "📦",
+        "label": "Recuperar los detalles correctos",
+        "costPctVehicle": 0.04,
+        "condition": 3,
+        "originality": 8,
+        "valueShare": 0.8,
+        "fanGain": 3,
+        "risk": 0.01,
+        "note": "El vehículo recuperó detalles propios de su época y versión."
+      },
+      {
+        "icon": "💰",
+        "label": "Conservar el dinero",
+        "note": "No gastaste; los detalles de conservación quedan pendientes."
+      }
+    ]
   }
 ]

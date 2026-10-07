@@ -520,7 +520,7 @@ button:disabled .ui-icon{
     <div class="topbar-actions">
       <button class="ghost achievements-button" id="openAchievements" type="button">🏆 Logros 0/31</button>
       <button id="emergencyReset" class="ghost" type="button">Reset</button>
-      <div class="version">prototipo privado · v0.48</div>
+      <div class="version">prototipo privado · v0.49</div>
     </div>
   </div>
 </header>
@@ -780,7 +780,7 @@ function imageBaseFor(car){
   return car?.imageBase||`${Math.max(1,CARS.findIndex(item=>item.id===car?.id)+1)}-${car?.marca||''} ${car?.modelo||''}`.trim();
 }
 function carImageSrc(car,ext=car?.imageExt||'png'){
-  return `./imagenes/${encodeURIComponent(imageBaseFor(car))}.${ext}?v=048`;
+  return `./imagenes/${encodeURIComponent(imageBaseFor(car))}.${ext}?v=049`;
 }
 function tryCarImage(img){
   const firstExt=carById(img.dataset.carId)?.imageExt||'png';
