@@ -404,14 +404,22 @@
     </image:image>
   </url>
   <url>
-    <loc>https://lmpautos.com/vehiculos/fiat-abarth-595-1-4-turbo-gran-turismo-2018/</loc>
+    <loc>https://lmpautos.com/vehiculos/peugeot-partner-1-6-hdi-furgon-2026/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://lmpautos.com/img/vehiculos/A128.webp?v=094c29556470</image:loc>
-      <image:title>Fiat Abarth 595 1.4 Turbo Gran Turismo 2018</image:title>
-    </image:image>
+  </url>
+  <url>
+    <loc>https://lmpautos.com/vehiculos/peugeot-2008-allure-tiptronic-2019/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lmpautos.com/vehiculos/fiat-fiorino-1-4-furgoneta-deuda-2019/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://lmpautos.com/vehiculos/ford-ka-s-1-5-l-2017/</loc>
@@ -472,5 +480,11 @@
       <image:loc>https://lmpautos.com/img/vehiculos/A136-3.webp?v=094c29556470</image:loc>
       <image:title>Toyota Etios X 1.5 Sedán 2015</image:title>
     </image:image>
+  </url>
+  <url>
+    <loc>https://lmpautos.com/vehiculos/chevrolet-sonic-1-6-lt-2012/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
   </url>
 </urlset>

@@ -255,10 +255,6 @@
         }
       ]
     },
-    "A128": {
-      "manualCover": true,
-      "items": []
-    },
     "A129": {
       "manualCover": true,
       "items": [
@@ -428,7 +424,23 @@
         }
       ]
     },
+    "A144": {
+      "manualCover": false,
+      "items": []
+    },
     "A145": {
+      "manualCover": false,
+      "items": []
+    },
+    "A146": {
+      "manualCover": false,
+      "items": []
+    },
+    "A147": {
+      "manualCover": false,
+      "items": []
+    },
+    "A148": {
       "manualCover": false,
       "items": []
     }
