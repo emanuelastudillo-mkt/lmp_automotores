@@ -1,6 +1,31 @@
 /* La decisión y su resultado ocupan el centro de la partida. */
 #gameScreen{max-width:1040px;margin-inline:auto}
 #gameScreen.screen.active,#gameScreen .event-card.enter{animation:none}
+html:has(#gameScreen.active){scroll-padding-top:calc(var(--current-vehicle-top,81px) + var(--current-vehicle-height,120px) + 14px)}
+.current-vehicle{position:sticky;top:var(--current-vehicle-top,81px);z-index:35;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:20px;align-items:center;background:#20242b;border:1px solid #535b66;border-radius:12px;padding:12px 16px;margin-bottom:14px;box-shadow:0 8px 20px #0005}
+.current-vehicle-identity{display:flex;align-items:center;gap:12px;min-width:0}
+.current-vehicle-photo{width:64px;height:64px;flex:0 0 64px;border-radius:8px;overflow:hidden;background:var(--paper)}
+.current-vehicle-photo img{width:100%;height:100%;object-fit:contain;display:block}
+.current-vehicle-name{min-width:0}
+.current-vehicle-label{display:block;font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:#c0cad7;line-height:1.4}
+.current-vehicle-label b{color:#ffbe98}
+.current-vehicle-name>strong{display:block;font-size:16px;line-height:1.25;margin:3px 0 5px;overflow-wrap:anywhere}
+.current-vehicle-ratings{display:flex;align-items:center;flex-wrap:wrap;gap:4px 12px;font-size:14px;line-height:1.2}
+.current-vehicle-ratings small{font-size:11px;color:#e1e4e9}
+.current-vehicle-ratings>span>span{display:inline-flex;gap:5px;align-items:center}
+.current-vehicle-ratings .no-fans{display:inline-flex;color:#adb5c0}
+.current-vehicle-ratings .no-fans .ui-icon{fill:none;stroke:currentColor;color:inherit;filter:none;width:14px;height:14px}
+.current-vehicle-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:0}
+.current-vehicle-metric{min-width:0}
+.current-vehicle-metric dt{font-size:12px;color:#c0cad7;line-height:1.4}
+.current-vehicle-metric dd{margin:2px 0 0;font-size:20px;font-weight:750;line-height:1.2;font-variant-numeric:tabular-nums}
+.current-vehicle-metric .metric-scale{font-size:11px;font-weight:400;color:#aeb8c5;margin-left:2px}
+.current-vehicle-bar{display:block;height:4px;margin-top:6px;border-radius:4px;overflow:hidden;background:#434b57}
+.current-vehicle-bar i{display:block;height:100%;background:#9bd3b0}
+.current-vehicle-metric[data-metric="originality"] i{background:#e9c275}
+.current-vehicle-metric[data-metric="performance"] i{background:#8ec1f0}
+.current-vehicle-empty{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:4px 16px;font-size:13px;color:var(--muted)}
+.current-vehicle-empty strong{color:var(--text)}
 #gameStats{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:16px}
 #gameStats>.stat{padding:12px 16px}
 .career-extra{grid-column:1/-1;background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
@@ -56,6 +81,16 @@
 #gameScreen .vehicle-tools .garage-actions button{font-size:13px}
 .garage-lock-note{margin:12px 0 0;font-size:12px;color:var(--muted);line-height:1.5}
 @media(max-width:700px){
+  .current-vehicle{grid-template-columns:minmax(0,1fr);gap:10px;padding:10px 12px}
+  .current-vehicle-identity{gap:10px}
+  .current-vehicle-photo{width:50px;height:50px;flex-basis:50px}
+  .current-vehicle-name>strong{font-size:14px}
+  .current-vehicle-ratings{font-size:12px;gap:4px 10px}
+  .current-vehicle-metrics{gap:10px}
+  .current-vehicle-metric dt{font-size:10px}
+  .current-vehicle-metric dd{font-size:15px;margin:2px 0 0}
+  .current-vehicle-bar{margin-top:4px}
+  .current-vehicle-metric .metric-scale{font-size:10px}
   .achievement-toast{top:auto;bottom:calc(84px + env(safe-area-inset-bottom,0px));right:12px;width:calc(100% - 24px)}
   #gameScreen .timeline{padding:16px}
   .extra-stats{grid-template-columns:repeat(2,minmax(0,1fr))}

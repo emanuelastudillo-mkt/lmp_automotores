@@ -1,4 +1,39 @@
 /* Presentación del paso actual. Consultar estas funciones no avanza la partida. */
+let currentVehicleObserver;
+function syncCurrentVehicleOffset(){
+  const panel=document.querySelector('#currentVehicle'),header=document.querySelector('.lmp-site-header'),nav=document.querySelector('#careerNav');
+  const top=(header?.getBoundingClientRect().height||0)+(nav&&getComputedStyle(nav).position==='sticky'?nav.getBoundingClientRect().height:0)+8;
+  document.documentElement.style.setProperty('--current-vehicle-top',`${top}px`);
+  document.documentElement.style.setProperty('--current-vehicle-height',`${panel?.getBoundingClientRect().height||0}px`);
+  return top;
+}
+function renderCurrentVehicle(){
+  const panel=$('#currentVehicle'),unit=state?.car,car=unit&&currentCar();
+  if(!panel)return;
+  if(!car){
+    panel.innerHTML='<div class="current-vehicle-empty"><strong>Sin vehículo en uso</strong><span>Elegí tu próximo auto desde el mercado o tu colección.</span></div>';
+  }else{
+    const status=carStatus(),fans=Math.max(0,Math.round(unit.fans||0)),flames=fanFlamesFromCount(fans);
+    const metrics=[['Estado','condition'],['Originalidad','originality'],['Performance','performance']];
+    panel.innerHTML=`<div class="current-vehicle-identity" data-unit-uid="${escapeText(unit.uid||'')}" data-vehicle-id="${escapeText(car.id)}">
+      <div class="current-vehicle-photo">${carImageMarkup(car)}</div>
+      <div class="current-vehicle-name"><span class="current-vehicle-label">Vehículo en uso${unit.operable===false?' · <b>Averiado</b>':''}</span><strong>${escapeText(car.marca+' '+car.modelo)} · ${unit.modelYear??car.desde}</strong>
+        <div class="current-vehicle-ratings">
+          <span class="current-vehicle-stars" role="img" aria-label="${status.stars} de 5 estrellas: ${escapeText(status.name)}" title="${escapeText(status.name)}"><span aria-hidden="true">${starIcons(status.stars)} <small>${status.stars}/5</small></span></span>
+          <span class="current-vehicle-fans" role="img" aria-label="${fans} fans: ${flames} de 3 fuegos" title="Fans de este vehículo"><span aria-hidden="true">${flames?flameIcons(flames):'<span class="no-fans">'+uiIcon('flame')+'</span>'} <small>${fans} fans</small></span></span>
+        </div>
+      </div>
+    </div><dl class="current-vehicle-metrics">${metrics.map(([label,key])=>{
+      const value=Math.round(clamp(Number(unit[key])||0,0,100));
+      return `<div class="current-vehicle-metric" data-metric="${key}"><dt>${label}</dt><dd>${value}<span class="metric-scale">/100</span><span class="current-vehicle-bar" aria-hidden="true"><i style="width:${value}%"></i></span></dd></div>`;
+    }).join('')}</dl>`;
+  }
+  if(typeof ResizeObserver==='function'&&!currentVehicleObserver){
+    currentVehicleObserver=new ResizeObserver(syncCurrentVehicleOffset);
+    for(const element of [panel,document.querySelector('.lmp-site-header'),$('#careerNav')])if(element)currentVehicleObserver.observe(element);
+    window.addEventListener('resize',syncCurrentVehicleOffset);
+  }
+}
 function storyVehicle(event){
   const pending=state?.pendingEvent;
   let unit=null,label='Tu vehículo en uso',note='';
@@ -40,6 +75,8 @@ function storyNextStep(){
   return years>0?{label:`Avanzar a ${next}`,note:`${years===1?'Pasará 1 año':`Pasarán ${years} años`}. Se sumarán los ingresos y gastos del período.`}:{label:`Continuar en ${state.year}`,note:'Ver el próximo acontecimiento de tu historia.'};
 }
 function renderStoryStep(kind,event){
+  // Los efectos forzados pueden cambiar el auto después de renderizar el garaje.
+  renderCurrentVehicle();
   if(kind==='decision'&&state.pendingResult)return;
   const result=kind==='result',guide=$('#turnGuide'),card=$('#eventCard');
   guide.innerHTML=`<span class="turn-badge ${result?'resolved':''}">${result?'Decisión resuelta':kind==='repair'?'Tu auto necesita atención':kind==='market'?'Elegí tu próximo auto':'Tu decisión'}</span><span class="turn-meta">${state.year} · ${money(state.money)}</span><span class="turn-instruction">${result?'Leé el resultado y seguí cuando quieras.':kind==='repair'?'Elegí cómo volver a circular.':kind==='market'?'Buscá un vehículo en el mercado o esperá un año para ahorrar.':'Elegí una de las opciones para seguir.'}</span>`;
@@ -53,9 +90,7 @@ function renderStoryStep(kind,event){
   }
   if(typeof requestAnimationFrame==='function')requestAnimationFrame(()=>{
     if(!$('#gameScreen').classList.contains('active')||$('#marketModal').classList.contains('open'))return;
-    const header=document.querySelector('.lmp-site-header'),nav=$('#careerNav');
-    let offset=(header?.getBoundingClientRect().height||0)+14;
-    if(nav&&getComputedStyle(nav).position==='sticky')offset+=nav.getBoundingClientRect().height+12;
+    const offset=syncCurrentVehicleOffset()+$('#currentVehicle').getBoundingClientRect().height+14;
     window.scrollTo({top:Math.max(0,guide.getBoundingClientRect().top+window.scrollY-offset),behavior:'instant'});
     if(title){title.tabIndex=-1;title.focus({preventScroll:true});}
   });

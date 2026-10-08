@@ -473,7 +473,7 @@ button:disabled .ui-icon{
 <link rel="stylesheet" href="./correcciones.css">
 <link rel="stylesheet" href="./interfaz.css">
 <link rel="stylesheet" href="./marca-lmp.css?v=052">
-<link rel="stylesheet" href="./flujo.css?v=053">
+<link rel="stylesheet" href="./flujo.css?v=054">
 </head>
 <body>
 
@@ -593,6 +593,7 @@ button:disabled .ui-icon{
 
   <section class="screen" id="gameScreen">
     <div class="stats" id="gameStats"></div>
+    <section class="current-vehicle" id="currentVehicle" aria-label="Vehículo en uso"></section>
     <div class="event-wrap">
       <section class="panel timeline">
         <div class="timeline-top">
@@ -676,7 +677,7 @@ button:disabled .ui-icon{
     </div>
   </div>
   <div class="shell game-footer-actions"><button id="emergencyReset" class="ghost" type="button">Reiniciar partida</button></div>
-  <div class="shell game-version" aria-label="Versión del juego">Tu vida sobre ruedas · v0.53</div>
+  <div class="shell game-version" aria-label="Versión del juego">Tu vida sobre ruedas · v0.54</div>
 </footer>
 
 
@@ -720,7 +721,7 @@ button:disabled .ui-icon{
 <script src="./vida-eventos.js?v=053"></script>
 <script src="./logros.js"></script>
 <script src="./logros-ui.js?v=053"></script>
-<script src="./flujo.js?v=053"></script>
+<script src="./flujo.js?v=054"></script>
 <script>
 const MAX_END_YEAR=2031;
 function careerEndYear(){ return state?.endYear||2026; }
@@ -1686,6 +1687,7 @@ function noVehicleMarkup(){
   </div>`;
 }
 function renderGarage(){
+  renderCurrentVehicle();
   const car=currentCar();
   $('#activeVehicleName').textContent=car&&state.car?`${car.marca} ${car.modelo} · ${state.car.modelYear??car.desde}`:'Sin vehículo';
   if(!car||!state.car){
