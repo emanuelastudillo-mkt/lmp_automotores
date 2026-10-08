@@ -39,6 +39,7 @@ body{padding-bottom:0}
 .lmp-map-link.maps{border-color:rgba(66,133,244,.45)}
 .lmp-map-link.waze{border-color:rgba(51,204,255,.45)}
 .game-version{border-top:1px solid rgba(255,255,255,.08);margin-top:24px;padding-top:12px;text-align:center;font-size:10px;font-weight:400;color:#919191;letter-spacing:.02em}
+@media(min-width:701px){.career-nav{top:73px;z-index:40}}
 @media(max-width:900px){
   .lmp-footer-inner{grid-template-columns:1fr 1fr;align-items:start}
   .lmp-footer-map-actions{grid-column:1/-1;justify-content:flex-start}
