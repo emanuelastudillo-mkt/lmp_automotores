@@ -5,6 +5,20 @@
     if(typeof s.player!=='string' || !Number.isInteger(s.year) || s.year<1960 || s.year>2031 || !Number.isInteger(s.startYear) || s.startYear<1960 || s.startYear>s.year || !Number.isFinite(s.money))return false;
     for(const k of ['history','events','collection','newMarketStock','usedMarketStock'])if(s[k]!==undefined && (!Array.isArray(s[k]) || s[k].some(v=>!v || typeof v!=='object' || Array.isArray(v))))return false;
     if(s.car!==null && s.car!==undefined && (typeof s.car!=='object' || typeof s.car.id!=='string'))return false;
+    if(s.life!==undefined){
+      const l=s.life;
+      if(!l||typeof l!=='object'||Array.isArray(l)||l.version!==1||!['pareja','divorciado'].includes(l.relationship)||!['inicio','fierrera','familiar'].includes(l.focus))return false;
+      for(const k of ['fierrera','familiar','libertad','tension'])if(!Number.isFinite(l[k])||l[k]<0||l[k]>100)return false;
+      if(typeof l.friendOffers!=='boolean'||!Array.isArray(l.children)||l.children.length>2||l.children.some(c=>!c||!Number.isInteger(c.bornYear)||c.bornYear<1940||c.bornYear>s.year))return false;
+      if(!l.seen||typeof l.seen!=='object'||Array.isArray(l.seen)||Object.entries(l.seen).some(([k,v])=>!/^vida_[a-z_]+$/.test(k)||!Number.isInteger(v)||v<1960||v>s.year))return false;
+      for(const k of ['lastEventYear','divorceYear'])if(l[k]!==null&&(!Number.isInteger(l[k])||l[k]<1960||l[k]>s.year))return false;
+    }
+    if(s.pendingEvent?.lifeOffer){
+      const o=s.pendingEvent.lifeOffer;
+      if(typeof o.id!=='string'||!Number.isInteger(o.modelYear)||o.modelYear<1960||o.modelYear>s.year||typeof o.inspected!=='boolean')return false;
+      for(const k of ['price','value','defectCost'])if(!Number.isFinite(o[k])||o[k]<0)return false;
+      for(const k of ['condition','originality','performance'])if(!Number.isFinite(o[k])||o[k]<0||o[k]>100)return false;
+    }
     if(s.endYear!==undefined&&(!Number.isInteger(s.endYear)||s.endYear<s.startYear||s.endYear>2031))return false;
     for(const unit of [...(s.collection||[]),...(s.car?[s.car]:[])]){
       if(typeof unit.id!=='string')return false;

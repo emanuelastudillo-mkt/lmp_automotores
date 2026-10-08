@@ -42,7 +42,7 @@ function ensureVehicleLinks(){
     else h.unitUid=unitUid();
   }
 }
-function isTrajectoryEvent(event){return !!event?.historicalArgentina||event?.special==='corralito';}
+function isTrajectoryEvent(event){return !!event?.lifeRoute||!!event?.historicalArgentina||['corralito','divorce','inheritance_father','inheritance_inlaw'].includes(event?.special);}
 function trajectoryEventNow(){
   if(state.year===2001&&!state.careerFlags?.corralito_ocurrido)return EVENTS.find(e=>e.special==='corralito');
   return historicalEventForCurrentYear();
@@ -92,6 +92,7 @@ function sanitizeImportedState(saved){
     }
     if(saved.pendingEvent.crashReason)saved.pendingEvent.crashReason=text(saved.pendingEvent.crashReason);
     if(saved.pendingEvent.inheritedUnit){const car=carById(saved.pendingEvent.inheritedUnit.id);if(car){saved.pendingEvent.inheritedUnit.brand=car.marca;saved.pendingEvent.inheritedUnit.model=car.modelo;}else delete saved.pendingEvent.inheritedUnit;}
+    if(saved.pendingEvent.lifeOffer&&!carById(saved.pendingEvent.lifeOffer.id))delete saved.pendingEvent.lifeOffer;
   }
   for(const item of [...(saved.newMarketStock||[]),...(saved.usedMarketStock||[])]){
     if(item.quality!==undefined)item.quality=text(item.quality);

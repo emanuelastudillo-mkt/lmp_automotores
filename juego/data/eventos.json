@@ -12054,5 +12054,962 @@
         "note": "No gastaste; los detalles de conservación quedan pendientes."
       }
     ]
+  },
+  {
+    "id": "vida_prioridades",
+    "icon": "🛣️",
+    "title": "Un fin de semana, dos planes",
+    "text": "Tu pareja propone pasar tiempo juntos. El club de autos también te invita. Lo que elijas empezará a marcar tus prioridades.",
+    "tags": [
+      "*"
+    ],
+    "lifeRoute": {
+      "once": true,
+      "priority": true,
+      "requiresCar": true,
+      "relationship": "pareja"
+    },
+    "choices": [
+      {
+        "label": "Ir al encuentro de autos",
+        "note": "Elegiste el encuentro y empezaste a conocer otros aficionados.",
+        "life": {
+          "fierrera": 4,
+          "tension": 8
+        },
+        "fanGain": 2
+      },
+      {
+        "label": "Organizar un plan en pareja",
+        "note": "Reservaste el fin de semana para compartirlo con tu pareja.",
+        "life": {
+          "familiar": 4,
+          "tension": -8
+        }
+      },
+      {
+        "label": "Compartir el encuentro con tu pareja",
+        "note": "Acordaron un plan que incluye el auto y tiempo juntos.",
+        "life": {
+          "fierrera": 3,
+          "familiar": 3,
+          "tension": -4
+        }
+      }
+    ]
+  },
+  {
+    "id": "vida_proyecto_pareja",
+    "icon": "🛣️",
+    "title": "Hacer planes juntos",
+    "text": "La conversación ya no es sólo sobre el próximo auto: tu pareja quiere acordar un proyecto común.",
+    "tags": [
+      "*"
+    ],
+    "lifeRoute": {
+      "requires": [
+        "vida_prioridades"
+      ],
+      "cooldown": 5,
+      "relationship": "pareja"
+    },
+    "choices": [
+      {
+        "label": "Armar un presupuesto compartido",
+        "note": "Acordaron metas y un presupuesto para el auto.",
+        "life": {
+          "familiar": 3,
+          "tension": -15
+        }
+      },
+      {
+        "label": "Priorizar mi próximo proyecto de auto",
+        "note": "Postergaste el proyecto compartido; la discusión quedó abierta.",
+        "life": {
+          "fierrera": 3,
+          "tension": 18
+        }
+      }
+    ]
+  },
+  {
+    "id": "vida_presupuesto_pareja",
+    "icon": "🛣️",
+    "title": "El auto se lleva más de lo acordado",
+    "text": "Entre repuestos y salidas, tu pareja siente que el auto ocupa el lugar del presupuesto compartido.",
+    "tags": [
+      "*"
+    ],
+    "lifeRoute": {
+      "minTension": 25,
+      "requiresCar": true,
+      "cooldown": 4,
+      "relationship": "pareja"
+    },
+    "choices": [
+      {
+        "label": "Cumplir el presupuesto y postergar mejoras",
+        "note": "Volviste al acuerdo y bajó la tensión.",
+        "life": {
+          "familiar": 3,
+          "tension": -22
+        }
+      },
+      {
+        "label": "Comprar las mejoras igualmente",
+        "note": "El proyecto avanzó, pero incumpliste el acuerdo.",
+        "life": {
+          "fierrera": 3,
+          "tension": 24
+        },
+        "money": -180,
+        "performance": 3,
+        "originality": -2
+      }
+    ]
+  },
+  {
+    "id": "vida_tiempo_pareja",
+    "icon": "🛣️",
+    "title": "Una tarde sin taller",
+    "text": "Tu pareja pide una tarde juntos. El trabajo del auto puede esperar, aunque tus amigos insisten en terminarlo hoy.",
+    "tags": [
+      "*"
+    ],
+    "lifeRoute": {
+      "requires": [
+        "vida_prioridades"
+      ],
+      "cooldown": 4,
+      "relationship": "pareja"
+    },
+    "choices": [
+      {
+        "label": "Dejar el taller por hoy",
+        "note": "Compartieron la tarde y recuperaron cercanía.",
+        "life": {
+          "familiar": 3,
+          "tension": -18
+        }
+      },
+      {
+        "label": "Quedarme a terminar el auto",
+        "note": "Elegiste el taller y aumentó el malestar.",
+        "life": {
+          "fierrera": 3,
+          "tension": 18
+        },
+        "condition": 2
+      }
+    ]
+  },
+  {
+    "id": "vida_limite_pareja",
+    "icon": "🛣️",
+    "title": "La relación necesita una decisión",
+    "text": "Las discusiones se repiten. Tu pareja pide que cambies la forma de repartir tiempo y dinero antes de seguir juntos.",
+    "tags": [
+      "*"
+    ],
+    "lifeRoute": {
+      "minTension": 45,
+      "minYears": 6,
+      "cooldown": 6,
+      "relationship": "pareja"
+    },
+    "choices": [
+      {
+        "label": "Acordar un cambio y cumplirlo",
+        "note": "Aceptaste límites claros y diste espacio a la relación.",
+        "life": {
+          "familiar": 5,
+          "tension": -40
+        }
+      },
+      {
+        "label": "Mantener mis prioridades",
+        "note": "La distancia creció; una separación empieza a ser posible.",
+        "life": {
+          "fierrera": 3,
+          "tension": 25
+        }
+      }
+    ]
+  },
+  {
+    "id": "vida_plan_hijos",
+    "icon": "🛣️",
+    "title": "Hablar de ampliar la familia",
+    "text": "La idea de tener un hijo aparece en una conversación tranquila. Implica cambiar prioridades y organizarse.",
+    "tags": [
+      "*"
+    ],
+    "lifeRoute": {
+      "branches": [
+        "familiar"
+      ],
+      "noChildren": true,
+      "minYears": 2,
+      "cooldown": 5,
+      "relationship": "pareja"
+    },
+    "choices": [
+      {
+        "label": "Dar el paso",
+        "note": "Con el tiempo llegó su primer hijo. La familia empieza una nueva etapa.",
+        "life": {
+          "familiar": 5,
+          "tension": -6,
+          "child": true
+        }
+      },
+      {
+        "label": "Esperar unos años",
+        "note": "Decidieron esperar y conservar sus planes actuales.",
+        "life": {
+          "fierrera": 1,
+          "tension": -2
+        }
+      }
+    ]
+  },
+  {
+    "id": "vida_segundo_hijo",
+    "icon": "🛣️",
+    "title": "La familia puede crecer",
+    "text": "Con la experiencia del primer hijo, conversan sobre ampliar nuevamente la familia.",
+    "tags": [
+      "*"
+    ],
+    "lifeRoute": {
+      "branches": [
+        "familiar"
+      ],
+      "children": true,
+      "maxChildren": 2,
+      "childMinAge": 4,
+      "cooldown": 6,
+      "relationship": "pareja"
+    },
+    "choices": [
+      {
+        "label": "Ampliar la familia",
+        "note": "Llegó un segundo hijo y reorganizaron sus planes.",
+        "life": {
+          "familiar": 4,
+          "child": true
+        }
+      },
+      {
+        "label": "Mantener la familia como está",
+        "note": "Prefirieron concentrarse en la familia que ya tienen.",
+        "life": {
+          "familiar": 2
+        }
+      }
+    ]
+  },
+  {
+    "id": "vida_gastos_hijos",
+    "icon": "🛣️",
+    "title": "El presupuesto tiene nuevas prioridades",
+    "text": "El colegio, la ropa y las actividades de los chicos compiten con la mejora que querías hacerle al auto.",
+    "tags": [
+      "*"
+    ],
+    "lifeRoute": {
+      "branches": [
+        "familiar",
+        "soltero"
+      ],
+      "children": true,
+      "childMinAge": 3,
+      "cooldown": 4
+    },
+    "choices": [
+      {
+        "label": "Cubrir las necesidades familiares",
+        "note": "Atendiste los gastos de los hijos y postergaste la mejora.",
+        "life": {
+          "familiar": 3,
+          "tension": -8
+        },
+        "money": -120
+      },
+      {
+        "label": "Buscar una alternativa más económica",
+        "note": "Ajustaste actividades y reservaste parte del presupuesto para la familia.",
+        "life": {
+          "familiar": 1,
+          "tension": 4
+        }
+      }
+    ]
+  },
+  {
+    "id": "vida_vacaciones_familia",
+    "icon": "🛣️",
+    "title": "Un viaje con la familia",
+    "text": "Quieren salir unos días. Podés organizar un viaje corto o destinar ese dinero a mejorar el auto.",
+    "tags": [
+      "*"
+    ],
+    "lifeRoute": {
+      "branches": [
+        "familiar"
+      ],
+      "children": true,
+      "requiresCar": true,
+      "cooldown": 5,
+      "relationship": "pareja"
+    },
+    "choices": [
+      {
+        "label": "Organizar un viaje corto",
+        "note": "Compartieron unas vacaciones acordes al presupuesto.",
+        "life": {
+          "familiar": 3,
+          "tension": -12
+        },
+        "money": -140
+      },
+      {
+        "label": "Usar el dinero en el auto",
+        "note": "Elegiste el proyecto del auto y postergaste el viaje.",
+        "life": {
+          "fierrera": 3,
+          "tension": 16
+        },
+        "money": -140,
+        "condition": 3
+      },
+      {
+        "label": "Postergar y conservar el dinero",
+        "note": "Elegiste un plan sencillo y conservaste tus ahorros.",
+        "life": {
+          "familiar": 1,
+          "tension": -3
+        }
+      }
+    ]
+  },
+  {
+    "id": "vida_actividad_hijos",
+    "icon": "🛣️",
+    "title": "Tu hijo quiere que estés",
+    "text": "Una actividad importante de tu hijo coincide con una reunión de autos. Tenés que elegir dónde pasar la tarde.",
+    "tags": [
+      "*"
+    ],
+    "lifeRoute": {
+      "branches": [
+        "familiar",
+        "soltero"
+      ],
+      "children": true,
+      "childMinAge": 6,
+      "cooldown": 5
+    },
+    "choices": [
+      {
+        "label": "Acompañar a mi hijo",
+        "note": "Estuviste presente y compartieron un recuerdo familiar.",
+        "life": {
+          "familiar": 4,
+          "tension": -10
+        }
+      },
+      {
+        "label": "Ir a la reunión de autos",
+        "note": "Elegiste el encuentro; tu hijo extrañó tu presencia.",
+        "life": {
+          "fierrera": 3,
+          "tension": 12
+        },
+        "fanGain": 2
+      }
+    ]
+  },
+  {
+    "id": "vida_regalo_padre",
+    "icon": "🛣️",
+    "title": "Tu padre quiere ayudarte con un 0 km",
+    "text": "Vio cómo cambió tu vida y ofrece regalarte un auto nuevo, práctico para la familia. Podés aceptarlo sin vender tu vehículo actual.",
+    "tags": [
+      "*"
+    ],
+    "lifeRoute": {
+      "branches": [
+        "familiar"
+      ],
+      "once": true,
+      "children": true,
+      "minYears": 4,
+      "sourceAlive": "father",
+      "requiresOffer": true
+    },
+    "choices": [],
+    "special": "life_gift_father"
+  },
+  {
+    "id": "vida_regalo_suegro",
+    "icon": "🛣️",
+    "title": "Un regalo para la familia",
+    "text": "Tu suegro quiere ayudar a la familia con un auto nuevo. La propuesta llega mientras la relación está estable.",
+    "tags": [
+      "*"
+    ],
+    "lifeRoute": {
+      "branches": [
+        "familiar"
+      ],
+      "once": true,
+      "children": true,
+      "minYears": 5,
+      "relationship": "pareja",
+      "sourceAlive": "inlaw",
+      "requiresOffer": true,
+      "maxTension": 40
+    },
+    "choices": [],
+    "special": "life_gift_inlaw"
+  },
+  {
+    "id": "vida_horarios_familia",
+    "icon": "🛣️",
+    "title": "Cambiar los horarios",
+    "text": "Podés reorganizar tu trabajo para pasar más tiempo con la familia, aunque eso reduzca un ingreso extra.",
+    "tags": [
+      "*"
+    ],
+    "lifeRoute": {
+      "branches": [
+        "familiar"
+      ],
+      "requires": [
+        "vida_proyecto_pareja"
+      ],
+      "cooldown": 6,
+      "relationship": "pareja"
+    },
+    "choices": [
+      {
+        "label": "Reservar tiempo para la familia",
+        "note": "Acomodaste los horarios y dejaste el ingreso extra.",
+        "life": {
+          "familiar": 4,
+          "tension": -14
+        }
+      },
+      {
+        "label": "Hacer unas horas más",
+        "note": "Cobraste un extra, pero otra vez quedó menos tiempo para compartir.",
+        "life": {
+          "fierrera": 1,
+          "tension": 8
+        },
+        "money": 100
+      }
+    ]
+  },
+  {
+    "id": "vida_juntada",
+    "icon": "🛣️",
+    "title": "Una nueva juntada fierrera",
+    "text": "Los conocidos del club te invitan a reunirte. Podés ir, llevar tu auto y seguir ampliando ese círculo.",
+    "tags": [
+      "*"
+    ],
+    "lifeRoute": {
+      "branches": [
+        "fierrera"
+      ],
+      "requiresCar": true,
+      "requires": [
+        "vida_prioridades"
+      ],
+      "cooldown": 4
+    },
+    "choices": [
+      {
+        "label": "Sumarme con el auto",
+        "note": "Conociste más aficionados y tu auto llamó la atención.",
+        "life": {
+          "fierrera": 3,
+          "tension": 7
+        },
+        "fanGain": 5,
+        "money": -60
+      },
+      {
+        "label": "Guardar el dinero y compartir la tarde en casa",
+        "note": "Preferiste un plan tranquilo en pareja.",
+        "life": {
+          "familiar": 3,
+          "tension": -8
+        }
+      }
+    ]
+  },
+  {
+    "id": "vida_preparacion",
+    "icon": "🛣️",
+    "title": "El grupo propone un nuevo proyecto",
+    "text": "Un amigo del club ofrece ayudarte a preparar el auto. El proyecto cuesta dinero y varias tardes de trabajo.",
+    "tags": [
+      "*"
+    ],
+    "lifeRoute": {
+      "branches": [
+        "fierrera"
+      ],
+      "requiresCar": true,
+      "requires": [
+        "vida_juntada"
+      ],
+      "cooldown": 6
+    },
+    "choices": [
+      {
+        "label": "Prepararlo con el grupo",
+        "note": "La preparación mejoró la respuesta del auto y aumentó tu vínculo con el grupo.",
+        "life": {
+          "fierrera": 4,
+          "tension": 12
+        },
+        "money": -220,
+        "performance": 8,
+        "originality": -6,
+        "fanGain": 4
+      },
+      {
+        "label": "Hacer sólo mantenimiento",
+        "note": "Pusiste el presupuesto en conservar la mecánica.",
+        "life": {
+          "familiar": 2,
+          "tension": -5
+        },
+        "money": -100,
+        "condition": 5
+      },
+      {
+        "label": "Postergar y conservar el dinero",
+        "note": "Elegiste un plan sencillo y conservaste tus ahorros.",
+        "life": {
+          "familiar": 1,
+          "tension": -3
+        }
+      }
+    ]
+  },
+  {
+    "id": "vida_rival",
+    "icon": "🛣️",
+    "title": "Un conocido quiere desafiarte",
+    "text": "En la juntada aparece un desafío para una picada ilegal. Aceptarlo puede dar fama o terminar en daños y pérdidas.",
+    "tags": [
+      "*"
+    ],
+    "lifeRoute": {
+      "branches": [
+        "fierrera"
+      ],
+      "requiresCar": true,
+      "requires": [
+        "vida_juntada"
+      ],
+      "cooldown": 6
+    },
+    "choices": [
+      {
+        "label": "Aceptar la picada",
+        "note": "Aceptaste el desafío.",
+        "life": {},
+        "storyRace": true
+      },
+      {
+        "label": "Rechazar y volver a casa",
+        "note": "Rechazaste el desafío y evitaste arriesgar el auto.",
+        "life": {
+          "familiar": 3,
+          "tension": -8
+        }
+      }
+    ]
+  },
+  {
+    "id": "vida_fans_club",
+    "icon": "🛣️",
+    "title": "El club empieza a reconocer tu auto",
+    "text": "Ya te conocen en los encuentros. Te proponen mostrar el auto y contar su historia.",
+    "tags": [
+      "*"
+    ],
+    "lifeRoute": {
+      "branches": [
+        "fierrera"
+      ],
+      "minFans": 5,
+      "requiresCar": true,
+      "requires": [
+        "vida_juntada"
+      ],
+      "cooldown": 5
+    },
+    "choices": [
+      {
+        "label": "Participar de la exhibición",
+        "note": "Mostraste el auto y sumaste seguidores.",
+        "life": {
+          "fierrera": 3,
+          "tension": 4
+        },
+        "fanGain": 9,
+        "money": -80
+      },
+      {
+        "label": "Conservar el tiempo para otros planes",
+        "note": "Elegiste mantener un perfil más tranquilo.",
+        "life": {
+          "familiar": 2,
+          "tension": -5
+        }
+      }
+    ]
+  },
+  {
+    "id": "vida_fama_costos",
+    "icon": "🛣️",
+    "title": "La fama también cuesta",
+    "text": "Los seguidores esperan otra presentación, pero trasladar y preparar el auto suma gastos.",
+    "tags": [
+      "*"
+    ],
+    "lifeRoute": {
+      "branches": [
+        "fierrera"
+      ],
+      "requiresCar": true,
+      "requires": [
+        "vida_fans_club"
+      ],
+      "cooldown": 6
+    },
+    "choices": [
+      {
+        "label": "Ir con un presupuesto limitado",
+        "note": "Participaste cuidando el presupuesto.",
+        "life": {
+          "fierrera": 2,
+          "tension": -3
+        },
+        "money": -90,
+        "fanGain": 5
+      },
+      {
+        "label": "Preparar una presentación más grande",
+        "note": "La presentación dio fama, aunque consumió tiempo y dinero.",
+        "life": {
+          "fierrera": 4,
+          "tension": 15
+        },
+        "money": -220,
+        "fanGain": 12
+      },
+      {
+        "label": "Postergar y conservar el dinero",
+        "note": "Elegiste un plan sencillo y conservaste tus ahorros.",
+        "life": {
+          "familiar": 1,
+          "tension": -3
+        }
+      }
+    ]
+  },
+  {
+    "id": "vida_despues_divorcio",
+    "icon": "🛣️",
+    "title": "Una nueva etapa después de la separación",
+    "text": "La separación ya ocurrió. Ahora podés decidir cómo reorganizar tus amistades, tu tiempo y el presupuesto del auto.",
+    "tags": [
+      "*"
+    ],
+    "lifeRoute": {
+      "branches": [
+        "soltero"
+      ],
+      "once": true,
+      "priority": true,
+      "relationship": "divorciado"
+    },
+    "choices": [
+      {
+        "label": "Retomar salidas y proyectos",
+        "note": "Volviste a encontrarte con amigos y abriste nuevos planes.",
+        "life": {
+          "libertad": 4,
+          "fierrera": 2
+        }
+      },
+      {
+        "label": "Ordenar primero mi presupuesto",
+        "note": "Elegiste una transición tranquila y organizaste tus gastos.",
+        "life": {
+          "libertad": 2,
+          "familiar": 2
+        }
+      }
+    ]
+  },
+  {
+    "id": "vida_fiesta",
+    "icon": "🛣️",
+    "title": "Los amigos organizan una fiesta",
+    "text": "Te invitan a salir. Podés sumarte con un gasto acordado o reservar el dinero para otro plan.",
+    "tags": [
+      "*"
+    ],
+    "lifeRoute": {
+      "branches": [
+        "soltero"
+      ],
+      "requires": [
+        "vida_despues_divorcio"
+      ],
+      "cooldown": 4
+    },
+    "choices": [
+      {
+        "label": "Ir con presupuesto limitado",
+        "note": "Disfrutaste la fiesta y mantuviste el gasto bajo control.",
+        "life": {
+          "libertad": 3
+        },
+        "money": -90
+      },
+      {
+        "label": "Guardar el dinero",
+        "note": "Preferiste conservar tus ahorros.",
+        "life": {
+          "familiar": 2
+        }
+      }
+    ]
+  },
+  {
+    "id": "vida_viaje_solo",
+    "icon": "🛣️",
+    "title": "Un viaje que venías postergando",
+    "text": "Ahora podés organizar un viaje con amigos. También podés reservar esos ahorros para cambiar de auto.",
+    "tags": [
+      "*"
+    ],
+    "lifeRoute": {
+      "branches": [
+        "soltero"
+      ],
+      "requires": [
+        "vida_despues_divorcio"
+      ],
+      "cooldown": 5
+    },
+    "choices": [
+      {
+        "label": "Hacer un viaje corto",
+        "note": "Saliste unos días y compartiste una nueva experiencia.",
+        "life": {
+          "libertad": 4
+        },
+        "money": -180
+      },
+      {
+        "label": "Ahorrar para el próximo auto",
+        "note": "Reservaste el dinero para una futura oportunidad.",
+        "life": {
+          "fierrera": 3
+        }
+      }
+    ]
+  },
+  {
+    "id": "vida_tuning_soltero",
+    "icon": "🛣️",
+    "title": "El proyecto personal del auto",
+    "text": "Un conocido propone trabajar en el auto los fines de semana. Elegís entre modificarlo o mantener su carácter original.",
+    "tags": [
+      "*"
+    ],
+    "lifeRoute": {
+      "branches": [
+        "soltero"
+      ],
+      "requiresCar": true,
+      "requires": [
+        "vida_despues_divorcio"
+      ],
+      "cooldown": 6
+    },
+    "choices": [
+      {
+        "label": "Hacer una preparación moderada",
+        "note": "Completaste una preparación moderada con tus amigos.",
+        "life": {
+          "fierrera": 3,
+          "libertad": 2
+        },
+        "money": -200,
+        "performance": 7,
+        "originality": -5,
+        "fanGain": 4
+      },
+      {
+        "label": "Conservarlo original",
+        "note": "Pusiste el presupuesto en mantener el auto.",
+        "life": {
+          "familiar": 1,
+          "libertad": 1
+        },
+        "money": -90,
+        "condition": 4
+      },
+      {
+        "label": "Postergar y conservar el dinero",
+        "note": "Elegiste un plan sencillo y conservaste tus ahorros.",
+        "life": {
+          "familiar": 1,
+          "tension": -3
+        }
+      }
+    ]
+  },
+  {
+    "id": "vida_amigo_deportivo",
+    "icon": "🛣️",
+    "title": "Un amigo vuelve a invitarte",
+    "text": "Retomaste el contacto con un amigo aficionado a los deportivos. Te cuenta que su grupo suele vender autos entre conocidos.",
+    "tags": [
+      "*"
+    ],
+    "lifeRoute": {
+      "branches": [
+        "soltero"
+      ],
+      "once": true,
+      "requires": [
+        "vida_despues_divorcio"
+      ]
+    },
+    "choices": [
+      {
+        "label": "Pedir que me avise si aparece una oportunidad",
+        "note": "Quedaste en contacto para recibir propuestas del grupo.",
+        "life": {
+          "fierrera": 3,
+          "libertad": 2,
+          "friendOffers": true
+        }
+      },
+      {
+        "label": "Mantener el contacto sin buscar auto",
+        "note": "Preferiste priorizar la amistad. Dejaste pasar las propuestas por ahora.",
+        "life": {
+          "libertad": 2
+        }
+      }
+    ]
+  },
+  {
+    "id": "vida_oferta_amigo",
+    "icon": "🛣️",
+    "title": "Un deportivo de un amigo está en venta",
+    "text": "Un amigo ofrece su deportivo usado. Podés revisarlo antes de decidir, comprarlo si te alcanza o dejar pasar la oportunidad.",
+    "tags": [
+      "*"
+    ],
+    "lifeRoute": {
+      "branches": [
+        "soltero"
+      ],
+      "requires": [
+        "vida_amigo_deportivo"
+      ],
+      "requiresOffer": true,
+      "cooldown": 7,
+      "friendOffers": true
+    },
+    "choices": [],
+    "special": "life_friend_offer"
+  },
+  {
+    "id": "vida_responsabilidad_soltero",
+    "icon": "🛣️",
+    "title": "Los hijos siguen siendo parte de tu vida",
+    "text": "Aunque estés separado, los hijos conservan su lugar. Organizar los tiempos requiere coordinar con tu expareja.",
+    "tags": [
+      "*"
+    ],
+    "lifeRoute": {
+      "branches": [
+        "soltero"
+      ],
+      "children": true,
+      "requires": [
+        "vida_despues_divorcio"
+      ],
+      "cooldown": 4
+    },
+    "choices": [
+      {
+        "label": "Acordar horarios y cumplirlos",
+        "note": "Compartiste tiempo con tus hijos y cumpliste lo acordado.",
+        "life": {
+          "familiar": 4,
+          "libertad": 1
+        }
+      },
+      {
+        "label": "Pedir otro horario y reorganizar la salida",
+        "note": "Coordinaste otro horario para conservar el vínculo y tu plan.",
+        "life": {
+          "familiar": 2,
+          "libertad": 2
+        }
+      }
+    ]
+  },
+  {
+    "id": "vida_presupuesto_soltero",
+    "icon": "🛣️",
+    "title": "Elegir el próximo plan",
+    "text": "Entre salidas, viajes y proyectos de autos, tenés más planes que presupuesto.",
+    "tags": [
+      "*"
+    ],
+    "lifeRoute": {
+      "branches": [
+        "soltero"
+      ],
+      "requires": [
+        "vida_despues_divorcio"
+      ],
+      "cooldown": 5
+    },
+    "choices": [
+      {
+        "label": "Ahorrar para una oportunidad de auto",
+        "note": "Ordenaste los gastos y reservaste el dinero.",
+        "life": {
+          "fierrera": 3
+        }
+      },
+      {
+        "label": "Organizar una salida económica",
+        "note": "Compartiste una salida sencilla con amigos.",
+        "life": {
+          "libertad": 3
+        },
+        "money": -50
+      }
+    ]
   }
 ]

@@ -466,6 +466,8 @@ button:disabled .ui-icon{
   filter:none!important;
 }
 
+
+.life-status{grid-column:1/-1;order:-1;color:var(--muted,#d1c4a5);font-size:.85rem;line-height:1.5;padding:10px 14px;border:1px solid #504632;border-radius:12px}.life-offer-photo{max-width:360px;aspect-ratio:1;margin:16px auto;overflow:hidden;border-radius:14px}.life-offer-photo img{width:100%;height:100%;object-fit:contain}
 </style>
 <link rel="stylesheet" href="./logros.css">
 <link rel="stylesheet" href="./correcciones.css">
@@ -520,7 +522,7 @@ button:disabled .ui-icon{
     <div class="topbar-actions">
       <button class="ghost achievements-button" id="openAchievements" type="button">🏆 Logros 0/31</button>
       <button id="emergencyReset" class="ghost" type="button">Reset</button>
-      <div class="version">prototipo privado · v0.49</div>
+      <div class="version">prototipo privado · v0.50</div>
     </div>
   </div>
 </header>
@@ -634,9 +636,11 @@ button:disabled .ui-icon{
   </div>
 </dialog>
 <div class="achievement-toast" id="achievementToast" role="status" aria-live="polite" aria-atomic="true" hidden></div>
-<script src="./guardado.js"></script>
+<script src="./guardado.js?v=050"></script>
 <script src="./legado.js"></script>
-<script src="./partida.js"></script>
+<script src="./partida.js?v=050"></script>
+<script src="./vidas.js?v=050"></script>
+<script src="./vida-eventos.js?v=050"></script>
 <script src="./logros.js"></script>
 <script src="./logros-ui.js"></script>
 <script>
@@ -780,7 +784,7 @@ function imageBaseFor(car){
   return car?.imageBase||`${Math.max(1,CARS.findIndex(item=>item.id===car?.id)+1)}-${car?.marca||''} ${car?.modelo||''}`.trim();
 }
 function carImageSrc(car,ext=car?.imageExt||'png'){
-  return `./imagenes/${encodeURIComponent(imageBaseFor(car))}.${ext}?v=049`;
+  return `./imagenes/${encodeURIComponent(imageBaseFor(car))}.${ext}?v=050`;
 }
 function tryCarImage(img){
   const firstExt=carById(img.dataset.carId)?.imageExt||'png';
@@ -1113,6 +1117,7 @@ function racePrizeMultiplier(){
   return 1+Math.min(2.2,(state?.raceSkill||0)*.18);
 }
 function registerRaceAttempt(){
+  LMPLife.raced(state);
   state.illegalRaceCount=(state.illegalRaceCount||0)+1;
   state.raceSkill=(state.raceSkill||0)+1;
 }
@@ -1355,7 +1360,8 @@ function renderStats(target){
     <div class="stat"><span>${uiIcon('flame')}Fans</span><strong>${animatedValue(`${prefix}-fans`,state.fans||0,fanDisplay)}</strong></div>
     <div class="stat"><span>${uiIcon('car')}Autos</span><strong>${animatedValue(`${prefix}-cars`,acquiredCount(),acquiredCount())}</strong></div>
     <div class="stat highlight"><span>${uiIcon('gauge')}Valor de tu auto</span><strong>${state.car?animatedValue(`${prefix}-carvalue`,currentValue,money(currentValue)):'—'}</strong></div>
-    <div class="stat"><span>${uiIcon('wrench')}Gasto mensual</span><strong>${state.car?animatedValue(`${prefix}-expense`,monthlyExpense(),money(monthlyExpense()),{invert:true}):'—'}</strong></div>`;
+    <div class="stat"><span>${uiIcon('wrench')}Gasto mensual</span><strong>${state.car?animatedValue(`${prefix}-expense`,monthlyExpense(),money(monthlyExpense()),{invert:true}):'—'}</strong></div>
+    <div class="life-status">${escapeText(LMPLife.summary(state))}</div>`;
 }
 function carCard(car,first=false){
   const price=car.market??marketPrice(car,state.year);
@@ -1688,6 +1694,8 @@ function eligibleEvents(){
     if(event.historicalArgentina){
       return state.year===event.historicalYear && !historicalEventSeen(event);
     }
+    if(!LMPLife.eligible(event,state,CARS))return false;
+    if(event.lifeRoute)return true;
     if(event.collectionOnly)return (state.collection||[]).length>0;
 
     if(!vehicleEventMatches(event,car))return false;
@@ -1712,7 +1720,7 @@ function eligibleEvents(){
       return vehicleAge()>=5;
     }
     if(event.special==='divorce'){
-      return state.year-state.startYear>=8 && (state.divorceCount||0)<3;
+      return state.year-state.startYear>=8 && (state.divorceCount||0)===0;
     }
     if(event.special==='corralito'){
       return state.year===2001 && !state.careerFlags?.corralito_ocurrido;
@@ -1773,7 +1781,7 @@ function maybeChooseCollectionEvent(){
   if(!collectionEvents.length)return false;
   const chance=Math.min(.34,.12+(state.collection||[]).length*.045);
   if(Math.random()>=chance)return false;
-  const selected=collectionEvents[rand(0,collectionEvents.length-1)];
+  const selected=LMPLife.pick(collectionEvents,state);
   state.pendingEvent={id:selected.id,forcedApplied:false};
   persist();
   return true;
@@ -1830,6 +1838,9 @@ function chooseEvent(){
     }
   }
 
+  const separation=eligible.find(e=>e.special==='divorce');
+  if(separation&&LMPLife.normalize(state).tension>=90){state.pendingEvent={id:separation.id,forcedApplied:false};persist();return;}
+  if(queueLifeEvent())return;
   if(maybeChooseCollectionEvent())return;
 
   const exclusiveEvents=eligible.filter(event=>
@@ -1844,8 +1855,8 @@ function chooseEvent(){
   }
 
   const recent=new Set(state.events.slice(0,4).map(item=>item.eventId).filter(Boolean));
-  let pool=eligible.filter(event=>!event.historicalArgentina && !event.collectionOnly && !event.exclusiveVehicleEvent && !['engine','crash'].includes(event.special) && !recent.has(event.id));
-  if(!pool.length)pool=eligible.filter(event=>!event.historicalArgentina && !event.collectionOnly && !event.exclusiveVehicleEvent && !['engine','crash'].includes(event.special));
+  let pool=eligible.filter(event=>!event.lifeRoute && !event.historicalArgentina && !event.collectionOnly && !event.exclusiveVehicleEvent && !['engine','crash'].includes(event.special) && !recent.has(event.id));
+  if(!pool.length)pool=eligible.filter(event=>!event.lifeRoute && !event.historicalArgentina && !event.collectionOnly && !event.exclusiveVehicleEvent && !['engine','crash'].includes(event.special));
   if(!pool.length)pool=eligible.filter(event=>!event.collectionOnly && !['engine','crash'].includes(event.special));
   if(!pool.length)pool=eligible;
 
@@ -1863,9 +1874,9 @@ function chooseEvent(){
 
   let selected;
   if(dramatic.length && Math.random()<.20){
-    selected=dramatic[rand(0,dramatic.length-1)];
+    selected=LMPLife.pick(dramatic,state);
   }else{
-    selected=(normal.length?normal:pool)[rand(0,(normal.length?normal:pool).length-1)];
+    selected=LMPLife.pick(normal.length?normal:pool,state);
   }
 
   state.pendingEvent={id:selected.id,forcedApplied:false};
@@ -1919,6 +1930,8 @@ function choicePreview(choice){
   if(choice.originality)parts.push(`Originalidad ${choice.originality>0?'+':''}${choice.originality}`);
   if(choice.performance)parts.push(`Performance ${choice.performance>0?'+':''}${choice.performance}`);
   if(choice.fanGain)parts.push(`Fans +${choice.fanGain}`);
+  if(choice.life?.tension&&LMPLife.normalize(state).relationship==='pareja')parts.push(`Tensión de pareja ${choice.life.tension>0?'+':''}${choice.life.tension}`);
+  if(choice.life?.child)parts.push('La familia crece');
   if(choice.risk>=.20)parts.push('Riesgo alto');
 
   return parts.join(' · ')||'Sin impacto económico inmediato';
@@ -2083,13 +2096,13 @@ function renderPendingEvent(){
 
   $('#eventCard').innerHTML=`
     <div class="event-icon">${event.icon||'🚗'}</div>
-    <span class="eyebrow">${event.historicalArgentina?`${event.historicalYear} · evento histórico argentino`:`${car.marca} ${car.modelo}`}</span>
+    <span class="eyebrow">${event.lifeRoute?'Tu vida fuera del taller':event.historicalArgentina?`${event.historicalYear} · evento histórico argentino`:`${car?.marca||''} ${car?.modelo||''}`}</span>
     <h2>${event.title}</h2>
     ${forcedText?`<div class="forced-banner"><strong>Ya ocurrió:</strong><span>${forcedText}</span></div>`:''}
     <p>${event.text}</p>
     ${!state.car?'<p>Sin vehículo: sólo se aplican efectos económicos y de trayectoria.</p>':''}
-    <div class="choices">${event.choices.map(genericChoiceMarkup).join('')}${state.car?friendRepairMarkup(event)+hardshipChoicesMarkup(event):specialButton('✅','Continuar sin vehículo','Registrás este hito de tu trayectoria.','historical-skip')}</div>`;
-  if(!state.car)$('#historical-skip').onclick=()=>completeEvent(event,'Viviste este hito histórico sin un vehículo activo.','📜');
+    <div class="choices">${event.choices.map(genericChoiceMarkup).join('')}${event.lifeRoute?'':state.car?friendRepairMarkup(event)+hardshipChoicesMarkup(event):specialButton('✅','Continuar sin vehículo','Registrás este hito de tu trayectoria.','historical-skip')}</div>`;
+  if(!state.car&&!event.lifeRoute)$('#historical-skip').onclick=()=>completeEvent(event,'Viviste este hito histórico sin un vehículo activo.','📜');
 
   document.querySelectorAll('[data-choice]').forEach(button=>{
     if(!button.disabled)button.onclick=()=>resolveChoice(event,event.choices[Number(button.dataset.choice)]);
@@ -2098,6 +2111,10 @@ function renderPendingEvent(){
   bindHardshipChoices(event);
 }
 function inheritedUnitCandidate(){
+  if(LMPLife.branch(state)==='familiar'){
+    const family=LMPLife.candidates({special:'life_gift_father'},state,CARS).filter(c=>!(state.collection||[]).some(i=>i.id===c.id)&&state.car?.id!==c.id);
+    if(family.length)return family[rand(0,family.length-1)];
+  }
   const owned=new Set([
     state.car?.id,
     ...(state.collection||[]).map(item=>item.id)
@@ -2127,9 +2144,9 @@ function ensureInheritedUnit(){
   const car=inheritedUnitCandidate();
   if(!car)return null;
 
-  const maxYear=Math.min(car.hasta??car.desde,state.year-5);
+  const maxYear=Math.min(car.hasta??car.desde,LMPLife.branch(state)==='familiar'?state.year-1:state.year-5);
   const minYear=Math.max(car.desde,maxYear-5);
-  const modelYear=Math.max(car.desde,rand(minYear,maxYear));
+  const modelYear=Math.max(car.desde,Math.min(state.year,rand(minYear,Math.max(minYear,maxYear))));
   const condition=rand(68,96);
   const originality=rand(76,100);
   const performance=rand(44,74);
@@ -2294,6 +2311,7 @@ function hailDamageProfile(){
   };
 }
 function renderSpecialEvent(event,car,forcedText){
+  if(event.special?.startsWith('life_')){renderLifeOffer(event);return;}
   if(['inheritance_father','inheritance_inlaw'].includes(event.special)){
     const source=event.special==='inheritance_father'?'father':'inlaw';
     const unit=ensureInheritedUnit();
@@ -2624,12 +2642,12 @@ function renderSpecialEvent(event,car,forcedText){
         ${specialButton('🚗','Entregar el auto',`Conservás tu dinero, pero perdés el vehículo sin cobrar ${money(carValue)}.`,'divorce-car')}
       </div>`;
     $('#divorce-money').onclick=()=>{
-      state.divorceCount=(state.divorceCount||0)+1;
+      if(!LMPLife.divorce(state))return;
       state.money-=half;
       finishSpecial(event,`El divorcio te costó ${money(half)}, pero conservaste el auto.`);
     };
     $('#divorce-car').onclick=()=>{
-      state.divorceCount=(state.divorceCount||0)+1;
+      if(!LMPLife.divorce(state))return;
       const history=currentHistory();
       if(history){
         history.soldYear=state.year;
@@ -2781,9 +2799,11 @@ function applyMoneyAndEffects(choice,actualCost=0){
   }
 }
 function resolveChoice(event,choice){
+  if(event.lifeRoute&&state.pendingEvent?.id!==event.id)return;
   if(!canAffordChoice(choice))return;
 
-  if(event.id==='semaforo_desafio' && choice.label==='Aceptar el desafío'){
+  LMPLife.effects(state,event,choice);
+  if(choice.storyRace||(event.id==='semaforo_desafio' && choice.label==='Aceptar el desafío')){
     resolveStreetRace(event);
     return;
   }
@@ -2937,6 +2957,7 @@ function resolveDynamicRepair(event,cost,effects,risk=0){
   completeEvent(event,text);
 }
 function completeEvent(event,text,icon='🎲'){
+  LMPLife.complete(state,event);
   if(event?.historicalArgentina){
     state.careerFlags=state.careerFlags||{};
     state.careerFlags[`historical_${event.id}`]=true;
@@ -3044,6 +3065,10 @@ function repairStaleState(){
   state.collection=Array.isArray(state.collection)?state.collection:[];
   state.flags=state.flags&&typeof state.flags==='object'?state.flags:{};
   state.careerFlags=state.careerFlags&&typeof state.careerFlags==='object'?state.careerFlags:{};
+  LMPLife.normalize(state);
+  if((state.divorceCount||0)>0&&eventById(state.pendingEvent?.id)?.special==='divorce')state.pendingEvent=null;
+  const personalPending=eventById(state.pendingEvent?.id);
+  if((state.divorceCount||0)>0&&(personalPending?.id==='pareja_odia_auto'||personalPending?.special==='inheritance_inlaw'))state.pendingEvent=null;
 
   if(state.flags.corralito_ocurrido && !state.careerFlags.corralito_ocurrido){
     state.careerFlags.corralito_ocurrido=true;
@@ -3128,6 +3153,8 @@ function renderGame(){
   }
 
   if(!state.car){
+    if(!state.pendingEvent)queueLifeEvent();
+    if(eventById(state.pendingEvent?.id)?.lifeRoute){closeMarket();renderStats($('#gameStats'));renderGarage();renderLog();renderPendingEvent();return;}
     renderStats($('#gameStats'));
     renderGarage();
     renderLog();
@@ -3477,6 +3504,7 @@ function careerStory(){
   if((state.friendMechanicUses||0)>=6)parts.push(`Tu mecánico amigo terminó siendo parte de la historia: lo llamaste ${state.friendMechanicUses} veces y pasó de improvisar a trabajar como "${friendMechanicLabel()}", aunque nunca dejó de existir el riesgo de que algo saliera mal.`);
   else if((state.friendMechanicUses||0)>0)parts.push(`También recurriste ${state.friendMechanicUses} ${state.friendMechanicUses===1?'vez':'veces'} a tu mecánico amigo, que fue aprendiendo con cada arreglo.`);
 
+  parts.push(LMPLife.summary(state)+'.');
   const inheritances=[];
   if(state.careerFlags?.fatherInheritance)inheritances.push('tu padre');
   if(state.careerFlags?.inlawInheritance)inheritances.push('tu suegro');
@@ -3538,6 +3566,7 @@ function finish(){
 }
 function persist(){
   if(!state)return;
+  LMPLife.normalize(state);
   ensureVehicleLinks();bindPendingUnit();
   if(!state.careerId)state.careerId=unitUid();
   checkAchievements();
@@ -3655,6 +3684,6 @@ $('#exportDamaged').hidden=!gameStore.damaged();
 </script>
 <dialog id="vehicleDialog" class="vehicle-dialog" aria-labelledby="vehicleTitle"><div class="dialog-bar"><button class="ghost" id="closeVehicle" type="button">Cerrar</button></div><div id="vehicleDetail"></div></dialog>
 <input id="importMemoryFile" type="file" accept=".json,application/json" hidden>
-<script src="./interfaz.js"></script>
+<script src="./interfaz.js?v=050"></script>
 </body>
 </html>
