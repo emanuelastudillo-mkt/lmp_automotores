@@ -33,7 +33,7 @@ function checkAchievements(final=false,year=state?.year){
     toast.textContent=`🏆 ${unlocked.length===1?'Logro desbloqueado':'Logros desbloqueados'}: ${names}${extra}.`;
     toast.hidden=false;
     clearTimeout(achievementToastTimer);
-    achievementToastTimer=setTimeout(()=>{toast.hidden=true;},10000);
+    achievementToastTimer=setTimeout(()=>{toast.hidden=true;},6000);
   }
 }
 function renderAchievements(){

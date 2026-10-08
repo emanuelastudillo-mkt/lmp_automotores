@@ -473,6 +473,7 @@ button:disabled .ui-icon{
 <link rel="stylesheet" href="./correcciones.css">
 <link rel="stylesheet" href="./interfaz.css">
 <link rel="stylesheet" href="./marca-lmp.css?v=052">
+<link rel="stylesheet" href="./flujo.css?v=053">
 </head>
 <body>
 
@@ -593,16 +594,20 @@ button:disabled .ui-icon{
   <section class="screen" id="gameScreen">
     <div class="stats" id="gameStats"></div>
     <div class="event-wrap">
-      <aside class="panel garage" id="garagePanel"></aside>
       <section class="panel timeline">
         <div class="timeline-top">
           <div><span class="eyebrow">Trayectoria</span><div id="playerLabel"></div></div>
           <span class="year-pill" id="yearPill"></span>
         </div>
-        <div id="activeVehiclePreview" class="active-vehicle-preview"></div>
+        <div id="turnGuide" class="turn-guide" role="status"></div>
+        <p id="yearAdvanceNotice" class="year-advance-notice" role="status" hidden></p>
         <div class="event-card" id="eventCard"></div>
-        <div class="log" id="eventLog"></div>
+        <details class="recent-events"><summary>Últimos sucesos</summary><div class="log" id="eventLog"></div></details>
       </section>
+      <details class="vehicle-tools" id="vehicleDetails">
+        <summary>Tu vehículo en uso · <strong id="activeVehicleName"></strong><small>Ver ficha, colección y acciones del auto</small></summary>
+        <aside class="panel garage" id="garagePanel"></aside>
+      </details>
     </div>
   </section>
 
@@ -671,7 +676,7 @@ button:disabled .ui-icon{
     </div>
   </div>
   <div class="shell game-footer-actions"><button id="emergencyReset" class="ghost" type="button">Reiniciar partida</button></div>
-  <div class="shell game-version" aria-label="Versión del juego">Tu vida sobre ruedas · v0.52</div>
+  <div class="shell game-version" aria-label="Versión del juego">Tu vida sobre ruedas · v0.53</div>
 </footer>
 
 
@@ -710,11 +715,12 @@ button:disabled .ui-icon{
 <div class="achievement-toast" id="achievementToast" role="status" aria-live="polite" aria-atomic="true" hidden></div>
 <script src="./guardado.js?v=050"></script>
 <script src="./legado.js"></script>
-<script src="./partida.js?v=050"></script>
+<script src="./partida.js?v=053"></script>
 <script src="./vidas.js?v=050"></script>
-<script src="./vida-eventos.js?v=050"></script>
+<script src="./vida-eventos.js?v=053"></script>
 <script src="./logros.js"></script>
-<script src="./logros-ui.js?v=052"></script>
+<script src="./logros-ui.js?v=053"></script>
+<script src="./flujo.js?v=053"></script>
 <script>
 const MAX_END_YEAR=2031;
 function careerEndYear(){ return state?.endYear||2026; }
@@ -821,9 +827,10 @@ function animatedMeter(label,value,key){
 }
 
 function screen(id){
+  const changing=!$('#'+id).classList.contains('active');
   document.querySelectorAll('.screen').forEach(el=>el.classList.remove('active'));
   $('#'+id).classList.add('active');
-  window.scrollTo({top:0,behavior:'auto'});
+  if(changing)window.scrollTo({top:0,behavior:'auto'});
 }
 function populateYears(){
   const select=$('#startYear');
@@ -1423,17 +1430,18 @@ function starterOptions(year,cash){
     .sort((a,b)=>a.market-b.market);
 }
 function renderStats(target){
-  const currentValue=state.car?vehicleValue():0;
-  const prefix=target?.id||'stats';
-  const fanDisplay=flameIcons(fanFlamesFromCount(state.fans||0))||'—';
-  target.innerHTML=`
+  const currentValue=state.car?vehicleValue():0,prefix=target?.id||'stats';
+  const expanded=target.querySelector('.career-extra')?.open;
+  const primary=`
     <div class="stat"><span>${uiIcon('calendar')}Año</span><strong>${animatedValue(`${prefix}-year`,state.year,state.year,{showDelta:false})}</strong></div>
-    <div class="stat"><span>${uiIcon('wallet')}Dinero</span><strong>${animatedValue(`${prefix}-money`,state.money,moneyDisplay(state.money))}</strong></div>
-    <div class="stat"><span>${uiIcon('flame')}Fans</span><strong>${animatedValue(`${prefix}-fans`,state.fans||0,fanDisplay)}</strong></div>
-    <div class="stat"><span>${uiIcon('car')}Autos</span><strong>${animatedValue(`${prefix}-cars`,acquiredCount(),acquiredCount())}</strong></div>
+    <div class="stat"><span>${uiIcon('wallet')}Dinero</span><strong>${animatedValue(`${prefix}-money`,state.money,moneyDisplay(state.money))}</strong></div>`;
+  const extra=`
+    <div class="stat"><span>${uiIcon('flame')}Fans</span><strong>${animatedValue(`${prefix}-fans`,state.fans||0,(state.fans||0).toLocaleString('es-AR'))}</strong></div>
+    <div class="stat"><span>${uiIcon('car')}Autos adquiridos</span><strong>${animatedValue(`${prefix}-cars`,acquiredCount(),acquiredCount())}</strong></div>
     <div class="stat highlight"><span>${uiIcon('gauge')}Valor de tu auto</span><strong>${state.car?animatedValue(`${prefix}-carvalue`,currentValue,money(currentValue)):'—'}</strong></div>
     <div class="stat"><span>${uiIcon('wrench')}Gasto mensual</span><strong>${state.car?animatedValue(`${prefix}-expense`,monthlyExpense(),money(monthlyExpense()),{invert:true}):'—'}</strong></div>
     <div class="life-status">${escapeText(LMPLife.summary(state))}</div>`;
+  target.innerHTML=target.id==='gameStats'?`${primary}<details class="career-extra"${expanded?' open':''}><summary>Tu vida, colección y economía · Ver detalles</summary><div class="extra-stats">${extra}</div></details>`:primary+extra;
 }
 function carCard(car,first=false){
   const price=car.market??marketPrice(car,state.year);
@@ -1598,16 +1606,15 @@ let yearAnimationTimer=null;
 function stopYearAnimation(){
   clearTimeout(yearAnimationTimer);yearAnimationTimer=null;
   const overlay=$('#yearTransition');overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');
+  $('#yearAdvanceNotice').hidden=true;
 }
 function playYearAnimation(){
   if(!pendingYearAnimation)return;
   const {from,to}=pendingYearAnimation;pendingYearAnimation=null;stopYearAnimation();
-  if(to<=from||window.matchMedia?.('(prefers-reduced-motion: reduce)').matches)return;
-  $('#yearTransitionValue').textContent=`${from} → ${to}`;
-  $('#yearTransitionProgress').style.width='100%';
-  $('#yearTransition').classList.add('open');$('#yearTransition').setAttribute('aria-hidden','false');
-  $('#skipYearAnimation').onclick=stopYearAnimation;
-  yearAnimationTimer=setTimeout(stopYearAnimation,1100);
+  if(to<=from)return;
+  const notice=$('#yearAdvanceNotice'),years=to-from;
+  notice.textContent=`${from} → ${to} · ${years===1?'Pasó 1 año':`Pasaron ${years} años`}. Tu dinero ya incluye los ingresos y gastos de ese período.`;
+  notice.hidden=false;
 }
 function advanceYears(years){
   const fromYear=state.year;
@@ -1680,7 +1687,7 @@ function noVehicleMarkup(){
 }
 function renderGarage(){
   const car=currentCar();
-  $('#activeVehiclePreview').innerHTML=car&&state.car?`<div class="preview-photo">${carImageMarkup(car)}</div><div><span class="eyebrow">Tu vehículo en uso · ${state.car.modelYear??car.desde}</span><strong>${car.marca} ${car.modelo}</strong><small>Podés consultar su ficha en Garaje.</small></div>`:'';
+  $('#activeVehicleName').textContent=car&&state.car?`${car.marca} ${car.modelo} · ${state.car.modelYear??car.desde}`:'Sin vehículo';
   if(!car||!state.car){
     $('#garagePanel').innerHTML=noVehicleMarkup();
     bindCollectionButtons();
@@ -1722,10 +1729,11 @@ function renderGarage(){
 
         <div class="canonical garage-secondary"><strong>Historia del modelo:</strong><br>${car.eventoCanonico}</div>
         <div class="garage-actions">
-          <button class="ghost" id="collectCarNow" data-mobile-label="Colección" ${vehicleActionsLocked()?'disabled':''}>${uiIcon('collection','action-icon')}<span>${vehicleActionsLocked()?'Acción disponible después de continuar':'Guardar / quedar sin auto'}</span></button>
-          <button class="car-select" id="sellCarNow" data-mobile-label="Vender" ${vehicleActionsLocked()?'disabled':''}>${uiIcon('sell','action-icon')}<span>${vehicleActionsLocked()?'Acción disponible después de continuar':`Vender ahora · ${currentSaleOffer().mood} · ${money(currentSaleOffer().amount)}`}</span></button>
-          <button class="ghost" id="openMarket" data-mobile-label="Mercado" ${vehicleActionsLocked()?'disabled':''}>${uiIcon('market','action-icon')}<span>${vehicleActionsLocked()?'Acción disponible después de continuar':'Ver mercado / cambiar auto'}</span></button>
+          <button class="ghost" id="collectCarNow" data-mobile-label="Colección" ${vehicleActionsLocked()?'disabled':''}>${uiIcon('collection','action-icon')}<span>Guardar y dejar de usar</span></button>
+          <button class="car-select" id="sellCarNow" data-mobile-label="Vender" ${vehicleActionsLocked()?'disabled':''}>${uiIcon('sell','action-icon')}<span>${vehicleActionsLocked()?'Vender este auto':`Vender · ${money(currentSaleOffer().amount)}`}</span></button>
+          <button class="ghost" id="openMarket" data-mobile-label="Mercado" ${vehicleActionsLocked()?'disabled':''}>${uiIcon('market','action-icon')}<span>Ver mercado / cambiar auto</span></button>
         </div>
+        ${vehicleActionsLocked()?'<p class="garage-lock-note">Estas acciones se habilitan después de resolver el acontecimiento y continuar.</p>':''}
         ${collectionPanelMarkup()}
       </div>
     </div>`;
@@ -2163,6 +2171,7 @@ function renderPendingEvent(){
 
   if(event.special){
     renderSpecialEvent(event,car,forcedText);
+    renderStoryStep('decision',event);
     return;
   }
 
@@ -2181,6 +2190,7 @@ function renderPendingEvent(){
   });
   bindFriendRepair(event);
   bindHardshipChoices(event);
+  renderStoryStep('decision',event);
 }
 function inheritedUnitCandidate(){
   if(LMPLife.branch(state)==='familiar'){
@@ -2400,7 +2410,7 @@ function renderSpecialEvent(event,car,forcedText){
       <h2>${event.title}</h2>
       <p>${event.text}</p>
       <div class="forced-banner">
-        <strong>${unit.brand} ${unit.model} · ${unit.modelYear}</strong>
+        <strong>Estado del vehículo heredado</strong>
         <span>Estado ${unit.condition} · Originalidad ${unit.originality} · Performance ${unit.performance} · valor estimado ${money(unit.value)}.</span>
       </div>
       <div class="choices">
@@ -2502,7 +2512,7 @@ function renderSpecialEvent(event,car,forcedText){
     if(event.special==='collection_fame'){
       $('#eventCard').innerHTML=`
         <div class="event-icon">${event.icon}</div>
-        <span class="eyebrow">Tu colección · ${item.brand} ${item.model}</span>
+        <span class="eyebrow">Tu colección</span>
         <h2>${event.title}</h2>
         <p>${event.text}</p>
         <div class="choices">
@@ -2524,7 +2534,7 @@ function renderSpecialEvent(event,car,forcedText){
     if(event.special==='collection_race'){
       $('#eventCard').innerHTML=`
         <div class="event-icon">${event.icon}</div>
-        <span class="eyebrow">Tu colección · ${item.brand} ${item.model}</span>
+        <span class="eyebrow">Tu colección</span>
         <h2>${event.title}</h2>
         <p>${event.text}</p>
         <div class="choices">
@@ -2560,7 +2570,7 @@ function renderSpecialEvent(event,car,forcedText){
       const offer=state.pendingEvent.collectionOffer;
       $('#eventCard').innerHTML=`
         <div class="event-icon">${event.icon}</div>
-        <span class="eyebrow">Oferta por ${item.brand} ${item.model}</span>
+        <span class="eyebrow">Oferta de compra</span>
         <h2>${event.title}</h2>
         <p>${event.text} Te ofrecen <strong>${money(offer)}</strong>.</p>
         <div class="choices">
@@ -2568,11 +2578,12 @@ function renderSpecialEvent(event,car,forcedText){
           ${specialButton('🔑','Rechazar','Lo conservás en tu colección.','collection-offer-no')}
         </div>`;
       $('#collection-offer-yes').onclick=()=>{
+        const vehicle=storyVehicle(event);
         const soldName=`${item.brand} ${item.model}`;
         sellCollectionCar(item.uid,offer,'oferta por colección',true);
         state.decisions++;
         state.pendingEvent=null;
-        state.pendingResult={year:state.year,title:'Resultado',text:`Aceptaste la oferta y vendiste ${soldName} por ${money(offer)}.`,icon:'🤝'};
+        state.pendingResult={year:state.year,title:'Venta concretada',text:`Aceptaste la oferta y vendiste ${soldName} por ${money(offer)}.`,icon:'🤝',vehicle};
         state.nextEventYear=Math.min(careerEndYear(),state.year+nextGap());
         persist();
         closeMarket();
@@ -2726,6 +2737,7 @@ function renderSpecialEvent(event,car,forcedText){
         history.soldFor=0;
         history.saleReason='divorcio';
       }
+      const vehicle=storyVehicle(event);
       const lostCar=`${car.marca} ${car.modelo}`;
       updateCurrentCarLegacy();
       state.car=null;
@@ -2736,7 +2748,7 @@ function renderSpecialEvent(event,car,forcedText){
         year:state.year,
         title:'Resultado',
         text:`El divorcio te obligó a entregar ${lostCar} sin recibir dinero.`,
-        icon:'🚗'
+        icon:'🚗',vehicle
       };
       state.nextEventYear=Math.min(careerEndYear(),state.year+nextGap());
       state.events.unshift({
@@ -3029,6 +3041,7 @@ function resolveDynamicRepair(event,cost,effects,risk=0){
   completeEvent(event,text);
 }
 function completeEvent(event,text,icon='🎲'){
+  const vehicle=storyVehicle(event);
   LMPLife.complete(state,event);
   if(event?.historicalArgentina){
     state.careerFlags=state.careerFlags||{};
@@ -3049,9 +3062,9 @@ function completeEvent(event,text,icon='🎲'){
   state.pendingEvent=null;
   state.pendingResult={
     year:state.year,
-    title:'Resultado',
+    title:event.title||'Resultado',
     text,
-    icon
+    icon,vehicle
   };
   state.nextEventYear=Math.min(careerEndYear(),state.year+nextGap());
   persist();
@@ -3060,6 +3073,7 @@ function completeEvent(event,text,icon='🎲'){
 function renderEventResult(){
   const result=state.pendingResult;
   if(!result)return;
+  const next=storyNextStep();
   updateCarFans();
   renderStats($('#gameStats'));
   renderGarage();
@@ -3069,15 +3083,16 @@ function renderEventResult(){
     <div class="event-icon">${result.icon||'🎲'}</div>
     <span class="eyebrow">${result.year} · resultado de tu decisión</span>
     <h2>${result.title||'Resultado'}</h2>
-    <div class="forced-banner"><strong>¿Qué pasó?</strong><span>${result.text}</span></div>
+    <div class="decision-outcome"><strong>Qué pasó</strong><span>${result.text}</span></div>
     <div class="choices">
       <button class="choice" id="continueAfterResult">
         <span class="choice-icon">${uiIcon('arrow')}</span>
-        <strong>Continuar</strong>
-        <small>Recién ahora avanzará el tiempo hacia el próximo evento.</small>
+        <strong>${next.label}</strong>
+        <small>${next.note}</small>
       </button>
     </div>`;
   hydrateSvgIcons($('#eventCard'));
+  renderStoryStep('result');
   $('#continueAfterResult').onclick=()=>{
     state.pendingResult=null;
     persist();
@@ -3236,6 +3251,7 @@ function renderGame(){
       <span class="eyebrow">${state.year}</span>
       <h2>Sin vehículo actual</h2>
       <p>Elegí otro auto en el mercado o pasá un año para seguir ahorrando.</p>`;
+    renderStoryStep('market');
     persist();
     openMarket(true);
     setTimeout(playYearAnimation,80);
@@ -3243,18 +3259,7 @@ function renderGame(){
   }
 
   if(!state.pendingEvent && state.nextEventYear>state.year){
-    let targetYear=Math.min(state.nextEventYear,careerEndYear());
-    const historicalStop=nextHistoricalYearBetween(state.year,targetYear);
-    if(historicalStop!==null){
-      targetYear=historicalStop;
-    }
-    if(
-      state.year<2001 &&
-      targetYear>2001 &&
-      !state.careerFlags?.corralito_ocurrido
-    ){
-      targetYear=2001;
-    }
+    const targetYear=nextStoryYear();
     const years=targetYear-state.year;
     if(years>0)advanceYears(years);
   }

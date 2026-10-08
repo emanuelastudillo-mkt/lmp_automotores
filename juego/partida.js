@@ -109,10 +109,10 @@ function renderBrokenVehicle(){
     state.money-=cost;state.car.repairs++;state.car.investedValue+=Math.round(cost*.76);
     state.car.condition=clamp(state.car.condition+22,0,100);state.car.performance=clamp(state.car.performance+20,0,100);
     state.car.originality=clamp(state.car.originality-2,0,100);state.car.operable=true;
-    state.decisions++;state.pendingResult={year:state.year,title:'Motor reconstruido',text:`Reconstruiste el motor por ${money(cost)}. El auto volvió a circular.`,icon:'🔩'};
+    state.decisions++;state.pendingResult={year:state.year,title:'Motor reconstruido',text:`Reconstruiste el motor por ${money(cost)}. El auto volvió a circular.`,icon:'🔩',vehicle:storyVehicle()};
     state.events.unshift({year:state.year,unitUid:state.car.uid,text:state.pendingResult.text});state.nextEventYear=Math.min(careerEndYear(),state.year+nextGap());persist();renderGame();
   };
-  persist();closeMarket();hydrateSvgIcons($('#eventCard'));
+  persist();closeMarket();hydrateSvgIcons($('#eventCard'));renderStoryStep('repair');
 }
 function showSaveWarning(message=gameStore.warning()){
   const el=document.querySelector('#saveWarning');if(!el)return;
