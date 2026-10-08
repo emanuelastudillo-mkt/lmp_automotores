@@ -1,0 +1,63 @@
+/* Identidad institucional de lmpautos.com, aplicada sólo al marco del juego. */
+body{padding-bottom:0}
+.lmp-site-header{position:sticky;top:0;z-index:50;background:rgba(16,16,16,.94);backdrop-filter:blur(14px);color:#fff;border-bottom:1px solid rgba(255,255,255,.09)}
+.lmp-topbar{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.lmp-brand{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none;font-size:18px;font-weight:900;letter-spacing:-.03em;flex-shrink:0}
+.lmp-brand img{width:44px;height:44px;object-fit:contain;display:block}
+.lmp-top-actions{display:flex;align-items:center;gap:10px}
+.lmp-instagram{display:flex;align-items:center;gap:9px;color:#fff;text-decoration:none;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:8px 11px;min-height:44px}
+.lmp-instagram:hover{background:rgba(255,255,255,.14)}
+.lmp-instagram svg{width:21px;height:21px;flex:0 0 auto}
+.lmp-instagram span{display:flex;flex-direction:column;line-height:1.05}
+.lmp-instagram strong{font-size:13px}
+.lmp-instagram small{font-size:10px;color:#c7c7c7;margin-top:3px}
+.lmp-site-nav{display:flex;gap:8px}
+.lmp-site-nav a{border:0;background:transparent;color:#bfbfbf;padding:10px 14px;border-radius:12px;min-height:44px;font-size:14px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center}
+.lmp-site-nav a:hover{background:#272727;color:#fff}
+.game-toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0 0}
+.game-title{font-size:18px;font-weight:750;letter-spacing:-.3px}
+.game-toolbar-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.game-note{margin-top:20px;padding:12px 14px;border-left:3px solid var(--amber);background:#17140c;color:var(--muted);font-size:13px;line-height:1.6}
+.game-duration{margin-top:12px;font-size:12px;color:var(--muted);line-height:1.5}
+.lmp-site-footer{background:#111;color:#aaa;padding:30px 0 14px;font-size:13px}
+.lmp-footer-inner{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:22px}
+.lmp-footer-brand{display:flex;flex-direction:column;gap:5px}
+.lmp-footer-brand strong{color:#fff;font-size:16px}
+.lmp-footer-brand span{color:#9f9f9f}
+.lmp-footer-privacy{display:flex;gap:12px;flex-wrap:wrap;margin-top:7px}
+.lmp-footer-privacy a{color:#d4d4d4;text-decoration:underline;text-underline-offset:3px}
+.lmp-footer-location{display:flex;align-items:center;gap:12px;min-width:0}
+.lmp-footer-location-icon{width:42px;height:42px;flex:0 0 auto;border-radius:13px;background:rgba(255,255,255,.08);display:grid;place-items:center;color:#fff}
+.lmp-footer-location-icon svg{width:21px;height:21px}
+.lmp-footer-address{display:flex;flex-direction:column;gap:4px;min-width:0}
+.lmp-footer-address strong{color:#fff;font-size:14px}
+.lmp-footer-address span{color:#aaa;line-height:1.4}
+.lmp-footer-map-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end}
+.lmp-map-link{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.07);color:#fff;border-radius:12px;padding:10px 12px;min-height:44px;font-weight:850;text-decoration:none}
+.lmp-map-link:hover{background:rgba(255,255,255,.14)}
+.lmp-map-link svg{width:18px;height:18px;flex:0 0 auto}
+.lmp-map-link.maps{border-color:rgba(66,133,244,.45)}
+.lmp-map-link.waze{border-color:rgba(51,204,255,.45)}
+.game-version{border-top:1px solid rgba(255,255,255,.08);margin-top:24px;padding-top:12px;text-align:center;font-size:10px;font-weight:400;color:#919191;letter-spacing:.02em}
+@media(max-width:900px){
+  .lmp-footer-inner{grid-template-columns:1fr 1fr;align-items:start}
+  .lmp-footer-map-actions{grid-column:1/-1;justify-content:flex-start}
+}
+@media(max-width:700px){
+  .lmp-topbar{gap:8px}
+  .lmp-brand span,.lmp-instagram span{display:none}
+  .lmp-top-actions{gap:6px}
+  .lmp-instagram{padding:10px}
+  .lmp-site-nav{gap:2px}
+  .lmp-site-nav a{font-size:12px;padding:10px 8px}
+  .game-toolbar{flex-wrap:wrap;padding-top:16px;gap:10px}
+  .game-toolbar-actions{gap:6px}
+  .game-toolbar-actions button{font-size:12px;padding:10px}
+  .lmp-footer-inner{grid-template-columns:1fr;gap:22px}
+  .lmp-site-footer{padding-bottom:calc(94px + env(safe-area-inset-bottom,0px))}
+}
+@media(max-width:360px){
+  .lmp-topbar{flex-wrap:wrap;padding:10px 0}
+  .lmp-top-actions{flex:1;justify-content:flex-end;flex-wrap:wrap}
+  .lmp-site-nav a{padding:10px 5px;font-size:11px}
+}
