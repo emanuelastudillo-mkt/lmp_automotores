@@ -16,7 +16,8 @@ body{padding-bottom:0}
 .lmp-site-nav a:hover{background:#272727;color:#fff}
 .game-toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0 0}
 .game-title{font-size:18px;font-weight:750;letter-spacing:-.3px}
-.game-toolbar-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.recovery-tools:has(button:not([hidden])){margin-top:16px}
+.career-nav .achievement-nav-count{display:block;font-size:10px;line-height:1.3;opacity:.8}
 .game-note{margin-top:20px;padding:12px 14px;border-left:3px solid var(--amber);background:#17140c;color:var(--muted);font-size:13px;line-height:1.6}
 .game-duration{margin-top:12px;font-size:12px;color:var(--muted);line-height:1.5}
 .lmp-site-footer{background:#111;color:#aaa;padding:30px 0 14px;font-size:13px}
@@ -39,6 +40,8 @@ body{padding-bottom:0}
 .lmp-map-link.maps{border-color:rgba(66,133,244,.45)}
 .lmp-map-link.waze{border-color:rgba(51,204,255,.45)}
 .game-version{border-top:1px solid rgba(255,255,255,.08);margin-top:24px;padding-top:12px;text-align:center;font-size:10px;font-weight:400;color:#919191;letter-spacing:.02em}
+.game-footer-actions{margin-top:26px;text-align:right}
+.game-footer-actions button{font-size:12px;background:transparent;color:#aaa;border-color:#353535}
 @media(min-width:701px){.career-nav{top:73px;z-index:40}}
 @media(max-width:900px){
   .lmp-footer-inner{grid-template-columns:1fr 1fr;align-items:start}
@@ -52,8 +55,8 @@ body{padding-bottom:0}
   .lmp-site-nav{gap:2px}
   .lmp-site-nav a{font-size:12px;padding:10px 8px}
   .game-toolbar{flex-wrap:wrap;padding-top:16px;gap:10px}
-  .game-toolbar-actions{gap:6px}
-  .game-toolbar-actions button{font-size:12px;padding:10px}
+  .career-nav{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .career-nav .achievement-nav-count{display:none}
   .lmp-footer-inner{grid-template-columns:1fr;gap:22px}
   .lmp-site-footer{padding-bottom:calc(94px + env(safe-area-inset-bottom,0px))}
 }

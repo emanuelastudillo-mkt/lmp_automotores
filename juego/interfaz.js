@@ -8,7 +8,9 @@
   const count=(n,singular,plural)=>`${n} ${n===1?singular:plural}`;
   const icon={partida:'road',garaje:'collection',hitos:'trophy',historia:'document',legado:'key'};
   const names={partida:'Partida',garaje:'Garaje',hitos:'Hitos',historia:'Historia',legado:'Legado'};
+  const achievementsButton=$('#openAchievements');
   nav.innerHTML=Object.keys(names).map(k=>`<button type="button" data-page="${k}">${uiIcon(icon[k])}<span>${names[k]}</span></button>`).join('');
+  nav.append(achievementsButton);
   const originalScreen=screen;
   screen=function(id){originalScreen(id);if(id!=='reviewScreen'){returnScreen=id;page='partida';archive=null;}syncNav();};
   function syncNav(){nav.querySelectorAll('[data-page]').forEach(b=>{const on=b.dataset.page===page;b.classList.toggle('active',on);b.setAttribute('aria-current',on?'page':'false');});}

@@ -38,7 +38,9 @@ function checkAchievements(final=false,year=state?.year){
 }
 function renderAchievements(){
   const records=achievementTracker.records();
-  document.querySelector('#openAchievements').textContent=`🏆 Logros ${achievementTracker.count()}/${records.length}`;
+  const button=document.querySelector('#openAchievements');
+  button.innerHTML=`<svg class="ui-icon" aria-hidden="true"><use href="#i-trophy"></use></svg><span>Logros<small class="achievement-nav-count">${achievementTracker.count()}/${records.length}</small></span>`;
+  button.setAttribute('aria-label',`Logros: ${achievementTracker.count()} de ${records.length} desbloqueados`);
   document.querySelector('#achievementsSummary').textContent=`${achievementTracker.count()} de ${records.length} logros desbloqueados`;
   document.querySelector('#achievementsWarning').hidden=!achievementTracker.storageFailed();
   // Sólo reconstruir las tarjetas cuando se abre el panel o cambia estando abierto.

@@ -472,7 +472,7 @@ button:disabled .ui-icon{
 <link rel="stylesheet" href="./logros.css">
 <link rel="stylesheet" href="./correcciones.css">
 <link rel="stylesheet" href="./interfaz.css">
-<link rel="stylesheet" href="./marca-lmp.css?v=051-1">
+<link rel="stylesheet" href="./marca-lmp.css?v=052">
 </head>
 <body>
 
@@ -539,10 +539,6 @@ button:disabled .ui-icon{
 
 <div class="shell game-toolbar">
   <div class="game-title">Tu vida sobre ruedas</div>
-  <div class="game-toolbar-actions">
-    <button class="ghost achievements-button" id="openAchievements" type="button">🏆 Logros 0/31</button>
-    <button id="emergencyReset" class="ghost" type="button">Reiniciar</button>
-  </div>
 </div>
 
 <div class="year-transition" id="yearTransition" aria-hidden="true">
@@ -554,9 +550,10 @@ button:disabled .ui-icon{
   </div>
 </div>
 
-<div class="shell backup-actions"><button class="ghost" id="exportGame" type="button">Exportar partida</button><button class="ghost" id="importGame" type="button">Importar partida</button><button class="ghost" id="exportDamaged" type="button" hidden>Descargar registro dañado</button><input id="importGameFile" type="file" accept=".json,application/json" hidden></div>
+<div class="shell recovery-tools"><button class="ghost" id="exportDamaged" type="button" hidden>Descargar registro dañado</button></div>
+<input id="importGameFile" type="file" accept=".json,application/json" hidden>
 <div class="shell save-warning" id="saveWarning" role="status" aria-live="polite" hidden></div>
-<nav id="careerNav" class="career-nav" aria-label="Secciones de tu trayectoria"></nav>
+<nav id="careerNav" class="career-nav" aria-label="Secciones de tu trayectoria"><button class="achievements-button" id="openAchievements" type="button">🏆 Logros 0/31</button></nav>
 <main class="shell">
 <section class="screen" id="reviewScreen"><div id="careerView"></div></section>
   <section class="screen active" id="startScreen">
@@ -673,7 +670,8 @@ button:disabled .ui-icon{
       </a>
     </div>
   </div>
-  <div class="shell game-version" aria-label="Versión del juego">Tu vida sobre ruedas · v0.51</div>
+  <div class="shell game-footer-actions"><button id="emergencyReset" class="ghost" type="button">Reiniciar partida</button></div>
+  <div class="shell game-version" aria-label="Versión del juego">Tu vida sobre ruedas · v0.52</div>
 </footer>
 
 
@@ -716,7 +714,7 @@ button:disabled .ui-icon{
 <script src="./vidas.js?v=050"></script>
 <script src="./vida-eventos.js?v=050"></script>
 <script src="./logros.js"></script>
-<script src="./logros-ui.js"></script>
+<script src="./logros-ui.js?v=052"></script>
 <script>
 const MAX_END_YEAR=2031;
 function careerEndYear(){ return state?.endYear||2026; }
@@ -3728,18 +3726,16 @@ function restoreCareer(saved){
 
   const saved=gameStore.read();
   if(saved)restoreCareer(saved);
-  else if(gameStore.damaged())renderRecovery('El guardado no se pudo leer. Podés descargar el registro e importar una copia válida.');
+  else if(gameStore.damaged())renderRecovery('El guardado no se pudo leer. Podés descargar el registro o reiniciar la partida desde el pie de página.');
   showSaveWarning();
 
 })().catch(error=>{console.error(error);renderRecovery(clean(error?.message)||'No se pudo cargar el juego.');});
 function renderRecovery(message){
   screen('startScreen');
-  $('#startScreen').innerHTML=`<div class="hero"><div><span class="eyebrow">Recuperación</span><h1>No se pudo recuperar la partida.</h1><p>${escapeText(message)}</p><p>Usá Exportar partida o Importar partida. También podés volver a intentar cargar los datos.</p><button class="primary" id="retryLoad" type="button">Volver a intentar</button></div></div>`;
+  $('#startScreen').innerHTML=`<div class="hero"><div><span class="eyebrow">Recuperación</span><h1>No se pudo recuperar la partida.</h1><p>${escapeText(message)}</p><p>Podés volver a intentar cargar los datos o reiniciar la partida desde el pie de página.</p><button class="primary" id="retryLoad" type="button">Volver a intentar</button></div></div>`;
   $('#retryLoad').onclick=()=>location.reload();
 }
-$('#exportGame').onclick=exportGame;
 $('#exportDamaged').onclick=()=>{if(gameStore.damaged())downloadSave(gameStore.damaged(),'LMP-registro-danado.json');};
-$('#importGame').onclick=()=>$('#importGameFile').click();
 $('#importGameFile').onchange=async event=>{
   const file=event.target.files?.[0];if(!file)return;
   try{
@@ -3758,6 +3754,6 @@ $('#exportDamaged').hidden=!gameStore.damaged();
 </script>
 <dialog id="vehicleDialog" class="vehicle-dialog" aria-labelledby="vehicleTitle"><div class="dialog-bar"><button class="ghost" id="closeVehicle" type="button">Cerrar</button></div><div id="vehicleDetail"></div></dialog>
 <input id="importMemoryFile" type="file" accept=".json,application/json" hidden>
-<script src="./interfaz.js?v=050"></script>
+<script src="./interfaz.js?v=052"></script>
 </body>
 </html>
