@@ -202,28 +202,6 @@
     </image:image>
   </url>
   <url>
-    <loc>https://lmpautos.com/vehiculos/chevrolet-tracker-1-8-lt-2015/</loc>
-    <lastmod>2026-10-19</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://lmpautos.com/img/vehiculos/A091.webp?v=34d29d1bf5ae</image:loc>
-      <image:title>Chevrolet Tracker 1.8 LT 2015</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://lmpautos.com/img/vehiculos/A091-1.webp?v=34d29d1bf5ae</image:loc>
-      <image:title>Chevrolet Tracker 1.8 LT 2015</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://lmpautos.com/img/vehiculos/A091-2.webp?v=34d29d1bf5ae</image:loc>
-      <image:title>Chevrolet Tracker 1.8 LT 2015</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://lmpautos.com/img/vehiculos/A091-3.webp?v=34d29d1bf5ae</image:loc>
-      <image:title>Chevrolet Tracker 1.8 LT 2015</image:title>
-    </image:image>
-  </url>
-  <url>
     <loc>https://lmpautos.com/vehiculos/peugeot-208-1-5-active-2015/</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>daily</changefreq>
@@ -407,6 +385,28 @@
     <image:image>
       <image:loc>https://lmpautos.com/img/vehiculos/A140.webp?v=34d29d1bf5ae</image:loc>
       <image:title>Fiat Mobi Easy way 1.0 2017</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lmpautos.com/vehiculos/chevrolet-tracker-1-8-lt-2015/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://lmpautos.com/img/vehiculos/A091.webp?v=34d29d1bf5ae</image:loc>
+      <image:title>Chevrolet Tracker 1.8 LT 2015</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://lmpautos.com/img/vehiculos/A091-1.webp?v=34d29d1bf5ae</image:loc>
+      <image:title>Chevrolet Tracker 1.8 LT 2015</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://lmpautos.com/img/vehiculos/A091-2.webp?v=34d29d1bf5ae</image:loc>
+      <image:title>Chevrolet Tracker 1.8 LT 2015</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://lmpautos.com/img/vehiculos/A091-3.webp?v=34d29d1bf5ae</image:loc>
+      <image:title>Chevrolet Tracker 1.8 LT 2015</image:title>
     </image:image>
   </url>
 </urlset>
