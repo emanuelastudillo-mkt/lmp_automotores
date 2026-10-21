@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T21:41:26.977Z",
+  "generatedAt": "2026-10-21T04:56:43.992Z",
   "source": "Google Sheets CSV publicado",
   "rowCount": 150,
-  "contentHash": "765f4477e8ced3b7f0b838c51f3f87805b37edc20a9a1944dcbd72f2e37c4703",
+  "contentHash": "995f020456a3f32f7463f11953a084e2b8bf67a0f8e0f3dd4d498b4bbbcabb95",
   "rows": [
     {
       "ID": "A005",
@@ -4300,8 +4300,8 @@
       "Precio publicado Uds": "$6.400",
       "Precio de contado Uds": "$6.400",
       "MAX FINAN": "",
-      "Anticipo MINIMO": "$10.200.000",
-      "Cotizacion al día": "$10.200.000",
+      "Anticipo MINIMO": "$10.100.000",
+      "Cotizacion al día": "$10.100.000",
       "Estado actual del auto": "VENDIDO",
       "% de anticipo": "100%",
       "Ultima publicacion": "04/08/2026",
@@ -4321,7 +4321,7 @@
       "Seguridad": "38",
       "Calificacion General": "60,6",
       "Destacado": "Si",
-      "Oportunidad": "34"
+      "Oportunidad": "33"
     },
     {
       "ID": "A128",
@@ -5072,9 +5072,9 @@
       "Oportunidad": ""
     },
     {
-      "ID": "$1.524,92",
+      "ID": "$1.524,75",
       "Marca": "Oficial",
-      "Modelo": "$1.558,47",
+      "Modelo": "$1.558,29",
       "Año": "Blue",
       "Kilometraje": "",
       "Color": "",
