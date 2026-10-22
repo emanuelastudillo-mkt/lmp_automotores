@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T04:57:06.695Z",
+  "generatedAt": "2026-10-22T12:00:14.360Z",
   "source": "Google Sheets CSV publicado",
   "rowCount": 151,
-  "contentHash": "bfe81ccb713416987b5f4a59a0d1b3dd97a8e90b7d69a7aab2f322c546c62fbd",
+  "contentHash": "5e2445c0c598332bb4e29827ef7cb050ce6d069fe5676e900e67ff1a52b5248e",
   "rows": [
     {
       "ID": "A005",
@@ -5096,17 +5096,17 @@
       "Foto 2": "",
       "Foto 3": "",
       "Foto 4": "",
-      "Rendimiento": "",
-      "Confort": "",
-      "Economía": "",
-      "Espacio": "",
-      "Seguridad": "",
-      "Calificacion General": "",
+      "Rendimiento": "86",
+      "Confort": "85",
+      "Economía": "52",
+      "Espacio": "88",
+      "Seguridad": "83",
+      "Calificacion General": "78,8",
       "Destacado": "",
-      "Oportunidad": ""
+      "Oportunidad": "72"
     },
     {
-      "ID": "$1.525,74",
+      "ID": "$1.525,75",
       "Marca": "Oficial",
       "Modelo": "$1.559,31",
       "Año": "Blue",
