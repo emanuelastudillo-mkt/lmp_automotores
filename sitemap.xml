@@ -24,28 +24,6 @@
     </image:image>
   </url>
   <url>
-    <loc>https://lmpautos.com/vehiculos/volkswagen-nivus-1-0-tsi-2021/</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://lmpautos.com/img/vehiculos/A098.webp?v=34d29d1bf5ae</image:loc>
-      <image:title>Volkswagen Nivus 1.0 TSI 2021</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://lmpautos.com/img/vehiculos/A098-1.webp?v=34d29d1bf5ae</image:loc>
-      <image:title>Volkswagen Nivus 1.0 TSI 2021</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://lmpautos.com/img/vehiculos/A098-2.webp?v=34d29d1bf5ae</image:loc>
-      <image:title>Volkswagen Nivus 1.0 TSI 2021</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://lmpautos.com/img/vehiculos/A098-3.webp?v=34d29d1bf5ae</image:loc>
-      <image:title>Volkswagen Nivus 1.0 TSI 2021</image:title>
-    </image:image>
-  </url>
-  <url>
     <loc>https://lmpautos.com/vehiculos/chevrolet-onix-1-4-plus-joy-2020/</loc>
     <lastmod>2026-10-23</lastmod>
     <changefreq>daily</changefreq>
@@ -360,10 +338,38 @@
     </image:image>
   </url>
   <url>
+    <loc>https://lmpautos.com/vehiculos/audi-q5-2-0-s-tronic-tfsi-211-cv-2011/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://lmpautos.com/vehiculos/peugeot-partner-1-6-hdi-furgon-plan-2026/</loc>
     <lastmod>2026-10-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lmpautos.com/vehiculos/volkswagen-nivus-1-0-tsi-2021/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://lmpautos.com/img/vehiculos/A098.webp?v=34d29d1bf5ae</image:loc>
+      <image:title>Volkswagen Nivus 1.0 TSI 2021</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://lmpautos.com/img/vehiculos/A098-1.webp?v=34d29d1bf5ae</image:loc>
+      <image:title>Volkswagen Nivus 1.0 TSI 2021</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://lmpautos.com/img/vehiculos/A098-2.webp?v=34d29d1bf5ae</image:loc>
+      <image:title>Volkswagen Nivus 1.0 TSI 2021</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://lmpautos.com/img/vehiculos/A098-3.webp?v=34d29d1bf5ae</image:loc>
+      <image:title>Volkswagen Nivus 1.0 TSI 2021</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://lmpautos.com/vehiculos/peugeot-2008-allure-tiptronic-2019/</loc>
@@ -408,11 +414,5 @@
       <image:loc>https://lmpautos.com/img/vehiculos/A091-3.webp?v=34d29d1bf5ae</image:loc>
       <image:title>Chevrolet Tracker 1.8 LT 2015</image:title>
     </image:image>
-  </url>
-  <url>
-    <loc>https://lmpautos.com/vehiculos/audi-q5-2-0-s-tronic-tfsi-211-cv-2011/</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
   </url>
 </urlset>
