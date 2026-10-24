@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T21:28:27.039Z",
+  "generatedAt": "2026-10-24T20:55:20.199Z",
   "source": "Google Sheets CSV publicado",
   "rowCount": 151,
-  "contentHash": "71b7798339df2e05a14595c0ecc246cb4b5ba8c3ce221b3da8f5da9565fea591",
+  "contentHash": "36759f77788da705f6233f045926063a8cdea4fe0a453b0b5453ae10b6e06ecd",
   "rows": [
     {
       "ID": "A005",
@@ -4880,7 +4880,7 @@
       "MAX FINAN": "$4.000.000",
       "Anticipo MINIMO": "$6.000.000",
       "Cotizacion al día": "$10.000.000",
-      "Estado actual del auto": "DISPONIBLE",
+      "Estado actual del auto": "RESERVADO",
       "% de anticipo": "60%",
       "Ultima publicacion": "16/10/2026",
       "Reel": "",
