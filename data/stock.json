@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-26T22:43:32.715Z",
+  "generatedAt": "2026-10-27T05:12:51.956Z",
   "source": "Google Sheets CSV publicado",
   "rowCount": 151,
-  "contentHash": "fd8d51f11355722d0bd2de1a59622b8aa12038488bc7718c7168599eaf1fb1e9",
+  "contentHash": "001d4b187a0bac65a8252b08b247927321ac61c1aae9c4162706527b34ef895b",
   "rows": [
     {
       "ID": "A005",
@@ -152,8 +152,8 @@
       "Precio publicado Uds": "$18.500",
       "Precio de contado Uds": "$18.000",
       "MAX FINAN": "$10.600.000",
-      "Anticipo MINIMO": "$18.900.000",
-      "Cotizacion al día": "$29.500.000",
+      "Anticipo MINIMO": "$19.000.000",
+      "Cotizacion al día": "$29.600.000",
       "Estado actual del auto": "VENDIDO",
       "% de anticipo": "64%",
       "Ultima publicacion": "11/11/2025",
@@ -3007,9 +3007,9 @@
       "Propietario": "Consignación",
       "Precio publicado Uds": "$18.500",
       "Precio de contado Uds": "$18.000",
-      "MAX FINAN": "$13.800.000",
+      "MAX FINAN": "$13.900.000",
       "Anticipo MINIMO": "$15.700.000",
-      "Cotizacion al día": "$29.500.000",
+      "Cotizacion al día": "$29.600.000",
       "Estado actual del auto": "DE BAJA",
       "% de anticipo": "53%",
       "Ultima publicacion": "03/03/2026",
@@ -3029,7 +3029,7 @@
       "Seguridad": "64",
       "Calificacion General": "70",
       "Destacado": "",
-      "Oportunidad": "84"
+      "Oportunidad": "85"
     },
     {
       "ID": "A088",
