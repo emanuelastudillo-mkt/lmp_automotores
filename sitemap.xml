@@ -14,6 +14,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://lmpautos.com/vehiculos/renault-kwid-1-0-iconic-2025/</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://lmpautos.com/vehiculos/volkswagen-gol-1-6-trendline-2021/</loc>
     <lastmod>2026-10-28</lastmod>
     <changefreq>daily</changefreq>
@@ -76,6 +82,12 @@
       <image:loc>https://lmpautos.com/img/vehiculos/A116.webp?v=4f8a20b622eb</image:loc>
       <image:title>Renault Sandero 1.6 Expression Pack 2019</image:title>
     </image:image>
+  </url>
+  <url>
+    <loc>https://lmpautos.com/vehiculos/renault-kangoo-1-6-furgon-2018/</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://lmpautos.com/vehiculos/renault-logan-1-6-authentique-2017/</loc>
@@ -339,12 +351,6 @@
   </url>
   <url>
     <loc>https://lmpautos.com/vehiculos/peugeot-partner-1-6-hdi-furgon-plan-2026/</loc>
-    <lastmod>2026-10-28</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://lmpautos.com/vehiculos/fiat-fiorino-1-4-furgoneta-deuda-2019/</loc>
     <lastmod>2026-10-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
