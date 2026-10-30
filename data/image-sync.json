@@ -336,15 +336,43 @@
     },
     "A150": {
       "manualCover": false,
-      "items": []
+      "items": [
+        {
+          "file": "A150.webp",
+          "source": "drive:1Ib5xjA-aD8bMR8dktfuEg-jYntYvFmMz",
+          "logicalOrder": 1
+        }
+      ]
     },
     "A151": {
       "manualCover": false,
-      "items": []
+      "items": [
+        {
+          "file": "A151.webp",
+          "source": "drive:1OKvknrunVkamGCy0B915-BH4ryGECpLx",
+          "logicalOrder": 1
+        }
+      ]
     },
     "A152": {
       "manualCover": false,
-      "items": []
+      "items": [
+        {
+          "file": "A152.webp",
+          "source": "drive:1D5fVBegIo3fq9QNon02NSdBPLCYpcVJw",
+          "logicalOrder": 1
+        }
+      ]
+    },
+    "A153": {
+      "manualCover": false,
+      "items": [
+        {
+          "file": "A153.webp",
+          "source": "drive:1Eh53sxcnyA7kD7ZFUQIXTj8UfX6QEtgI",
+          "logicalOrder": 1
+        }
+      ]
     }
   }
 }
