@@ -276,16 +276,6 @@
     </image:image>
   </url>
   <url>
-    <loc>https://lmpautos.com/vehiculos/peugeot-308-1-6-active-2012/</loc>
-    <lastmod>2026-11-03</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://lmpautos.com/img/vehiculos/A143.webp?v=eea86a520611</image:loc>
-      <image:title>Peugeot 308 1.6 Active 2012</image:title>
-    </image:image>
-  </url>
-  <url>
     <loc>https://lmpautos.com/vehiculos/mercedes-benz-c200-blue-efficiency-at-2012/</loc>
     <lastmod>2026-11-03</lastmod>
     <changefreq>daily</changefreq>
@@ -357,6 +347,16 @@
     <image:image>
       <image:loc>https://lmpautos.com/img/vehiculos/A140.webp?v=eea86a520611</image:loc>
       <image:title>Fiat Mobi Easy way 1.0 2017</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lmpautos.com/vehiculos/peugeot-308-1-6-active-2012/</loc>
+    <lastmod>2026-11-03</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://lmpautos.com/img/vehiculos/A143.webp?v=eea86a520611</image:loc>
+      <image:title>Peugeot 308 1.6 Active 2012</image:title>
     </image:image>
   </url>
 </urlset>
