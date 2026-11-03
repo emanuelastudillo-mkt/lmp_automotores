@@ -306,6 +306,7 @@ button.active{background:linear-gradient(135deg,var(--red),var(--red2));border-c
 
 <script>
 const METRICS_ACCESS = {
+  apiUrl: "https://script.google.com/macros/s/AKfycbyBPglRzqQzeQvJeInUWs_1zSmOdfR32ldX97dLJvweCKi1ve29btcXNekeu6d9osmc/exec",
   sheetId: "1DN8we3PaI2foFvz_pGcfu11aa9gmEIJaFiQjYjSN7RM",
   sheetName: "seguidores",
   columnName: "metricas",
@@ -383,13 +384,15 @@ function loadMetricsPassword(){
 
     const query = new URLSearchParams({
       sheet: METRICS_ACCESS.sheetName,
+      action: "public_sheet",
+      callback: callbackName,
       tq: "select *",
       headers: "1",
       tqx: `responseHandler:${callbackName}`,
       _: Date.now().toString()
     });
 
-    script.src = `https://docs.google.com/spreadsheets/d/${METRICS_ACCESS.sheetId}/gviz/tq?${query.toString()}`;
+    script.src = `${METRICS_ACCESS.apiUrl}?${query.toString()}`;
     script.onerror = ()=>{
       cleanup();
       reject(new Error("No se pudo consultar Google Sheets"));

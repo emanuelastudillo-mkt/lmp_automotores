@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>Autos Usados en Lomas del Mirador | LMP Autos</title>
-<meta name="lmp-build" content="lmp-autos-web-v1.37.3-seguridad-rendimiento">
+<meta name="lmp-build" content="lmp-autos-web-v1.37.4-leads-privados">
   <meta name="description" content="Autos usados en Lomas del Mirador con financiación, cuotas fijas y permutas. Más de 10 años de experiencia. Visitanos en Av. Mosconi 799, Zona Oeste.">
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   <script>
@@ -4836,13 +4836,15 @@ function loadFollowersSheetJsonp(){
 
     const query=new URLSearchParams({
       sheet:CONFIG.followersSheetName,
+      action:'public_sheet',
+      callback:callbackName,
       tqx:`responseHandler:${callbackName}`,
       tq:'select *',
       headers:'1',
       _:Date.now().toString()
     });
 
-    script.src=`https://docs.google.com/spreadsheets/d/${CONFIG.sheetId}/gviz/tq?${query}`;
+    script.src=`${CONFIG.eventsApi}?${query}`;
     script.onerror=()=>{
       cleanup();
       reject(new Error('No se pudo cargar la pestaña seguidores'));
@@ -8981,12 +8983,15 @@ function loadGoogleSheetJsonp(){
 
     const query=new URLSearchParams({
       gid:CONFIG.gid,
+      sheet:'Inventario',
+      action:'public_sheet',
+      callback:callbackName,
       tqx:`responseHandler:${callbackName}`,
       tq:'select *',
       headers:'1',
       _:Date.now().toString()
     });
-    script.src=`https://docs.google.com/spreadsheets/d/${CONFIG.sheetId}/gviz/tq?${query}`;
+    script.src=`${CONFIG.eventsApi}?${query}`;
     script.onerror=()=>{
       cleanup();
       reject(new Error('No se pudo cargar el script de Google Sheets'));
@@ -9461,7 +9466,7 @@ setTimeout(()=>{
 </script>
 
   <div class="site-version-row">
-    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.37.3</div>
+    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.37.4</div>
     <span class="site-version" aria-hidden="true">·</span>
     <a class="site-version-link" href="?stock=interno" rel="nofollow">catálogo</a>
   </div>
