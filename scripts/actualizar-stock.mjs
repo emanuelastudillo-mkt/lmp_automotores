@@ -1429,7 +1429,10 @@ function metaPixelMarkup(row) {
   };
   window.lmpLoadMetaPixel = function() {
     window.LMP_META_ALLOWED = true;
-    if (window.LMP_META_READY) return true;
+    if (window.LMP_META_READY) {
+      if (typeof window.fbq === 'function') window.fbq('consent', 'grant');
+      return true;
+    }
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
     n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -1765,6 +1768,7 @@ ${breadcrumbJsonLd(row, url)}
     window.LMP_META_ALLOWED=choice==='granted';
     if(choice==='granted')window.lmpLoadMetaPixel?.();
     if(choice==='denied'){
+      if(typeof window.fbq==='function')window.fbq('consent','revoke');
       try{sessionStorage.removeItem(window.LMP_META_MATCH_STORAGE_KEY||'lmp_meta_match_v1')}catch(_){}
       window.LMP_META_MATCH_DATA={};
     }

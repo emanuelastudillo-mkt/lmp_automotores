@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>Autos Usados en Lomas del Mirador | LMP Autos</title>
-<meta name="lmp-build" content="lmp-autos-web-v1.36.5-bna-aproximado">
+<meta name="lmp-build" content="lmp-autos-web-v1.37.3-seguridad-rendimiento">
   <meta name="description" content="Autos usados en Lomas del Mirador con financiación, cuotas fijas y permutas. Más de 10 años de experiencia. Visitanos en Av. Mosconi 799, Zona Oeste.">
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   <script>
@@ -117,7 +117,10 @@
   };
   window.lmpLoadMetaPixel=function(){
     window.LMP_META_ALLOWED=true;
-    if(window.LMP_META_READY)return true;
+    if(window.LMP_META_READY){
+      if(typeof window.fbq==='function')window.fbq('consent','grant');
+      return true;
+    }
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
     n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -3437,13 +3440,15 @@
       }
     }
 
+    @media(max-width:420px){
+      header .instagram-pill-text{display:none}
+      header .instagram-pill{padding:8px}
+      header nav button,header nav a{padding:9px 7px;font-size:11px}
+    }
 </style>
 </head>
 <body>
   
-  <noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=1026614216645178&ev=PageView&noscript=1"
-/></noscript>
 <header>
   
   <div class="shell topbar">
@@ -4667,6 +4672,7 @@ function bannerImageMarkup(base,index){
     data-banner-extension-index="0"
     alt="LMP Autos"
     loading="${index===0?'eager':'lazy'}"
+    fetchpriority="${index===0?'high':'auto'}"
     decoding="async">`;
 }
 
@@ -4914,6 +4920,14 @@ function parseCSV(text){
   return rows.map(r=>Object.fromEntries(headers.map((h,i)=>[h,(r[i]??'').trim()])));
 }
 function clean(v){return (v??'').toString().trim()}
+function safeHttpUrl(value){
+  const raw=clean(value);
+  if(!raw)return '';
+  try{
+    const url=new URL(raw,window.location.href);
+    return ['https:','http:'].includes(url.protocol) && !url.username && !url.password ? url.href : '';
+  }catch(_){return ''}
+}
 function normalize(v){return clean(v).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase()}
 function slugify(value){
   return clean(value)
@@ -5547,8 +5561,8 @@ function mapVehicle(r){
     destacadoPopup:isFeaturedPopupValue(r['Vehículo destacado'] ?? r['Vehiculo destacado'] ?? r.Destacado ?? r['Popup destacado'] ?? r['Destacado popup']),
     combustible:clean(r.Combustible),
     transmision:clean(r.Transmision),
-    instagram:clean(r.Reel).startsWith('http')?clean(r.Reel):'',
-    carpeta:mediaFolderLink,
+    instagram:safeHttpUrl(r.Reel),
+    carpeta:safeHttpUrl(mediaFolderLink),
     rendimiento,
     confort,
     economia,
@@ -5630,12 +5644,16 @@ function vehicleBenefitsMarkup(v){
     : '';
 }
 
-async function loadLocalCoverManifest(){
+let localCoverManifestRequest=null;
+function loadLocalCoverManifest(){
+  if(!localCoverManifestRequest)localCoverManifestRequest=fetchLocalCoverManifest();
+  return localCoverManifestRequest;
+}
+async function fetchLocalCoverManifest(){
   try{
-    const separator=CONFIG.localCoverManifest.includes('?')?'&':'?';
     const response=await fetch(
-      `${CONFIG.localCoverManifest}${separator}_=${Date.now()}`,
-      {cache:'no-store'}
+      CONFIG.localCoverManifest,
+      {cache:'no-cache'}
     );
 
     if(!response.ok)return null;
@@ -6207,6 +6225,7 @@ function setPrivacyChoice(choice){
   window.LMP_META_ALLOWED=normalized==='granted';
   if(normalized==='granted' && typeof window.lmpLoadMetaPixel==='function')window.lmpLoadMetaPixel();
   if(normalized==='denied'){
+    if(typeof window.fbq==='function')window.fbq('consent','revoke');
     try{sessionStorage.removeItem(window.LMP_META_MATCH_STORAGE_KEY||'lmp_meta_match_v1')}catch(_){}
     window.LMP_META_MATCH_DATA={};
   }
@@ -9055,10 +9074,7 @@ async function applyStockResult(result,{initial=false,saveCacheResult=false}={})
 
   populateFilters();
 
-  await Promise.all([
-    loadVehicleStats(),
-    verifyLocalCovers(vehicles)
-  ]);
+  await verifyLocalCovers(vehicles);
 
   if(saveCacheResult){
     saveStockCache({source:result.source || 'Google Sheets en vivo'});
@@ -9119,6 +9135,18 @@ async function applyStockResult(result,{initial=false,saveCacheResult=false}={})
 
 async function loadData({force=false}={}){
   let initialRendered=false;
+  if(force)localCoverManifestRequest=null;
+  // Las estadísticas complementan el catálogo, pero nunca bloquean su carga.
+  loadVehicleStats().then(()=>{
+    if(!vehicles.length || isInternalStockMode())return;
+    const hasStats=Object.values(vehicleStats).some(item=>Number(item.score)>0);
+    $('#featuredTitle').textContent=hasStats?'Los más consultados':'Vehículos recomendados';
+    $('#featuredSubtitle').textContent=hasStats
+      ? 'Los vehículos que más interés generan entre nuestros visitantes.'
+      : 'Una selección variada entre distintas marcas y rangos de precio.';
+    highlightedVehicles=selectHighlights(CONFIG.maxFeatured);
+    if(highlightedVehicles.length)renderCards($('#featuredGrid'),highlightedVehicles,{localOnly:true});
+  }).catch(error=>console.warn('No se pudieron actualizar los destacados:',error.message));
 
   if(!force){
     try{
@@ -9311,11 +9339,11 @@ function reviewInitials(name){
 function reviewCardMarkup(review){
   const author=clean(review?.author);
   const text=clean(review?.text);
-  const image=clean(review?.profileImage);
+  const image=safeHttpUrl(review?.profileImage);
   const rating=Math.max(1,Math.min(5,Number(review?.rating)||5));
   const stars='★★★★★'.slice(0,rating);
   const avatar=image
-    ? `<div class="review-avatar has-photo"><img src="${escapeAttr(image)}" alt="Foto de perfil de ${escapeAttr(author)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentElement.classList.remove('has-photo');this.parentElement.innerHTML='${escapeAttr(reviewInitials(author))}'"></div>`
+    ? `<div class="review-avatar has-photo" data-initials="${escapeAttr(reviewInitials(author))}"><img src="${escapeAttr(image)}" alt="Foto de perfil de ${escapeAttr(author)}" loading="lazy" referrerpolicy="no-referrer"></div>`
     : `<div class="review-avatar" aria-hidden="true">${escapeHtml(reviewInitials(author))}</div>`;
 
   return `<article class="review-card">
@@ -9371,7 +9399,7 @@ async function loadRandomReviews(){
   if(!grid)return;
 
   try{
-    const response=await fetch(`${REVIEWS_DATA_URL}?v=134`,{cache:'no-store'});
+    const response=await fetch(`${REVIEWS_DATA_URL}?v=134`,{cache:'no-cache'});
     if(!response.ok)throw new Error(`HTTP ${response.status}`);
 
     const reviews=(await response.json())
@@ -9389,6 +9417,16 @@ async function loadRandomReviews(){
 
     if(selected.length){
       grid.innerHTML=selected.map(reviewCardMarkup).join('');
+      grid.querySelectorAll('.review-avatar img').forEach(img=>{
+        const fallback=()=>{
+          const avatar=img.parentElement;
+          if(!avatar)return;
+          avatar.classList.remove('has-photo');
+          avatar.textContent=avatar.dataset.initials || '★';
+        };
+        img.addEventListener('error',fallback,{once:true});
+        if(img.complete && !img.naturalWidth)fallback();
+      });
     }
   }catch(error){
     console.warn('No se pudieron cargar las reseñas aleatorias:',error);
@@ -9423,7 +9461,7 @@ setTimeout(()=>{
 </script>
 
   <div class="site-version-row">
-    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.37.2</div>
+    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.37.3</div>
     <span class="site-version" aria-hidden="true">·</span>
     <a class="site-version-link" href="?stock=interno" rel="nofollow">catálogo</a>
   </div>
