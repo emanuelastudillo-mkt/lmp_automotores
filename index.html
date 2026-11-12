@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <meta name="apple-mobile-web-app-title" content="LMP Autos">
   <title>Autos Usados en Lomas del Mirador | LMP Autos</title>
-<meta name="lmp-build" content="lmp-autos-web-v1.37.4-leads-privados">
+<meta name="lmp-build" content="lmp-autos-web-v1.37.5-sin-boton-ig">
   <meta name="description" content="Autos usados en Lomas del Mirador con financiación, cuotas fijas y permutas. Más de 10 años de experiencia. Visitanos en Av. Mosconi 799, Zona Oeste.">
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   <script>
@@ -1593,7 +1593,7 @@
     .trust-strip .trust-item svg{width:19px;height:19px;flex:0 0 auto;color:var(--accent)}
     .card-tools{position:absolute;top:10px;right:10px;display:flex;gap:6px;z-index:4}
     .tool-btn{width:34px;height:34px;border:0;border-radius:50%;background:rgba(255,255,255,.92);display:grid;place-items:center;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,.16);font-size:16px}
-    .tool-btn.active{background:#111;color:#fff}.card-actions{grid-template-columns:1fr auto auto}
+    .tool-btn.active{background:#111;color:#fff}.card-actions{grid-template-columns:1fr auto}
     .card-wa{border:0;background:#1fa855;color:#fff;border-radius:12px;padding:11px 12px;font-weight:900;cursor:pointer}
     .card-installment{margin-top:8px;padding:9px 11px;background:#f4f4f1;border-radius:11px;font-size:11px;font-weight:800;color:#555}.card-installment strong{color:#171717}
     .catalog-quickbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 0 14px}.quick-btn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 13px;font-weight:850;cursor:pointer}.quick-btn.active{background:#111;color:#fff;border-color:#111}
@@ -4951,6 +4951,15 @@ function safeHttpUrl(value){
     return ['https:','http:'].includes(url.protocol) && !url.username && !url.password ? url.href : '';
   }catch(_){return ''}
 }
+function instagramPostUrl(value){
+  try{
+    const url=new URL(clean(value));
+    return url.protocol==='https:' && !url.username && !url.password
+      && ['instagram.com','www.instagram.com','m.instagram.com'].includes(url.hostname)
+      && /^\/(?:p|reel|reels|tv)\/[A-Za-z0-9_-]+\/?$/.test(url.pathname)
+      ? url.href : '';
+  }catch(_){return ''}
+}
 function normalize(v){return clean(v).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase()}
 function slugify(value){
   return clean(value)
@@ -5584,7 +5593,7 @@ function mapVehicle(r){
     destacadoPopup:isFeaturedPopupValue(r['Vehículo destacado'] ?? r['Vehiculo destacado'] ?? r.Destacado ?? r['Popup destacado'] ?? r['Destacado popup']),
     combustible:clean(r.Combustible),
     transmision:clean(r.Transmision),
-    instagram:safeHttpUrl(r.Reel),
+    instagram:instagramPostUrl(r.Reel),
     carpeta:safeHttpUrl(mediaFolderLink),
     rendimiento,
     confort,
@@ -6605,7 +6614,6 @@ function card(v,index=0,{localOnly=false}={}){
       ${vehicleBenefitsMarkup(v)}
       <div class="card-actions">
         <button class="detail-btn" data-id="${escapeAttr(v.id)}">Ver vehículo</button>
-        ${v.instagram?`<a class="ig-btn" href="${escapeAttr(v.instagram)}" target="_blank" rel="noopener">IG</a>`:''}
         <button class="card-wa" type="button" data-wa-id="${escapeAttr(v.id)}">Consultar</button>
       </div>
     </div>
@@ -9487,7 +9495,7 @@ setTimeout(()=>{
 </script>
 
   <div class="site-version-row">
-    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.37.4</div>
+    <div class="site-version" aria-label="Versión del sitio">lmpautos V1.37.5</div>
     <span class="site-version" aria-hidden="true">·</span>
     <a class="site-version-link" href="?stock=interno" rel="nofollow">catálogo</a>
   </div>
