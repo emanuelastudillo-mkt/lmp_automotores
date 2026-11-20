@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-19T20:43:53.478Z",
+  "generatedAt": "2026-11-20T07:25:17.153Z",
   "source": "Google Sheets CSV publicado",
   "rowCount": 158,
-  "contentHash": "258268217e7a208a71d346216e20e2c9e3e3fb96f191bcf7e70169b2a37c0e6a",
+  "contentHash": "21bd795eb2d32ac12ec2bc98c29b790f6a33a23f59ee87588360a74650be67e1",
   "rows": [
     {
       "ID": "A005",
@@ -4676,14 +4676,14 @@
       "MAX FINAN": "$5.600.000",
       "Anticipo MINIMO": "$4.000.000",
       "Cotizacion al día": "$9.600.000",
-      "Estado actual del auto": "DISPONIBLE",
+      "Estado actual del auto": "RESERVADO",
       "% de anticipo": "41%",
       "Ultima publicacion": "18/11/2026",
       "Reel": "si",
       "Fotos": "si",
       "Combustible": "Nafta",
       "Transmision": "Manual",
-      "Fecha de salida o venta": "",
+      "Fecha de salida o venta": "11 - NOV - 2026",
       "Foto 1": "https://drive.google.com/file/d/1AAnfVCxeUv1gJ0oXmTwCr0O0k9Ag9-N2/view?usp=sharing",
       "Foto 2": "https://drive.google.com/file/d/1dxonyQLXsLvTan8zOXs3i_u5jSxjl5fY/view?usp=sharing",
       "Foto 3": "",
