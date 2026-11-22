@@ -18,7 +18,13 @@
     },
     "A158": {
       "manualCover": false,
-      "items": []
+      "items": [
+        {
+          "file": "A158.webp",
+          "source": "drive:1MWoP5vdfip6gIh6CrT1DN8peADYoGaGK",
+          "logicalOrder": 1
+        }
+      ]
     },
     "A080": {
       "manualCover": true,
@@ -26,7 +32,28 @@
     },
     "A154": {
       "manualCover": false,
-      "items": []
+      "items": [
+        {
+          "file": "A154.webp",
+          "source": "drive:1Ee2cV1QD_imSCmFPEonamISg8xMdsEIf",
+          "logicalOrder": 1
+        },
+        {
+          "file": "A154-1.webp",
+          "source": "drive:1w1uf_5AwtUtfSwo0ZovLe_u2q_AAbSTy",
+          "logicalOrder": 2
+        },
+        {
+          "file": "A154-2.webp",
+          "source": "drive:1nO2ytXiXFCKyAcgKN-KzD0tq7zBBstgG",
+          "logicalOrder": 3
+        },
+        {
+          "file": "A154-3.webp",
+          "source": "drive:1PzwClfwGu-Nad9Maoy3-kRjDLH9R96CG",
+          "logicalOrder": 4
+        }
+      ]
     },
     "A113": {
       "manualCover": true,
@@ -75,7 +102,23 @@
     },
     "A157": {
       "manualCover": false,
-      "items": []
+      "items": [
+        {
+          "file": "A157.webp",
+          "source": "drive:1z2bNbYhZRwdGx2HBIhMEnmKgkCz7TIZQ",
+          "logicalOrder": 1
+        },
+        {
+          "file": "A157-1.webp",
+          "source": "drive:1up09iisvW9lCtaWtPaVbwV8g1KFGRRao",
+          "logicalOrder": 2
+        },
+        {
+          "file": "A157-2.webp",
+          "source": "drive:1amI--HxCAB6TRNofS8h4HHytwheHAE3e",
+          "logicalOrder": 3
+        }
+      ]
     },
     "A088": {
       "manualCover": true,
@@ -129,7 +172,13 @@
     },
     "A156": {
       "manualCover": false,
-      "items": []
+      "items": [
+        {
+          "file": "A156.webp",
+          "source": "drive:1TPifnethKULM97n6uGdtKLotahbSeapQ",
+          "logicalOrder": 1
+        }
+      ]
     },
     "A116": {
       "manualCover": false,
@@ -166,8 +215,23 @@
       "items": [
         {
           "file": "A152.webp",
-          "source": "drive:1D5fVBegIo3fq9QNon02NSdBPLCYpcVJw",
+          "source": "drive:1bmflqH9ptoFAVKRayW6BTLJdU30UnVYn",
           "logicalOrder": 1
+        },
+        {
+          "file": "A152-1.webp",
+          "source": "drive:1C3BMTXKUsRnyxGKQwvG-apUTULO7N58x",
+          "logicalOrder": 2
+        },
+        {
+          "file": "A152-2.webp",
+          "source": "drive:1FodCiPtFZGNZLqriOuO7RUN4qUlcsf_7",
+          "logicalOrder": 3
+        },
+        {
+          "file": "A152-3.webp",
+          "source": "drive:1pYNuM_RFI4z84A4a_zFxZjDvZ6vsAbFu",
+          "logicalOrder": 4
         }
       ]
     },
@@ -256,8 +320,23 @@
       "items": [
         {
           "file": "A153.webp",
-          "source": "drive:1Eh53sxcnyA7kD7ZFUQIXTj8UfX6QEtgI",
+          "source": "drive:1_NLXhSJx-v07rhwf3zz5ET7BE-d-NG2Y",
           "logicalOrder": 1
+        },
+        {
+          "file": "A153-1.webp",
+          "source": "drive:1b_uyMB5trUd71xlSl_KazfAgJ-bkXexn",
+          "logicalOrder": 2
+        },
+        {
+          "file": "A153-2.webp",
+          "source": "drive:1OWYyk58GOxImFy_EFaL-ohO3fKfVv2hY",
+          "logicalOrder": 3
+        },
+        {
+          "file": "A153-3.webp",
+          "source": "drive:11K9-ei-5i4cZEg5w33jU9wdbvrIqY9zL",
+          "logicalOrder": 4
         }
       ]
     },
