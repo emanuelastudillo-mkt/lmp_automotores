@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-25T21:46:28.168Z",
+  "generatedAt": "2026-11-26T08:29:53.582Z",
   "source": "Google Sheets CSV publicado",
   "rowCount": 159,
-  "contentHash": "678eb766755aaf3b23b46b7e0fac8701005e765ff75d38095bb2798d032e1dfc",
+  "contentHash": "ff8a96acb211598444a91c40e262efeb403f812d27e84466947a4a1eb9aed561",
   "rows": [
     {
       "0": "A005",
@@ -3551,9 +3551,9 @@
       "Propietario": "Propio",
       "Precio publicado Uds": "$22.000",
       "Precio de contado Uds": "$22.000",
-      "MAX FINAN": "$18.300.000",
+      "MAX FINAN": "$18.200.000",
       "Anticipo MINIMO": "$18.300.000",
-      "Cotizacion al día": "$36.600.000",
+      "Cotizacion al día": "$36.500.000",
       "Estado actual del auto": "VENDIDO",
       "% de anticipo": "50%",
       "Ultima publicacion": "19/05/2026",
@@ -5380,7 +5380,7 @@
     {
       "0": "$1.603",
       "Marca": "Oficial",
-      "Modelo": "$1.691,16",
+      "Modelo": "$1.691,15",
       "Año": "Blue",
       "Kilometraje": "",
       "Color": "",
