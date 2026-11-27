@@ -30,11 +30,17 @@ jobs:
       - name: Instalar procesador de imágenes
         run: npm install --no-save --no-package-lock sharp@0.34.3
 
+      - name: Comprobar selección de vehículos vendidos
+        run: node --test tests/preserve-sold-vehicle-pages.test.mjs
+
       - name: Sincronizar stock, imágenes, SEO y catálogo de Meta
         run: node scripts/actualizar-stock.mjs
 
-      - name: Preservar URLs históricas que ya no estén en la hoja
+      - name: Preservar fichas de vehículos VENDIDO en Sheets
         run: node scripts/preserve-sold-vehicle-pages.mjs
+
+      - name: Verificar todas las fichas vendidas antes de publicar
+        run: node scripts/preserve-sold-vehicle-pages.mjs --check
 
       - name: Guardar cambios
         shell: bash

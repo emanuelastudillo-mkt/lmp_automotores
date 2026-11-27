@@ -9120,6 +9120,8 @@ async function applyStockResult(result,{initial=false,saveCacheResult=false}={})
     }else{
       clearVehicleUrl({replace:true});
     }
+  }else if(window.location.hash==='#catalogo'){
+    switchView('catalog');
   }else{
     maybeShowFeaturedPopup();
   }

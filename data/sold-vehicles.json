@@ -1,6 +1,19 @@
 [
   {
     "slug": "peugeot-partner-1-6-hdi-furgon-2020",
-    "name": "Peugeot Partner 1.6 HDI Furgón 2020"
+    "name": "Peugeot Partner 1.6 HDI Furgón 2020",
+    "vehicleId": "A105"
+  },
+  {
+    "slug": "kia-sorento-2-2-hdi-4x4-2010",
+    "vehicleId": "A126"
+  },
+  {
+    "slug": "kia-sorento-2-2-4x4-2010",
+    "vehicleId": "A126"
+  },
+  {
+    "slug": "chevrolet-onix-1-4-ltz-2019",
+    "vehicleId": "A133"
   }
 ]

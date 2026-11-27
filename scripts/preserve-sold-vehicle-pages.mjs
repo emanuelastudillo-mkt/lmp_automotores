@@ -1,20 +1,7 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
-import { execFileSync } from 'node:child_process';
-
-const ROOT = process.cwd();
-const VEHICLES_DIR = path.join(ROOT, 'vehiculos');
-const MANUAL_FILE = path.join(ROOT, 'data', 'sold-vehicles.json');
-
-function git(args, options = {}) {
-  return execFileSync('git', args, {
-    cwd: ROOT,
-    encoding: 'utf8',
-    stdio: ['ignore', 'pipe', 'pipe'],
-    ...options,
-  }).trim();
-}
+import { pathToFileURL } from 'node:url';
 
 function esc(value = '') {
   return String(value)
@@ -25,86 +12,76 @@ function esc(value = '') {
     .replaceAll("'", '&#039;');
 }
 
-function stripTags(value = '') {
-  return String(value)
-    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
-    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/&nbsp;/gi, ' ')
-    .replace(/&amp;/gi, '&')
-    .replace(/\s+/g, ' ')
-    .trim();
+function clean(value) {
+  return String(value ?? '').trim();
 }
 
-function titleCaseSlug(slug) {
-  const keepUpper = new Map([
-    ['hdi', 'HDI'], ['tdi', 'TDI'], ['tsi', 'TSI'], ['dsg', 'DSG'],
-    ['lt', 'LT'], ['xls', 'XLS'], ['gnc', 'GNC'], ['4x4', '4x4']
-  ]);
-  return slug.split('-').map(part => {
-    if (keepUpper.has(part.toLowerCase())) return keepUpper.get(part.toLowerCase());
-    if (/^\d+(?:\.\d+)?$/.test(part)) return part;
-    return part.charAt(0).toUpperCase() + part.slice(1);
-  }).join(' ');
+function normalize(value) {
+  return clean(value).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase();
 }
 
-function extractName(html, slug) {
-  const h1 = html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1];
-  if (h1) {
-    const clean = stripTags(h1);
-    if (clean && !/stock interno/i.test(clean)) return clean;
-  }
-  const title = html.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i)?.[1];
-  if (title) {
-    let clean = stripTags(title)
-      .replace(/\s*\|\s*LMP Autos.*$/i, '')
-      .replace(/\s+usado(?:s)?\s+en\s+Lomas del Mirador.*$/i, '')
-      .trim();
-    if (clean) return clean;
-  }
-  return titleCaseSlug(slug);
+function rowValue(row, header) {
+  const key = Object.keys(row).find(key => normalize(key) === normalize(header));
+  return key === undefined ? '' : clean(row[key]);
 }
 
-function normalizeName(name, slug) {
-  const yearFromSlug = slug.match(/(?:^|-)(19|20)\d{2}(?:-|$)/)?.[0]?.replaceAll('-', '');
-  if (yearFromSlug && !new RegExp(`\\b${yearFromSlug}\\b`).test(name)) {
-    return `${name} ${yearFromSlug}`;
-  }
-  return name;
+function vehicleName(row) {
+  return ['Marca', 'Modelo', 'Año'].map(header => rowValue(row, header)).filter(Boolean).join(' ');
 }
 
-function getHistoricalPages() {
-  let output = '';
-  try {
-    output = git(['log', '--all', '--format=', '--name-only', '--', 'vehiculos/*/index.html']);
-  } catch {
-    return [];
-  }
-  return [...new Set(output.split(/\r?\n/).map(x => x.trim()).filter(x => /^vehiculos\/[^/]+\/index\.html$/.test(x)))];
+function vehicleId(row) {
+  return (rowValue(row, 'ID') || clean(Object.values(row)[0]))
+    .replace(/\.[a-z0-9]+$/i, '').replace(/[^a-zA-Z0-9_-]/g, '');
 }
 
-function latestExistingVersion(filePath) {
-  let commits = '';
-  try {
-    commits = git(['log', '--all', '--diff-filter=AMR', '--format=%H', '--', filePath]);
-  } catch {
-    return null;
-  }
-  for (const commit of commits.split(/\r?\n/).filter(Boolean)) {
-    try {
-      const html = git(['show', `${commit}:${filePath}`]);
-      if (html) return { commit, html };
-    } catch {}
-  }
-  return null;
+function vehicleSlug(row) {
+  return normalize(vehicleName(row)).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 }
 
-function soldPage({ slug, name, sourceCommit = '' }) {
+// El estado de la hoja es la autoridad. Una URL desaparecida, por sí sola,
+// no confirma una venta: también puede ser un vehículo DE BAJA o renombrado.
+export function buildSoldEntries(rows, aliases = []) {
+  if (!Array.isArray(rows) || !rows.length || !Array.isArray(aliases)) {
+    throw new Error('Stock o registro de direcciones vendidas inválido.');
+  }
+  if (!Object.keys(rows[0]).some(key => normalize(key) === 'ESTADO ACTUAL DEL AUTO')) {
+    throw new Error('Falta la columna Estado actual del auto en data/stock.json.');
+  }
+  const soldRows = rows.filter(row => normalize(rowValue(row, 'Estado actual del auto')) === 'VENDIDO');
+  const protectedSlugs = new Set(rows.filter(row => !soldRows.includes(row)).map(vehicleSlug));
+  const entries = new Map();
+  for (const row of soldRows) {
+    const slug = vehicleSlug(row);
+    if (!vehicleId(row) || !rowValue(row, 'Marca') || !rowValue(row, 'Modelo')) {
+      throw new Error('Hay un vehículo VENDIDO sin ID, marca o modelo.');
+    }
+    if (protectedSlugs.has(slug)) {
+      throw new Error(`La dirección ${slug} también corresponde a un vehículo no vendido.`);
+    }
+    // No agrupar por ID: la planilla puede reutilizar un ID en dos filas.
+    entries.set(slug, { slug, name: vehicleName(row), vehicleId: vehicleId(row) });
+  }
+  for (const alias of aliases) {
+    const slug = clean(alias.slug);
+    if (!/^[a-z0-9-]+$/.test(slug)) throw new Error('Dirección histórica inválida.');
+    if (entries.has(slug)) continue;
+    if (!clean(alias.vehicleId)) throw new Error(`Falta el ID del vehículo para ${slug}.`);
+    const matches = rows.filter(row => vehicleId(row) === clean(alias.vehicleId));
+    // Si el ID deja de estar vendido o deja de existir, no atribuirle una venta.
+    if (!matches.length || matches.some(row => !soldRows.includes(row))) continue;
+    if (matches.length !== 1) throw new Error(`ID ambiguo para la dirección histórica ${slug}.`);
+    if (protectedSlugs.has(slug)) throw new Error(`La dirección histórica ${slug} está en uso.`);
+    entries.set(slug, { slug, name: vehicleName(matches[0]), vehicleId: vehicleId(matches[0]) });
+  }
+  return { soldRecords: soldRows.length, entries: [...entries.values()].sort((a, b) => a.slug.localeCompare(b.slug)) };
+}
+
+function soldPage({ slug, name, vehicleId }) {
   const canonical = `https://lmpautos.com/vehiculos/${slug}/`;
   const whatsappText = encodeURIComponent(`Hola, vi que el ${name} ya fue vendido. ¿Tienen alguna unidad similar disponible?`);
   const whatsapp = `https://wa.me/5491132627744?text=${whatsappText}`;
   const safeName = esc(name);
-  const recovered = sourceCommit ? `<!-- recovered-from:${esc(sourceCommit)} -->` : '<!-- manual-sold-entry -->';
+  const recovered = `<!-- sold-from-stock:${esc(vehicleId)} -->`;
 
   return `<!doctype html>
 <html lang="es-AR">
@@ -171,78 +148,33 @@ ${recovered}
 </body></html>\n`;
 }
 
-function loadManualEntries() {
-  if (!fs.existsSync(MANUAL_FILE)) return [];
+export function restoreSoldPages(root = process.cwd(), { check = false } = {}) {
+  // El actualizador escribe esta copia de Sheets antes de llamar al restaurador.
+  // Un JSON ausente o inválido debe detener el workflow, no simular una restauración exitosa.
+  const stock = JSON.parse(fs.readFileSync(path.join(root, 'data', 'stock.json'), 'utf8'));
+  const aliasesFile = path.join(root, 'data', 'sold-vehicles.json');
+  const aliases = fs.existsSync(aliasesFile) ? JSON.parse(fs.readFileSync(aliasesFile, 'utf8')) : [];
+  const result = buildSoldEntries(stock.rows, aliases);
+  const changed = [];
+  for (const entry of result.entries) {
+    const file = path.join(root, 'vehiculos', entry.slug, 'index.html');
+    const html = soldPage(entry);
+    const current = fs.existsSync(file) ? fs.readFileSync(file, 'utf8').replace(/\r\n/g, '\n') : '';
+    if (current === html) continue;
+    if (check) throw new Error(`Falta restaurar o actualizar /vehiculos/${entry.slug}/`);
+    fs.mkdirSync(path.dirname(file), { recursive: true });
+    fs.writeFileSync(file, html, 'utf8');
+    changed.push(entry.slug);
+  }
+  return { ...result, changed };
+}
+
+if (process.argv[1] && pathToFileURL(path.resolve(process.argv[1])).href === import.meta.url) {
   try {
-    const parsed = JSON.parse(fs.readFileSync(MANUAL_FILE, 'utf8'));
-    return Array.isArray(parsed) ? parsed : [];
-  } catch (err) {
-    console.error(`No se pudo leer ${path.relative(ROOT, MANUAL_FILE)}: ${err.message}`);
+    const result = restoreSoldPages(process.cwd(), { check: process.argv.includes('--check') });
+    console.log(`Vendidos en Sheets: ${result.soldRecords}. URLs conservadas: ${result.entries.length}. Restauradas/actualizadas: ${result.changed.length}.`);
+  } catch (error) {
+    console.error(`ERROR al conservar vendidos: ${error.message}`);
     process.exitCode = 1;
-    return [];
   }
 }
-
-function ensureGeneratedSoldPageNoindex(file, slug) {
-  if (!fs.existsSync(file)) return false;
-
-  const html = fs.readFileSync(file, 'utf8');
-  const generatedByPreserver =
-    html.includes('<!-- recovered-from:') ||
-    html.includes('<!-- manual-sold-entry -->');
-
-  if (!generatedByPreserver) return false;
-
-  let next = html;
-  if (/<meta\s+name=["']robots["'][^>]*>/i.test(next)) {
-    next = next.replace(
-      /<meta\s+name=["']robots["'][^>]*>/i,
-      '<meta name="robots" content="noindex,follow">'
-    );
-  } else {
-    next = next.replace(
-      /(<meta\s+name=["']description["'][^>]*>)/i,
-      '$1\n  <meta name="robots" content="noindex,follow">'
-    );
-  }
-
-  if (next === html) return false;
-  fs.writeFileSync(file, next, 'utf8');
-  console.log(`Ajustada a noindex: /vehiculos/${slug}/`);
-  return true;
-}
-
-function ensureSoldPage({ slug, name, sourceCommit = '' }) {
-  if (!/^[a-z0-9-]+$/.test(slug)) return false;
-  const dir = path.join(VEHICLES_DIR, slug);
-  const file = path.join(dir, 'index.html');
-  if (fs.existsSync(file)) return ensureGeneratedSoldPageNoindex(file, slug);
-  fs.mkdirSync(dir, { recursive: true });
-  fs.writeFileSync(file, soldPage({ slug, name, sourceCommit }), 'utf8');
-  console.log(`Restaurada como VENDIDO: /vehiculos/${slug}/`);
-  return true;
-}
-
-let restored = 0;
-
-// 1) Recorre TODO el historial Git. Cualquier ficha que alguna vez existió y hoy falta
-// vuelve a crearse como una página estática VENDIDO con la misma URL.
-for (const historicalPath of getHistoricalPages()) {
-  const absolute = path.join(ROOT, historicalPath);
-  if (fs.existsSync(absolute)) continue;
-  const version = latestExistingVersion(historicalPath);
-  const slug = historicalPath.split('/')[1];
-  const extracted = version ? extractName(version.html, slug) : titleCaseSlug(slug);
-  const name = normalizeName(extracted, slug);
-  if (ensureSoldPage({ slug, name, sourceCommit: version?.commit ?? '' })) restored++;
-}
-
-// 2) Entradas manuales para URLs antiguas que quizá no estén en el historial del repo.
-for (const entry of loadManualEntries()) {
-  const slug = String(entry?.slug ?? '').trim();
-  if (!slug) continue;
-  const name = String(entry?.name ?? '').trim() || titleCaseSlug(slug);
-  if (ensureSoldPage({ slug, name })) restored++;
-}
-
-console.log(restored ? `Total restauradas: ${restored}` : 'No hay URLs vendidas pendientes de restaurar.');

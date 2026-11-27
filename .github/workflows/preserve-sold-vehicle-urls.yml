@@ -7,8 +7,11 @@ on:
       - main
     paths:
       - 'vehiculos/**'
+      - 'data/stock.json'
       - 'data/sold-vehicles.json'
       - 'scripts/preserve-sold-vehicle-pages.mjs'
+      - 'tests/preserve-sold-vehicle-pages.test.mjs'
+      - '.github/workflows/preserve-sold-vehicle-urls.yml'
 
 permissions:
   contents: write
@@ -27,19 +30,25 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Restaurar páginas históricas como VENDIDO
+      - name: Comprobar selección de vehículos vendidos
+        run: node --test tests/preserve-sold-vehicle-pages.test.mjs
+
+      - name: Restaurar páginas de vehículos VENDIDO en Sheets
         run: node scripts/preserve-sold-vehicle-pages.mjs
+
+      - name: Verificar todas las fichas vendidas
+        run: node scripts/preserve-sold-vehicle-pages.mjs --check
 
       - name: Guardar páginas restauradas
         shell: bash
         run: |
-          if git diff --quiet -- vehiculos; then
+          git add -- vehiculos
+          if git diff --cached --quiet -- vehiculos; then
             echo "No hay páginas para restaurar."
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add vehiculos
           git commit -m "Preservar URLs de vehículos vendidos [preserve-sold]"
           git push
